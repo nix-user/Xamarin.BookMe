@@ -1,0 +1,4 @@
+*.txt
+**/obj/
+**/bin/
+**/packages/
