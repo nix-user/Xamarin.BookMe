@@ -33,7 +33,7 @@
             <Switch x:Name="IsBig" IsToggled="False" HorizontalOptions="EndAndExpand"/>
           </StackLayout>
 
-          <StackLayout  Padding="0,40,0,0" Orientation="Horizontal">
+          <StackLayout  Orientation="Horizontal" VerticalOptions="EndAndExpand">
             <Label Text="C Поликомом" FontSize="Large" HorizontalOptions="Start" VerticalOptions="End"/>
             <Switch x:Name="IsPolinom" IsToggled="False" HorizontalOptions="EndAndExpand"/>
           </StackLayout>

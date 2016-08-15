@@ -11,7 +11,7 @@ namespace App2.Pages
     public partial class ListRoomPage : ContentPage
     {
 
-       public static List<Room> rooms = new List<Room>()
+        public static List<Room> rooms = new List<Room>()
         {
             new Room()
             {
@@ -89,7 +89,7 @@ namespace App2.Pages
         {
             InitializeComponent();
             CurreBooking = book;
-            ResultRoom=Search(book);
+            ResultRoom = Search(book);
             AddUserBookInRange(book);
             if (!ResultRoom.Any())
             {
@@ -100,14 +100,14 @@ namespace App2.Pages
 
         private void AddUserBookInRange(Booking booking)
         {
-            List<MyBookViewResult> result=new List<MyBookViewResult>();
+            List<MyBookViewResult> result = new List<MyBookViewResult>();
             foreach (Room room in rooms)
             {
                 foreach (var book in room.Bookings)
                 {
                     if (book.From < booking.From && book.To > booking.To && book.WhoBook == booking.WhoBook)
                     {
-                       result.Add( new MyBookViewResult()
+                        result.Add(new MyBookViewResult()
                         {
                             Date = book.Date,
                             From = book.From,
@@ -136,7 +136,7 @@ namespace App2.Pages
             {
                 foreach (var book in room.Bookings)
                 {
-                    if (((book.From < booking.From && book.To < booking.To)|(book.From > booking.From && book.To < booking.To)) && book.WhoBook == booking.WhoBook)
+                    if (((book.From < booking.From && book.To < booking.To) | (book.From > booking.From && book.To < booking.To)) && book.WhoBook == booking.WhoBook)
                     {
                         result.Add(new MyBookViewResult()
                         {
@@ -198,7 +198,7 @@ namespace App2.Pages
             }
             return result;
         }
-      
+
         private async void BtnBooking_OnClicked(object sender, EventArgs e)
         {
             string idButton = ((Button)sender).ClassId;

@@ -134,6 +134,12 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\App2\App2.csproj">
+      <Project>{cf8e4745-c5d1-4a08-9fa2-cf956f2799a5}</Project>
+      <Name>App2</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
