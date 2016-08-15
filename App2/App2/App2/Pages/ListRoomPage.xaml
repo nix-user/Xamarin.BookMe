@@ -3,7 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App2.Pages.ListRoomPage">
   <StackLayout>
-    <ListView x:Name="listUserRoomInRange" ItemsSource="{Binding}" RowHeight="120" BackgroundColor="Green" VerticalOptions="Start">
+    <!--<ListView x:Name="listUserRoomInRange" ItemsSource="{Binding}" RowHeight="120" VerticalOptions="Start">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <ViewCell.View>
+                <StackLayout VerticalOptions="Center" Orientation="Horizontal"  BackgroundColor="Green" >
+                  <StackLayout>
+                  <Label Text = "{Binding Room,StringFormat='Комната: № {0}' }" FontSize="Medium"/>
+                  <Label Text="{Binding Date,StringFormat='Дата: {0:dd/MMMM/yyyy}'}" FontSize="Medium"/>
+                  <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding From,StringFormat='От: {0:hh\\:mm}'}" FontSize="Medium"></Label>
+                    <Label Text = "{Binding Number,StringFormat='№ {0}' }" FontSize="24" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalOptions="Start"/>
+                    <Label Text="{Binding To,StringFormat='До: {0:hh\\:mm}'}" FontSize="Medium"></Label>
+                  </StackLayout>
+                  </StackLayout>
+                  <Label Text="Забукана вами" HorizontalOptions="End"></Label>
+                </StackLayout>
+            </ViewCell.View>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+     <ListView x:Name="listUserRoomPartInRange" ItemsSource="{Binding}" RowHeight="120" BackgroundColor="Silver" VerticalOptions="Start">
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
@@ -16,10 +38,6 @@
                     <Label Text="{Binding From,StringFormat='От: {0:hh\\:mm}'}" FontSize="Medium"></Label>
                     <Label Text="{Binding To,StringFormat='До: {0:hh\\:mm}'}" FontSize="Medium"></Label>
                   </StackLayout>
-                  <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding IsBig, StringFormat='Большая:{0}'}"></Label>
-                    <Label Text="{Binding IsHasPolynom, StringFormat='Поликом:{0}'}"></Label>
-                  </StackLayout>
                   </StackLayout>
                   <Label Text="Забукана вами" HorizontalOptions="End"></Label>
                 </StackLayout>
@@ -27,32 +45,7 @@
           </ViewCell>
         </DataTemplate>
       </ListView.ItemTemplate>
-    </ListView>
-     <ListView x:Name="listUserRoomPartInRange" ItemsSource="{Binding}" RowHeight="120" BackgroundColor="Yellow" VerticalOptions="Start">
-      <ListView.ItemTemplate>
-        <DataTemplate>
-          <ViewCell>
-            <ViewCell.View>
-                <StackLayout VerticalOptions="Center" Orientation="Horizontal">
-                  <StackLayout>
-                  <Label Text = "{Binding Room,StringFormat='Комната: № {0}' }" FontSize="Medium"/>
-                  <Label Text="{Binding Date,StringFormat='Дата: {0:dd/MMMM/yyyy}'}" FontSize="Medium"/>
-                  <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding From,StringFormat='От: {0:hh\\:mm}'}" FontSize="Medium"></Label>
-                    <Label Text="{Binding To,StringFormat='До: {0:hh\\:mm}'}" FontSize="Medium"></Label>
-                  </StackLayout>
-                  <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding IsBig, StringFormat='Большая:{0}'}"></Label>
-                    <Label Text="{Binding IsHasPolynom, StringFormat='Поликом:{0}'}"></Label>
-                  </StackLayout>
-                  </StackLayout>
-                  <Label Text="Забукана вами" HorizontalOptions="End"></Label>
-                </StackLayout>
-            </ViewCell.View>
-          </ViewCell>
-        </DataTemplate>
-      </ListView.ItemTemplate>
-    </ListView>
+    </ListView>-->
     <ListView x:Name="listRoom" ItemsSource="{Binding}" RowHeight="80">
       <ListView.ItemTemplate>
         <DataTemplate>

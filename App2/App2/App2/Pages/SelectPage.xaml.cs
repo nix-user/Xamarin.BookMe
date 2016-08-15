@@ -31,7 +31,7 @@ namespace App2.Page
         {
             if (TimeFrom.Time < TimeTo.Time)
             {
-                Room room = new Room() {IsBig = IsBig.IsToggled, IsHasPolynom = IsPolinom.IsToggled};
+                Room room = new Room() {IsBig = IsBig.IsToggled, IsHasPolykom = IsPolinom.IsToggled};
                 Booking booking = new Booking()
                 {
                     Date = Date.Date,

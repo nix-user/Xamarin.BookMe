@@ -18,6 +18,6 @@ namespace App2.Entity
 
         public bool IsBig { get; set; }
 
-        public bool IsHasPolynom { get; set; }
+        public bool IsHasPolykom { get; set; }
     }
 }

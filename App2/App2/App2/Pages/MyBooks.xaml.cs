@@ -53,7 +53,7 @@ namespace App2.Pages
                             Date = booking.Date,
                             From = booking.From,
                             To = booking.To,
-                            IsHasPolynom = room.IsHasPolynom,
+                            IsHasPolykom = room.IsHasPolykom,
                             IsBig = room.IsBig
                         });
                     }

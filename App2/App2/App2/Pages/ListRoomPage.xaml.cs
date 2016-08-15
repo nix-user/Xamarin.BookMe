@@ -13,72 +13,74 @@ namespace App2.Pages
 
         public static List<Room> rooms = new List<Room>()
         {
+              new Room()
+            {
+                IsBig = false,
+                IsHasPolykom = false,
+                Number = 6,
+                Id = 6,
+                Bookings =
+                    new List<Booking>()
+                    {
+                    }
+            },
             new Room()
             {
-                IsBig = true,
-                IsHasPolynom = true,
+                IsBig = false,
+                IsHasPolykom = false,
+                Number = 5,
+                Id = 5,
+                Bookings =
+                    new List<Booking>()
+                    {
+                    }
+            },
+            new Room()
+            {
+                IsBig = false,
+                IsHasPolykom = false,
                 Number = 1,
                 Id = 1,
                 Bookings =
                     new List<Booking>()
                     {
-                        new Booking()
-                        {
-                            Date = DateTime.Today,
-                            From = new TimeSpan(11, 0, 0),
-                            To = new TimeSpan(12, 0, 0)
-                        }
+                       
                     }
             },
             new Room()
             {
                 IsBig = false,
-                IsHasPolynom = true,
+                IsHasPolykom = false,
                 Number = 2,
                 Id = 2,
                 Bookings =
                     new List<Booking>()
                     {
-                        new Booking()
-                        {
-                            Date = DateTime.Today,
-                            From = new TimeSpan(11, 0, 0),
-                            To = new TimeSpan(13, 0, 0)
-                        }
+                      
                     }
             },
             new Room()
             {
                 IsBig = false,
-                IsHasPolynom = false,
+                IsHasPolykom = false,
                 Number = 3,
                 Id = 3,
                 Bookings =
                     new List<Booking>()
                     {
-                        new Booking()
-                        {
-                            Date = DateTime.Today,
-                            From = new TimeSpan(14, 0, 0),
-                            To = new TimeSpan(16, 0, 0)
-                        }
+                      
                     }
             },
             new Room()
             {
                 IsBig = false,
-                IsHasPolynom = false,
+                IsHasPolykom = false,
                 Number = 4,
                 Id = 4,
                 Bookings =
                     new List<Booking>()
                     {
-                        new Booking()
-                        {
-                            Date = DateTime.Today,
-                            From = new TimeSpan(16, 0, 0),
-                            To = new TimeSpan(19, 0, 0)
-                        }
+                       
                     }
             }
         };
@@ -90,7 +92,8 @@ namespace App2.Pages
             InitializeComponent();
             CurreBooking = book;
             ResultRoom = Search(book);
-            AddUserBookInRange(book);
+            //AddUserBookInRange(book);
+            //AddUserBookPartRange(book);
             if (!ResultRoom.Any())
             {
                 listRoom.Header = ListRoomIsEmpty();
@@ -98,67 +101,67 @@ namespace App2.Pages
             listRoom.BindingContext = ResultRoom;
         }
 
-        private void AddUserBookInRange(Booking booking)
-        {
-            List<MyBookViewResult> result = new List<MyBookViewResult>();
-            foreach (Room room in rooms)
-            {
-                foreach (var book in room.Bookings)
-                {
-                    if (book.From < booking.From && book.To > booking.To && book.WhoBook == booking.WhoBook)
-                    {
-                        result.Add(new MyBookViewResult()
-                        {
-                            Date = book.Date,
-                            From = book.From,
-                            To = book.To,
-                            Room = book.Room.Number,
-                            IsHasPolynom = room.IsHasPolynom,
-                            IsBig = room.IsBig
-                        });
-                    }
-                }
-            }
-            if (result.Any())
-            {
-                listUserRoomInRange.ItemsSource = result;
-            }
-            else
-            {
-                listUserRoomInRange.IsVisible = false;
-            }
-        }
+        //private void AddUserBookInRange(Booking booking)
+        //{
+        //    List<MyBookViewResult> result = new List<MyBookViewResult>();
+        //    foreach (Room room in rooms)
+        //    {
+        //        foreach (var book in room.Bookings)
+        //        {
+        //            if (book.From < booking.From && book.To > booking.To && book.WhoBook == booking.WhoBook)
+        //            {
+        //                result.Add(new MyBookViewResult()
+        //                {
+        //                    Date = book.Date,
+        //                    From = book.From,
+        //                    To = book.To,
+        //                    Room = book.Room.Number,
+        //                    IsHasPolykom = room.IsHasPolykom,
+        //                    IsBig = room.IsBig
+        //                });
+        //            }
+        //        }
+        //    }
+        //    if (result.Any())
+        //    {
+        //        listUserRoomInRange.ItemsSource = result;
+        //    }
+        //    else
+        //    {
+        //        listUserRoomInRange.IsVisible = false;
+        //    }
+        //}
 
-        public void AddUserBookPartRange(Booking booking)
-        {
-            List<MyBookViewResult> result = new List<MyBookViewResult>();
-            foreach (Room room in rooms)
-            {
-                foreach (var book in room.Bookings)
-                {
-                    if (((book.From < booking.From && book.To < booking.To) | (book.From > booking.From && book.To < booking.To)) && book.WhoBook == booking.WhoBook)
-                    {
-                        result.Add(new MyBookViewResult()
-                        {
-                            Date = book.Date,
-                            From = book.From,
-                            To = book.To,
-                            Room = book.Room.Number,
-                            IsHasPolynom = room.IsHasPolynom,
-                            IsBig = room.IsBig
-                        });
-                    }
-                }
-            }
-            if (result.Any())
-            {
-                listUserRoomPartInRange.ItemsSource = result;
-            }
-            else
-            {
-                listUserRoomPartInRange.IsVisible = false;
-            }
-        }
+        //public void AddUserBookPartRange(Booking booking)
+        //{
+        //    List<MyBookViewResult> result = new List<MyBookViewResult>();
+        //    foreach (Room room in rooms)
+        //    {
+        //        foreach (var book in room.Bookings)
+        //        {
+        //            if (((book.From < booking.From && book.To > booking.From&&booking.To>book.To) | (book.From < booking.To && book.To > booking.To&&booking.From<book.From)) && book.WhoBook == booking.WhoBook)
+        //            {
+        //                result.Add(new MyBookViewResult()
+        //                {
+        //                    Date = book.Date,
+        //                    From = book.From,
+        //                    To = book.To,
+        //                    Room = book.Room.Number,
+        //                    IsHasPolykom = room.IsHasPolykom,
+        //                    IsBig = room.IsBig
+        //                });
+        //            }
+        //        }
+        //    }
+        //    if (result.Any())
+        //    {
+        //        listUserRoomPartInRange.ItemsSource = result;
+        //    }
+        //    else
+        //    {
+        //        listUserRoomPartInRange.IsVisible = false;
+        //    }
+        //}
 
         public Label ListRoomIsEmpty()
         {
@@ -174,7 +177,7 @@ namespace App2.Pages
         public List<Room> Search(Booking room)
         {
             List<Room> result = new List<Room>();
-            foreach (var item in rooms.Where(x => x.IsBig == room.Room.IsBig && x.IsHasPolynom == room.Room.IsHasPolynom))
+            foreach (var item in rooms.Where(x => x.IsBig == room.Room.IsBig && x.IsHasPolykom == room.Room.IsHasPolykom))
             {
                 bool b = true;
                 foreach (Booking book in item.Bookings.Where(x => x.Date == room.Date))
