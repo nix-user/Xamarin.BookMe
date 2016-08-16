@@ -8,6 +8,8 @@ namespace App2.Entity
 {
     public class MyBookViewResult
     {
+        public int Id { get; set; }
+
         public int Room { get; set; }
 
         public TimeSpan From { get; set; }
@@ -19,5 +21,9 @@ namespace App2.Entity
         public bool IsBig { get; set; }
 
         public bool IsHasPolykom { get; set; }
+
+        public bool? InRange { get; set; }
+
+        public bool IsBook { get; set; }
     }
 }

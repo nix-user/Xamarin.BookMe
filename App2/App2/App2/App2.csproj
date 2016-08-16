@@ -36,6 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Binding\CheckerInBookRoom.cs" />
+    <Compile Include="Binding\CheckerInColor.cs" />
     <Compile Include="Entity\Booking.cs" />
     <Compile Include="Entity\MyBookViewResult.cs" />
     <Compile Include="Entity\Room.cs" />

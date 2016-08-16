@@ -54,7 +54,8 @@ namespace App2.Pages
                             From = booking.From,
                             To = booking.To,
                             IsHasPolykom = room.IsHasPolykom,
-                            IsBig = room.IsBig
+                            IsBig = room.IsBig,
+                            IsBook = false
                         });
                     }
                 }
