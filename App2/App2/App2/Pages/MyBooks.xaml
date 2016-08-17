@@ -22,7 +22,7 @@
                   </StackLayout>
                   <StackLayout Orientation="Horizontal">
                 <Label Text="{Binding IsBig, StringFormat='Большая:{0}',Converter={StaticResource boolConvert}}"></Label>
-                <Label Text="{Binding IsHasPolykom, StringFormat='Полином:{0}',Converter={StaticResource boolConvert}}"></Label>
+                <Label Text="{Binding IsHasPolykom, StringFormat='Поликом:{0}',Converter={StaticResource boolConvert}}"></Label>
                 </StackLayout>
                 </StackLayout>
              </ViewCell.View>

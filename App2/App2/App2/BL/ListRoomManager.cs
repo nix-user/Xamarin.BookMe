@@ -210,7 +210,8 @@ namespace App2.BL
             currentBooking.Room = rooms.FirstOrDefault(x => x.Id == idRoom);
             Room currentRoom = rooms.FirstOrDefault(x => x.Id == idRoom); 
             return string.Format(" Комната: {3}\n Дата: {0}\n Время: {1} - {2}\n Большая:{4} Поликом:{5}", currentBooking.Date.ToString("d"),
-                    currentBooking.From.ToString(@"hh\:mm"), currentBooking.To.ToString(@"hh\:mm"), currentRoom.Number.ToString(),currentRoom.IsBig,currentRoom.IsHasPolykom);
+                    currentBooking.From.ToString(@"hh\:mm"), currentBooking.To.ToString(@"hh\:mm"), currentRoom.Number, 
+                    string.Format("{0:Да;0;Нет}",currentRoom.IsBig.GetHashCode()), string.Format("{0:Да;0;Нет}",currentRoom.IsHasPolykom.GetHashCode()));
         }
 
         public void AddBook(int idRoom)
