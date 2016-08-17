@@ -11,7 +11,9 @@ namespace App2.Pages
 {
     public partial class ListRoomPage : ContentPage
     {
-        private readonly string BookingHead = "Подтвердите действие";
+        private readonly string BookingHeadChecking = "Подтвердите действие";
+        private readonly string BookingBodySucces = "Комната успешно забронирована";
+        private readonly string BookingHeadSuccess = "Действие успешно выполнено";
         private readonly string BookButonOK = "Да";
         private readonly string BookButonNO = "Нет";
 
@@ -37,11 +39,13 @@ namespace App2.Pages
         {
             int idRoom = int.Parse(((Button)sender).ClassId);
             string bookBody = list.Booking(idRoom);
-            bool b = await DisplayAlert(BookingHead, bookBody, BookButonOK, BookButonNO);
+            bool b = await DisplayAlert(BookingHeadChecking, bookBody, BookButonOK, BookButonNO);
             if (b)
             {
-                await Navigation.PopAsync();
+                
                 list.AddBook(idRoom);
+                await DisplayAlert(BookingHeadSuccess, BookingBodySucces, BookButonOK);
+                await Navigation.PopAsync();
             }
             
         }

@@ -5,7 +5,7 @@
              x:Class="App2.Page.SelectPage">
 
   <ContentPage.Content>
-    <StackLayout HorizontalOptions="CenterAndExpand" >
+    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
       <StackLayout x:Name="DateSpace" Padding="20,0">
         <Label x:Name="LabelDate" FontSize="Large" Text="Выбрана текущая дата" />
         <DatePicker x:Name="Date" Format="D"  DateSelected="datePicker_DateSelected">
@@ -14,7 +14,7 @@
 
           <StackLayout >
             <Label Text="От" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Large"/>
-            <TimePicker x:Name="TimeFrom" Format="HH:mm" Time="11:00"  VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand"></TimePicker>
+            <TimePicker x:Name="TimeFrom" Format="HH:mm" Time="11:00"  HorizontalOptions="FillAndExpand"></TimePicker>
           </StackLayout>
 
           <StackLayout Padding="0,40,0,0">
@@ -23,10 +23,10 @@
 
           <StackLayout >
             <Label Text="До" FontSize="Large" HorizontalTextAlignment="Center"/>
-            <TimePicker x:Name="TimeTo" Time="11:00"  Format="HH:mm"></TimePicker>
+            <TimePicker x:Name="TimeTo" Time="11:00"  Format="HH:mm" HorizontalOptions="FillAndExpand"></TimePicker>
           </StackLayout>
         </StackLayout>
-        <Label x:Name="ErrorInterval" HorizontalOptions="Center"/>
+        <Label x:Name="ErrorInterval" HorizontalOptions="Center" TextColor="Maroon"/>
         <StackLayout Padding="10,40">
           <StackLayout Orientation="Horizontal">
             <Label  Text="Большая" FontSize="Large"/>
@@ -39,10 +39,10 @@
           </StackLayout>
         </StackLayout>
       </StackLayout>
-      <StackLayout VerticalOptions="End">
+      <StackLayout VerticalOptions="EndAndExpand">
         <Button HorizontalOptions="FillAndExpand" Text="Мои бронирования" Clicked="MyBook_OnClicked"/>
         <Button HorizontalOptions="FillAndExpand" Text="Поиск" Clicked="Button_OnClicked" />
       </StackLayout>
-    </StackLayout>
+    </StackLayout> 
   </ContentPage.Content>
 </ContentPage>

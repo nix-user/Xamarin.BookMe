@@ -43,6 +43,7 @@ namespace App2.Page
                     To = TimeTo.Time,
                     WhoBook = this.CurrentUser
                 };
+                ErrorInterval.Text = string.Empty;
                 Navigation.PushAsync(new ListRoomPage(booking, CurrentUser));
             }
             else

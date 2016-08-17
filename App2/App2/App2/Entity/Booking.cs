@@ -8,6 +8,8 @@ namespace App2.Entity
 {
     public class Booking
     {
+        public int Id { get; set; }
+
         public TimeSpan From { get; set; }
 
         public TimeSpan To { get; set; }

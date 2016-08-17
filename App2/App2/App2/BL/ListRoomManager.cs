@@ -9,6 +9,7 @@ namespace App2.BL
 {
     public class ListRoomManager
     {
+        public static List<Booking> bookings = new List<Booking>(); 
         public static List<Room> rooms = new List<Room>()
         {
               new Room()
@@ -85,6 +86,7 @@ namespace App2.BL
 
         private Booking currentBooking;
         private User currentUser;
+        private static int counter = 0;
 
         public ListRoomManager(Booking book, User currentUser)
         {
@@ -127,7 +129,7 @@ namespace App2.BL
             {
                 foreach (var book in room.Bookings)
                 {
-                    if (((book.From < booking.From && book.To > booking.From && booking.To > book.To) | (book.From < booking.To && book.To > booking.To && booking.From < book.From)) && book.WhoBook == booking.WhoBook && book.Date==booking.Date)
+                    if (((book.From <= booking.From && book.To >= booking.From && booking.To >= book.To) | (book.From <= booking.To && book.To >= booking.To && booking.From <= book.From)) && book.WhoBook == booking.WhoBook && book.Date==booking.Date)
                     {
                         result.Add(new MyBookViewResult()
                         {
@@ -216,7 +218,19 @@ namespace App2.BL
 
         public void AddBook(int idRoom)
         {
+            currentBooking.Id = counter++;
             rooms.FirstOrDefault(x => x.Id == idRoom).Bookings.Add(currentBooking);
+            bookings.Add(currentBooking);
+        }
+
+        public void DeleteBook(int idBooking)
+        {
+            Booking deleteBook=bookings.FirstOrDefault(x => x.Id == idBooking);
+            bookings.Remove(deleteBook);
+            foreach (Room room in rooms)
+            {
+                room.Bookings.Remove(deleteBook);
+            }
         }
 
         public List<MyBookViewResult> GetUserBookings()
@@ -236,7 +250,8 @@ namespace App2.BL
                             To = booking.To,
                             IsHasPolykom = room.IsHasPolykom,
                             IsBig = room.IsBig,
-                            IsBook = false
+                            IsBook = false,
+                            Id = booking.Id
                         });
                     }
                 }

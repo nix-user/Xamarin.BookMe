@@ -16,11 +16,11 @@
         <DataTemplate>
           <ViewCell>
             <ViewCell.View>
-              <StackLayout BackgroundColor="{Binding InRange,Converter={StaticResource ColorConverter}}" VerticalOptions="CenterAndExpand">
+              <StackLayout BackgroundColor="{Binding InRange,Converter={StaticResource ColorConverter}}" Padding="10,5,10,5" VerticalOptions="CenterAndExpand">
                <StackLayout Orientation="Horizontal">
-                  <Label Text = "{Binding Room,StringFormat='Комната: № {0}' }" FontSize="Medium"/>
+                  <Label Text = "{Binding Room,StringFormat='Комната: № {0}' }" FontSize="Medium"  VerticalOptions="CenterAndExpand"/>
                   <Button HorizontalOptions="EndAndExpand"   x:Name="btnBooking" ClassId="{Binding Id}" Text="Бронировать" IsVisible="{Binding IsBook,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Large" Clicked="BtnBooking_OnClicked"/>
-                  <Label Text="Забукана вами" HorizontalOptions="EndAndExpand" FontSize="Medium" IsVisible="{Binding IsBook}"></Label>
+                  <Label Text="Забронировано вами" HorizontalOptions="EndAndExpand" FontSize="Medium" IsVisible="{Binding IsBook}"></Label>
                 </StackLayout>
               <StackLayout Orientation="Horizontal" IsVisible="{Binding IsBook}">
                 <Label Text="{Binding From,StringFormat='От: {0:hh\\:mm}'}" FontSize="Medium"></Label>
