@@ -10,14 +10,14 @@
         <Label x:Name="LabelDate" FontSize="Large" Text="Выбрана текущая дата" />
         <DatePicker x:Name="Date" Format="D"  DateSelected="datePicker_DateSelected">
         </DatePicker>
-        <StackLayout Padding="0,70,0,0" Orientation="Horizontal" HorizontalOptions="Center">
+        <StackLayout Padding="0,30,0,0" Orientation="Horizontal" HorizontalOptions="Center">
 
           <StackLayout >
             <Label Text="От" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Large"/>
-            <TimePicker x:Name="TimeFrom" Format="HH:mm" Time="11:00" AnchorX="10" HorizontalOptions="Center" VerticalOptions="End"></TimePicker>
+            <TimePicker x:Name="TimeFrom" Format="HH:mm" Time="11:00"  VerticalOptions="EndAndExpand" HorizontalOptions="EndAndExpand"></TimePicker>
           </StackLayout>
 
-          <StackLayout Padding="0,30,0,0">
+          <StackLayout Padding="0,40,0,0">
             <Label Text="-"  FontSize="Large"></Label>
           </StackLayout>
 
@@ -40,7 +40,7 @@
         </StackLayout>
       </StackLayout>
       <StackLayout VerticalOptions="End">
-        <Button HorizontalOptions="FillAndExpand" Text="Мои буки" Clicked="MyBook_OnClicked"/>
+        <Button HorizontalOptions="FillAndExpand" Text="Мои бронирования" Clicked="MyBook_OnClicked"/>
         <Button HorizontalOptions="FillAndExpand" Text="Поиск" Clicked="Button_OnClicked" />
       </StackLayout>
     </StackLayout>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using App2.BL;
 using App2.Entity;
 using Java.Nio.Channels;
 using Xamarin.Forms;
@@ -16,8 +17,8 @@ namespace App2.Pages
         public MyBooks(User user)
         {
             InitializeComponent();
-            CurrentUser = user;
-            ResultRoom = Serch();
+            ListRoomManager manager=new ListRoomManager(user);
+            ResultRoom = manager.GetUserBookings();
             if (ResultRoom.Any())
             {
                 listRoom.BindingContext = ResultRoom;
@@ -38,29 +39,6 @@ namespace App2.Pages
                 FontSize = 24
             };
         }
-        private List<MyBookViewResult> Serch()
-        {
-            List<MyBookViewResult> result=new List<MyBookViewResult>();
-            foreach (Room room in ListRoomPage.rooms)
-            {
-                foreach (Booking booking in room.Bookings)
-                {
-                    if (booking.WhoBook==CurrentUser)
-                    {
-                        result.Add(new MyBookViewResult()
-                        {
-                            Room = room.Number,
-                            Date = booking.Date,
-                            From = booking.From,
-                            To = booking.To,
-                            IsHasPolykom = room.IsHasPolykom,
-                            IsBig = room.IsBig,
-                            IsBook = false
-                        });
-                    }
-                }
-            }
-            return result;
-        }
+       
     }
 }

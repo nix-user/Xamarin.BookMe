@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using App2.Entity;
 using App2.Pages;
+using Java.Util;
 using Xamarin.Forms;
 
 namespace App2.Page
@@ -22,16 +24,17 @@ namespace App2.Page
 
         private void datePicker_DateSelected(object sender, DateChangedEventArgs e)
         {
-            if(LabelDate != null){
+            if (LabelDate != null)
+            {
                 LabelDate.Text = "Вы выбрали " + e.NewDate.ToString("dd/MM/yyyy");
             }
         }
-        
+
         private void Button_OnClicked(object sender, EventArgs e)
         {
             if (TimeFrom.Time < TimeTo.Time)
             {
-                Room room = new Room() {IsBig = IsBig.IsToggled, IsHasPolykom = IsPolinom.IsToggled};
+                Room room = new Room() { IsBig = IsBig.IsToggled, IsHasPolykom = IsPolinom.IsToggled };
                 Booking booking = new Booking()
                 {
                     Date = Date.Date,
@@ -40,11 +43,10 @@ namespace App2.Page
                     To = TimeTo.Time,
                     WhoBook = this.CurrentUser
                 };
-                Navigation.PushAsync(new ListRoomPage(booking));
+                Navigation.PushAsync(new ListRoomPage(booking, CurrentUser));
             }
             else
             {
-                TimeFrom.Time = TimeTo.Time;
                 ErrorInterval.Text = "Неверный интервал";
             }
         }

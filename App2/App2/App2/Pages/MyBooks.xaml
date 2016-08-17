@@ -1,9 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:binding="clr-namespace:App2.Binding;assembly=App2"
              x:Class="App2.Pages.MyBooks">
-  <StackLayout>
-    <ListView x:Name="listRoom" ItemsSource="{Binding}" RowHeight="140" SeparatorColor="Black">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+     <binding:ConverterBool x:Key="boolConvert"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <StackLayout><ListView x:Name="listRoom" ItemsSource="{Binding}" RowHeight="140" SeparatorColor="Black">
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
@@ -16,8 +21,8 @@
                     <Label Text="{Binding To,StringFormat='До: {0:hh\\:mm}'}" FontSize="Medium"></Label>
                   </StackLayout>
                   <StackLayout Orientation="Horizontal">
-                <Label Text="{Binding IsBig, StringFormat='Большая:{0}'}"></Label>
-                <Label Text="{Binding IsHasPolynom, StringFormat='Полином:{0}'}"></Label>
+                <Label Text="{Binding IsBig, StringFormat='Большая:{0}',Converter={StaticResource boolConvert}}"></Label>
+                <Label Text="{Binding IsHasPolykom, StringFormat='Полином:{0}',Converter={StaticResource boolConvert}}"></Label>
                 </StackLayout>
                 </StackLayout>
              </ViewCell.View>
