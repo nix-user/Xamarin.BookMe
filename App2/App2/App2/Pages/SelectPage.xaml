@@ -6,7 +6,7 @@
 
   <ContentPage.Content>
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
-      <StackLayout x:Name="DateSpace" Padding="20,0">
+      <StackLayout x:Name="DateSpace" Padding="10,0">
         <Label x:Name="LabelDate" FontSize="Large" Text="Выбрана текущая дата" />
         <DatePicker x:Name="Date" Format="D"  DateSelected="datePicker_DateSelected">
         </DatePicker>
@@ -32,17 +32,17 @@
             <Label  Text="Большая" FontSize="Large"/>
             <Switch x:Name="IsBig" IsToggled="False" HorizontalOptions="EndAndExpand"/>
           </StackLayout>
-
           <StackLayout  Orientation="Horizontal" VerticalOptions="EndAndExpand">
             <Label Text="C Поликомом" FontSize="Large" HorizontalOptions="Start" VerticalOptions="End"/>
             <Switch x:Name="IsPolinom" IsToggled="False" HorizontalOptions="EndAndExpand"/>
           </StackLayout>
         </StackLayout>
       </StackLayout>
-      <StackLayout VerticalOptions="EndAndExpand">
+      <StackLayout VerticalOptions="EndAndExpand" AbsoluteLayout.LayoutBounds="0.5,1,AutoSize,-1"
+         AbsoluteLayout.LayoutFlags="PositionProportional">
         <Button HorizontalOptions="FillAndExpand" Text="Мои бронирования" Clicked="MyBook_OnClicked"/>
         <Button HorizontalOptions="FillAndExpand" Text="Поиск" Clicked="Button_OnClicked" />
       </StackLayout>
-    </StackLayout> 
+    </StackLayout>
   </ContentPage.Content>
 </ContentPage>
