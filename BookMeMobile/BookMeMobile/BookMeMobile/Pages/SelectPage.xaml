@@ -8,7 +8,7 @@
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
       <StackLayout x:Name="DateSpace" Padding="10,0">
         <Label x:Name="LabelDate" FontSize="Large" Text="Выбрана текущая дата" />
-        <DatePicker x:Name="Date" Format="D"  DateSelected="datePicker_DateSelected">
+        <DatePicker x:Name="Date" Format="D"  DateSelected="DatePickerDateSelected">
         </DatePicker>
         <StackLayout Padding="0,30,0,0" Orientation="Horizontal" HorizontalOptions="Center">
 

@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using BookMeMobile.Entity;
 using BookMeMobile.Pages;
 using Java.Util;
@@ -15,16 +9,17 @@ namespace BookMeMobile.Page
     public partial class SelectPage : ContentPage
     {
         public User CurrentUser { get; set; }
+
         public SelectPage(User currentUser)
         {
-            InitializeComponent();
-            Date.MinimumDate = DateTime.Now;
+            this.InitializeComponent();
+            this.Date.MinimumDate = DateTime.Now;
             this.CurrentUser = currentUser;
         }
 
-        private void datePicker_DateSelected(object sender, DateChangedEventArgs e)
+        private void DatePickerDateSelected(object sender, DateChangedEventArgs e)
         {
-            if (LabelDate != null)
+            if (this.LabelDate != null)
             {
                 LabelDate.Text = "Вы выбрали " + e.NewDate.ToString("dd/MM/yyyy");
             }
@@ -37,14 +32,14 @@ namespace BookMeMobile.Page
                 Room room = new Room() { IsBig = IsBig.IsToggled, IsHasPolykom = IsPolinom.IsToggled };
                 Booking booking = new Booking()
                 {
-                    Date = Date.Date,
-                    Room = room,
-                    From = TimeFrom.Time,
-                    To = TimeTo.Time,
+                    Date = Date.Date, 
+                    Room = room, 
+                    From = TimeFrom.Time, 
+                    To = TimeTo.Time, 
                     WhoBook = this.CurrentUser
                 };
                 ErrorInterval.Text = string.Empty;
-                Navigation.PushAsync(new ListRoomPage(booking, CurrentUser));
+                Navigation.PushAsync(new ListRoomPage(booking, this.CurrentUser));
             }
             else
             {
@@ -54,7 +49,7 @@ namespace BookMeMobile.Page
 
         private void MyBook_OnClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MyBooks(CurrentUser));
+            Navigation.PushAsync(new MyBooks(this.CurrentUser));
         }
     }
 }

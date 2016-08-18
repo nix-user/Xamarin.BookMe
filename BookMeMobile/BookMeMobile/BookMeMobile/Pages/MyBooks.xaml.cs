@@ -12,27 +12,31 @@ namespace BookMeMobile.Pages
 {
     public partial class MyBooks : ContentPage
     {
-        private readonly string BookingHeadChecking = "Подтвердите действие";
-        private readonly string BookIsDelete = "Снять бронирование бронирование?";
-        private readonly string BookingBodySucces = "Комната успешно разбронирована";
-        private readonly string BookingHeadSuccess = "Действие успешно выполнено";
-        private readonly string BookButonOK = "Да";
-        private readonly string BookButonNO = "Нет";
+        private readonly string bookingHeadChecking = "Подтвердите действие";
+        private readonly string bookIsDelete = "Снять бронирование бронирование?";
+        private readonly string bookingBodySucces = "Комната успешно разбронирована";
+        private readonly string bookingHeadSuccess = "Действие успешно выполнено";
+        private readonly string bookButonOK = "Да";
+        private readonly string bookButonNO = "Нет";
+
         public List<MyBookViewResult> ResultRoom { get; set; }
+
         private ListRoomManager manager;
+
         public User CurrentUser { get; set; }
+
         public MyBooks(User user)
         {
-            InitializeComponent();
-            manager=new ListRoomManager(user);
-            ResultRoom = manager.GetUserBookings();
-            if (ResultRoom.Any())
+            this.InitializeComponent();
+            this.manager = new ListRoomManager(user);
+            this.ResultRoom = this.manager.GetUserBookings();
+            if (this.ResultRoom.Any())
             {
-                listRoom.BindingContext = ResultRoom;
+                listRoom.BindingContext = this.ResultRoom;
             }
             else
             {
-                listRoom.Header = ListRoomIsEmpty();
+                listRoom.Header = this.ListRoomIsEmpty();
             }
         }
 
@@ -50,12 +54,12 @@ namespace BookMeMobile.Pages
         private async void BtnBooking_OnClicked(object sender, EventArgs e)
         {
             int idBook = int.Parse(((Button)sender).ClassId);
-            bool b = await DisplayAlert(BookingHeadChecking, BookIsDelete, BookButonOK, BookButonNO);
+            bool b = await DisplayAlert(this.bookingHeadChecking, this.bookIsDelete, this.bookButonOK, this.bookButonNO);
             if (b)
             {
-                manager.DeleteBook(idBook);
-                await DisplayAlert(BookingHeadSuccess, BookingBodySucces, BookButonOK);
-                await Navigation.PopAsync();
+                this.manager.DeleteBook(idBook);
+                await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
+                await this.Navigation.PopAsync();
             }
         }
     }

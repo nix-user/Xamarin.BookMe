@@ -12,16 +12,17 @@ namespace BookMeMobile.Pages
 {
     public partial class LoginPage : ContentPage
     {
-        public List<User> Users { get; set; }=new List<User>() {new User() {Id = 1,Login = "User1"},new User() {Id=2,Login ="User2"} };
+        public List<User> Users { get; set; } = new List<User>() { new User() { Id = 1, Login = "User1" }, new User() { Id = 2, Login = "User2" } };
+
         public LoginPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
-        
+
         private void BtnSignIn_OnClicked(object sender, EventArgs e)
         {
-            User user = Users.FirstOrDefault(x => x.Login == TextLogin.Text);
-            if (user!=null)
+            User user = this.Users.FirstOrDefault(x => x.Login == TextLogin.Text);
+            if (user != null)
             {
                 Navigation.PushAsync(new SelectPage(user));
             }

@@ -8,7 +8,7 @@ namespace BookMeMobile.Binding
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool? inRange = (Nullable<bool>) value;
+            bool? inRange = (bool?)value;
             if (inRange != null)
             {
                 if (inRange == true)

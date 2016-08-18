@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace BookMeMobile.Entity
 {
@@ -10,8 +6,9 @@ namespace BookMeMobile.Entity
     {
         public Room()
         {
-            Bookings=new List<Booking>();
+            this.Bookings = new List<Booking>();
         }
+
         public int Id { get; set; }
 
         public int Number { get; set; }
