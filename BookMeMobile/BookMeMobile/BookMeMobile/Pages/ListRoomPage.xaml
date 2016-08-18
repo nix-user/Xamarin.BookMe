@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:binding1="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
+             x:Class="BookMeMobile.Pages.ListRoomPage">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <binding1:CheckerInColor x:Key="ColorConverter" />
+      <binding1:CheckerInBookRoom x:Key="boolConvert"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <StackLayout>
+    <Label x:Name="isRoom" Text="Комнат нет" FontSize="24" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="False"/>
+    <ListView x:Name="listUserRoomInRange" ItemsSource="{Binding}" RowHeight="80" VerticalOptions="Start">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <ViewCell.View>
+              <StackLayout BackgroundColor="{Binding InRange,Converter={StaticResource ColorConverter}}" Padding="10,5,10,5" VerticalOptions="CenterAndExpand">
+               <StackLayout Orientation="Horizontal">
+                  <Label Text = "{Binding Room,StringFormat='Комната: № {0}' }" FontSize="Medium"  VerticalOptions="CenterAndExpand"/>
+                  <Button HorizontalOptions="EndAndExpand"   x:Name="btnBooking" ClassId="{Binding Id}" Text="Бронировать" IsVisible="{Binding IsBook,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Large" Clicked="BtnBooking_OnClicked"/>
+                  <Label Text="Забронировано вами" HorizontalOptions="EndAndExpand" FontSize="Medium" IsVisible="{Binding IsBook}"></Label>
+                </StackLayout>
+              <StackLayout Orientation="Horizontal" IsVisible="{Binding IsBook}">
+                <Label Text="{Binding From,StringFormat='От: {0:hh\\:mm}'}" FontSize="Medium"></Label>
+                <Label Text="{Binding To,StringFormat='До: {0:hh\\:mm}'}" FontSize="Medium"></Label>
+              </StackLayout>
+              </StackLayout>
+            </ViewCell.View>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </StackLayout>
+</ContentPage>

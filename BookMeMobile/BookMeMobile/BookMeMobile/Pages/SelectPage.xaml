@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:widget="clr-namespace:Android.Widget;assembly=Mono.Android"
+             x:Class="BookMeMobile.Page.SelectPage">
+
+  <ContentPage.Content>
+    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" >
+      <StackLayout x:Name="DateSpace" Padding="10,0">
+        <Label x:Name="LabelDate" FontSize="Large" Text="Выбрана текущая дата" />
+        <DatePicker x:Name="Date" Format="D"  DateSelected="datePicker_DateSelected">
+        </DatePicker>
+        <StackLayout Padding="0,30,0,0" Orientation="Horizontal" HorizontalOptions="Center">
+
+          <StackLayout >
+            <Label Text="От" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Large"/>
+            <TimePicker x:Name="TimeFrom" Format="HH:mm" Time="11:00"  HorizontalOptions="FillAndExpand"></TimePicker>
+          </StackLayout>
+
+          <StackLayout Padding="0,40,0,0">
+            <Label Text="-"  FontSize="Large"></Label>
+          </StackLayout>
+
+          <StackLayout >
+            <Label Text="До" FontSize="Large" HorizontalTextAlignment="Center"/>
+            <TimePicker x:Name="TimeTo" Time="11:00"  Format="HH:mm" HorizontalOptions="FillAndExpand"></TimePicker>
+          </StackLayout>
+        </StackLayout>
+        <Label x:Name="ErrorInterval" HorizontalOptions="Center" TextColor="Maroon"/>
+        <StackLayout Padding="10,40">
+          <StackLayout Orientation="Horizontal">
+            <Label  Text="Большая" FontSize="Large"/>
+            <Switch x:Name="IsBig" IsToggled="False" HorizontalOptions="EndAndExpand"/>
+          </StackLayout>
+          <StackLayout  Orientation="Horizontal" VerticalOptions="EndAndExpand">
+            <Label Text="C Поликомом" FontSize="Large" HorizontalOptions="Start" VerticalOptions="End"/>
+            <Switch x:Name="IsPolinom" IsToggled="False" HorizontalOptions="EndAndExpand"/>
+          </StackLayout>
+        </StackLayout>
+      </StackLayout>
+      <StackLayout VerticalOptions="EndAndExpand" AbsoluteLayout.LayoutBounds="0.5,1,AutoSize,-1"
+         AbsoluteLayout.LayoutFlags="PositionProportional">
+        <Button HorizontalOptions="FillAndExpand" Text="Мои бронирования" Clicked="MyBook_OnClicked"/>
+        <Button HorizontalOptions="FillAndExpand" Text="Поиск" Clicked="Button_OnClicked" />
+      </StackLayout>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>
