@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BookMeMobile.Page;
 using BookMeMobile.Pages;
 using Xamarin.Forms;
 

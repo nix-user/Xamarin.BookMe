@@ -1,10 +1,9 @@
 ﻿using System;
 using BookMeMobile.Entity;
-using BookMeMobile.Pages;
 using Java.Util;
 using Xamarin.Forms;
 
-namespace BookMeMobile.Page
+namespace BookMeMobile.Pages
 {
     public partial class SelectPage : ContentPage
     {

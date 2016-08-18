@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
-using BookMeMobile.Page;
 using Java.Lang;
 using Xamarin.Forms;
 

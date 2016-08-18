@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMeMobile.Droid", "BookMeMobile\BookMeMobile.Droid\BookMeMobile.Droid.csproj", "{E2DB2292-6DE0-4D7A-BC59-5A5DFBF1A25C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMeMobile.iOS", "BookMeMobile\BookMeMobile.iOS\BookMeMobile.iOS.csproj", "{C8D48223-7648-40D8-909F-C2635999D947}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMeMobile.Touch", "BookMeMobile\BookMeMobile.Touch\BookMeMobile.Touch.csproj", "{C8D48223-7648-40D8-909F-C2635999D947}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookMeMobile", "BookMeMobile\BookMeMobile\BookMeMobile.csproj", "{CF8E4745-C5D1-4A08-9FA2-CF956F2799A5}"
 EndProject
