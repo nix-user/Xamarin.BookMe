@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BookMeMobile.Pages.ProfilePage">
   <StackLayout BindingContext="{Binding}" VerticalOptions="Start" Padding="10,0,10,0">
+   
     <StackLayout Orientation="Horizontal" VerticalOptions="Start">
       <Image Source="profileMenu.png" />
       <Label  Text="{Binding UserName}" FontSize="Medium" VerticalOptions="Center"></Label>
@@ -10,23 +11,13 @@
     <TableView>
       <TableRoot>
         <TableSection>
-          <ViewCell>
-            <StackLayout Orientation="Horizontal">
-            <Label Text="Любимая комната:"  FontSize="Medium" />
-            <Label Text="{Binding FavoriteRoom}"  FontSize="Medium"/>
-            </StackLayout>
-          </ViewCell>
+          <EntryCell x:Name="txtFavoriteRoomCell" Keyboard="Default" Label="Любимая комната:" Text="{Binding FavoriteRoom}"/>
         </TableSection>
         <TableSection>
-          <ViewCell>
-              <StackLayout Orientation="Horizontal">
-                <Label Text="Моя комната:" FontSize="Medium"/>
-                <Label Text="{Binding MyRoom}"   FontSize="Medium"/>
-                </StackLayout>
-              </ViewCell>
+          <EntryCell x:Name="txtMyRoomCell" Keyboard="Default" Label="Моя комната:" Text="{Binding MyRoom}"/>
         </TableSection>
-        
       </TableRoot>
     </TableView>
+    <Button x:Name="btnSave" IsEnabled="False" Text="Сохранить" Clicked="BtnSave_OnClicked"/>
   </StackLayout>
 </ContentPage>

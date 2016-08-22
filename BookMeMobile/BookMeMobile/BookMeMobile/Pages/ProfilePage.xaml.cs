@@ -12,11 +12,47 @@ namespace BookMeMobile.Pages
     public partial class ProfilePage : ContentPage
     {
         private ProfileViewModel profileViewModel;
+        private User currentUser;
 
         public ProfilePage()
         {
-            this.BindingContext = new ProfileViewModel(SelectPage.CurrentUser);
             this.InitializeComponent();
+            this.BindingContext = new ProfileViewModel(SelectPage.CurrentUser);
+            this.currentUser = SelectPage.CurrentUser;
+            this.txtFavoriteRoomCell.PropertyChanged += this.FavoriteRoomCell_OnCompleted;
+            this.txtMyRoomCell.PropertyChanged += this.MyRoomCell_OnCompleted;
+        }
+
+        private void BtnSave_OnClicked(object sender, EventArgs e)
+        {
+            this.profileViewModel = (ProfileViewModel)this.BindingContext;
+            SelectPage.CurrentUser.FavoriteRoom = this.profileViewModel.FavoriteRoom;
+            SelectPage.CurrentUser.MyRoom = this.profileViewModel.MyRoom;
+            btnSave.IsEnabled = false;
+        }
+
+        private void FavoriteRoomCell_OnCompleted(object sender, EventArgs e)
+        {
+            if (this.txtFavoriteRoomCell.Text != this.currentUser.FavoriteRoom)
+            {
+                this.VisibleButon();
+            }
+        }
+
+        private void MyRoomCell_OnCompleted(object sender, EventArgs e)
+        {
+            if (this.txtMyRoomCell.Text != this.currentUser.MyRoom.ToString())
+            {
+                this.VisibleButon();
+            }
+        }
+
+        private void VisibleButon()
+        {
+            if (this.btnSave != null)
+            {
+                this.btnSave.IsEnabled = true;
+            }
         }
     }
 }

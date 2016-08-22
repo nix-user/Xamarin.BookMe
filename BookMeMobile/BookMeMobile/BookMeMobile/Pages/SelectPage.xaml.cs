@@ -1,4 +1,5 @@
 ﻿using System;
+using Android.Locations;
 using BookMeMobile.Entity;
 using Java.Util;
 using Xamarin.Forms;
@@ -14,6 +15,16 @@ namespace BookMeMobile.Pages
             this.InitializeComponent();
             this.Date.MinimumDate = DateTime.Now;
             CurrentUser = currentUser;
+            this.SettingPaddingForWinPhone();
+        }
+
+        private void SettingPaddingForWinPhone()
+        {
+            if (Device.OS == TargetPlatform.Windows || Device.OS == TargetPlatform.WinPhone)
+            {
+                this.checkerLayout.Padding = new Thickness(0, 0, 0, 0);
+                this.timeLayout.Padding = new Thickness(0, 0, 0, 0);
+            }
         }
 
         private void DatePickerDateSelected(object sender, DateChangedEventArgs e)
