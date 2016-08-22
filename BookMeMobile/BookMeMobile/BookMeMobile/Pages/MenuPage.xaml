@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookMeMobile.Pages.MenuPage"
+             Padding="0,40,0,0"
+             Icon="hamburger.png"
+             Title="Menu"
+             >
+  <ContentPage.Content>
+    <StackLayout>
+    <Label FontSize="Large" HorizontalOptions="Center"/>
+    <ListView x:Name="listView" VerticalOptions="FillAndExpand" SeparatorVisibility="Default">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <ViewCell.View>
+              <StackLayout Orientation="Horizontal">
+                <Image Source="{Binding Source}"/> 
+                <Label Text="{Binding Title}" VerticalOptions="CenterAndExpand"/>
+              </StackLayout>
+            </ViewCell.View>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

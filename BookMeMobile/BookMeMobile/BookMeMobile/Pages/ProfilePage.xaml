@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookMeMobile.Pages.ProfilePage">
+  <StackLayout BindingContext="{Binding}" VerticalOptions="Start" Padding="10,0,10,0">
+    <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+      <Image Source="profileMenu.png" />
+      <Label  Text="{Binding UserName}" FontSize="Medium" VerticalOptions="Center"></Label>
+    </StackLayout>
+    <TableView>
+      <TableRoot>
+        <TableSection>
+          <ViewCell>
+            <StackLayout Orientation="Horizontal">
+            <Label Text="Любимая комната:"  FontSize="Medium" />
+            <Label Text="{Binding FavoriteRoom}"  FontSize="Medium"/>
+            </StackLayout>
+          </ViewCell>
+        </TableSection>
+        <TableSection>
+          <ViewCell>
+              <StackLayout Orientation="Horizontal">
+                <Label Text="Моя комната:" FontSize="Medium"/>
+                <Label Text="{Binding MyRoom}"   FontSize="Medium"/>
+                </StackLayout>
+              </ViewCell>
+        </TableSection>
+        
+      </TableRoot>
+    </TableView>
+  </StackLayout>
+</ContentPage>

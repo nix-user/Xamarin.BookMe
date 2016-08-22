@@ -38,8 +38,7 @@
           </StackLayout>
         </StackLayout>
       </StackLayout>
-      <StackLayout VerticalOptions="EndAndExpand" AbsoluteLayout.LayoutBounds="0.5,1,AutoSize,-1"
-         AbsoluteLayout.LayoutFlags="PositionProportional">
+      <StackLayout >
         <Button HorizontalOptions="FillAndExpand" Text="Мои бронирования" Clicked="MyBook_OnClicked"/>
         <Button HorizontalOptions="FillAndExpand" Text="Поиск" Clicked="Button_OnClicked" />
       </StackLayout>
