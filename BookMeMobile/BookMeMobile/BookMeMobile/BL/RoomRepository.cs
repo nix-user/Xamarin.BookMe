@@ -7,7 +7,7 @@ using BookMeMobile.Entity;
 
 namespace BookMeMobile.BL
 {
-    public class RoomRepository
+    class RoomRepository
     {
         private static List<Room> rooms = new List<Room>()
         {
@@ -75,5 +75,6 @@ namespace BookMeMobile.BL
         {
             rooms.Add(room);
         }
+
     }
 }

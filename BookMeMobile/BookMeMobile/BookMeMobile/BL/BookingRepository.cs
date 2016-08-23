@@ -7,9 +7,10 @@ using BookMeMobile.Entity;
 
 namespace BookMeMobile.BL
 {
-    public class BookingRepository
+    class BookingRepository
     {
         private static List<Booking> bookings = new List<Booking>();
+
 
         public IEnumerable<Booking> GetAll()
         {
@@ -28,7 +29,7 @@ namespace BookMeMobile.BL
 
         public void ReoveBook(int id)
         {
-            Booking removingBook = this.GetBook(id);
+            Booking removingBook = GetBook(id);
             bookings.Remove(removingBook);
         }
     }
