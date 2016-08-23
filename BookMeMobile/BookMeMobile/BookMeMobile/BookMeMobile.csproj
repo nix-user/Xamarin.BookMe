@@ -40,7 +40,9 @@
     <Compile Include="Binding\CheckerInBookRoom.cs" />
     <Compile Include="Binding\CheckerInColor.cs" />
     <Compile Include="Binding\ConverterBool.cs" />
+    <Compile Include="BL\BookingRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
+    <Compile Include="BL\RoomRepository.cs" />
     <Compile Include="Entity\Booking.cs" />
     <Compile Include="Entity\MenuPageItem.cs" />
     <Compile Include="Entity\MyBookViewResult.cs" />
