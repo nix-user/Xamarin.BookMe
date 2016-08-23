@@ -25,5 +25,7 @@ namespace BookMeMobile.Entity
         public bool? InRange { get; set; }
 
         public bool IsBook { get; set; }
+
+        public bool IsRecursive { get; set; }
     }
 }

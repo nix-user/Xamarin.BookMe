@@ -27,6 +27,8 @@ namespace BookMeMobile.BL
 
         public ListRoomManager(User user)
         {
+            this.bookings = new BookingRepository();
+            this.rooms = new RoomRepository();
             this.currentUser = user;
         }
 
@@ -115,21 +117,31 @@ namespace BookMeMobile.BL
 
             foreach (var item in srchList)
             {
-                bool b = true;
-                foreach (Booking book in item.Bookings.Where(x => x.Date == room.Date))
+                List<Booking> searchBook = new List<Booking>();
+                bool hasRange = true;
+                if (room.IsRecursive)
+                {
+                    searchBook.AddRange(item.Bookings.Where(x => x.Date >= room.Date));
+                }
+                else
+                {
+                    searchBook.AddRange(item.Bookings.Where(x => x.Date == room.Date));
+                }
+
+                foreach (Booking book in searchBook)
                 {
                     if (book.From >= room.To || book.To <= room.From)
                     {
-                        b = true;
+                        hasRange = true;
                     }
                     else
                     {
-                        b = false;
+                        hasRange = false;
                         break;
                     }
                 }
 
-                if (b)
+                if (hasRange)
                 {
                     result.Add(new MyBookViewResult()
                     {
@@ -158,6 +170,17 @@ namespace BookMeMobile.BL
                 currentRoom.Number,
                 string.Format("{0:Да;0;Нет}", currentRoom.IsBig.GetHashCode()),
                 string.Format("{0:Да;0;Нет}", currentRoom.IsHasPolykom.GetHashCode()));
+        }
+
+        public void AddBookInWeek(int idRoom)
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                this.currentBooking.Date.AddDays(1);
+                this.currentBooking.Id = counter++;
+                this.rooms.GetAll().FirstOrDefault(x => x.Id == idRoom).Bookings.Add(this.currentBooking);
+                this.bookings.AddBooking(this.currentBooking);
+            }
         }
 
         public void AddBook(int idRoom)

@@ -1,6 +1,7 @@
 ﻿using System;
 using Android.Locations;
 using BookMeMobile.Entity;
+using BookMeMobile.Pages.MyBookPages;
 using Java.Util;
 using Xamarin.Forms;
 
@@ -46,7 +47,8 @@ namespace BookMeMobile.Pages
                     Room = room,
                     From = TimeFrom.Time,
                     To = TimeTo.Time,
-                    WhoBook = CurrentUser
+                    WhoBook = CurrentUser,
+                    IsRecursive = IsRecursive.IsToggled
                 };
                 ErrorInterval.Text = string.Empty;
                 Navigation.PushAsync(new ListRoomPage(booking, CurrentUser));
@@ -59,7 +61,7 @@ namespace BookMeMobile.Pages
 
         private void MyBook_OnClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MyBooks(CurrentUser));
+            Navigation.PushAsync(new TabPanelPage());
         }
     }
 }

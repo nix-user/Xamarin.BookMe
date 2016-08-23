@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BookMeMobile.BL;
 using BookMeMobile.Entity;
-using Java.Nio.Channels;
 using Xamarin.Forms;
 
-namespace BookMeMobile.Pages
+namespace BookMeMobile.Pages.MyBookPages
 {
     public partial class MyBooks : ContentPage
     {
@@ -32,7 +29,7 @@ namespace BookMeMobile.Pages
             this.ResultRoom = this.manager.GetUserBookings();
             if (this.ResultRoom.Any())
             {
-                listRoom.BindingContext = this.ResultRoom;
+                this.listRoom.BindingContext = this.ResultRoom;
             }
             else
             {

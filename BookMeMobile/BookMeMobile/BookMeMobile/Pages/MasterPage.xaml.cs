@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
+using BookMeMobile.Pages.MyBookPages;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
@@ -20,6 +21,7 @@ namespace BookMeMobile.Pages
             this.masterPage = new MenuPage();
             this.Master = this.masterPage;
             this.Detail = new NavigationPage(new SelectPage(currentUser));
+            this.Detail.Padding = new Thickness(0, 20, 0, 0);
             this.masterPage.ListView.ItemSelected += this.OnItemSelected;
         }
 
