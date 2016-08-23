@@ -21,16 +21,15 @@ namespace BookMeMobile.BL
         {
             return bookings.FirstOrDefault(x => x.Id == id);
         }
-
-        public void AddBooking(Booking book)
-        {
-            bookings.Add(book);
-        }
-
         public void ReoveBook(int id)
         {
             Booking removingBook = GetBook(id);
             bookings.Remove(removingBook);
+        }
+
+        public void AddBooking(Booking book)
+        {
+            bookings.Add(book);
         }
     }
 }
