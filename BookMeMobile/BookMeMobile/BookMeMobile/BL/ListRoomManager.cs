@@ -19,8 +19,8 @@ namespace BookMeMobile.BL
 
         public ListRoomManager(Booking book, User currentUser)
         {
-            bookings = new BookingRepository();
-            rooms = new RoomRepository();
+            this.bookings = new BookingRepository();
+            this.rooms = new RoomRepository();
             this.currentBooking = book;
             this.currentUser = currentUser;
         }
@@ -33,7 +33,7 @@ namespace BookMeMobile.BL
         public List<MyBookViewResult> AddUserBookInRange(Booking booking)
         {
             List<MyBookViewResult> result = new List<MyBookViewResult>();
-            foreach (Room room in rooms.GetAll().Where(x => x.IsBig == booking.Room.IsBig && x.IsHasPolykom == booking.Room.IsHasPolykom))
+            foreach (Room room in this.rooms.GetAll().Where(x => x.IsBig == booking.Room.IsBig && x.IsHasPolykom == booking.Room.IsHasPolykom))
             {
                 foreach (var book in room.Bookings.Where(x => x.WhoBook == booking.WhoBook && x.Date == booking.Date))
                 {
@@ -57,7 +57,7 @@ namespace BookMeMobile.BL
         public List<MyBookViewResult> AddUserBookPartRange(Booking booking)
         {
             List<MyBookViewResult> result = new List<MyBookViewResult>();
-            foreach (Room room in rooms.GetAll().Where(x => x.IsBig == booking.Room.IsBig && x.IsHasPolykom == booking.Room.IsHasPolykom))
+            foreach (Room room in this.rooms.GetAll().Where(x => x.IsBig == booking.Room.IsBig && x.IsHasPolykom == booking.Room.IsHasPolykom))
             {
                 foreach (var book in room.Bookings)
                 {
@@ -87,22 +87,22 @@ namespace BookMeMobile.BL
         {
             if (room.Room.IsBig && room.Room.IsHasPolykom)
             {
-                return rooms.GetAll().Where(x => x.IsBig && x.IsHasPolykom).ToList();
+                return this.rooms.GetAll().Where(x => x.IsBig && x.IsHasPolykom).ToList();
             }
 
             if (!room.Room.IsBig && room.Room.IsHasPolykom)
             {
-                return rooms.GetAll().Where(x => (x.IsBig || !x.IsBig) && x.IsHasPolykom).ToList();
+                return this.rooms.GetAll().Where(x => (x.IsBig || !x.IsBig) && x.IsHasPolykom).ToList();
             }
 
             if (room.Room.IsBig && !room.Room.IsHasPolykom)
             {
-                return rooms.GetAll().Where(x => (x.IsHasPolykom || !x.IsHasPolykom) && x.IsBig).ToList();
+                return this.rooms.GetAll().Where(x => (x.IsHasPolykom || !x.IsHasPolykom) && x.IsBig).ToList();
             }
 
             if (!room.Room.IsBig && !room.Room.IsHasPolykom)
             {
-                return rooms.GetAll().Where(x => true).ToList();
+                return this.rooms.GetAll().Where(x => true).ToList();
             }
 
             return null;
@@ -148,8 +148,8 @@ namespace BookMeMobile.BL
 
         public string Booking(int idRoom)
         {
-            this.currentBooking.Room = rooms.GetRoom(idRoom);
-            Room currentRoom = rooms.GetRoom(idRoom);
+            this.currentBooking.Room = this.rooms.GetRoom(idRoom);
+            Room currentRoom = this.rooms.GetRoom(idRoom);
             return string.Format(
                 " Комната: {3}\n Дата: {0}\n Время: {1} - {2}\n Большая:{4} Поликом:{5}",
                 this.currentBooking.Date.ToString("d"),
@@ -163,15 +163,15 @@ namespace BookMeMobile.BL
         public void AddBook(int idRoom)
         {
             this.currentBooking.Id = counter++;
-            rooms.GetAll().FirstOrDefault(x => x.Id == idRoom).Bookings.Add(this.currentBooking);
-            bookings.AddBooking(this.currentBooking);
+            this.rooms.GetAll().FirstOrDefault(x => x.Id == idRoom).Bookings.Add(this.currentBooking);
+            this.bookings.AddBooking(this.currentBooking);
         }
 
         public void DeleteBook(int idBooking)
         {
-            Booking deleteBook = bookings.GetBook(idBooking);
-            bookings.ReoveBook(deleteBook.Id);
-            foreach (Room room in rooms.GetAll())
+            Booking deleteBook = this.bookings.GetBook(idBooking);
+            this.bookings.ReoveBook(deleteBook.Id);
+            foreach (Room room in this.rooms.GetAll())
             {
                 room.Bookings.Remove(deleteBook);
             }
@@ -180,7 +180,7 @@ namespace BookMeMobile.BL
         public List<MyBookViewResult> GetUserBookings()
         {
             List<MyBookViewResult> result = new List<MyBookViewResult>();
-            foreach (Room room in rooms.GetAll())
+            foreach (Room room in this.rooms.GetAll())
             {
                 foreach (Booking booking in room.Bookings)
                 {
