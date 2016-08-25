@@ -15,7 +15,7 @@ namespace BookMeMobile.BL
             {
                 IsBig = false,
                 IsHasPolykom = false,
-                Number = 6,
+                Number = "304D",
                 Id = 6,
                 Bookings = new List<Booking>()
             },
@@ -23,7 +23,7 @@ namespace BookMeMobile.BL
             {
                 IsBig = false,
                 IsHasPolykom = false,
-                Number = 5,
+                Number = "505E",
                 Id = 5,
                 Bookings = new List<Booking>()
             },
@@ -31,7 +31,7 @@ namespace BookMeMobile.BL
             {
                 IsBig = false,
                 IsHasPolykom = false,
-                Number = 1,
+                Number = "403D",
                 Id = 1,
                 Bookings = new List<Booking>()
             },
@@ -39,7 +39,7 @@ namespace BookMeMobile.BL
             {
                 IsBig = true,
                 IsHasPolykom = false,
-                Number = 2,
+                Number = "202K",
                 Id = 2,
                 Bookings = new List<Booking>()
             },
@@ -47,7 +47,7 @@ namespace BookMeMobile.BL
             {
                 IsBig = true,
                 IsHasPolykom = false,
-                Number = 3,
+                Number = "323P",
                 Id = 3,
                 Bookings = new List<Booking>()
             },
@@ -55,7 +55,7 @@ namespace BookMeMobile.BL
             {
                 IsBig = false,
                 IsHasPolykom = true,
-                Number = 4,
+                Number = "678T",
                 Id = 4,
                 Bookings = new List<Booking>()
             }

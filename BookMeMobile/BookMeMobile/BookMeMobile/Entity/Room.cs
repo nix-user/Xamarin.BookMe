@@ -11,7 +11,7 @@ namespace BookMeMobile.Entity
 
         public int Id { get; set; }
 
-        public int Number { get; set; }
+        public string Number { get; set; }
 
         public bool IsBig { get; set; }
 

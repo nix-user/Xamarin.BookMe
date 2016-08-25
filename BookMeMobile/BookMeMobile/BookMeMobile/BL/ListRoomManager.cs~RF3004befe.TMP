@@ -88,7 +88,7 @@ namespace BookMeMobile.BL
                 }
             }
 
-            return this.Sort(result);
+            return result;
         }
 
         private List<Room> ConditionTrue(Booking room)
@@ -161,7 +161,7 @@ namespace BookMeMobile.BL
                 }
             }
 
-            return this.Sort(result);
+            return result;
         }
 
         public string Booking(int idRoom)
@@ -282,16 +282,16 @@ namespace BookMeMobile.BL
 
         public List<MyBookViewResult> Sort(List<MyBookViewResult> list)
         {
-            int userFloor = this.GetFloorInNumber(this.currentUser.MyRoom);
+            int userFloor = GetFloorInNumber(currentUser.MyRoom);
             list.Sort((view1, view2) =>
             {
-                if (Math.Abs(GetFloorInNumber(view1.Room.ToString()) - userFloor) > Math.Abs(GetFloorInNumber(view2.Room.ToString()) - userFloor))
+                if (Math.Abs(view1.Room - userFloor) > Math.Abs(view1.Room - userFloor))
                 {
                     return 1;
                 }
                 else
                 {
-                    if (Math.Abs(GetFloorInNumber(view1.Room.ToString()) - userFloor) < Math.Abs(GetFloorInNumber(view2.Room.ToString()) - userFloor))
+                    if (Math.Abs(view1.Room - userFloor) > Math.Abs(view1.Room - userFloor))
                     {
                         return -1;
                     }
@@ -300,13 +300,10 @@ namespace BookMeMobile.BL
                         return 0;
                     }
                 }
-            });
-            if (list.FindIndex(x => x.Room == this.currentUser.FavoriteRoom) > 0)
-            {
-                MyBookViewResult first = list[list.FindIndex(x => x.Room == this.currentUser.FavoriteRoom)];
-                list.Remove(first);
-                list.Insert(0, first);
-            }
+            } 
+            );
+
+
 
             return list;
         }

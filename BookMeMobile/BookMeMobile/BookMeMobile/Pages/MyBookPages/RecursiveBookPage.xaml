@@ -28,7 +28,7 @@
                     <Label Text="{Binding Date,StringFormat='{0:dd/MMMM/yyyy}'}" FontSize="Medium"></Label>
                     <StackLayout Orientation="Horizontal">
                       <Label Text="{Binding From,StringFormat='{0:hh\\:mm} -'}" FontSize="Medium"></Label>
-                      <Label Text="{Binding To,StringFormat='{0:hh\\:mm}'}" FontSize="Medium"></Label>
+                      <Label Text="{Binding To,StringFormat=' {0:hh\\:mm}'}" FontSize="Medium"></Label>
                     </StackLayout>
                   </StackLayout>
                 </AbsoluteLayout>
