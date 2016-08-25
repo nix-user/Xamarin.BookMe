@@ -61,11 +61,11 @@
     <Compile Include="Pages\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MyBookPages\AllMyBook.xaml.cs">
+      <DependentUpon>AllMyBook.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\MyBookPages\MyBooks.xaml.cs">
       <DependentUpon>MyBooks.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\MyBookPages\Page1.xaml.cs">
-      <DependentUpon>Page1.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MyBookPages\RecursiveBookPage.xaml.cs">
       <DependentUpon>RecursiveBookPage.xaml</DependentUpon>
@@ -159,7 +159,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\MyBookPages\Page1.xaml">
+    <EmbeddedResource Include="Pages\MyBookPages\AllMyBook.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

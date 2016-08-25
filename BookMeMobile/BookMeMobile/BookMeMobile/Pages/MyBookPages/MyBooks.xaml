@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:binding1="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.MyBookPages.MyBooks"
-             Title="Book">
+             Title="Мои бронирования">
   <ContentPage.Resources>
     <ResourceDictionary>
       <binding1:ConverterBool x:Key="boolConvert"/>
@@ -11,6 +11,7 @@
   </ContentPage.Resources>
   <ContentPage.Content>
   <StackLayout>
+    <Label x:Name="messageIsEmpty" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Text="Комнат нет" IsVisible="False"/>
     <ListView x:Name="listRoom" ItemsSource="{Binding}" HasUnevenRows="True" SeparatorColor="Black">
       <ListView.ItemTemplate>
         <DataTemplate>

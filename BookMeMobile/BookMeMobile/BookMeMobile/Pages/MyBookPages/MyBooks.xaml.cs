@@ -33,19 +33,8 @@ namespace BookMeMobile.Pages.MyBookPages
             }
             else
             {
-                listRoom.Header = this.ListRoomIsEmpty();
+                messageIsEmpty.IsVisible = true;
             }
-        }
-
-        public Label ListRoomIsEmpty()
-        {
-            return new Label()
-            {
-                Text = "Комнат нет",
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                HorizontalTextAlignment = TextAlignment.Center,
-                FontSize = 24
-            };
         }
 
         private async void BtnBooking_OnClicked(object sender, EventArgs e)

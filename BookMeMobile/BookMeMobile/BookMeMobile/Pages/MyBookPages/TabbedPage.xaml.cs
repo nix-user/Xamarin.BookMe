@@ -5,11 +5,12 @@ namespace BookMeMobile.Pages.MyBookPages
 {
     public partial class TabPanelPage : TabbedPage
     {
-        public TabPanelPage()
+        public TabPanelPage(User currentUser)
         {
             this.InitializeComponent();
-            //this.Children.Add(new MyBooks(currentUser));
-            //this.Children.Add(new RecursiveBookPage());
+            this.Children.Add(new MyBooks(currentUser));
+            this.Children.Add(new RecursiveBookPage(currentUser));
+            this.Children.Add(new AllMyBook(currentUser));
         }
     }
 }

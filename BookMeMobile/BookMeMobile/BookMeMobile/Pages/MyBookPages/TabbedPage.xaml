@@ -3,6 +3,4 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BookMeMobile.Pages.MyBookPages;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.MyBookPages.TabPanelPage">
-  <local:Page1/>
-  <local:RecursiveBookPage/>
   </TabbedPage>

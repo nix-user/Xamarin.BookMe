@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:widget="clr-namespace:Android.Widget;assembly=Mono.Android"
-             x:Class="BookMeMobile.Pages.SelectPage">
+             x:Class="BookMeMobile.Pages.SelectPage"
+             Title="Select Page">
   <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
       <StackLayout x:Name="DateSpace">
         <Label x:Name="LabelDate" FontSize="Large" Text="Выбрана текущая дата" />

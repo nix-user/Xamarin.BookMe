@@ -4,7 +4,6 @@
              x:Class="BookMeMobile.Pages.MyBookPages.RecursiveBookPage"
              Title="Рекурентные">
   <ContentPage.Content>
-  <Label Text="Hello"> </Label>  
   
 </ContentPage.Content>
   </ContentPage>

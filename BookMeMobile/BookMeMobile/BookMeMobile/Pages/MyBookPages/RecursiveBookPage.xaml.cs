@@ -1,10 +1,11 @@
-﻿using Xamarin.Forms;
+﻿using BookMeMobile.Entity;
+using Xamarin.Forms;
 
 namespace BookMeMobile.Pages.MyBookPages
 {
     public partial class RecursiveBookPage : ContentPage
     {
-        public RecursiveBookPage()
+        public RecursiveBookPage(User currentUser)
         {
             this.InitializeComponent();
         }

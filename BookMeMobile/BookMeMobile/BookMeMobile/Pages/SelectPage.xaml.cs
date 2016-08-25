@@ -51,7 +51,7 @@ namespace BookMeMobile.Pages
                     IsRecursive = IsRecursive.IsToggled
                 };
                 ErrorInterval.Text = string.Empty;
-                Navigation.PushAsync(new ListRoomPage(booking, CurrentUser));
+                Navigation.PushModalAsync(new ListRoomPage(booking, CurrentUser));
             }
             else
             {
@@ -61,7 +61,7 @@ namespace BookMeMobile.Pages
 
         private void MyBook_OnClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new TabPanelPage());
+           this.Navigation.PushModalAsync(new TabPanelPage(CurrentUser));
         }
     }
 }

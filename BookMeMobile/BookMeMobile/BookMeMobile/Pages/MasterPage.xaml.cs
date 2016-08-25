@@ -20,7 +20,7 @@ namespace BookMeMobile.Pages
             this.MasterBehavior = MasterBehavior.SplitOnPortrait;
             this.masterPage = new MenuPage();
             this.Master = this.masterPage;
-            this.Detail = new NavigationPage(new SelectPage(currentUser));
+            this.Detail = new SelectPage(currentUser);
             this.Detail.Padding = new Thickness(0, 20, 0, 0);
             this.masterPage.ListView.ItemSelected += this.OnItemSelected;
         }

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using BookMeMobile.Entity;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Pages.MyBookPages
 {
-    public partial class Page1 : ContentPage
+    public partial class AllMyBook : ContentPage
     {
-        public Page1()
+        public AllMyBook(User currentUser)
         {
             this.InitializeComponent();
         }
