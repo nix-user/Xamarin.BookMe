@@ -65,7 +65,7 @@ namespace BookMeMobile.BL
                 {
                     bool endInRange = book.From <= booking.From && book.To >= booking.From && booking.To >= book.To;
                     bool startInRange = book.From <= booking.To && book.To >= booking.To && booking.From <= book.From;
-                    if ((endInRange | startInRange) && book.WhoBook == booking.WhoBook && book.Date == booking.Date)
+                    if ((endInRange | startInRange) & book.WhoBook == booking.WhoBook && book.Date == booking.Date)
                     {
                         result.Add(new MyBookViewResult()
                         {
@@ -125,7 +125,7 @@ namespace BookMeMobile.BL
                 }
                 else
                 {
-                    searchBook.AddRange(item.Bookings.Where(x => x.Date == room.Date));
+                    searchBook.AddRange(item.Bookings.Where(x => x.Date.Date == room.Date.Date));
                 }
 
                 foreach (Booking book in searchBook)
@@ -174,12 +174,22 @@ namespace BookMeMobile.BL
 
         public void AddBookInWeek(int idRoom)
         {
-            for (int i = 0; i < 7; i++)
-            {
-                this.currentBooking.Date.AddDays(1);
+           for (int i = 1; i <= 7; i++)
+           {
+               Booking currentBook = new Booking()
+               {
+                   IsRecursive = true,
+                   Room = this.currentBooking.Room,
+                   Id = this.currentBooking.Id,
+                   Date = this.currentBooking.Date,
+                   From = this.currentBooking.From,
+                   To = this.currentBooking.To,
+                   WhoBook = this.currentBooking.WhoBook
+               };
                 this.currentBooking.Id = counter++;
-                this.rooms.GetAll().FirstOrDefault(x => x.Id == idRoom).Bookings.Add(this.currentBooking);
-                this.bookings.AddBooking(this.currentBooking);
+                this.rooms.GetAll().FirstOrDefault(x => x.Id == idRoom).Bookings.Add(currentBook);
+                this.bookings.AddBooking(currentBook);
+                this.currentBooking.Date = DateTime.Now.AddDays(i);
             }
         }
 
@@ -203,28 +213,60 @@ namespace BookMeMobile.BL
         public List<MyBookViewResult> GetUserBookings()
         {
             List<MyBookViewResult> result = new List<MyBookViewResult>();
-            foreach (Room room in this.rooms.GetAll())
-            {
-                foreach (Booking booking in room.Bookings)
+
+            foreach (Booking booking in this.bookings.GetAll().Where(x => x.IsRecursive == false))
                 {
                     if (booking.WhoBook == this.currentUser)
                     {
                         result.Add(new MyBookViewResult()
                         {
-                            Room = room.Number,
+                            Room = booking.Room.Number,
                             Date = booking.Date,
                             From = booking.From,
                             To = booking.To,
-                            IsHasPolykom = room.IsHasPolykom,
-                            IsBig = room.IsBig,
+                            IsHasPolykom = booking.Room.IsHasPolykom,
+                            IsBig = booking.Room.IsBig,
                             IsBook = false,
                             Id = booking.Id
                         });
                     }
-                }
             }
 
             return result;
+        }
+
+        public List<MyBookViewResult> GetUserBookingsRecursive()
+        {
+            List<MyBookViewResult> result = new List<MyBookViewResult>();
+            List<Booking> allBooksOne = new List<Booking>();
+
+            foreach (Booking booking in this.bookings.GetAll().Where(x => x.WhoBook == this.currentUser && x.IsRecursive))
+            {
+                allBooksOne.Add(booking);
+            }
+
+            result = allBooksOne.GroupBy(x => new { x.From, x.To, x.Room }).Select(x => new MyBookViewResult()
+            {
+                Id = x.First().Id,
+                From = x.Key.From,
+                To = x.Key.To,
+                Room = x.Key.Room.Number,
+                Date = x.First().Date,
+                IsRecursive = true,
+                IsBig = x.First().Room.IsBig,
+                IsHasPolykom = x.FirstOrDefault().Room.IsHasPolykom
+            }).ToList();
+
+            return result;
+        }
+
+        public void DeleteBookRecursive(int idBook)
+        {
+            Booking book = this.bookings.GetAll().FirstOrDefault(x => x.Id == idBook);
+            foreach (Booking booking in this.rooms.GetAll().FirstOrDefault(x => x.Id == book.Room.Id).Bookings.Where(y => y.From == book.From && y.To == book.To))
+            {
+                this.bookings.ReoveBook(booking.Id);
+            }
         }
     }
 }

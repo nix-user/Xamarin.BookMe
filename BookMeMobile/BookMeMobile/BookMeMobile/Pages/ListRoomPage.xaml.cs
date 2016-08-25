@@ -56,7 +56,7 @@ namespace BookMeMobile.Pages
                 }
 
                 await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
-                await Navigation.PopAsync();
+                await Navigation.PopModalAsync();
             }
         }
     }
