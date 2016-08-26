@@ -13,8 +13,8 @@ namespace BookMeMobile.Pages
     {
         public static List<User> Users { get; set; } = new List<User>
         {
-            new User() { Id = 1, Login = "User1", FavoriteRoom  = "403 D", MyRoom = "410" },
-            new User() { Id = 2, Login = "User2", FavoriteRoom = "303 D", MyRoom = "409" }
+            new User() { Id = 1, Login = "User1", FavoriteRoom  = "304D", MyRoom = "410" },
+            new User() { Id = 2, Login = "User2", FavoriteRoom = "303D", MyRoom = "409" }
         };
 
         public LoginPage()
