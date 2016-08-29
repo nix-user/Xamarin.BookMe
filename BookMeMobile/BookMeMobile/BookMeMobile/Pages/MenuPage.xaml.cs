@@ -27,6 +27,9 @@ namespace BookMeMobile.Pages
             });
             masterPageItems.Add(new MenuPageItem
             {
+                Title = "QR Бронирование",
+                IconSource = "profileMenu.png",
+                TargetType = typeof(QrBook)
             });
             listView.ItemsSource = masterPageItems;
         }

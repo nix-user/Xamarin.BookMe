@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BookMeMobile.Entity;
 using BookMeMobile.Pages.MyBookPages;
 using Xamarin.Forms;
+using ZXing.Net.Mobile.Forms;
 
 namespace BookMeMobile.Pages
 {
@@ -13,6 +14,7 @@ namespace BookMeMobile.Pages
     {
         private MenuPage masterPage;
         private User currentUser;
+        private ZXingScannerPage scanPage;
 
         public MainPage(User currentUser)
         {
@@ -25,7 +27,7 @@ namespace BookMeMobile.Pages
             this.masterPage.ListView.ItemSelected += this.OnItemSelected;
         }
 
-        private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private  void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var item = e.SelectedItem as MenuPageItem;
             if (item != null)
@@ -33,16 +35,21 @@ namespace BookMeMobile.Pages
                 if (item.TargetType == typeof(MyBooks))
                 {
                     this.Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType, this.currentUser));
-                    this.masterPage.ListView.SelectedItem = null;
-                    this.IsPresented = false;
                 }
 
                 if (item.TargetType == typeof(ProfilePage))
                 {
-                    this.Detail.Navigation.PushAsync(new ProfilePage());
-                    this.masterPage.ListView.SelectedItem = null;
-                    this.IsPresented = false;
+                    this.Detail.Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType));
                 }
+
+                if (item.TargetType == typeof(QrBook))
+                {
+                    QrBook code = new QrBook();
+                    code.GoCamera();
+                }
+
+                this.masterPage.ListView.SelectedItem = null;
+                this.IsPresented = false;
             }
         }
     }

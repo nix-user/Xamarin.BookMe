@@ -285,13 +285,15 @@ namespace BookMeMobile.BL
             int userFloor = this.GetFloorInNumber(this.currentUser.MyRoom);
             list.Sort((view1, view2) =>
             {
-                if (Math.Abs(GetFloorInNumber(view1.Room.ToString()) - userFloor) > Math.Abs(GetFloorInNumber(view2.Room.ToString()) - userFloor))
+                if (Math.Abs(GetFloorInNumber(view1.Room.ToString()) - userFloor) >
+                    Math.Abs(GetFloorInNumber(view2.Room.ToString()) - userFloor))
                 {
                     return 1;
                 }
                 else
                 {
-                    if (Math.Abs(GetFloorInNumber(view1.Room.ToString()) - userFloor) < Math.Abs(GetFloorInNumber(view2.Room.ToString()) - userFloor))
+                    if (Math.Abs(GetFloorInNumber(view1.Room.ToString()) - userFloor) <
+                        Math.Abs(GetFloorInNumber(view2.Room.ToString()) - userFloor))
                     {
                         return -1;
                     }
@@ -311,18 +313,63 @@ namespace BookMeMobile.BL
             return list;
         }
 
-    public int GetFloorInNumber(string s)
-    {
-        string stringFloor = new string(s.ToCharArray().Where(ch => !char.IsLetter(ch)).ToArray());
-        int floor;
-        if (stringFloor.Length < 4)
+        public int GetFloorInNumber(string s)
         {
-            return floor = int.Parse(stringFloor[0].ToString());
+            string stringFloor = new string(s.ToCharArray().Where(ch => !char.IsLetter(ch)).ToArray());
+            int floor;
+            if (stringFloor.Length < 4)
+            {
+                return floor = int.Parse(stringFloor[0].ToString());
+            }
+            else
+            {
+                return floor = int.Parse(stringFloor[0].ToString() + stringFloor[1]);
+            }
         }
-        else
+
+        public Booking AttemptBook(string result, User user)
         {
-            return floor = int.Parse(stringFloor[0].ToString() + stringFloor[1]);
+            Room currentRoom = this.rooms.GetAll().FirstOrDefault(x => x.Number == result);
+            foreach (Booking book in currentRoom.Bookings.Where(x => x.Date.Date == DateTime.Now.Date))
+            {
+                if (book.From >= DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00)) || book.To <= DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00)))
+                {
+                    return new Booking()
+                    {
+                        Date = DateTime.Now,
+                        Room = currentRoom,
+                        From = DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00)),
+                        Id = book.Id,
+                        To = DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00)),
+                        WhoBook = this.currentUser
+                    };
+                }
+                else
+                {
+                    if (book.WhoBook == this.currentUser)
+                    {
+                        return new Booking()
+                        {
+                            Date = book.Date,
+                            Room = book.Room,
+                            From = DateTime.Now.Subtract(DateTime.Now),
+                            Id = book.Id,
+                            To = DateTime.Now.Subtract(DateTime.Now.AddHours(1)),
+                            WhoBook = this.currentUser
+                        };
+                    }
+                }
+            }
+
+            return new Booking()
+            {
+                Date = DateTime.Now,
+                Room = currentRoom,
+                From = DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00)),
+                Id = DateTime.Now.Millisecond + new Random().Next(1000),
+                To = DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00)),
+                WhoBook = this.currentUser
+            };
         }
     }
-}
 }
