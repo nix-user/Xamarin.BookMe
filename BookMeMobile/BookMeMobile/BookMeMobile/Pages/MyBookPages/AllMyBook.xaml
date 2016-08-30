@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:binding="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
+             x:Class="BookMeMobile.Pages.MyBookPages.AllMyBook"
+  Title="Все бронирования">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <binding:ConverterBool x:Key="boolConvert"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Padding>
+    0, 20, 0, 0
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <StackLayout>
+      <Label x:Name="messageIsEmpty" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Text="Комнат нет" IsVisible="False"/>
+      <ListView x:Name="listRoom" ItemsSource="{Binding}" HasUnevenRows="True" SeparatorColor="Black">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <ViewCell.View>
+                <AbsoluteLayout>
+                  <Button AbsoluteLayout.LayoutBounds="1,0.48,-1,-1"
+           AbsoluteLayout.LayoutFlags="PositionProportional" HorizontalOptions="End"   x:Name="btnBooking" ClassId="{Binding Id}" Text="Снять бронь" IsVisible="{Binding IsBook,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Medium" Clicked="BtnBooking_OnClicked"/>
+                  <StackLayout VerticalOptions="Center">
+                    <StackLayout Orientation="Horizontal">
+                      <Label Text = "{Binding Room,StringFormat='Комната: № {0}' }" FontSize="Medium"/>
+                      <Label Text="Рекурентная" HorizontalOptions="EndAndExpand" FontSize="Medium" IsVisible="{Binding IsRecursive}"/>
+                    </StackLayout>
+                    <Label Text="{Binding Date,StringFormat='{0:dd/MMMM/yyyy}'}" FontSize="Medium"></Label>
+                    <StackLayout Orientation="Horizontal">
+                      <Label Text="{Binding From,StringFormat='{0:hh\\:mm} -'}" FontSize="Medium"></Label>
+                      <Label Text="{Binding To,StringFormat=' {0:hh\\:mm}'}" FontSize="Medium"></Label>
+                    </StackLayout>
+                  </StackLayout>
+                </AbsoluteLayout>
+              </ViewCell.View>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

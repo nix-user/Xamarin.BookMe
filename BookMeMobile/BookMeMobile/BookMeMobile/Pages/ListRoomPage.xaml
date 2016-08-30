@@ -16,7 +16,7 @@
         <DataTemplate>
           <ViewCell>
             <ViewCell.View>
-              <StackLayout BackgroundColor="{Binding InRange,Converter={StaticResource ColorConverter}}" Padding="10,5,10,5" VerticalOptions="CenterAndExpand">
+              <StackLayout BackgroundColor="{Binding InRange,Converter={StaticResource ColorConverter}}" VerticalOptions="CenterAndExpand">
                <StackLayout Orientation="Horizontal">
                   <Label Text = "{Binding Room,StringFormat='Комната: № {0}' }" FontSize="Medium"  VerticalOptions="CenterAndExpand"/>
                   <Button HorizontalOptions="EndAndExpand"   x:Name="btnBooking" ClassId="{Binding Id}" Text="Бронировать" IsVisible="{Binding IsBook,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Large" Clicked="BtnBooking_OnClicked"/>

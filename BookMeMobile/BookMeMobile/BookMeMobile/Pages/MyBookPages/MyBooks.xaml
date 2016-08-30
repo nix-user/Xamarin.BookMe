@@ -2,26 +2,32 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:binding1="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
-             x:Class="BookMeMobile.Pages.MyBooks">
+             x:Class="BookMeMobile.Pages.MyBookPages.MyBooks"
+             Title="Мои бронирования">
   <ContentPage.Resources>
     <ResourceDictionary>
       <binding1:ConverterBool x:Key="boolConvert"/>
     </ResourceDictionary>
   </ContentPage.Resources>
+  <ContentPage.Padding>
+    0, 20, 0, 0
+  </ContentPage.Padding>
+ <ContentPage.Content>
   <StackLayout>
+    <Label x:Name="messageIsEmpty" HorizontalOptions="CenterAndExpand" FontSize="Large" VerticalOptions="CenterAndExpand" Text="Комнат нет" IsVisible="False"/>
     <ListView x:Name="listRoom" ItemsSource="{Binding}" HasUnevenRows="True" SeparatorColor="Black">
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
             <ViewCell.View>
               <AbsoluteLayout><Button AbsoluteLayout.LayoutBounds="1,0.5,-1,-1"
-           AbsoluteLayout.LayoutFlags="PositionProportional" HorizontalOptions="EndAndExpand"   x:Name="btnBooking" ClassId="{Binding Id}" Text="Снять бронь" IsVisible="{Binding IsBook,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Large" Clicked="BtnBooking_OnClicked"/>
-              <StackLayout VerticalOptions="Center" Padding="20,0">
+           AbsoluteLayout.LayoutFlags="PositionProportional" HorizontalOptions="End"   x:Name="btnBooking" ClassId="{Binding Id}" Text="Снять бронь" IsVisible="{Binding IsBook,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Medium" Clicked="BtnBooking_OnClicked"/>
+              <StackLayout VerticalOptions="Center">
                 <Label Text = "{Binding Room,StringFormat='Комната: № {0}' }" FontSize="Medium"/>
                 <Label Text="{Binding Date,StringFormat='{0:dd/MMMM/yyyy}'}" FontSize="Medium"></Label>
                <StackLayout Orientation="Horizontal">
                   <Label Text="{Binding From,StringFormat='{0:hh\\:mm} -'}" FontSize="Medium"></Label>
-                  <Label Text="{Binding To,StringFormat='{0:hh\\:mm}'}" FontSize="Medium"></Label>
+                  <Label Text="{Binding To,StringFormat=' {0:hh\\:mm}'}" FontSize="Medium"></Label>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                   <Label Text="{Binding IsBig, StringFormat='Большая:{0}',Converter={StaticResource boolConvert}}"></Label>
@@ -35,4 +41,5 @@
       </ListView.ItemTemplate>
     </ListView>
   </StackLayout>
+  </ContentPage.Content>
 </ContentPage>

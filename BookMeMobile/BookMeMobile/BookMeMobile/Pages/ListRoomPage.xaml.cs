@@ -19,11 +19,14 @@ namespace BookMeMobile.Pages
 
         public List<MyBookViewResult> ResultRoom { get; set; }
 
+        private Booking currentBooking;
+
         private ListRoomManager list;
 
         public ListRoomPage(Booking book, User currentUser)
         {
             this.InitializeComponent();
+            this.currentBooking = book;
             this.list = new ListRoomManager(book, currentUser);
             this.ResultRoom = this.list.AddUserBookInRange(book);
             this.ResultRoom.AddRange(this.list.AddUserBookPartRange(book));
@@ -43,9 +46,17 @@ namespace BookMeMobile.Pages
             bool b = await this.DisplayAlert(this.bookingHeadChecking, bookBody, this.bookButonOK, this.bookButonNO);
             if (b)
             {
-                this.list.AddBook(idRoom);
+                if (!this.currentBooking.IsRecursive)
+                {
+                    this.list.AddBook(idRoom);
+                }
+                else
+                {
+                    this.list.AddBookInWeek(idRoom);
+                }
+
                 await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
-                await Navigation.PopAsync();
+                await Navigation.PopModalAsync();
             }
         }
     }

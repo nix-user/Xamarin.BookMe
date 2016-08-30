@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:widget="clr-namespace:Android.Widget;assembly=Mono.Android"
-             x:Class="BookMeMobile.Pages.SelectPage">
+             x:Class="BookMeMobile.Pages.SelectPage"
+             Title="Select Page">
   <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
       <StackLayout x:Name="DateSpace">
         <Label x:Name="LabelDate" FontSize="Large" Text="Выбрана текущая дата" />
@@ -33,6 +34,10 @@
           <StackLayout  Orientation="Horizontal" VerticalOptions="EndAndExpand">
             <Label Text="C Поликомом" FontSize="Large" HorizontalOptions="Start" VerticalOptions="End"/>
             <Switch x:Name="IsPolinom" IsToggled="False" HorizontalOptions="EndAndExpand"/>
+          </StackLayout>
+          <StackLayout  Orientation="Horizontal" VerticalOptions="EndAndExpand">
+            <Label Text="Рекурентные" FontSize="Large" HorizontalOptions="Start" VerticalOptions="End"/>
+            <Switch x:Name="IsRecursive" IsToggled="False" HorizontalOptions="EndAndExpand"/>
           </StackLayout>
         </StackLayout>
       </StackLayout>

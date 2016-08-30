@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BookMeMobile.Pages.LoginPage">
+             x:Class="BookMeMobile.Pages.LoginPage"
+             Title="Login">
   <StackLayout VerticalOptions="CenterAndExpand">
     <Label HorizontalOptions="Center" Text="Введите логин" FontSize="Large"/>
     <Entry x:Name="TextLogin" Text="User1" HorizontalTextAlignment="Center"/>

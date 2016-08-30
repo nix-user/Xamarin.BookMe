@@ -10,7 +10,7 @@ namespace BookMeMobile.Entity
     {
         public int Id { get; set; }
 
-        public int Room { get; set; }
+        public string Room { get; set; }
 
         public TimeSpan From { get; set; }
 
@@ -25,5 +25,7 @@ namespace BookMeMobile.Entity
         public bool? InRange { get; set; }
 
         public bool IsBook { get; set; }
+
+        public bool IsRecursive { get; set; }
     }
 }

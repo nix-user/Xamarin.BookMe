@@ -14,6 +14,6 @@ namespace BookMeMobile.Entity
 
         public string FavoriteRoom { get; set; }
 
-        public int MyRoom { get; set; }
+        public string MyRoom { get; set; }
     }
 }

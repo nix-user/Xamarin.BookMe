@@ -5,12 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.BL;
 using BookMeMobile.Entity;
-using Java.Nio.Channels;
 using Xamarin.Forms;
 
-namespace BookMeMobile.Pages
+namespace BookMeMobile.Pages.MyBookPages
 {
-    public partial class MyBooks : ContentPage
+    public partial class AllMyBook : ContentPage
     {
         private readonly string bookingHeadChecking = "Подтвердите действие";
         private readonly string bookIsDelete = "Снять бронирование бронирование?";
@@ -25,30 +24,20 @@ namespace BookMeMobile.Pages
 
         public User CurrentUser { get; set; }
 
-        public MyBooks(User user)
+        public AllMyBook(User user)
         {
             this.InitializeComponent();
             this.manager = new ListRoomManager(user);
-            this.ResultRoom = this.manager.GetUserBookings();
+            this.ResultRoom = this.manager.GetUserBookingsRecursive();
+            this.ResultRoom.AddRange(this.manager.GetUserBookings());
             if (this.ResultRoom.Any())
             {
-                listRoom.BindingContext = this.ResultRoom;
+                this.listRoom.BindingContext = this.ResultRoom;
             }
             else
             {
-                listRoom.Header = this.ListRoomIsEmpty();
+                messageIsEmpty.IsVisible = true;
             }
-        }
-
-        public Label ListRoomIsEmpty()
-        {
-            return new Label()
-            {
-                Text = "Комнат нет",
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                HorizontalTextAlignment = TextAlignment.Center,
-                FontSize = 24
-            };
         }
 
         private async void BtnBooking_OnClicked(object sender, EventArgs e)
@@ -57,7 +46,7 @@ namespace BookMeMobile.Pages
             bool b = await DisplayAlert(this.bookingHeadChecking, this.bookIsDelete, this.bookButonOK, this.bookButonNO);
             if (b)
             {
-                this.manager.DeleteBook(idBook);
+                this.manager.DeleteBookRecursive(idBook);
                 await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
                 await this.Navigation.PopAsync();
             }
