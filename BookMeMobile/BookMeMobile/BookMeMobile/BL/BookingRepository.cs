@@ -21,7 +21,7 @@ namespace BookMeMobile.BL
             return bookings.FirstOrDefault(x => x.Id == id);
         }
 
-        public void ReoveBook(int id)
+        public void RemoveBook(int id)
         {
             Booking removingBook = this.GetBook(id);
             bookings.Remove(removingBook);

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BookMeMobile.Entity;
 using BookMeMobile.Pages.MyBookPages;
 using Xamarin.Forms;
+using ZXing;
 using ZXing.Net.Mobile.Forms;
 
 namespace BookMeMobile.Pages
@@ -16,7 +17,7 @@ namespace BookMeMobile.Pages
         private User currentUser;
         private ZXingScannerPage scanPage;
 
-        public MainPage(User currentUser)
+        public MainPage(User currentUser, Page page = new SelectPage(currentUser))
         {
             this.currentUser = currentUser;
             this.MasterBehavior = MasterBehavior.SplitOnPortrait;
@@ -24,33 +25,42 @@ namespace BookMeMobile.Pages
             this.Master = this.masterPage;
             this.Detail = new SelectPage(currentUser);
             this.Detail.Padding = new Thickness(0, 20, 0, 0);
+
             this.masterPage.ListView.ItemSelected += this.OnItemSelected;
         }
 
-        private  void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var item = e.SelectedItem as MenuPageItem;
             if (item != null)
             {
-                if (item.TargetType == typeof(MyBooks))
-                {
-                    this.Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType, this.currentUser));
-                }
-
                 if (item.TargetType == typeof(ProfilePage))
                 {
-                    this.Detail.Navigation.PushAsync((Page)Activator.CreateInstance(item.TargetType));
+                    this.Detail = (Page)Activator.CreateInstance(item.TargetType);
                 }
 
                 if (item.TargetType == typeof(QrBook))
                 {
-                    QrBook code = new QrBook();
-                    code.GoCamera();
+                    this.scanPage = new ZXingScannerPage();
+                    this.scanPage.OnScanResult += this.HandleScanResult;
+                    await this.Navigation.PushAsync(this.scanPage);
                 }
 
                 this.masterPage.ListView.SelectedItem = null;
                 this.IsPresented = false;
             }
+        }
+
+        private void HandleScanResult(Result result)
+        {
+            this.scanPage.IsScanning = false;
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                Navigation.PopAsync();
+                QrBook code = new QrBook();
+                code.ScanResult(result, currentUser);
+            });
         }
     }
 }

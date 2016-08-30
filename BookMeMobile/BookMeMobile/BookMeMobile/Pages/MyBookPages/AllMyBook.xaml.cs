@@ -48,7 +48,7 @@ namespace BookMeMobile.Pages.MyBookPages
             {
                 this.manager.DeleteBookRecursive(idBook);
                 await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
-                await this.Navigation.PopAsync();
+                await this.Navigation.PopModalAsync();
             }
         }
     }

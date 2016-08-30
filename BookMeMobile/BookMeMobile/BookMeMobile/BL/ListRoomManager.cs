@@ -206,10 +206,17 @@ namespace BookMeMobile.BL
             this.bookings.AddBooking(this.currentBooking);
         }
 
+        public void AddBook(Booking book)
+        {
+            book.Id = counter++;
+            this.rooms.GetAll().FirstOrDefault(x => x.Id == book.Room.Id).Bookings.Add(book);
+            this.bookings.AddBooking(book);
+        }
+
         public void DeleteBook(int idBooking)
         {
             Booking deleteBook = this.bookings.GetBook(idBooking);
-            this.bookings.ReoveBook(deleteBook.Id);
+            this.bookings.RemoveBook(deleteBook.Id);
             foreach (Room room in this.rooms.GetAll())
             {
                 room.Bookings.Remove(deleteBook);
@@ -270,13 +277,10 @@ namespace BookMeMobile.BL
         public void DeleteBookRecursive(int idBook)
         {
             Booking book = this.bookings.GetAll().FirstOrDefault(x => x.Id == idBook);
-            foreach (
-                Booking booking in
-                    this.rooms.GetAll()
-                        .FirstOrDefault(x => x.Id == book.Room.Id)
-                        .Bookings.Where(y => y.From == book.From && y.To == book.To))
+            foreach (Booking booking in this.rooms.GetAll().FirstOrDefault(x => x.Id == book.Room.Id).Bookings.Where(y => y.From == book.From && y.To == book.To))
             {
-                this.bookings.ReoveBook(booking.Id);
+                this.bookings.RemoveBook(booking.Id);
+                this.rooms.GetAll().FirstOrDefault(x => x.Number == booking.Room.Number).Bookings.Remove(booking);
             }
         }
 
@@ -329,34 +333,24 @@ namespace BookMeMobile.BL
 
         public Booking AttemptBook(string result, User user)
         {
+            bool roomBook = false;
             Room currentRoom = this.rooms.GetAll().FirstOrDefault(x => x.Number == result);
             foreach (Booking book in currentRoom.Bookings.Where(x => x.Date.Date == DateTime.Now.Date))
             {
-                if (book.From >= DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00)) || book.To <= DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00)))
+                if (book.From >= DateTime.Now.TimeOfDay || book.To <= DateTime.Now.TimeOfDay)
                 {
-                    return new Booking()
-                    {
-                        Date = DateTime.Now,
-                        Room = currentRoom,
-                        From = DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00)),
-                        Id = book.Id,
-                        To = DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00)),
-                        WhoBook = this.currentUser
-                    };
+                    roomBook = false;
                 }
                 else
                 {
                     if (book.WhoBook == this.currentUser)
                     {
-                        return new Booking()
-                        {
-                            Date = book.Date,
-                            Room = book.Room,
-                            From = DateTime.Now.Subtract(DateTime.Now),
-                            Id = book.Id,
-                            To = DateTime.Now.Subtract(DateTime.Now.AddHours(1)),
-                            WhoBook = this.currentUser
-                        };
+                        roomBook = false;
+                    }
+                    else
+                    {
+                        roomBook = true;
+                        return null;
                     }
                 }
             }
@@ -365,9 +359,9 @@ namespace BookMeMobile.BL
             {
                 Date = DateTime.Now,
                 Room = currentRoom,
-                From = DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00)),
+                From = DateTime.Now.Subtract(DateTime.Now.Date),
                 Id = DateTime.Now.Millisecond + new Random().Next(1000),
-                To = DateTime.Now.Subtract(new DateTime(1970, 1, 9, 0, 0, 00)),
+                To = DateTime.Now.AddHours(1).Subtract(DateTime.Now.Date),
                 WhoBook = this.currentUser
             };
         }
