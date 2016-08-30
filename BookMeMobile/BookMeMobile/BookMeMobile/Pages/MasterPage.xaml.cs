@@ -17,13 +17,24 @@ namespace BookMeMobile.Pages
         private User currentUser;
         private ZXingScannerPage scanPage;
 
-        public MainPage(User currentUser, Page page = new SelectPage(currentUser))
+        public MainPage(User currentUser)
         {
             this.currentUser = currentUser;
             this.MasterBehavior = MasterBehavior.SplitOnPortrait;
             this.masterPage = new MenuPage();
             this.Master = this.masterPage;
             this.Detail = new SelectPage(currentUser);
+            this.Detail.Padding = new Thickness(0, 20, 0, 0);
+            this.masterPage.ListView.ItemSelected += this.OnItemSelected;
+        }
+
+        public MainPage(User currentUser, Page page)
+        {
+            this.currentUser = currentUser;
+            this.MasterBehavior = MasterBehavior.SplitOnPortrait;
+            this.masterPage = new MenuPage();
+            this.Master = this.masterPage;
+            this.Detail = page;
             this.Detail.Padding = new Thickness(0, 20, 0, 0);
 
             this.masterPage.ListView.ItemSelected += this.OnItemSelected;

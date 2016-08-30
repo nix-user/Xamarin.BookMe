@@ -43,7 +43,7 @@
     </StackLayout>
     <StackLayout >
       <Button HorizontalOptions="FillAndExpand" Text="Мои бронирования" Clicked="MyBook_OnClicked"/>
-      <Button x:Name="seachBtn" HorizontalOptions="FillAndExpand" Text="Поиск" Clicked="Button_OnClicked" />
+      <Button HorizontalOptions="FillAndExpand" Text="Поиск" Clicked="Button_OnClicked" />
     </StackLayout>
   </StackLayout>
 </ContentPage>
