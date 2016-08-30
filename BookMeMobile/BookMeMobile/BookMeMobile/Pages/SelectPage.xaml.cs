@@ -11,6 +11,14 @@ namespace BookMeMobile.Pages
     {
         public static User CurrentUser { get; set; }
 
+        public EventHandler BtnListEventHandler
+        {
+            set
+            {
+                this.seachBtn.Clicked += value;
+            }
+        }
+
         public SelectPage(User currentUser)
         {
             this.InitializeComponent();
@@ -51,7 +59,7 @@ namespace BookMeMobile.Pages
                     IsRecursive = IsRecursive.IsToggled
                 };
                 ErrorInterval.Text = string.Empty;
-                Navigation.PushModalAsync(new ListRoomPage(booking, CurrentUser));
+                this.Navigation.PushAsync(new ListRoomPage(booking, CurrentUser));
             }
             else
             {
@@ -59,9 +67,9 @@ namespace BookMeMobile.Pages
             }
         }
 
-        private void MyBook_OnClicked(object sender, EventArgs e)
+        public void MyBook_OnClicked(object sender, EventArgs e)
         {
-           this.Navigation.PushModalAsync(new TabPanelPage(CurrentUser));
+            this.Navigation.PushModalAsync(new TabPanelPage(CurrentUser));
         }
     }
 }
