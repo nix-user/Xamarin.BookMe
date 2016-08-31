@@ -345,7 +345,15 @@ namespace BookMeMobile.BL
                 {
                     if (book.WhoBook == this.currentUser)
                     {
-                        roomBook = false;
+                        return new Booking()
+                        {
+                            Date = DateTime.Now,
+                            Room = currentRoom,
+                            From = book.To,
+                            Id = DateTime.Now.Millisecond + new Random().Next(1000),
+                            To = book.To.Add(new TimeSpan(1, 0, 0)),
+                            WhoBook = this.currentUser
+                        };
                     }
                     else
                     {

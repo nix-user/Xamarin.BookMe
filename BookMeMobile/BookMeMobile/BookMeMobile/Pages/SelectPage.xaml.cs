@@ -61,7 +61,7 @@ namespace BookMeMobile.Pages
 
         public void MyBook_OnClicked(object sender, EventArgs e)
         {
-            this.Navigation.PushModalAsync(new MainPage(CurrentUser, new TabPanelPage(CurrentUser)));
+            this.Navigation.PushAsync(new MainPage(CurrentUser, new TabPanelPage(CurrentUser)));
         }
     }
 }
