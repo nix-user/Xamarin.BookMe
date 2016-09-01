@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using BookMeMobile.Data;
 using BookMeMobile.Entity;
 using Newtonsoft.Json;
 
@@ -11,11 +12,12 @@ namespace BookMeMobile.BL
 {
     public class BookingRepository
     {
-        private string restUri = "http://localhost:52594/api/Booking/{0}";
+        private string restUri;
         private HttpClient client;
 
         public BookingRepository()
         {
+            restUri = new RestURl().BookURl;
             this.client = new HttpClient();
         }
 
@@ -36,7 +38,7 @@ namespace BookMeMobile.BL
 
         public async Task<Booking> GetBook(int id)
         {
-            var uri = new Uri(string.Format(this.restUri, string.Empty));
+            var uri = new Uri(string.Format(this.restUri, id));
             var response = await this.client.GetAsync(uri);
             if (response.IsSuccessStatusCode)
             {
