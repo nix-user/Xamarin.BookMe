@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:widget="clr-namespace:Android.Widget;assembly=Mono.Android"
+             xmlns:render="clr-namespace:BookMeMobile.Render;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.SelectPage"
              Title="Select Page">
   <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
@@ -13,7 +14,7 @@
 
         <StackLayout >
           <Label Text="От" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Large"/>
-          <TimePicker x:Name="TimeFrom" Format="HH:mm" Time="11:00"  HorizontalOptions="FillAndExpand"></TimePicker>
+          <render:TimePicker24Hour x:Name="TimeFrom" Format="HH:mm" Time="11:00"  HorizontalOptions="FillAndExpand"></render:TimePicker24Hour>
         </StackLayout>
 
         <StackLayout Padding="0,40,0,0">
@@ -22,7 +23,7 @@
 
         <StackLayout >
           <Label Text="До" FontSize="Large" HorizontalTextAlignment="Center"/>
-          <TimePicker x:Name="TimeTo" Time="11:00"    Format="HH:mm" HorizontalOptions="FillAndExpand"></TimePicker>
+          <render:TimePicker24Hour x:Name="TimeTo" Time="11:00"    Format="HH:mm" HorizontalOptions="FillAndExpand"></render:TimePicker24Hour>
         </StackLayout>
       </StackLayout>
       <Label x:Name="ErrorInterval" HorizontalOptions="Center" TextColor="Maroon"/>
@@ -43,7 +44,7 @@
     </StackLayout>
     <StackLayout >
       <Button HorizontalOptions="FillAndExpand" Text="Мои бронирования" Clicked="MyBook_OnClicked"/>
-      <Button x:Name="seachBtn" HorizontalOptions="FillAndExpand" Text="Поиск" Clicked="Button_OnClicked" />
+      <Button HorizontalOptions="FillAndExpand" Text="Поиск" Clicked="Button_OnClicked" />
     </StackLayout>
   </StackLayout>
 </ContentPage>
