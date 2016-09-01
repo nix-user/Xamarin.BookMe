@@ -11,8 +11,7 @@ namespace BookMeMobile.BL
 {
     public class BookingRepository
     {
-        private static List<Booking> bookings = new List<Booking>();
-        private string restUri = "{0}";
+        private string restUri = "http://localhost:52594/api/Booking/{0}";
         private HttpClient client;
 
         public BookingRepository()

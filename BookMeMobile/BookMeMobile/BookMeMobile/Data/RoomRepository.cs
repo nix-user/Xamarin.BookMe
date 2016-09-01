@@ -64,7 +64,7 @@ namespace BookMeMobile.BL
             }
         };
 
-        private string restUri = "{0}";
+        private string restUri = "http://localhost:52594/api/Room/{0}";
         private HttpClient client;
 
         public RoomRepository()
