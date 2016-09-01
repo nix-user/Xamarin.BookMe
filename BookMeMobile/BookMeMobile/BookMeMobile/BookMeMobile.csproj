@@ -42,6 +42,7 @@
     <Compile Include="Binding\ConverterBool.cs" />
     <Compile Include="Data\BookingRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
+    <Compile Include="Data\RestURl.cs" />
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Entity\Booking.cs" />
     <Compile Include="Entity\MenuPageItem.cs" />

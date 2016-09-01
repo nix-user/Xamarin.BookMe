@@ -18,7 +18,7 @@ namespace BookMeMobile.BL
 
         public RoomRepository()
         {
-            restUri = new RestURl().RoomURl;
+            this.restUri = RestURl.RoomURl;
             this.client = new HttpClient();
         }
 

@@ -7,25 +7,24 @@ using BookMeMobile.Entity;
 
 namespace BookMeMobile.Data
 {
-    class RestURl
+    public static class RestURl
     {
-        private readonly string ApiURL = "http://localhost:52594/api/";
+        private const string ApiURL = "http://localhost:52594/api/";
 
-        public string BookURl
+        public static string BookURl
         {
             get
             {
-                return this.ApiURL + "Booking/{0}";
+                return ApiURL + "Booking/{0}";
             }
         }
 
-        public string RoomURl
+        public static string RoomURl
         {
             get
             {
-                return this.ApiURL + "Room/{0}";
+                return ApiURL + "Room/{0}";
             }
         }
-
     }
 }

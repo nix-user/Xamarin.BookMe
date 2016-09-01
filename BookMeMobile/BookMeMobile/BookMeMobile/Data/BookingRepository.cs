@@ -17,7 +17,7 @@ namespace BookMeMobile.BL
 
         public BookingRepository()
         {
-            restUri = new RestURl().BookURl;
+            this.restUri = RestURl.BookURl;
             this.client = new HttpClient();
         }
 
