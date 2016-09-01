@@ -11,7 +11,6 @@ namespace BookMeMobile.Render
     {
         public TimePicker24Hour() : base()
         {
-
         }
     }
 }

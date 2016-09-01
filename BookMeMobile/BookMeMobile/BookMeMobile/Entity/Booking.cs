@@ -21,5 +21,7 @@ namespace BookMeMobile.Entity
         public User WhoBook { get; set; }
 
         public bool IsRecursive { get; set; }
+
+        public TimeSpan Duration { get; set; }
     }
 }
