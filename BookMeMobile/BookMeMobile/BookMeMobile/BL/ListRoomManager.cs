@@ -91,24 +91,24 @@ namespace BookMeMobile.BL
             return this.Sort(result);
         }
 
-        private List<Room> ConditionTrue(ReservationModel room)
+        private List<Room> ConditionTrue(ReservationModel reservation)
         {
-            if (room.Room.IsBig && room.Room.IsHasPolykom)
+            if (reservation.Room.IsBig && reservation.Room.IsHasPolykom)
             {
                 return this.rooms.GetAllRoom().Result.Where(x => x.IsBig && x.IsHasPolykom).ToList();
             }
 
-            if (!room.Room.IsBig && room.Room.IsHasPolykom)
+            if (!reservation.Room.IsBig && reservation.Room.IsHasPolykom)
             {
                 return this.rooms.GetAllRoom().Result.Where(x => (x.IsBig || !x.IsBig) && x.IsHasPolykom).ToList();
             }
 
-            if (room.Room.IsBig && !room.Room.IsHasPolykom)
+            if (reservation.Room.IsBig && !reservation.Room.IsHasPolykom)
             {
                 return this.rooms.GetAllRoom().Result.Where(x => (x.IsHasPolykom || !x.IsHasPolykom) && x.IsBig).ToList();
             }
 
-            if (!room.Room.IsBig && !room.Room.IsHasPolykom)
+            if (!reservation.Room.IsBig && !reservation.Room.IsHasPolykom)
             {
                 return this.rooms.GetAllRoom().Result.Where(x => true).ToList();
             }
@@ -116,27 +116,27 @@ namespace BookMeMobile.BL
             return null;
         }
 
-        public List<MyBookViewResult> Search(ReservationModel room)
+        public List<MyBookViewResult> Search(ReservationModel reservation)
         {
             List<MyBookViewResult> result = new List<MyBookViewResult>();
-            List<Room> srchList = this.ConditionTrue(room);
+            List<Room> srchList = this.ConditionTrue(reservation);
 
             foreach (var item in srchList)
             {
                 List<ReservationModel> searchBook = new List<ReservationModel>();
                 bool hasRange = true;
-                if (room.IsRecursive)
+                if (reservation.IsRecursive)
                 {
-                    searchBook.AddRange(item.Bookings.Where(x => x.Date >= room.Date));
+                    searchBook.AddRange(item.Bookings.Where(x => x.Date >= reservation.Date));
                 }
                 else
                 {
-                    searchBook.AddRange(item.Bookings.Where(x => x.Date.Date == room.Date.Date));
+                    searchBook.AddRange(item.Bookings.Where(x => x.Date.Date == reservation.Date.Date));
                 }
 
                 foreach (ReservationModel book in searchBook)
                 {
-                    if (book.From >= room.To || book.To <= room.From)
+                    if (book.From >= reservation.To || book.To <= reservation.From)
                     {
                         hasRange = true;
                     }
