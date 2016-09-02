@@ -13,18 +13,19 @@ using String = System.String;
 
 namespace BookMeMobile.Pages
 {
-    public partial class QrBook : ContentPage
+    public partial class QrReservation : ContentPage
     {
         public async void ScanResult(Result result, User currentUser)
         {
             ListRoomManager manager = new ListRoomManager(currentUser);
-            ReservationModel book = manager.AttemptBook(result.Text, currentUser);
-            if (book != null)
+            ReservationModel reservation = manager.AttemptReservation(result.Text, currentUser);
+            if (reservation != null)
             {
-                bool saveOrNot = await DisplayAlert("Забронировать комнату?", string.Format("Комната: {0} \n От: {1:hh\\:mm} \n До: {2:hh\\:mm}", book.Room.Number, book.From, book.To), "Да", "Нет");
+                string body = string.Format("Комната: {0} \n От: {1:hh\\:mm} \n До: {2:hh\\:mm}", reservation.Room.Number, reservation.From, reservation.To);
+                bool saveOrNot = await DisplayAlert("Забронировать комнату?", body, "Да", "Нет");
                 if (saveOrNot)
                 {
-                    manager.AddBook(book);
+                    manager.AddReservation(reservation);
                     await this.DisplayAlert("Успешно", "Комната успешно занята", "Ok");
                 }
             }

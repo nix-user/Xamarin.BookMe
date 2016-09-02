@@ -44,9 +44,9 @@
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\RestURl.cs" />
     <Compile Include="Data\RoomRepository.cs" />
-    <Compile Include="Entity\Booking.cs" />
+    <Compile Include="Entity\ReservationModel.cs" />
     <Compile Include="Entity\MenuPageItem.cs" />
-    <Compile Include="Entity\MyBookViewResult.cs" />
+    <Compile Include="Entity\MyReservationViewResult.cs" />
     <Compile Include="Entity\ProfileViewModel.cs" />
     <Compile Include="Entity\Room.cs" />
     <Compile Include="Entity\User.cs" />

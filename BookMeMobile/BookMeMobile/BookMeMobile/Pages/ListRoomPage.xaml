@@ -19,10 +19,10 @@
               <StackLayout BackgroundColor="{Binding InRange,Converter={StaticResource ColorConverter}}" VerticalOptions="CenterAndExpand">
                <StackLayout Orientation="Horizontal">
                   <Label Text = "{Binding Room,StringFormat='Комната: № {0}' }" FontSize="Medium"  VerticalOptions="CenterAndExpand"/>
-                  <Button HorizontalOptions="EndAndExpand"   x:Name="btnBooking" ClassId="{Binding Id}" Text="Бронировать" IsVisible="{Binding IsBook,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Large" Clicked="BtnBooking_OnClicked"/>
-                  <Label Text="Забронировано вами" HorizontalOptions="EndAndExpand" FontSize="Medium" IsVisible="{Binding IsBook}"></Label>
+                  <Button HorizontalOptions="EndAndExpand"   x:Name="btnBooking" ClassId="{Binding Id}" Text="Бронировать" IsVisible="{Binding IsReservation,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Large" Clicked="BtnBooking_OnClicked"/>
+                  <Label Text="Забронировано вами" HorizontalOptions="EndAndExpand" FontSize="Medium" IsVisible="{Binding IsReservation}"></Label>
                 </StackLayout>
-              <StackLayout Orientation="Horizontal" IsVisible="{Binding IsBook}">
+              <StackLayout Orientation="Horizontal" IsVisible="{Binding IsReservation}">
                 <Label Text="{Binding From,StringFormat='От: {0:hh\\:mm}'}" FontSize="Medium"></Label>
                 <Label Text="{Binding To,StringFormat='До: {0:hh\\:mm}'}" FontSize="Medium"></Label>
               </StackLayout>

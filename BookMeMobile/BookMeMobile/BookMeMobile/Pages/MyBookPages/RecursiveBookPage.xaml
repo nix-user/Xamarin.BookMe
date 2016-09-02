@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:binding="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
-             x:Class="BookMeMobile.Pages.MyBookPages.RecursiveBookPage"
+             x:Class="BookMeMobile.Pages.MyBookPages.RecursiveReservationPage"
              Title="Рекурентные">
   <ContentPage.Resources>
     <ResourceDictionary>

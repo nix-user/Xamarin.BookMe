@@ -9,7 +9,7 @@ namespace BookMeMobile.Pages.MyBookPages
         {
             this.InitializeComponent();
             this.Children.Add(new AllMyBook(currentUser));
-            this.Children.Add(new RecursiveBookPage(currentUser));
+            this.Children.Add(new RecursiveReservationPage(currentUser));
         }
     }
 }

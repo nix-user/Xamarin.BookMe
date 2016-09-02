@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookMeMobile.Entity
 {
-    public class MyBookViewResult
+    public class MyReservationViewResult
     {
         public int Id { get; set; }
 
@@ -24,7 +24,7 @@ namespace BookMeMobile.Entity
 
         public bool? InRange { get; set; }
 
-        public bool IsBook { get; set; }
+        public bool IsReservation { get; set; }
 
         public bool IsRecursive { get; set; }
     }

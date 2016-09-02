@@ -7,26 +7,26 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.Pages.MyBookPages
 {
-    public partial class RecursiveBookPage : ContentPage
+    public partial class RecursiveReservationPage : ContentPage
     {
-        private readonly string bookingHeadChecking = "Подтвердите действие";
-        private readonly string bookIsDelete = "Снять бронирование бронирование?";
-        private readonly string bookingBodySucces = "Комната успешно разбронирована";
-        private readonly string bookingHeadSuccess = "Действие успешно выполнено";
-        private readonly string bookButonOK = "Да";
-        private readonly string bookButonNO = "Нет";
+        private readonly string reservationingHeadChecking = "Подтвердите действие";
+        private readonly string reservationIsDelete = "Снять бронирование бронирование?";
+        private readonly string reservationingBodySucces = "Комната успешно разбронирована";
+        private readonly string reservationingHeadSuccess = "Действие успешно выполнено";
+        private readonly string reservationButonOK = "Да";
+        private readonly string reservationButonNO = "Нет";
 
-        public List<MyBookViewResult> ResultRoom { get; set; }
+        public List<MyReservationViewResult> ResultRoom { get; set; }
 
         private ListRoomManager manager;
 
         public User CurrentUser { get; set; }
 
-        public RecursiveBookPage(User user)
+        public RecursiveReservationPage(User user)
         {
             this.InitializeComponent();
             this.manager = new ListRoomManager(user);
-            this.ResultRoom = this.manager.GetUserBookingsRecursive();
+            this.ResultRoom = this.manager.GetUserReservationingsRecursive();
             if (this.ResultRoom.Any())
             {
                 this.listRoom.BindingContext = this.ResultRoom;
@@ -40,11 +40,11 @@ namespace BookMeMobile.Pages.MyBookPages
         private async void BtnBooking_OnClicked(object sender, EventArgs e)
         {
             int idBook = int.Parse(((Button)sender).ClassId);
-            bool b = await DisplayAlert(this.bookingHeadChecking, this.bookIsDelete, this.bookButonOK, this.bookButonNO);
+            bool b = await DisplayAlert(this.reservationingHeadChecking, this.reservationIsDelete, this.reservationButonOK, this.reservationButonNO);
             if (b)
             {
-                this.manager.DeleteBookRecursive(idBook);
-                await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
+                await this.manager.DeleteReservationRecursive(idBook);
+                await this.DisplayAlert(this.reservationingHeadSuccess, this.reservationingBodySucces, this.reservationButonOK);
                 await this.Navigation.PopModalAsync();
             }
         }

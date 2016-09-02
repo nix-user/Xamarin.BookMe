@@ -15,7 +15,7 @@ namespace BookMeMobile.Data
         {
             get
             {
-                return ApiURL + "Book/{0}";
+                return ApiURL + "Reservation/{0}";
             }
         }
 

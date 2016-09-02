@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookMeMobile.Entity
 {
-    public class ReservationModel
+    public class ReservationModel : IEquatable<ReservationModel>
     {
         public int Id { get; set; }
 
@@ -23,5 +23,10 @@ namespace BookMeMobile.Entity
         public bool IsRecursive { get; set; }
 
         public TimeSpan Duration { get; set; }
+
+        public bool Equals(ReservationModel other)
+        {
+            return this.Id == other.Id;
+        }
     }
 }

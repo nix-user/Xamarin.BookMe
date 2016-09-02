@@ -50,7 +50,7 @@ namespace BookMeMobile.Pages
                     this.Detail = (Page)Activator.CreateInstance(item.TargetType);
                 }
 
-                if (item.TargetType == typeof(QrBook))
+                if (item.TargetType == typeof(QrReservation))
                 {
                     this.scanPage = new ZXingScannerPage();
                     this.scanPage.OnScanResult += this.HandleScanResult;
@@ -69,7 +69,7 @@ namespace BookMeMobile.Pages
             Device.BeginInvokeOnMainThread(() =>
             {
                 Navigation.PopAsync();
-                QrBook code = new QrBook();
+                QrReservation code = new QrReservation();
                 code.ScanResult(result, currentUser);
             });
         }

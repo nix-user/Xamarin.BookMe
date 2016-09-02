@@ -43,7 +43,7 @@ namespace BookMeMobile.Pages
             if (TimeFrom.Time < TimeTo.Time)
             {
                 Room room = new Room() { IsBig = IsBig.IsToggled, IsHasPolykom = IsPolinom.IsToggled };
-                ReservationModel booking = new ReservationModel()
+                ReservationModel reservation = new ReservationModel()
                 {
                     Date = Date.Date,
                     Room = room,
@@ -53,7 +53,7 @@ namespace BookMeMobile.Pages
                     IsRecursive = IsRecursive.IsToggled
                 };
                 ErrorInterval.Text = string.Empty;
-                await this.Navigation.PushAsync(new MainPage(CurrentUser, new ListRoomPage(booking, CurrentUser)));
+                await this.Navigation.PushAsync(new MainPage(CurrentUser, new ListRoomPage(reservation, CurrentUser)));
             }
             else
             {
@@ -61,7 +61,7 @@ namespace BookMeMobile.Pages
             }
         }
 
-        public void MyBook_OnClicked(object sender, EventArgs e)
+        public void MyReservations_OnClicked(object sender, EventArgs e)
         {
             this.Navigation.PushAsync(new MainPage(CurrentUser, new TabPanelPage(CurrentUser)));
         }

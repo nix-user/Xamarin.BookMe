@@ -43,7 +43,7 @@
       </StackLayout>
     </StackLayout>
     <StackLayout >
-      <Button HorizontalOptions="FillAndExpand" Text="Мои бронирования" Clicked="MyBook_OnClicked"/>
+      <Button HorizontalOptions="FillAndExpand" Text="Мои бронирования" Clicked="MyReservations_OnClicked"/>
       <Button HorizontalOptions="FillAndExpand" Text="Поиск" Clicked="Button_OnClicked" />
     </StackLayout>
   </StackLayout>
