@@ -12,14 +12,14 @@ namespace BookMeMobile.BL
         private static int counter = 0;
 
         private RoomRepository rooms;
-        private BookingRepository bookings;
+        private BookingRepository reservation;
 
         private ReservationModel currentBooking;
         private User currentUser;
 
         public ListRoomManager(ReservationModel book, User currentUser)
         {
-            this.bookings = new BookingRepository();
+            this.reservation = new BookingRepository();
             this.rooms = new RoomRepository();
             this.currentBooking = book;
             this.currentUser = currentUser;
@@ -27,7 +27,7 @@ namespace BookMeMobile.BL
 
         public ListRoomManager(User user)
         {
-            this.bookings = new BookingRepository();
+            this.reservation = new BookingRepository();
             this.rooms = new RoomRepository();
             this.currentUser = user;
         }
@@ -194,7 +194,7 @@ namespace BookMeMobile.BL
                 };
                 this.currentBooking.Id = counter++;
                 this.rooms.GetAllRoom().Result.FirstOrDefault(x => x.Id == idRoom).Bookings.Add(currentBook);
-                await this.bookings.AddBooking(currentBook);
+                await this.reservation.AddBooking(currentBook);
                 this.currentBooking.Date = DateTime.Now.AddDays(i);
             }
         }
@@ -202,26 +202,26 @@ namespace BookMeMobile.BL
         public async void AddBook(int idRoom)
         {
             this.currentBooking.Id = counter++;
-            await this.bookings.AddBooking(this.currentBooking);
+            await this.reservation.AddBooking(this.currentBooking);
         }
 
         public async void AddBook(ReservationModel book)
         {
             book.Id = counter++;
-            await this.bookings.AddBooking(book);
+            await this.reservation.AddBooking(book);
         }
 
         public async Task<bool> DeleteBook(int idBooking)
         {
-            ReservationModel deleteBook = this.bookings.GetBook(idBooking).Result;
-            return await this.bookings.RemoveBook(deleteBook.Id);
+            ReservationModel deleteBook = this.reservation.GetBook(idBooking).Result;
+            return await this.reservation.RemoveBook(deleteBook.Id);
         }
 
         public List<MyBookViewResult> GetUserBookings()
         {
             List<MyBookViewResult> result = new List<MyBookViewResult>();
 
-            foreach (ReservationModel booking in this.bookings.GetAll().Result.Where(x => x.IsRecursive == false))
+            foreach (ReservationModel booking in this.reservation.GetAll().Result.Where(x => x.IsRecursive == false))
             {
                 if (booking.Author.Id == this.currentUser.Id)
                 {
@@ -245,7 +245,7 @@ namespace BookMeMobile.BL
         public List<MyBookViewResult> GetUserBookingsRecursive()
         {
             List<MyBookViewResult> result = new List<MyBookViewResult>();
-            List<ReservationModel> allBooksOne = this.bookings.GetAll().Result.Where(x => x.Author.Id == this.currentUser.Id && x.IsRecursive).ToList();
+            List<ReservationModel> allBooksOne = this.reservation.GetAll().Result.Where(x => x.Author.Id == this.currentUser.Id && x.IsRecursive).ToList();
 
             result = allBooksOne.GroupBy(x => new { x.From, x.To, x.Room }).Select(x => new MyBookViewResult()
             {
@@ -264,7 +264,7 @@ namespace BookMeMobile.BL
 
         public async Task<bool> DeleteBookRecursive(int idBook)
         {
-            return await this.bookings.RemoveBook(idBook);
+            return await this.reservation.RemoveBook(idBook);
         }
 
         public List<MyBookViewResult> Sort(List<MyBookViewResult> list)
