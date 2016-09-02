@@ -19,11 +19,11 @@ namespace BookMeMobile.Pages
 
         public List<MyBookViewResult> ResultRoom { get; set; }
 
-        private Booking currentBooking;
+        private ReservationModel currentBooking;
 
         private ListRoomManager list;
 
-        public ListRoomPage(Booking book, User currentUser)
+        public ListRoomPage(ReservationModel book, User currentUser)
         {
             this.InitializeComponent();
             this.currentBooking = book;

@@ -22,14 +22,14 @@ namespace BookMeMobile.BL
             this.client = new HttpClient();
         }
 
-        public async Task<IEnumerable<Booking>> GetAll()
+        public async Task<IEnumerable<ReservationModel>> GetAll()
         {
             var uri = new Uri(string.Format(this.restUri, string.Empty));
             var response = this.client.GetAsync(uri);
             if (response.Result.IsSuccessStatusCode)
             {
                 var content = await response.Result.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<IEnumerable<Booking>>(content);
+                return JsonConvert.DeserializeObject<IEnumerable<ReservationModel>>(content);
             }
             else
             {
@@ -37,14 +37,14 @@ namespace BookMeMobile.BL
             }
         }
 
-        public async Task<Booking> GetBook(int id)
+        public async Task<ReservationModel> GetBook(int id)
         {
             var uri = new Uri(string.Format(this.restUri, id));
             var response = this.client.GetAsync(uri);
             if (response.Result.IsSuccessStatusCode)
             {
                 var content = await response.Result.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<Booking>(content);
+                return JsonConvert.DeserializeObject<ReservationModel>(content);
             }
             else
             {
@@ -59,7 +59,7 @@ namespace BookMeMobile.BL
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> AddBooking(Booking book)
+        public async Task<bool> AddBooking(ReservationModel book)
         {
             var uri = new Uri(string.Format(this.restUri, string.Empty));
             var json = JsonConvert.SerializeObject(book);

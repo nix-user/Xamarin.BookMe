@@ -18,7 +18,7 @@ namespace BookMeMobile.Pages
         public async void ScanResult(Result result, User currentUser)
         {
             ListRoomManager manager = new ListRoomManager(currentUser);
-            Booking book = manager.AttemptBook(result.Text, currentUser);
+            ReservationModel book = manager.AttemptBook(result.Text, currentUser);
             if (book != null)
             {
                 bool saveOrNot = await DisplayAlert("Забронировать комнату?", string.Format("Комната: {0} \n От: {1:hh\\:mm} \n До: {2:hh\\:mm}", book.Room.Number, book.From, book.To), "Да", "Нет");

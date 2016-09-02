@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookMeMobile.Entity
 {
-    public class Booking
+    public class ReservationModel
     {
         public int Id { get; set; }
 
@@ -18,7 +18,7 @@ namespace BookMeMobile.Entity
 
         public Room Room { get; set; }
 
-        public User WhoBook { get; set; }
+        public User Author { get; set; }
 
         public bool IsRecursive { get; set; }
 

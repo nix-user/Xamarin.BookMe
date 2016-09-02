@@ -43,13 +43,13 @@ namespace BookMeMobile.Pages
             if (TimeFrom.Time < TimeTo.Time)
             {
                 Room room = new Room() { IsBig = IsBig.IsToggled, IsHasPolykom = IsPolinom.IsToggled };
-                Booking booking = new Booking()
+                ReservationModel booking = new ReservationModel()
                 {
                     Date = Date.Date,
                     Room = room,
                     From = TimeFrom.Time,
                     To = TimeTo.Time,
-                    WhoBook = CurrentUser,
+                    Author = CurrentUser,
                     IsRecursive = IsRecursive.IsToggled
                 };
                 ErrorInterval.Text = string.Empty;
