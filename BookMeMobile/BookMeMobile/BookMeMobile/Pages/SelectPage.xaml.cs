@@ -15,6 +15,8 @@ namespace BookMeMobile.Pages
         {
             this.InitializeComponent();
             this.Date.MinimumDate = DateTime.Now;
+            this.TimeTo.Time = DateTime.Now.TimeOfDay;
+            this.TimeFrom.Time = DateTime.Now.TimeOfDay;
             CurrentUser = currentUser;
             this.SettingPaddingForWinPhone();
         }
@@ -36,7 +38,7 @@ namespace BookMeMobile.Pages
             }
         }
 
-        private void Button_OnClicked(object sender, EventArgs e)
+        private async void Button_OnClicked(object sender, EventArgs e)
         {
             if (TimeFrom.Time < TimeTo.Time)
             {
@@ -51,7 +53,7 @@ namespace BookMeMobile.Pages
                     IsRecursive = IsRecursive.IsToggled
                 };
                 ErrorInterval.Text = string.Empty;
-                this.Navigation.PushAsync(new MainPage(CurrentUser, new ListRoomPage(booking, CurrentUser)));
+                await this.Navigation.PushAsync(new MainPage(CurrentUser, new ListRoomPage(booking, CurrentUser)));
             }
             else
             {

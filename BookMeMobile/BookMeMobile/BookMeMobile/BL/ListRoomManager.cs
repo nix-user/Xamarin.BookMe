@@ -40,7 +40,7 @@ namespace BookMeMobile.BL
                     this.rooms.GetAllRoom().Result
                         .Where(x => x.IsBig == booking.Room.IsBig && x.IsHasPolykom == booking.Room.IsHasPolykom))
             {
-                foreach (var book in room.Bookings.Where(x => x.WhoBook == booking.WhoBook && x.Date == booking.Date))
+                foreach (var book in room.Bookings.Where(x => x.WhoBook.Id == booking.WhoBook.Id && x.Date == booking.Date))
                 {
                     if (book.From < booking.From && book.To > booking.To)
                     {
@@ -71,7 +71,7 @@ namespace BookMeMobile.BL
                 {
                     bool endInRange = book.From <= booking.From && book.To >= booking.From && booking.To >= book.To;
                     bool startInRange = book.From <= booking.To && book.To >= booking.To && booking.From <= book.From;
-                    if ((endInRange | startInRange) & book.WhoBook == booking.WhoBook && book.Date == booking.Date)
+                    if ((endInRange | startInRange) & book.WhoBook.Id == booking.WhoBook.Id && book.Date == booking.Date)
                     {
                         result.Add(new MyBookViewResult()
                         {
@@ -164,9 +164,9 @@ namespace BookMeMobile.BL
             return this.Sort(result);
         }
 
-        public string Booking(int idRoom)
+        public async Task<string> Booking(int idRoom)
         {
-            this.currentBooking.Room = this.rooms.GetRoom(idRoom).Result;
+            this.currentBooking.Room = await this.rooms.GetRoom(idRoom);
             Room currentRoom = this.rooms.GetRoom(idRoom).Result;
             return string.Format(
                 " Комната: {3}\n Дата: {0}\n Время: {1} - {2}\n Большая:{4} Поликом:{5}",
@@ -178,7 +178,7 @@ namespace BookMeMobile.BL
                 string.Format("{0:Да;0;Нет}", currentRoom.IsHasPolykom.GetHashCode()));
         }
 
-        public void AddBookInWeek(int idRoom)
+        public async void AddBookInWeek(int idRoom)
         {
             for (int i = 1; i <= 7; i++)
             {
@@ -194,33 +194,27 @@ namespace BookMeMobile.BL
                 };
                 this.currentBooking.Id = counter++;
                 this.rooms.GetAllRoom().Result.FirstOrDefault(x => x.Id == idRoom).Bookings.Add(currentBook);
-                this.bookings.AddBooking(currentBook);
+                await this.bookings.AddBooking(currentBook);
                 this.currentBooking.Date = DateTime.Now.AddDays(i);
             }
         }
 
-        public void AddBook(int idRoom)
+        public async void AddBook(int idRoom)
         {
             this.currentBooking.Id = counter++;
-            this.rooms.GetAllRoom().Result.FirstOrDefault(x => x.Id == idRoom).Bookings.Add(this.currentBooking);
-            this.bookings.AddBooking(this.currentBooking);
+            await this.bookings.AddBooking(this.currentBooking);
         }
 
-        public void AddBook(Booking book)
+        public async void AddBook(Booking book)
         {
             book.Id = counter++;
-            this.rooms.GetAllRoom().Result.FirstOrDefault(x => x.Id == book.Room.Id).Bookings.Add(book);
-            this.bookings.AddBooking(book);
+            await this.bookings.AddBooking(book);
         }
 
-        public void DeleteBook(int idBooking)
+        public async Task<bool> DeleteBook(int idBooking)
         {
             Booking deleteBook = this.bookings.GetBook(idBooking).Result;
-            this.bookings.RemoveBook(deleteBook.Id);
-            foreach (Room room in this.rooms.GetAllRoom().Result)
-            {
-                room.Bookings.Remove(deleteBook);
-            }
+            return await this.bookings.RemoveBook(deleteBook.Id);
         }
 
         public List<MyBookViewResult> GetUserBookings()
@@ -229,7 +223,7 @@ namespace BookMeMobile.BL
 
             foreach (Booking booking in this.bookings.GetAll().Result.Where(x => x.IsRecursive == false))
             {
-                if (booking.WhoBook == this.currentUser)
+                if (booking.WhoBook.Id == this.currentUser.Id)
                 {
                     result.Add(new MyBookViewResult()
                     {
@@ -274,14 +268,9 @@ namespace BookMeMobile.BL
             return result;
         }
 
-        public void DeleteBookRecursive(int idBook)
+        public async Task<bool> DeleteBookRecursive(int idBook)
         {
-            Booking book = this.bookings.GetAll().Result.FirstOrDefault(x => x.Id == idBook);
-            foreach (Booking booking in this.rooms.GetAllRoom().Result.FirstOrDefault(x => x.Id == book.Room.Id).Bookings.Where(y => y.From == book.From && y.To == book.To))
-            {
-                this.bookings.RemoveBook(booking.Id);
-                this.rooms.GetAllRoom().Result.FirstOrDefault(x => x.Number == booking.Room.Number).Bookings.Remove(booking);
-            }
+            return await this.bookings.RemoveBook(idBook);
         }
 
         public List<MyBookViewResult> Sort(List<MyBookViewResult> list)
@@ -343,7 +332,7 @@ namespace BookMeMobile.BL
                 }
                 else
                 {
-                    if (book.WhoBook == this.currentUser)
+                    if (book.WhoBook.Id == this.currentUser.Id)
                     {
                         return new Booking()
                         {

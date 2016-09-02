@@ -9,13 +9,13 @@ namespace BookMeMobile.Data
 {
     public static class RestURl
     {
-        private const string ApiURL = "http://localhost:52594/api/";
+        private const string ApiURL = "http://10.10.41.172/api/";
 
         public static string BookURl
         {
             get
             {
-                return ApiURL + "Booking/{0}";
+                return ApiURL + "Book/{0}";
             }
         }
 

@@ -43,7 +43,7 @@ namespace BookMeMobile.Pages.MyBookPages
             bool b = await DisplayAlert(this.bookingHeadChecking, this.bookIsDelete, this.bookButonOK, this.bookButonNO);
             if (b)
             {
-                this.manager.DeleteBook(idBook);
+                await this.manager.DeleteBook(idBook);
                 await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
                 await this.Navigation.PopModalAsync();
             }

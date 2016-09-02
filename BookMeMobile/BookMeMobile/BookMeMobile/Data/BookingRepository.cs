@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
@@ -24,10 +25,10 @@ namespace BookMeMobile.BL
         public async Task<IEnumerable<Booking>> GetAll()
         {
             var uri = new Uri(string.Format(this.restUri, string.Empty));
-            var response = await this.client.GetAsync(uri);
-            if (response.IsSuccessStatusCode)
+            var response = this.client.GetAsync(uri);
+            if (response.Result.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadAsStringAsync();
+                var content = await response.Result.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<IEnumerable<Booking>>(content);
             }
             else
@@ -39,10 +40,10 @@ namespace BookMeMobile.BL
         public async Task<Booking> GetBook(int id)
         {
             var uri = new Uri(string.Format(this.restUri, id));
-            var response = await this.client.GetAsync(uri);
-            if (response.IsSuccessStatusCode)
+            var response = this.client.GetAsync(uri);
+            if (response.Result.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadAsStringAsync();
+                var content = await response.Result.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<Booking>(content);
             }
             else
@@ -55,30 +56,16 @@ namespace BookMeMobile.BL
         {
             var uri = new Uri(string.Format(this.restUri, id));
             var response = await this.client.DeleteAsync(uri);
-            if (response.IsSuccessStatusCode)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> AddBooking(Booking book)
         {
-            var uri = new Uri(string.Format(this.restUri, book.Id));
+            var uri = new Uri(string.Format(this.restUri, string.Empty));
             var json = JsonConvert.SerializeObject(book);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await this.client.PostAsync(uri, content);
-            if (response.IsSuccessStatusCode)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            var response = await this.client.PostAsync(uri, content);
+            return response.IsSuccessStatusCode;
         }
     }
 }

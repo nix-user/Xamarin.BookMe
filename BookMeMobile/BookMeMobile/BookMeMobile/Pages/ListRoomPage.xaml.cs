@@ -42,7 +42,7 @@ namespace BookMeMobile.Pages
         private async void BtnBooking_OnClicked(object sender, EventArgs e)
         {
             int idRoom = int.Parse(((Button)sender).ClassId);
-            string bookBody = this.list.Booking(idRoom);
+            string bookBody = await this.list.Booking(idRoom);
             bool b = await this.DisplayAlert(this.bookingHeadChecking, bookBody, this.bookButonOK, this.bookButonNO);
             if (b)
             {
@@ -56,7 +56,7 @@ namespace BookMeMobile.Pages
                 }
 
                 await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
-                await Navigation.PopModalAsync();
+                await Navigation.PopAsync();
             }
         }
     }
