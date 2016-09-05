@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Android.Provider;
+using BookMeMobile.Data;
 using BookMeMobile.Entity;
-using Java.Lang;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
 {
     public partial class LoginPage : ContentPage
     {
+        private const string HeadError = "Ошибка";
+        private const string BodyUserIsNotExist = "Такого пользователя нет";
+        private const string BodyInternetIsNotExist = "Нет подключения к интернету";
+        private const string Ok = "Ok";
+
         public static List<User> Users { get; set; } = new List<User>
         {
-            new User() { Id = 1, Login = "User1", FavoriteRoom  = "304D", MyRoom = "410" },
+            new User() { Id = 1, Login = "User1", FavoriteRoom = "304D", MyRoom = "410" },
             new User() { Id = 2, Login = "User2", FavoriteRoom = "303D", MyRoom = "409" }
         };
 
@@ -22,16 +28,22 @@ namespace BookMeMobile.Pages
             this.InitializeComponent();
         }
 
-        private void BtnSignIn_OnClicked(object sender, EventArgs e)
+        private async void BtnSignIn_OnClicked(object sender, EventArgs e)
         {
+            if (!await RestURl.IsConnected())
+            {
+                await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                return;
+            }
+
             User user = Users.FirstOrDefault(x => x.Login == TextLogin.Text);
             if (user != null)
             {
-                Navigation.PushAsync(new MainPage(user));
+                await Navigation.PushAsync(new MainPage(user));
             }
             else
             {
-                Error.Text = "Такого пользователя нет";
+                await this.DisplayAlert(HeadError, BodyUserIsNotExist, Ok);
             }
         }
     }

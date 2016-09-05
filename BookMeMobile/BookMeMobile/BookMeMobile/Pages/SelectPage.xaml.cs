@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.Locations;
+using BookMeMobile.Data;
 using BookMeMobile.Entity;
 using BookMeMobile.Pages.MyBookPages;
 using Java.Util;
@@ -9,6 +10,11 @@ namespace BookMeMobile.Pages
 {
     public partial class SelectPage : ContentPage
     {
+        private const string HeadError = "Ошибка";
+        private const string BodyInternetIsNotExist = "Нет подключения к интернету";
+        private const string BodyIntervalIsInvalid = "Нет подключения к интернету";
+        private const string Ok = "Ok";
+
         public static User CurrentUser { get; set; }
 
         public SelectPage(User currentUser)
@@ -53,17 +59,29 @@ namespace BookMeMobile.Pages
                     IsRecursive = IsRecursive.IsToggled
                 };
                 ErrorInterval.Text = string.Empty;
+                if (!await RestURl.IsConnected())
+                {
+                    await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                    return;
+                }
+
                 await this.Navigation.PushAsync(new MainPage(CurrentUser, new ListRoomPage(reservation, CurrentUser)));
             }
             else
             {
-                ErrorInterval.Text = "Неверный интервал";
+                await this.DisplayAlert(HeadError, BodyIntervalIsInvalid, Ok);
             }
         }
 
-        public void MyReservations_OnClicked(object sender, EventArgs e)
+        public async void MyReservations_OnClicked(object sender, EventArgs e)
         {
-            this.Navigation.PushAsync(new MainPage(CurrentUser, new TabPanelPage(CurrentUser)));
+            if (!await RestURl.IsConnected())
+            {
+                await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                return;
+            }
+
+           await this.Navigation.PushAsync(new MainPage(CurrentUser, new TabPanelPage(CurrentUser)));
         }
     }
 }

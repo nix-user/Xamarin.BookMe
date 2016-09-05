@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
@@ -24,6 +25,22 @@ namespace BookMeMobile.Data
             get
             {
                 return ApiURL + "Room/{0}";
+            }
+        }
+
+        public static async Task<bool> IsConnected()
+        {
+            try
+            {
+                var client = new HttpClient();
+                client.Timeout = new TimeSpan(0, 0, 0, 3);
+                var uri = new Uri(string.Format(RestURl.BookURl, string.Empty));
+                await client.GetAsync(uri);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
     }
