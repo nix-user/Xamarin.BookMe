@@ -6,7 +6,7 @@ namespace BookMeMobile.Entity
     {
         public Room()
         {
-            this.Bookings = new List<Booking>();
+            this.Reservations = new List<ReservationModel>();
         }
 
         public int Id { get; set; }
@@ -17,6 +17,6 @@ namespace BookMeMobile.Entity
 
         public bool IsHasPolykom { get; set; }
 
-        public List<Booking> Bookings { get; set; }
+        public List<ReservationModel> Reservations { get; set; }
     }
 }

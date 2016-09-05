@@ -29,7 +29,7 @@ namespace BookMeMobile.Pages
             {
                 Title = "QR Бронирование",
                 IconSource = "profileMenu.png",
-                TargetType = typeof(QrBook)
+                TargetType = typeof(QrReservation)
             });
             listView.ItemsSource = masterPageItems;
         }

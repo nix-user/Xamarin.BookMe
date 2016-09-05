@@ -15,10 +15,12 @@ namespace BookMeMobile.Pages.MyBookPages
         private readonly string bookIsDelete = "Снять бронирование бронирование?";
         private readonly string bookingBodySucces = "Комната успешно разбронирована";
         private readonly string bookingHeadSuccess = "Действие успешно выполнено";
+        private readonly string bookingHeadError = "Ошибка";
+        private readonly string bookingBodyError = "Действие не было выполнено";
         private readonly string bookButonOK = "Да";
         private readonly string bookButonNO = "Нет";
 
-        public List<MyBookViewResult> ResultRoom { get; set; }
+        public List<MyReservationViewResult> ResultRoom { get; set; }
 
         private ListRoomManager manager;
 
@@ -28,8 +30,8 @@ namespace BookMeMobile.Pages.MyBookPages
         {
             this.InitializeComponent();
             this.manager = new ListRoomManager(user);
-            this.ResultRoom = this.manager.GetUserBookingsRecursive();
-            this.ResultRoom.AddRange(this.manager.GetUserBookings());
+            this.ResultRoom = this.manager.GetUserReservationingsRecursive();
+            this.ResultRoom.AddRange(this.manager.GetUserReservation());
             if (this.ResultRoom.Any())
             {
                 this.listRoom.BindingContext = this.ResultRoom;
@@ -46,9 +48,17 @@ namespace BookMeMobile.Pages.MyBookPages
             bool b = await DisplayAlert(this.bookingHeadChecking, this.bookIsDelete, this.bookButonOK, this.bookButonNO);
             if (b)
             {
-                this.manager.DeleteBookRecursive(idBook);
-                await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
-                await this.Navigation.PopModalAsync();
+                bool result = await this.manager.DeleteReservationRecursive(idBook);
+                if (result)
+                {
+                    await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
+                }
+                else
+                {
+                    await this.DisplayAlert(this.bookingHeadError, this.bookingBodyError, this.bookButonOK);
+                }
+
+                await this.Navigation.PopAsync();
             }
         }
     }

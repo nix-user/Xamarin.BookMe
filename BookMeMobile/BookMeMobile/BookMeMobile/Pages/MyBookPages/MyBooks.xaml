@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:binding1="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
-             x:Class="BookMeMobile.Pages.MyBookPages.MyBooks"
+             x:Class="BookMeMobile.Pages.MyBookPages.MyReservation"
              Title="Мои бронирования">
   <ContentPage.Resources>
     <ResourceDictionary>

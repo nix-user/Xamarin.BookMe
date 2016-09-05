@@ -11,26 +11,26 @@ namespace BookMeMobile.Pages
 {
     public partial class ListRoomPage : ContentPage
     {
-        private readonly string bookingHeadChecking = "Подтвердите действие";
-        private readonly string bookingBodySucces = "Комната успешно забронирована";
-        private readonly string bookingHeadSuccess = "Действие успешно выполнено";
-        private readonly string bookButonOK = "Да";
-        private readonly string bookButonNO = "Нет";
+        private readonly string reservationingHeadChecking = "Подтвердите действие";
+        private readonly string reservationingBodySucces = "Комната успешно забронирована";
+        private readonly string reservationingHeadSuccess = "Действие успешно выполнено";
+        private readonly string reservationButonOK = "Да";
+        private readonly string reservationButonNO = "Нет";
 
-        public List<MyBookViewResult> ResultRoom { get; set; }
+        public List<MyReservationViewResult> ResultRoom { get; set; }
 
-        private Booking currentBooking;
+        private ReservationModel currentBooking;
 
         private ListRoomManager list;
 
-        public ListRoomPage(Booking book, User currentUser)
+        public ListRoomPage(ReservationModel reservation, User currentUser)
         {
             this.InitializeComponent();
-            this.currentBooking = book;
-            this.list = new ListRoomManager(book, currentUser);
-            this.ResultRoom = this.list.AddUserBookInRange(book);
-            this.ResultRoom.AddRange(this.list.AddUserBookPartRange(book));
-            this.ResultRoom.AddRange(this.list.Search(book));
+            this.currentBooking = reservation;
+            this.list = new ListRoomManager(reservation, currentUser);
+            this.ResultRoom = this.list.AddUserReservationInRange(reservation);
+            this.ResultRoom.AddRange(this.list.AddUserReservationPartRange(reservation));
+            this.ResultRoom.AddRange(this.list.Search(reservation));
             if (!this.ResultRoom.Any())
             {
                 isRoom.IsVisible = true;
@@ -42,21 +42,21 @@ namespace BookMeMobile.Pages
         private async void BtnBooking_OnClicked(object sender, EventArgs e)
         {
             int idRoom = int.Parse(((Button)sender).ClassId);
-            string bookBody = this.list.Booking(idRoom);
-            bool b = await this.DisplayAlert(this.bookingHeadChecking, bookBody, this.bookButonOK, this.bookButonNO);
+            string reservationBody = await this.list.ReservationMessag(idRoom);
+            bool b = await this.DisplayAlert(this.reservationingHeadChecking, reservationBody, this.reservationButonOK, this.reservationButonNO);
             if (b)
             {
                 if (!this.currentBooking.IsRecursive)
                 {
-                    this.list.AddBook(idRoom);
+                    this.list.AddReservation(idRoom);
                 }
                 else
                 {
-                    this.list.AddBookInWeek(idRoom);
+                    this.list.AddRecursiveReservation(idRoom);
                 }
 
-                await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
-                await Navigation.PopModalAsync();
+                await this.DisplayAlert(this.reservationingHeadSuccess, this.reservationingBodySucces, this.reservationButonOK);
+                await Navigation.PopAsync();
             }
         }
     }

@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.Pages.MyBookPages
 {
-    public partial class MyBooks : ContentPage
+    public partial class MyReservation : ContentPage
     {
         private readonly string bookingHeadChecking = "Подтвердите действие";
         private readonly string bookIsDelete = "Снять бронирование бронирование?";
@@ -16,17 +16,17 @@ namespace BookMeMobile.Pages.MyBookPages
         private readonly string bookButonOK = "Да";
         private readonly string bookButonNO = "Нет";
 
-        public List<MyBookViewResult> ResultRoom { get; set; }
+        public List<MyReservationViewResult> ResultRoom { get; set; }
 
         private ListRoomManager manager;
 
         public User CurrentUser { get; set; }
 
-        public MyBooks(User user)
+        public MyReservation(User user)
         {
             this.InitializeComponent();
             this.manager = new ListRoomManager(user);
-            this.ResultRoom = this.manager.GetUserBookings();
+            this.ResultRoom = this.manager.GetUserReservation();
             if (this.ResultRoom.Any())
             {
                 this.listRoom.BindingContext = this.ResultRoom;
@@ -43,7 +43,7 @@ namespace BookMeMobile.Pages.MyBookPages
             bool b = await DisplayAlert(this.bookingHeadChecking, this.bookIsDelete, this.bookButonOK, this.bookButonNO);
             if (b)
             {
-                this.manager.DeleteBook(idBook);
+                await this.manager.DeleteReservation(idBook);
                 await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
                 await this.Navigation.PopModalAsync();
             }

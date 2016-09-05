@@ -15,6 +15,8 @@ namespace BookMeMobile.Pages
         {
             this.InitializeComponent();
             this.Date.MinimumDate = DateTime.Now;
+            this.TimeTo.Time = DateTime.Now.TimeOfDay;
+            this.TimeFrom.Time = DateTime.Now.TimeOfDay;
             CurrentUser = currentUser;
             this.SettingPaddingForWinPhone();
         }
@@ -36,22 +38,22 @@ namespace BookMeMobile.Pages
             }
         }
 
-        private void Button_OnClicked(object sender, EventArgs e)
+        private async void Button_OnClicked(object sender, EventArgs e)
         {
             if (TimeFrom.Time < TimeTo.Time)
             {
                 Room room = new Room() { IsBig = IsBig.IsToggled, IsHasPolykom = IsPolinom.IsToggled };
-                Booking booking = new Booking()
+                ReservationModel reservation = new ReservationModel()
                 {
                     Date = Date.Date,
                     Room = room,
                     From = TimeFrom.Time,
                     To = TimeTo.Time,
-                    WhoBook = CurrentUser,
+                    Author = CurrentUser,
                     IsRecursive = IsRecursive.IsToggled
                 };
                 ErrorInterval.Text = string.Empty;
-                this.Navigation.PushAsync(new MainPage(CurrentUser, new ListRoomPage(booking, CurrentUser)));
+                await this.Navigation.PushAsync(new MainPage(CurrentUser, new ListRoomPage(reservation, CurrentUser)));
             }
             else
             {
@@ -59,7 +61,7 @@ namespace BookMeMobile.Pages
             }
         }
 
-        public void MyBook_OnClicked(object sender, EventArgs e)
+        public void MyReservations_OnClicked(object sender, EventArgs e)
         {
             this.Navigation.PushAsync(new MainPage(CurrentUser, new TabPanelPage(CurrentUser)));
         }

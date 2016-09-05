@@ -22,7 +22,7 @@
               <ViewCell.View>
                 <AbsoluteLayout>
                   <Button AbsoluteLayout.LayoutBounds="1,0.48,-1,-1"
-           AbsoluteLayout.LayoutFlags="PositionProportional" HorizontalOptions="End"   x:Name="btnBooking" ClassId="{Binding Id}" Text="Снять бронь" IsVisible="{Binding IsBook,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Medium" Clicked="BtnBooking_OnClicked"/>
+           AbsoluteLayout.LayoutFlags="PositionProportional" HorizontalOptions="End"   x:Name="btnBooking" ClassId="{Binding Id}" Text="Снять бронь" IsVisible="{Binding IsRecursive,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Medium" Clicked="BtnBooking_OnClicked"/>
                   <StackLayout VerticalOptions="Center">
                     <StackLayout Orientation="Horizontal">
                       <Label Text = "{Binding Room,StringFormat='Комната: № {0}' }" FontSize="Medium"/>
