@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Android.Locations;
 using BookMeMobile.BL;
 using BookMeMobile.Data;
@@ -13,7 +14,7 @@ namespace BookMeMobile.Pages
     {
         private const string HeadError = "Ошибка";
         private const string BodyInternetIsNotExist = "Нет подключения к интернету";
-        private const string BodyIntervalIsInvalid = "Нет подключения к интернету";
+        private const string BodyIntervalIsInvalid = "Ввведен неверный интервал";
         private const string Ok = "Ok";
 
         public static User CurrentUser { get; set; }
@@ -62,7 +63,20 @@ namespace BookMeMobile.Pages
                     Author = CurrentUser,
                     IsRecursive = IsRecursive.IsToggled
                 };
-                await this.Navigation.PushAsync(new MainPage(CurrentUser, new ListRoomPage(reservation, CurrentUser)));
+
+                ReservationsStatusModel inRange = this.manager.AddUserReservationInRange(reservation);
+                if (inRange.StatusCode == StatusCode.Ok)
+                {
+                    List<MyReservationViewResult> partInRange = this.manager.AddUserReservationPartRange(reservation);
+                    List<MyReservationViewResult> searchList = this.manager.Search(reservation);
+                    await
+                        this.Navigation.PushAsync(new MainPage(CurrentUser,
+                            new ListRoomPage(reservation, CurrentUser, inRange.ReservationModels, partInRange, searchList)));
+                }
+                else
+                {
+                   await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                }
             }
             else
             {
@@ -74,7 +88,7 @@ namespace BookMeMobile.Pages
         {
             ReservationsStatusModel recursive = this.GetRecursiveReservation();
             ReservationsStatusModel noRecursive = this.GetReservation();
-            if (recursive.StatusCode == StatusCode.Ok && recursive.StatusCode == StatusCode.Ok)
+            if (recursive.StatusCode == StatusCode.Ok)
             {
                 await
                     this.Navigation.PushAsync(new MainPage(CurrentUser,
@@ -82,7 +96,7 @@ namespace BookMeMobile.Pages
             }
             else
             {
-                await this.DisplayAlert(HeadError, BodyIntervalIsInvalid, Ok);
+                await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
             }
         }
 
