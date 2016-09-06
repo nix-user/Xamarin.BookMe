@@ -18,20 +18,27 @@ namespace BookMeMobile.Pages
         public async void ScanResult(Result result, User currentUser)
         {
             ListRoomManager manager = new ListRoomManager(currentUser);
-            ReservationModel reservation = manager.AttemptReservation(result.Text, currentUser);
-            if (reservation != null)
+            ReservationStatusModel reservation = manager.AttemptReservation(result.Text, currentUser);
+            if (reservation.StatusCode == StatusCode.Ok)
             {
-                string body = string.Format("Комната: {0} \n От: {1:hh\\:mm} \n До: {2:hh\\:mm}", reservation.Room.Number, reservation.From, reservation.To);
-                bool saveOrNot = await DisplayAlert("Забронировать комнату?", body, "Да", "Нет");
-                if (saveOrNot)
+                if (reservation != null)
                 {
-                    manager.AddReservation(reservation);
-                    await this.DisplayAlert("Успешно", "Комната успешно занята", "Ok");
+                    string body = string.Format("Комната: {0} \n От: {1:hh\\:mm} \n До: {2:hh\\:mm}", reservation.Reservation.Room.Number, reservation.Reservation.From, reservation.Reservation.To);
+                    bool saveOrNot = await DisplayAlert("Забронировать комнату?", body, "Да", "Нет");
+                    if (saveOrNot)
+                    {
+                        await manager.AddReservation(reservation.Reservation);
+                        await this.DisplayAlert("Успешно", "Комната успешно занята", "Ok");
+                    }
+                }
+                else
+                {
+                    await this.DisplayAlert("Действие не может быть выполнено", "Комната занята", "Ok");
                 }
             }
             else
             {
-              await this.DisplayAlert("Действие не может быть выполнено", "Комната занята", "Ok");
+                await this.DisplayAlert("Ошибка", "Нет подключения к интернету", "Ok");
             }
         }
     }
