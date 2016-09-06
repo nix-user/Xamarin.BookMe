@@ -17,6 +17,7 @@ namespace BookMeMobile.Data
         {
             this.restUri = RestURl.BookURl;
             this.client = new HttpClient();
+            this.client.Timeout = new TimeSpan(0, 0, 5);
         }
 
         public async Task<IEnumerable<ReservationModel>> GetAll()

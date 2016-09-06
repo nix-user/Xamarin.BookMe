@@ -65,13 +65,13 @@ namespace BookMeMobile.Pages
                 };
 
                 ReservationsStatusModel inRange = this.manager.AddUserReservationInRange(reservation);
-                if (inRange.StatusCode == StatusCode.Ok)
+                ReservationsStatusModel partInRange = this.manager.AddUserReservationPartRange(reservation);
+                ReservationsStatusModel searchList = this.manager.Search(reservation);
+                if (inRange.StatusCode == StatusCode.Ok && partInRange.StatusCode == StatusCode.Ok && searchList.StatusCode == StatusCode.Ok)
                 {
-                    List<MyReservationViewResult> partInRange = this.manager.AddUserReservationPartRange(reservation);
-                    List<MyReservationViewResult> searchList = this.manager.Search(reservation);
-                    await
+                   await
                         this.Navigation.PushAsync(new MainPage(CurrentUser,
-                            new ListRoomPage(reservation, CurrentUser, inRange.ReservationModels, partInRange, searchList)));
+                            new ListRoomPage(reservation, CurrentUser, inRange.ReservationModels, partInRange.ReservationModels, searchList.ReservationModels)));
                 }
                 else
                 {
@@ -88,7 +88,7 @@ namespace BookMeMobile.Pages
         {
             ReservationsStatusModel recursive = this.GetRecursiveReservation();
             ReservationsStatusModel noRecursive = this.GetReservation();
-            if (recursive.StatusCode == StatusCode.Ok)
+            if (recursive.StatusCode == StatusCode.Ok && noRecursive.StatusCode == StatusCode.Ok)
             {
                 await
                     this.Navigation.PushAsync(new MainPage(CurrentUser,

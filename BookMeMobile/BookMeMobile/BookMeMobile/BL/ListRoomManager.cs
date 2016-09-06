@@ -65,42 +65,54 @@ namespace BookMeMobile.BL
 
                 return new ReservationsStatusModel() { ReservationModels = result, StatusCode = StatusCode.Ok };
             }
-            catch (WebException)
+            catch (AggregateException)
             {
                 return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
             }
         }
 
-        public List<MyReservationViewResult> AddUserReservationPartRange(ReservationModel reservation)
+        public ReservationsStatusModel AddUserReservationPartRange(ReservationModel reservation)
         {
-            List<MyReservationViewResult> result = new List<MyReservationViewResult>();
-            foreach (
-                Room room in
-                    this.roomRepository.GetAllRoom().Result
-                        .Where(x => x.IsBig == reservation.Room.IsBig && x.IsHasPolykom == reservation.Room.IsHasPolykom))
+            try
             {
-                foreach (var currentReserve in room.Reservations)
+                List<MyReservationViewResult> result = new List<MyReservationViewResult>();
+                foreach (
+                    Room room in
+                        this.roomRepository.GetAllRoom().Result
+                            .Where(
+                                x =>
+                                    x.IsBig == reservation.Room.IsBig && x.IsHasPolykom == reservation.Room.IsHasPolykom))
                 {
-                    bool endInRange = currentReserve.From <= reservation.From && currentReserve.To >= reservation.From && reservation.To >= currentReserve.To;
-                    bool startInRange = currentReserve.From <= reservation.To && currentReserve.To >= reservation.To && reservation.From <= currentReserve.From;
-                    if ((endInRange | startInRange) & currentReserve.Author.Id == reservation.Author.Id && currentReserve.Date == reservation.Date)
+                    foreach (var currentReserve in room.Reservations)
                     {
-                        result.Add(new MyReservationViewResult()
+                        bool endInRange = currentReserve.From <= reservation.From &&
+                                          currentReserve.To >= reservation.From && reservation.To >= currentReserve.To;
+                        bool startInRange = currentReserve.From <= reservation.To && currentReserve.To >= reservation.To &&
+                                            reservation.From <= currentReserve.From;
+                        if ((endInRange | startInRange) & currentReserve.Author.Id == reservation.Author.Id &&
+                            currentReserve.Date == reservation.Date)
                         {
-                            Date = currentReserve.Date,
-                            From = currentReserve.From,
-                            To = currentReserve.To,
-                            Room = currentReserve.Room.Number,
-                            IsHasPolykom = room.IsHasPolykom,
-                            IsBig = room.IsBig,
-                            InRange = false,
-                            IsReservation = true
-                        });
+                            result.Add(new MyReservationViewResult()
+                            {
+                                Date = currentReserve.Date,
+                                From = currentReserve.From,
+                                To = currentReserve.To,
+                                Room = currentReserve.Room.Number,
+                                IsHasPolykom = room.IsHasPolykom,
+                                IsBig = room.IsBig,
+                                InRange = false,
+                                IsReservation = true
+                            });
+                        }
                     }
                 }
-            }
 
-            return this.Sort(result);
+                return new ReservationsStatusModel() { ReservationModels = this.Sort(result), StatusCode = StatusCode.Ok };
+            }
+            catch (AggregateException)
+            {
+                return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
+            }
         }
 
         private List<Room> ConditionTrue(ReservationModel reservation)
@@ -128,52 +140,55 @@ namespace BookMeMobile.BL
             return null;
         }
 
-        public List<MyReservationViewResult> Search(ReservationModel reservation)
+        public ReservationsStatusModel Search(ReservationModel reservation)
         {
-            List<MyReservationViewResult> result = new List<MyReservationViewResult>();
-            List<Room> srchList = this.ConditionTrue(reservation);
-
-            foreach (var item in srchList)
+            try
             {
-                List<ReservationModel> searchReservations = new List<ReservationModel>();
-                bool hasRange = true;
-                if (reservation.IsRecursive)
-                {
-                    searchReservations.AddRange(item.Reservations.Where(x => x.Date >= reservation.Date));
-                }
-                else
-                {
-                    searchReservations.AddRange(item.Reservations.Where(x => x.Date.Date == reservation.Date.Date));
-                }
+                List<MyReservationViewResult> result = new List<MyReservationViewResult>();
+                List<Room> srchList = this.ConditionTrue(reservation);
 
-                foreach (ReservationModel currenrReservation in searchReservations)
+                foreach (var item in srchList)
                 {
-                    if (currenrReservation.From >= reservation.To || currenrReservation.To <= reservation.From)
+                    List<ReservationModel> searchReservations = new List<ReservationModel>();
+                    bool hasRange = true;
+                    if (reservation.IsRecursive)
                     {
-                        hasRange = true;
+                        searchReservations.AddRange(item.Reservations.Where(x => x.Date >= reservation.Date));
                     }
                     else
                     {
-                        hasRange = false;
-                        break;
+                        searchReservations.AddRange(item.Reservations.Where(x => x.Date.Date == reservation.Date.Date));
+                    }
+
+                    foreach (ReservationModel currenrReservation in searchReservations)
+                    {
+                        if (!(currenrReservation.From >= reservation.To || currenrReservation.To <= reservation.From))
+                        {
+                            hasRange = false;
+                            break;
+                        }
+                    }
+
+                    if (hasRange)
+                    {
+                        result.Add(new MyReservationViewResult()
+                        {
+                            IsHasPolykom = item.IsHasPolykom,
+                            IsBig = item.IsBig,
+                            Room = item.Number,
+                            Id = item.Id,
+                            IsReservation = false,
+                            InRange = null
+                        });
                     }
                 }
 
-                if (hasRange)
-                {
-                    result.Add(new MyReservationViewResult()
-                    {
-                        IsHasPolykom = item.IsHasPolykom,
-                        IsBig = item.IsBig,
-                        Room = item.Number,
-                        Id = item.Id,
-                        IsReservation = false,
-                        InRange = null
-                    });
-                }
+                return new ReservationsStatusModel() { ReservationModels = this.Sort(result), StatusCode = StatusCode.Ok };
             }
-
-            return this.Sort(result);
+            catch (AggregateException)
+            {
+                return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
+            }
         }
 
         public async Task<string> ReservationMessag(int idRoom)
@@ -260,7 +275,7 @@ namespace BookMeMobile.BL
 
                 return new ReservationsStatusModel() { ReservationModels = result, StatusCode = StatusCode.Ok };
             }
-            catch (WebException)
+            catch (AggregateException)
             {
                 return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
             }
@@ -295,7 +310,7 @@ namespace BookMeMobile.BL
 
                 return new ReservationsStatusModel() { ReservationModels = result, StatusCode = StatusCode.Ok };
             }
-            catch (WebException)
+            catch (AggregateException)
             {
                 return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
             }
@@ -396,7 +411,7 @@ namespace BookMeMobile.BL
 
                 return this.NewReservationModel(currentRoom);
             }
-            catch (WebException)
+            catch (AggregateException)
             {
                 return new ReservationStatusModel() { Reservation = null, StatusCode = StatusCode.NoInternet };
             }
@@ -404,7 +419,7 @@ namespace BookMeMobile.BL
 
         private ReservationStatusModel NewReservationModel(Room currentRoom)
         {
-           return new ReservationStatusModel()
+            return new ReservationStatusModel()
             {
                 Reservation = new ReservationModel()
                 {
