@@ -13,7 +13,7 @@ namespace BookMeMobile.Pages.MyBookPages
     public partial class AllMyBook : ContentPage
     {
         private readonly string bookingHeadChecking = "Подтвердите действие";
-        private readonly string bookIsDelete = "Снять бронирование бронирование?";
+        private readonly string bookIsDelete = "Снять бронирование ?";
         private readonly string bookingBodySucces = "Комната успешно разбронирована";
         private readonly string bookingHeadSuccess = "Действие успешно выполнено";
         private readonly string bookingHeadError = "Ошибка";
