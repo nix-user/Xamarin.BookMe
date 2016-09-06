@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
@@ -64,7 +65,7 @@ namespace BookMeMobile.BL
 
                 return new ReservationsStatusModel() { ReservationModels = result, StatusCode = StatusCode.Ok };
             }
-            catch (Exception)
+            catch (WebException)
             {
                 return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
             }
@@ -259,7 +260,7 @@ namespace BookMeMobile.BL
 
                 return new ReservationsStatusModel() { ReservationModels = result, StatusCode = StatusCode.Ok };
             }
-            catch (Exception)
+            catch (WebException)
             {
                 return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
             }
@@ -294,7 +295,7 @@ namespace BookMeMobile.BL
 
                 return new ReservationsStatusModel() { ReservationModels = result, StatusCode = StatusCode.Ok };
             }
-            catch (Exception)
+            catch (WebException)
             {
                 return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
             }
@@ -395,7 +396,7 @@ namespace BookMeMobile.BL
 
                 return this.NewReservationModel(currentRoom);
             }
-            catch (Exception)
+            catch (WebException)
             {
                 return new ReservationStatusModel() { Reservation = null, StatusCode = StatusCode.NoInternet };
             }
