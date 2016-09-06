@@ -30,11 +30,11 @@ namespace BookMeMobile.Pages
 
         private async void BtnSignIn_OnClicked(object sender, EventArgs e)
         {
-            if (!await RestURl.IsConnected())
-            {
-                await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
-                return;
-            }
+            //if (!await RestURl.IsConnected())
+            //{
+            //    await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+            //    return;
+            //}
 
             User user = Users.FirstOrDefault(x => x.Login == TextLogin.Text);
             if (user != null)

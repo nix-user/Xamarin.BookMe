@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ namespace BookMeMobile.Pages.MyBookPages
         private readonly string bookingHeadSuccess = "Действие успешно выполнено";
         private readonly string bookingHeadError = "Ошибка";
         private readonly string bookingBodyError = "Действие не было выполнено";
+        private readonly string bodyNoInternet = "Действие не было выполнено";
         private readonly string bookButonOK = "Да";
         private readonly string bookButonNO = "Нет";
 
@@ -26,12 +28,12 @@ namespace BookMeMobile.Pages.MyBookPages
 
         public User CurrentUser { get; set; }
 
-        public AllMyBook(User user)
+        public AllMyBook(User user, List<MyReservationViewResult> noRecursive, List<MyReservationViewResult> recursive)
         {
             this.InitializeComponent();
             this.manager = new ListRoomManager(user);
-            this.ResultRoom = this.manager.GetUserReservationingsRecursive();
-            this.ResultRoom.AddRange(this.manager.GetUserReservation());
+            this.ResultRoom = noRecursive;
+            this.ResultRoom.AddRange(recursive);
             if (this.ResultRoom.Any())
             {
                 this.listRoom.BindingContext = this.ResultRoom;
@@ -48,14 +50,20 @@ namespace BookMeMobile.Pages.MyBookPages
             bool b = await DisplayAlert(this.bookingHeadChecking, this.bookIsDelete, this.bookButonOK, this.bookButonNO);
             if (b)
             {
-                bool result = await this.manager.DeleteReservationRecursive(idBook);
-                if (result)
+                StatusCode result = await this.manager.DeleteReservationRecursive(idBook);
+                if (result == StatusCode.Ok)
                 {
                     await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
                 }
-                else
+
+                if (result == StatusCode.Error)
                 {
                     await this.DisplayAlert(this.bookingHeadError, this.bookingBodyError, this.bookButonOK);
+                }
+
+                if (result == StatusCode.NoInternet)
+                {
+                    await this.DisplayAlert(this.bookingHeadError, this.bodyNoInternet, this.bookButonOK);
                 }
 
                 await this.Navigation.PopAsync();

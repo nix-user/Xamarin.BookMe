@@ -9,6 +9,8 @@ namespace BookMeMobile.Pages.MyBookPages
 {
     public partial class RecursiveReservationPage : ContentPage
     {
+        private const string BodyInternetIsNotExist = "Нет подключения к интернету";
+        private readonly string bookingHeadError = "Ошибка";
         private readonly string reservationingHeadChecking = "Подтвердите действие";
         private readonly string reservationIsDelete = "Снять бронирование бронирование?";
         private readonly string reservationingBodySucces = "Комната успешно разбронирована";
@@ -22,11 +24,11 @@ namespace BookMeMobile.Pages.MyBookPages
 
         public User CurrentUser { get; set; }
 
-        public RecursiveReservationPage(User user)
+        public RecursiveReservationPage(User user, List<MyReservationViewResult> list)
         {
             this.InitializeComponent();
             this.manager = new ListRoomManager(user);
-            this.ResultRoom = this.manager.GetUserReservationingsRecursive();
+            this.ResultRoom = list;
             if (this.ResultRoom.Any())
             {
                 this.listRoom.BindingContext = this.ResultRoom;

@@ -1,5 +1,6 @@
 ﻿using System;
 using Android.Locations;
+using BookMeMobile.BL;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
 using BookMeMobile.Pages.MyBookPages;
@@ -17,6 +18,8 @@ namespace BookMeMobile.Pages
 
         public static User CurrentUser { get; set; }
 
+        private ListRoomManager manager;
+
         public SelectPage(User currentUser)
         {
             this.InitializeComponent();
@@ -24,6 +27,7 @@ namespace BookMeMobile.Pages
             this.TimeTo.Time = DateTime.Now.TimeOfDay;
             this.TimeFrom.Time = DateTime.Now.TimeOfDay;
             CurrentUser = currentUser;
+            this.manager = new ListRoomManager(currentUser);
             this.SettingPaddingForWinPhone();
         }
 
@@ -58,13 +62,6 @@ namespace BookMeMobile.Pages
                     Author = CurrentUser,
                     IsRecursive = IsRecursive.IsToggled
                 };
-                ErrorInterval.Text = string.Empty;
-                if (!await RestURl.IsConnected())
-                {
-                    await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
-                    return;
-                }
-
                 await this.Navigation.PushAsync(new MainPage(CurrentUser, new ListRoomPage(reservation, CurrentUser)));
             }
             else
@@ -75,13 +72,30 @@ namespace BookMeMobile.Pages
 
         public async void MyReservations_OnClicked(object sender, EventArgs e)
         {
-            if (!await RestURl.IsConnected())
+            ReservationsStatusModel recursive = this.GetRecursiveReservation();
+            ReservationsStatusModel noRecursive = this.GetReservation();
+            if (recursive.StatusCode == StatusCode.Ok && recursive.StatusCode == StatusCode.Ok)
             {
-                await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
-                return;
+                await
+                    this.Navigation.PushAsync(new MainPage(CurrentUser,
+                        new TabPanelPage(CurrentUser, recursive.ReservationModels, noRecursive.ReservationModels)));
             }
+            else
+            {
+                await this.DisplayAlert(HeadError, BodyIntervalIsInvalid, Ok);
+            }
+        }
 
-           await this.Navigation.PushAsync(new MainPage(CurrentUser, new TabPanelPage(CurrentUser)));
+        private ReservationsStatusModel GetRecursiveReservation()
+        {
+            ReservationsStatusModel model = this.manager.GetUserReservationingsRecursive().Result;
+            return model;
+        }
+
+        private ReservationsStatusModel GetReservation()
+        {
+            ReservationsStatusModel model = this.manager.GetUserReservation().Result;
+            return model;
         }
     }
 }

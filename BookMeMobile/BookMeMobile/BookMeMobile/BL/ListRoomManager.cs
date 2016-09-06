@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
+using Org.Apache.Http.Impl.Cookie;
 
 namespace BookMeMobile.BL
 {
@@ -199,70 +200,97 @@ namespace BookMeMobile.BL
             }
         }
 
-        public async void AddReservation(int idRoom)
+        public async Task<StatusCode> AddReservation(int idRoom)
         {
             this.currentReservation.Id = counter++;
-            await this.reservationRepository.AddReservation(this.currentReservation);
+            return await this.reservationRepository.AddReservation(this.currentReservation);
         }
 
-        public async void AddReservation(ReservationModel reservation)
+        public async Task<StatusCode> AddReservation(ReservationModel reservation)
         {
             reservation.Id = counter++;
-            await this.reservationRepository.AddReservation(reservation);
+            return await this.reservationRepository.AddReservation(reservation);
         }
 
-        public async Task<bool> DeleteReservation(int idReservation)
+        public async Task<StatusCode> DeleteReservation(int idReservation)
         {
-            ReservationModel deleteReservation = this.reservationRepository.GetReservation(idReservation).Result;
-            return await this.reservationRepository.RemoveReservation(deleteReservation.Id);
+            return await this.reservationRepository.RemoveReservation(idReservation);
         }
 
-        public List<MyReservationViewResult> GetUserReservation()
+        public async Task<ReservationsStatusModel> GetUserReservation()
         {
-            List<MyReservationViewResult> result = new List<MyReservationViewResult>();
-
-            foreach (ReservationModel reservation in this.reservationRepository.GetAll().Result.Where(x => x.IsRecursive == false))
+            try
             {
-                if (reservation.Author.Id == this.currentUser.Id)
+                List<MyReservationViewResult> result = new List<MyReservationViewResult>();
+                IEnumerable<ReservationModel> allReservation = await this.reservationRepository.GetAll();
+
+                if (allReservation == null)
                 {
-                    result.Add(new MyReservationViewResult()
-                    {
-                        Room = reservation.Room.Number,
-                        Date = reservation.Date,
-                        From = reservation.From,
-                        To = reservation.To,
-                        IsHasPolykom = reservation.Room.IsHasPolykom,
-                        IsBig = reservation.Room.IsBig,
-                        IsReservation = false,
-                        Id = reservation.Id
-                    });
+                    return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.Error };
                 }
+
+                foreach (ReservationModel reservation in allReservation.Where(x => x.IsRecursive == false))
+                {
+                    if (reservation.Author.Id == this.currentUser.Id)
+                    {
+                        result.Add(new MyReservationViewResult()
+                        {
+                            Room = reservation.Room.Number,
+                            Date = reservation.Date,
+                            From = reservation.From,
+                            To = reservation.To,
+                            IsHasPolykom = reservation.Room.IsHasPolykom,
+                            IsBig = reservation.Room.IsBig,
+                            IsReservation = false,
+                            Id = reservation.Id
+                        });
+                    }
+                }
+
+                return new ReservationsStatusModel() { ReservationModels = result, StatusCode = StatusCode.Ok };
             }
-
-            return result;
-        }
-
-        public List<MyReservationViewResult> GetUserReservationingsRecursive()
-        {
-            List<MyReservationViewResult> result = new List<MyReservationViewResult>();
-            List<ReservationModel> allReservationOne = this.reservationRepository.GetAll().Result.Where(x => x.Author.Id == this.currentUser.Id && x.IsRecursive).ToList();
-
-            result = allReservationOne.GroupBy(x => new { x.From, x.To, x.Room }).Select(x => new MyReservationViewResult()
+            catch (Exception)
             {
-                Id = x.First().Id,
-                From = x.Key.From,
-                To = x.Key.To,
-                Room = x.Key.Room.Number,
-                Date = x.First().Date,
-                IsRecursive = true,
-                IsBig = x.First().Room.IsBig,
-                IsHasPolykom = x.FirstOrDefault().Room.IsHasPolykom
-            }).ToList();
-
-            return result;
+                return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
+            }
         }
 
-        public async Task<bool> DeleteReservationRecursive(int idReservation)
+        public async Task<ReservationsStatusModel> GetUserReservationingsRecursive()
+        {
+            try
+            {
+                List<MyReservationViewResult> result = new List<MyReservationViewResult>();
+
+                IEnumerable<ReservationModel> allReservation = await this.reservationRepository.GetAll();
+
+                if (allReservation == null)
+                {
+                    return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.Error };
+                }
+
+                allReservation = allReservation.Where(x => x.Author.Id == this.currentUser.Id && x.IsRecursive);
+                result =
+                    allReservation.GroupBy(x => new { x.From, x.To, x.Room }).Select(x => new MyReservationViewResult()
+                    {
+                        Id = x.First().Id,
+                        From = x.Key.From,
+                        To = x.Key.To,
+                        Room = x.Key.Room.Number,
+                        Date = x.First().Date,
+                        IsRecursive = true,
+                        IsBig = x.First().Room.IsBig,
+                        IsHasPolykom = x.FirstOrDefault().Room.IsHasPolykom
+                    }).ToList();
+
+                return new ReservationsStatusModel() { ReservationModels = result, StatusCode = StatusCode.Ok };
+            }
+            catch (Exception)
+            {
+                return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
+            }
+        }
+
+        public async Task<StatusCode> DeleteReservationRecursive(int idReservation)
         {
             return await this.reservationRepository.RemoveReservation(idReservation);
         }

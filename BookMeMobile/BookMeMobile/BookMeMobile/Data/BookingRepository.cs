@@ -49,20 +49,48 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<bool> RemoveReservation(int id)
+        public async Task<StatusCode> RemoveReservation(int id)
         {
-            var uri = new Uri(string.Format(this.restUri, id));
-            var response = await this.client.DeleteAsync(uri);
-            return response.IsSuccessStatusCode;
+            try
+            {
+                var uri = new Uri(string.Format(this.restUri, id));
+                var response = await this.client.DeleteAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    return StatusCode.Ok;
+                }
+                else
+                {
+                    return StatusCode.Error;
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode.NoInternet;
+            }
         }
 
-        public async Task<bool> AddReservation(ReservationModel reservation)
+        public async Task<StatusCode> AddReservation(ReservationModel reservation)
         {
-            var uri = new Uri(string.Format(this.restUri, string.Empty));
-            var json = JsonConvert.SerializeObject(reservation);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await this.client.PostAsync(uri, content);
-            return response.IsSuccessStatusCode;
+            try
+            {
+                var uri = new Uri(string.Format(this.restUri, string.Empty));
+                var json = JsonConvert.SerializeObject(reservation);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await this.client.PostAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return StatusCode.Ok;
+                }
+                else
+                {
+                    return StatusCode.Error;
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode.NoInternet;
+            }
         }
     }
 }
