@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.BL;
 using BookMeMobile.Entity;
+using BookMeMobile.Model;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
@@ -20,20 +21,17 @@ namespace BookMeMobile.Pages
         private readonly string reservationButonOK = "Да";
         private readonly string reservationButonNO = "Нет";
 
-        public List<MyReservationViewResult> ResultRoom { get; set; }
+        public List<RoomResult> ResultRoom { get; set; }
 
         private ReservationModel currentBooking;
 
         private ListRoomManager list;
 
-        public ListRoomPage(ReservationModel reservation, User currentUser, List<MyReservationViewResult> inRange, List<MyReservationViewResult> partRange, List<MyReservationViewResult> search)
+        public ListRoomPage(User currentUser, RoomsStatusModel search)
         {
             this.InitializeComponent();
-            this.currentBooking = reservation;
-            this.list = new ListRoomManager(reservation, currentUser);
-            this.ResultRoom = inRange;
-            this.ResultRoom.AddRange(partRange);
-            this.ResultRoom.AddRange(search);
+            this.list = new ListRoomManager(currentUser);
+            this.ResultRoom = search.Rooms.ToList();
             if (!this.ResultRoom.Any())
             {
                 isRoom.IsVisible = true;

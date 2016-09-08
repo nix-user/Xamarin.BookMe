@@ -18,13 +18,13 @@ namespace BookMeMobile.Pages.MyBookPages
         private readonly string reservationButonOK = "Да";
         private readonly string reservationButonNO = "Нет";
 
-        public List<MyReservationViewResult> ResultRoom { get; set; }
+        public List<ReservationModel> ResultRoom { get; set; }
 
         private ListRoomManager manager;
 
         public User CurrentUser { get; set; }
 
-        public RecursiveReservationPage(User user, List<MyReservationViewResult> list)
+        public RecursiveReservationPage(User user, List<ReservationModel> list)
         {
             this.InitializeComponent();
             this.manager = new ListRoomManager(user);

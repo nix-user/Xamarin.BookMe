@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,19 +35,27 @@ namespace BookMeMobile.Data
                 return null;
             }
         }
-
-        public async Task<ReservationModel> GetReservation(int id)
+                                                                                          
+        public async Task<ReservationStatusModel> GetReservation(int id)
         {
             var uri = new Uri(string.Format(this.restUri, id));
             var response = this.client.GetAsync(uri);
             if (response.Result.IsSuccessStatusCode)
             {
                 var content = await response.Result.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<ReservationModel>(content);
+                return new ReservationStatusModel()
+                {
+                    Reservation = JsonConvert.DeserializeObject<ReservationModel>(content),
+                    StatusCode = StatusCode.Ok
+                };
             }
             else
             {
-                return null;
+                return new ReservationStatusModel()
+                {
+                    Reservation = null,
+                    StatusCode = StatusCode.Ok
+                };
             }
         }
 
@@ -91,6 +100,40 @@ namespace BookMeMobile.Data
             catch (Exception)
             {
                 return StatusCode.NoInternet;
+            }
+        }
+
+        public async Task<ReservationsStatusModel> GetUserReservations(string login)
+        {
+            try
+            {
+                var uri = new Uri(string.Format(this.restUri, login));
+                var response = await this.client.GetAsync(uri);
+                var content = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {  
+                    return new ReservationsStatusModel()
+                    {
+                        ReservationModels = JsonConvert.DeserializeObject<List<ReservationModel>>(content),
+                        StatusCode = StatusCode.Ok
+                    };
+                }
+                else
+                {
+                    return new ReservationsStatusModel()
+                    {
+                        ReservationModels = null,
+                        StatusCode = StatusCode.Error
+                    };
+                }
+            }
+            catch (Exception)
+            {
+                return new ReservationsStatusModel()
+                {
+                    ReservationModels = null,
+                    StatusCode = StatusCode.NoInternet
+                };
             }
         }
     }

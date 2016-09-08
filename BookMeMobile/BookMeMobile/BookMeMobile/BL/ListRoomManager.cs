@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
+using BookMeMobile.Model;
 using Org.Apache.Http.Impl.Cookie;
 
 namespace BookMeMobile.BL
@@ -38,7 +39,7 @@ namespace BookMeMobile.BL
         {
             try
             {
-                List<MyReservationViewResult> result = new List<MyReservationViewResult>();
+                List<ReservationModel> result = new List<ReservationModel>();
                 foreach (
                     Room room in
                         this.roomRepository.GetAllRoom().Result
@@ -51,13 +52,11 @@ namespace BookMeMobile.BL
                     {
                         if (currentReservation.From < reservation.From && currentReservation.To > reservation.To)
                         {
-                            result.Add(new MyReservationViewResult()
+                            result.Add(new ReservationModel()
                             {
                                 From = currentReservation.From,
                                 To = currentReservation.To,
-                                Room = currentReservation.Room.Number,
-                                InRange = true,
-                                IsReservation = true
+                                Room = currentReservation.Room
                             });
                         }
                     }
@@ -75,7 +74,7 @@ namespace BookMeMobile.BL
         {
             try
             {
-                List<MyReservationViewResult> result = new List<MyReservationViewResult>();
+                List<ReservationModel> result = new List<ReservationModel>();
                 foreach (
                     Room room in
                         this.roomRepository.GetAllRoom().Result
@@ -92,16 +91,12 @@ namespace BookMeMobile.BL
                         if ((endInRange | startInRange) & currentReserve.Author.Id == reservation.Author.Id &&
                             currentReserve.Date == reservation.Date)
                         {
-                            result.Add(new MyReservationViewResult()
+                            result.Add(new ReservationModel()
                             {
                                 Date = currentReserve.Date,
                                 From = currentReserve.From,
                                 To = currentReserve.To,
-                                Room = currentReserve.Room.Number,
-                                IsHasPolykom = room.IsHasPolykom,
-                                IsBig = room.IsBig,
-                                InRange = false,
-                                IsReservation = true
+                                Room = currentReserve.Room
                             });
                         }
                     }
@@ -138,58 +133,7 @@ namespace BookMeMobile.BL
             }
 
             return null;
-        }
-
-        public ReservationsStatusModel Search(ReservationModel reservation)
-        {
-            try
-            {
-                List<MyReservationViewResult> result = new List<MyReservationViewResult>();
-                List<Room> srchList = this.ConditionTrue(reservation);
-
-                foreach (var item in srchList)
-                {
-                    List<ReservationModel> searchReservations = new List<ReservationModel>();
-                    bool hasRange = true;
-                    if (reservation.IsRecursive)
-                    {
-                        searchReservations.AddRange(item.Reservations.Where(x => x.Date >= reservation.Date));
-                    }
-                    else
-                    {
-                        searchReservations.AddRange(item.Reservations.Where(x => x.Date.Date == reservation.Date.Date));
-                    }
-
-                    foreach (ReservationModel currenrReservation in searchReservations)
-                    {
-                        if (!(currenrReservation.From >= reservation.To || currenrReservation.To <= reservation.From))
-                        {
-                            hasRange = false;
-                            break;
-                        }
-                    }
-
-                    if (hasRange)
-                    {
-                        result.Add(new MyReservationViewResult()
-                        {
-                            IsHasPolykom = item.IsHasPolykom,
-                            IsBig = item.IsBig,
-                            Room = item.Number,
-                            Id = item.Id,
-                            IsReservation = false,
-                            InRange = null
-                        });
-                    }
-                }
-
-                return new ReservationsStatusModel() { ReservationModels = this.Sort(result), StatusCode = StatusCode.Ok };
-            }
-            catch (AggregateException)
-            {
-                return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
-            }
-        }
+        } 
 
         public async Task<string> ReservationMessag(int idRoom)
         {
@@ -243,44 +187,6 @@ namespace BookMeMobile.BL
             return await this.reservationRepository.RemoveReservation(idReservation);
         }
 
-        public async Task<ReservationsStatusModel> GetUserReservation()
-        {
-            try
-            {
-                List<MyReservationViewResult> result = new List<MyReservationViewResult>();
-                IEnumerable<ReservationModel> allReservation = await this.reservationRepository.GetAll();
-
-                if (allReservation == null)
-                {
-                    return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.Error };
-                }
-
-                foreach (ReservationModel reservation in allReservation.Where(x => x.IsRecursive == false))
-                {
-                    if (reservation.Author.Id == this.currentUser.Id)
-                    {
-                        result.Add(new MyReservationViewResult()
-                        {
-                            Room = reservation.Room.Number,
-                            Date = reservation.Date,
-                            From = reservation.From,
-                            To = reservation.To,
-                            IsHasPolykom = reservation.Room.IsHasPolykom,
-                            IsBig = reservation.Room.IsBig,
-                            IsReservation = false,
-                            Id = reservation.Id
-                        });
-                    }
-                }
-
-                return new ReservationsStatusModel() { ReservationModels = result, StatusCode = StatusCode.Ok };
-            }
-            catch (AggregateException)
-            {
-                return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
-            }
-        }
-
         public async Task<ReservationsStatusModel> GetUserReservationingsRecursive()
         {
             try
@@ -321,7 +227,7 @@ namespace BookMeMobile.BL
             return await this.reservationRepository.RemoveReservation(idReservation);
         }
 
-        public List<MyReservationViewResult> Sort(List<MyReservationViewResult> list)
+        public List<ReservationModel> Sort(List<ReservationModel> list)
         {
             int userFloor = this.GetFloorInNumber(this.currentUser.MyRoom);
             list.Sort((view1, view2) =>
@@ -344,9 +250,9 @@ namespace BookMeMobile.BL
                     }
                 }
             });
-            if (list.FindIndex(x => x.Room == this.currentUser.FavoriteRoom) > 0)
+            if (list.FindIndex(x => x.Room.Number == this.currentUser.FavoriteRoom) > 0)
             {
-                MyReservationViewResult first = list[list.FindIndex(x => x.Room == this.currentUser.FavoriteRoom)];
+                ReservationModel first = list[list.FindIndex(x => x.Room.Number == this.currentUser.FavoriteRoom)];
                 list.Remove(first);
                 list.Insert(0, first);
             }
@@ -432,6 +338,34 @@ namespace BookMeMobile.BL
                 },
                 StatusCode = StatusCode.Ok
             };
+        }
+
+        public async Task<RoomsStatusModel> GetEmptyRoom(RoomFilterParameters filter)
+        {
+            try
+            {
+                return new RoomsStatusModel()
+                {
+                    Rooms = await this.roomRepository.GetEmptyRoom(filter),
+                    StatusCode = StatusCode.Ok
+                };
+            }
+            catch (AggregateException)
+            {
+                return new RoomsStatusModel()
+                {
+                    Rooms = null,
+                    StatusCode = StatusCode.NoInternet
+                };
+            }
+        }
+
+        public async Task<ReservationsStatusModel> GetAllUserReservation()
+        {
+            
+                return await reservationRepository.GetUserReservations(currentUser.Login);
+               
+
         }
     }
 }

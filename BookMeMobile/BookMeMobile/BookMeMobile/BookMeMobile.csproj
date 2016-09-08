@@ -44,14 +44,17 @@
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\RestURl.cs" />
     <Compile Include="Data\RoomRepository.cs" />
-    <Compile Include="Entity\ReservationsStatusModel.cs" />
+    <Compile Include="Model\ListRoomResult.cs" />
+    <Compile Include="Model\ReservationsStatusModel.cs" />
     <Compile Include="Entity\ReservationModel.cs" />
-    <Compile Include="Entity\MenuPageItem.cs" />
-    <Compile Include="Entity\MyReservationViewResult.cs" />
-    <Compile Include="Entity\ProfileViewModel.cs" />
-    <Compile Include="Entity\ReservationStatusModel.cs" />
+    <Compile Include="Model\MenuPageItem.cs" />
+    <Compile Include="Model\MyReservationViewResult.cs" />
+    <Compile Include="Model\ProfileViewModel.cs" />
+    <Compile Include="Model\ReservationStatusModel.cs" />
     <Compile Include="Entity\Room.cs" />
-    <Compile Include="Entity\StatusCode.cs" />
+    <Compile Include="Model\RoomFilterParameters.cs" />
+    <Compile Include="Model\RoomsStatusModel.cs" />
+    <Compile Include="Model\StatusCode.cs" />
     <Compile Include="Entity\User.cs" />
     <Compile Include="Pages\ListRoomPage.xaml.cs">
       <DependentUpon>ListRoomPage.xaml</DependentUpon>

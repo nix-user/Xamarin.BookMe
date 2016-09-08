@@ -4,26 +4,26 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Android.App;
 using BookMeMobile.Entity;
+using BookMeMobile.Model;
 using Newtonsoft.Json;
 
 namespace BookMeMobile.Data
 {
     public class RoomRepository
     {
-        private string restUri;
         private HttpClient client;
 
         public RoomRepository()
         {
-            this.restUri = RestURl.RoomURl;
             this.client = new HttpClient();
             this.client.Timeout = new TimeSpan(0, 0, 5);
         }
 
         public async Task<IEnumerable<Room>> GetAllRoom()
         {
-            var uri = new Uri(string.Format(this.restUri, string.Empty));
+            var uri = new Uri(string.Format(RestURl.RoomURl, string.Empty));
             var response = this.client.GetAsync(uri);
             if (response.Result.IsSuccessStatusCode)
             {
@@ -38,7 +38,7 @@ namespace BookMeMobile.Data
 
         public async Task<Room> GetRoom(int id)
         {
-            var uri = new Uri(string.Format(this.restUri, id));
+            var uri = new Uri(string.Format(RestURl.RoomURl, id));
             var response = this.client.GetAsync(uri);
             if (response.Result.IsSuccessStatusCode)
             {
@@ -53,11 +53,35 @@ namespace BookMeMobile.Data
 
         public async Task<bool> AddRoom(Room room)
         {
-            var uri = new Uri(string.Format(this.restUri, room.Id));
+            var uri = new Uri(string.Format(RestURl.RoomURl, room.Id));
             var json = JsonConvert.SerializeObject(room);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await this.client.PostAsync(uri, content);
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<IEnumerable<RoomResult>> GetEmptyRoom(RoomFilterParameters filter)
+        {
+            //var uri = new Uri(RestURl.GetEmptyRoom);
+            //var json = JsonConvert.SerializeObject(filter);
+            //var content = new StringContent(json, Encoding.UTF8, "application/json");
+            //var response = await this.client.PostAsync(uri, content);
+            //var contentResponce = await response.Content.ReadAsStringAsync();
+            //var roomResult = JsonConvert.DeserializeObject<List<Room>>(contentResponce);
+            var roomResult = new List<Room>()
+            {
+              new Room() { Id = 1, Number = "124ds", IsBig = true, IsHasPolykom = false },
+              new Room() { Id = 2, Number = "124ds", IsBig = true, IsHasPolykom = false },
+              new Room() { Id = 3, Number = "124ds", IsBig = true, IsHasPolykom = false },
+              new Room() { Id = 4, Number = "124ds", IsBig = true, IsHasPolykom = false },
+              new Room() { Id = 5, Number = "124ds", IsBig = true, IsHasPolykom = false }
+            };
+
+            return roomResult.Select(item => new RoomResult
+            {
+                Id = item.Id,
+                Number = item.Number
+            });
         }
     }
 }

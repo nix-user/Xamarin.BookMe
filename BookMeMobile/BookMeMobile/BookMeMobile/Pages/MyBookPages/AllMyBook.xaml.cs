@@ -22,7 +22,7 @@ namespace BookMeMobile.Pages.MyBookPages
         private readonly string bookButonOK = "Да";
         private readonly string bookButonNO = "Нет";
 
-        public List<MyReservationViewResult> ResultRoom { get; set; }
+        public List<ReservationModel> ResultRoom { get; set; }
 
         private ListRoomManager manager;
 
