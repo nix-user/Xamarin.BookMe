@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
+using BookMeMobile.Model;
 using Newtonsoft.Json;
 
 namespace BookMeMobile.Data
@@ -18,7 +20,7 @@ namespace BookMeMobile.Data
         {
             this.restUri = RestURl.BookURl;
             this.client = new HttpClient();
-            this.client.Timeout = new TimeSpan(0, 0, 5);
+            this.client.Timeout = new TimeSpan(0, 0, 4);
         }
 
         public async Task<IEnumerable<ReservationModel>> GetAll()
@@ -80,7 +82,7 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<StatusCode> AddReservation(ReservationModel reservation)
+        public async Task<StatusCode> AddReservation(int idRoom,ReservationModel reservation)
         {
             try
             {
@@ -103,36 +105,21 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<ReservationsStatusModel> GetUserReservations(string login)
+        public async Task<ResponseModel<IEnumerable<ReservationModel>>> GetUserReservations(string login)
         {
-            try
+            var uri = new Uri(string.Format(this.restUri, login));
+            var response = await this.client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
             {
-                var uri = new Uri(string.Format(this.restUri, login));
-                var response = await this.client.GetAsync(uri);
-                var content = await response.Content.ReadAsStringAsync();
-                if (response.IsSuccessStatusCode)
-                {
-                    return new ReservationsStatusModel()
-                    {
-                        ReservationModels = JsonConvert.DeserializeObject<List<ReservationModel>>(content),
-                        StatusCode = StatusCode.Ok
-                    };
-                }
-                else
-                {
-                    return new ReservationsStatusModel()
-                    {
-                        ReservationModels = null,
-                        StatusCode = StatusCode.Error
-                    };
-                }
+                return JsonConvert.DeserializeObject<ResponseModel<IEnumerable<ReservationModel>>>(content);
             }
-            catch (Exception)
+            else
             {
-                return new ReservationsStatusModel()
+                return new ResponseModel<IEnumerable<ReservationModel>>
                 {
-                    ReservationModels = null,
-                    StatusCode = StatusCode.NoInternet
+                    Result = null,
+                    IsOperationSuccessful = false
                 };
             }
         }

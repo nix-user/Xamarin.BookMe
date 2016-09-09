@@ -35,5 +35,10 @@ namespace BookMeMobile.Data
                 return ApiURL + "GetEmptyRoom";
             }
         }
+
+        public static string GetCurrentRoomReservation
+        {
+            get { return RoomURl + "/reservations"; }
+        }
     }
 }

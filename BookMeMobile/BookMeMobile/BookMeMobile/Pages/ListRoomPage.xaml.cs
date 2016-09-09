@@ -21,17 +21,17 @@ namespace BookMeMobile.Pages
         private readonly string reservationButonOK = "Да";
         private readonly string reservationButonNO = "Нет";
 
-        public List<RoomResult> ResultRoom { get; set; }
+        public List<Room> ResultRoom { get; set; }
 
         private ReservationModel currentBooking;
 
         private ListRoomManager list;
 
-        public ListRoomPage(User currentUser, RoomsStatusModel search)
+        public ListRoomPage(User currentUser, RoomResultStatusCode search)
         {
             this.InitializeComponent();
             this.list = new ListRoomManager(currentUser);
-            this.ResultRoom = search.Rooms.ToList();
+            this.ResultRoom = search.LIstRoomResults.ToList();
             if (!this.ResultRoom.Any())
             {
                 isRoom.IsVisible = true;

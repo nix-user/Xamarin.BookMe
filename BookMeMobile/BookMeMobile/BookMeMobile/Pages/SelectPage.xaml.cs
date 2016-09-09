@@ -16,6 +16,7 @@ namespace BookMeMobile.Pages
         private const string HeadError = "Ошибка";
         private const string BodyInternetIsNotExist = "Нет подключения к интернету";
         private const string BodyIntervalIsInvalid = "Ввведен неверный интервал";
+        private const string BodyError = "Ошибка на сервере";
         private const string Ok = "Ok";
 
         public static User CurrentUser { get; set; }
@@ -63,16 +64,27 @@ namespace BookMeMobile.Pages
                     IsLarge = IsBig.IsToggled
                 };
 
-                RoomsStatusModel searchList = await this.manager.GetEmptyRoom(reservation);
-                if (searchList.StatusCode == StatusCode.Ok)
+                RoomResultStatusCode searchList = await this.manager.GetEmptyRoom(reservation);
+                switch (searchList.StatusCode)
                 {
-                    await
-                         this.Navigation.PushAsync(new MainPage(CurrentUser,
+                    case StatusCode.Ok:
+                        {
+                            await this.Navigation.PushAsync(new MainPage(CurrentUser,
                              new ListRoomPage(CurrentUser, searchList)));
-                }
-                else
-                {
-                    await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                            break;
+                        }
+
+                    case StatusCode.NoInternet:
+                        {
+                            await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                            break;
+                        }
+
+                    case StatusCode.Error:
+                        {
+                            await this.DisplayAlert(HeadError, BodyError, Ok);
+                            break;
+                        }
                 }
             }
             else
@@ -84,15 +96,26 @@ namespace BookMeMobile.Pages
         public async void MyReservations_OnClicked(object sender, EventArgs e)
         {
             ReservationsStatusModel allReservatioons = await this.manager.GetAllUserReservation();
-            if (allReservatioons.StatusCode == StatusCode.Ok)
+            switch (allReservatioons.StatusCode)
             {
-                await
-                    this.Navigation.PushAsync(new MainPage(CurrentUser,
-                        new TabPanelPage(CurrentUser, allReservatioons.ReservationModels)));
-            }
-            else
-            {
-                await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                case StatusCode.Ok:
+                    {
+                        await this.Navigation.PushAsync(
+                            new TabPanelPage(CurrentUser, allReservatioons.ReservationModels));
+                        break;
+                    }
+
+                case StatusCode.NoInternet:
+                    {
+                        await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                        break;
+                    }
+
+                case StatusCode.Error:
+                    {
+                        await this.DisplayAlert(HeadError, BodyError, Ok);
+                        break;
+                    }
             }
         }
     }
