@@ -35,80 +35,80 @@ namespace BookMeMobile.BL
             this.currentUser = user;
         }
 
-        public ReservationsStatusModel AddUserReservationInRange(ReservationModel reservation)
-        {
-            try
-            {
-                List<ReservationModel> result = new List<ReservationModel>();
-                foreach (
-                    Room room in
-                        this.roomRepository.GetAllRoom().Result
-                            .Where(x => x.IsBig == reservation.Room.IsBig && x.IsHasPolykom == reservation.Room.IsHasPolykom))
-                {
-                    foreach (
-                        var currentReservation in
-                            room.Reservations.Where(
-                                x => x.Author.Id == reservation.Author.Id && x.Date == reservation.Date))
-                    {
-                        if (currentReservation.From < reservation.From && currentReservation.To > reservation.To)
-                        {
-                            result.Add(new ReservationModel()
-                            {
-                                From = currentReservation.From,
-                                To = currentReservation.To,
-                                Room = currentReservation.Room
-                            });
-                        }
-                    }
-                }
+        //public ReservationsStatusModel AddUserReservationInRange(ReservationModel reservation)
+        //{
+        //    try
+        //    {
+        //        List<ReservationModel> result = new List<ReservationModel>();
+        //        foreach (
+        //            Room room in
+        //                this.roomRepository.GetAllRoom().Result
+        //                    .Where(x => x.IsBig == reservation.Room.IsBig && x.IsHasPolykom == reservation.Room.IsHasPolykom))
+        //        {
+        //            foreach (
+        //                var currentReservation in
+        //                    room.Reservations.Where(
+        //                        x => x.Author.Id == reservation.Author.Id && x.From.Date == reservation.From.Date))
+        //            {
+        //                if (currentReservation.From < reservation.From && currentReservation.To > reservation.To)
+        //                {
+        //                    result.Add(new ReservationModel()
+        //                    {
+        //                        From = currentReservation.From,
+        //                        To = currentReservation.To,
+        //                        Room = currentReservation.Room
+        //                    });
+        //                }
+        //            }
+        //        }
 
-                return new ReservationsStatusModel() { ReservationModels = result, StatusCode = StatusCode.Ok };
-            }
-            catch (AggregateException)
-            {
-                return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
-            }
-        }
+        //        return new ReservationsStatusModel() { ReservationModels = result, StatusCode = StatusCode.Ok };
+        //    }
+        //    catch (AggregateException)
+        //    {
+        //        return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
+        //    }
+        //}
 
-        public ReservationsStatusModel AddUserReservationPartRange(ReservationModel reservation)
-        {
-            try
-            {
-                List<ReservationModel> result = new List<ReservationModel>();
-                foreach (
-                    Room room in
-                        this.roomRepository.GetAllRoom().Result
-                            .Where(
-                                x =>
-                                    x.IsBig == reservation.Room.IsBig && x.IsHasPolykom == reservation.Room.IsHasPolykom))
-                {
-                    foreach (var currentReserve in room.Reservations)
-                    {
-                        bool endInRange = currentReserve.From <= reservation.From &&
-                                          currentReserve.To >= reservation.From && reservation.To >= currentReserve.To;
-                        bool startInRange = currentReserve.From <= reservation.To && currentReserve.To >= reservation.To &&
-                                            reservation.From <= currentReserve.From;
-                        if ((endInRange | startInRange) & currentReserve.Author.Id == reservation.Author.Id &&
-                            currentReserve.Date == reservation.Date)
-                        {
-                            result.Add(new ReservationModel()
-                            {
-                                Date = currentReserve.Date,
-                                From = currentReserve.From,
-                                To = currentReserve.To,
-                                Room = currentReserve.Room
-                            });
-                        }
-                    }
-                }
+        //public ReservationsStatusModel AddUserReservationPartRange(ReservationModel reservation)
+        //{
+        //    try
+        //    {
+        //        List<ReservationModel> result = new List<ReservationModel>();
+        //        foreach (
+        //            Room room in
+        //                this.roomRepository.GetAllRoom().Result
+        //                    .Where(
+        //                        x =>
+        //                            x.IsBig == reservation.Room.IsBig && x.IsHasPolykom == reservation.Room.IsHasPolykom))
+        //        {
+        //            foreach (var currentReserve in room.Reservations)
+        //            {
+        //                bool endInRange = currentReserve.From <= reservation.From &&
+        //                                  currentReserve.To >= reservation.From && reservation.To >= currentReserve.To;
+        //                bool startInRange = currentReserve.From <= reservation.To && currentReserve.To >= reservation.To &&
+        //                                    reservation.From <= currentReserve.From;
+        //                if ((endInRange | startInRange) & currentReserve.Author.Id == reservation.Author.Id &&
+        //                    currentReserve.From.Date == reservation.From.Date)
+        //                {
+        //                    result.Add(new ReservationModel()
+        //                    {
+        //                        Date = currentReserve.Date,
+        //                        From = currentReserve.From,
+        //                        To = currentReserve.To,
+        //                        Room = currentReserve.Room
+        //                    });
+        //                }
+        //            }
+        //        }
 
-                return new ReservationsStatusModel() { ReservationModels = this.Sort(result), StatusCode = StatusCode.Ok };
-            }
-            catch (AggregateException)
-            {
-                return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
-            }
-        }
+        //        return new ReservationsStatusModel() { ReservationModels = this.Sort(result), StatusCode = StatusCode.Ok };
+        //    }
+        //    catch (AggregateException)
+        //    {
+        //        return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
+        //    }
+        //}
 
         private List<Room> ConditionTrue(ReservationModel reservation)
         {
@@ -133,7 +133,7 @@ namespace BookMeMobile.BL
             }
 
             return null;
-        } 
+        }
 
         public async Task<string> ReservationMessag(int idRoom)
         {
@@ -141,34 +141,33 @@ namespace BookMeMobile.BL
             Room currentRoom = this.roomRepository.GetRoom(idRoom).Result;
             return string.Format(
                 " Комната: {3}\n Дата: {0}\n Время: {1} - {2}\n Большая:{4} Поликом:{5}",
-                this.currentReservation.Date.ToString("d"),
-                this.currentReservation.From.ToString(@"hh\:mm"),
-                this.currentReservation.To.ToString(@"hh\:mm"),
+                this.currentReservation.From.Date.ToString("d"),
+                this.currentReservation.From.TimeOfDay.ToString(@"hh\:mm"),
+                this.currentReservation.To.TimeOfDay.ToString(@"hh\:mm"),
                 currentRoom.Number,
                 string.Format("{0:Да;0;Нет}", currentRoom.IsBig.GetHashCode()),
                 string.Format("{0:Да;0;Нет}", currentRoom.IsHasPolykom.GetHashCode()));
         }
 
-        public async void AddRecursiveReservation(int idRoom)
-        {
-            for (int i = 1; i <= 7; i++)
-            {
-                ReservationModel currentReservation = new ReservationModel()
-                {
-                    IsRecursive = true,
-                    Room = this.currentReservation.Room,
-                    Id = this.currentReservation.Id,
-                    Date = this.currentReservation.Date,
-                    From = this.currentReservation.From,
-                    To = this.currentReservation.To,
-                    Author = this.currentReservation.Author
-                };
-                this.currentReservation.Id = counter++;
-                this.roomRepository.GetAllRoom().Result.FirstOrDefault(x => x.Id == idRoom).Reservations.Add(currentReservation);
-                await this.reservationRepository.AddReservation(currentReservation);
-                this.currentReservation.Date = DateTime.Now.AddDays(i);
-            }
-        }
+        //public async void AddRecursiveReservation(int idRoom)
+        //{
+        //    for (int i = 1; i <= 7; i++)
+        //    {
+        //        ReservationModel currentReservation = new ReservationModel()
+        //        {
+        //            IsRecursive = true,
+        //            Room = this.currentReservation.Room,
+        //            Id = this.currentReservation.Id,
+        //            From = this.currentReservation.From,
+        //            To = this.currentReservation.To,
+        //            Author = this.currentReservation.Author
+        //        };
+        //        this.currentReservation.Id = counter++;
+        //        this.roomRepository.GetAllRoom().Result.FirstOrDefault(x => x.Id == idRoom).Reservations.Add(currentReservation);
+        //        await this.reservationRepository.AddReservation(currentReservation);
+        //        this.currentReservation.Date = DateTime.Now.AddDays(i);
+        //    }
+        //}
 
         public async Task<StatusCode> AddReservation(int idRoom)
         {
@@ -187,45 +186,45 @@ namespace BookMeMobile.BL
             return await this.reservationRepository.RemoveReservation(idReservation);
         }
 
-        public async Task<ReservationsStatusModel> GetUserReservationingsRecursive()
-        {
-            try
-            {
-                List<MyReservationViewResult> result = new List<MyReservationViewResult>();
+        //public async Task<ReservationsStatusModel> GetUserReservationingsRecursive()
+        //{
+        //    try
+        //    {
+        //        List<ReservationModel> result = new List<ReservationModel>();
 
-                IEnumerable<ReservationModel> allReservation = await this.reservationRepository.GetAll();
+        //        IEnumerable<ReservationModel> allReservation = await this.reservationRepository.GetAll();
 
-                if (allReservation == null)
-                {
-                    return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.Error };
-                }
+        //        if (allReservation == null)
+        //        {
+        //            return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.Error };
+        //        }
 
-                allReservation = allReservation.Where(x => x.Author.Id == this.currentUser.Id && x.IsRecursive);
-                result =
-                    allReservation.GroupBy(x => new { x.From, x.To, x.Room }).Select(x => new MyReservationViewResult()
-                    {
-                        Id = x.First().Id,
-                        From = x.Key.From,
-                        To = x.Key.To,
-                        Room = x.Key.Room.Number,
-                        Date = x.First().Date,
-                        IsRecursive = true,
-                        IsBig = x.First().Room.IsBig,
-                        IsHasPolykom = x.FirstOrDefault().Room.IsHasPolykom
-                    }).ToList();
+        //        allReservation = allReservation.Where(x => x.Author.Id == this.currentUser.Id && x.IsRecursive);
+        //        result =
+        //            allReservation.GroupBy(x => new { x.From, x.To, x.Room }).Select(x => new MyReservationViewResult()
+        //            {
+        //                Id = x.First().Id,
+        //                From = x.Key.From,
+        //                To = x.Key.To,
+        //                Room = x.Key.Room.Number,
+        //                Date = x.First().Date,
+        //                IsRecursive = true,
+        //                IsBig = x.First().Room.IsBig,
+        //                IsHasPolykom = x.FirstOrDefault().Room.IsHasPolykom
+        //            }).ToList();
 
-                return new ReservationsStatusModel() { ReservationModels = result, StatusCode = StatusCode.Ok };
-            }
-            catch (AggregateException)
-            {
-                return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
-            }
-        }
+        //        return new ReservationsStatusModel() { ReservationModels = result, StatusCode = StatusCode.Ok };
+        //    }
+        //    catch (AggregateException)
+        //    {
+        //        return new ReservationsStatusModel() { ReservationModels = null, StatusCode = StatusCode.NoInternet };
+        //    }
+        //}
 
-        public async Task<StatusCode> DeleteReservationRecursive(int idReservation)
-        {
-            return await this.reservationRepository.RemoveReservation(idReservation);
-        }
+        //public async Task<StatusCode> DeleteReservationRecursive(int idReservation)
+        //{
+        //    return await this.reservationRepository.RemoveReservation(idReservation);
+        //}
 
         public List<ReservationModel> Sort(List<ReservationModel> list)
         {
@@ -263,14 +262,13 @@ namespace BookMeMobile.BL
         public int GetFloorInNumber(string s)
         {
             string stringFloor = new string(s.ToCharArray().Where(ch => !char.IsLetter(ch)).ToArray());
-            int floor;
             if (stringFloor.Length < 4)
             {
-                return floor = int.Parse(stringFloor[0].ToString());
+                return int.Parse(stringFloor[0].ToString());
             }
             else
             {
-                return floor = int.Parse(stringFloor[0].ToString() + stringFloor[1]);
+                return int.Parse(stringFloor[0].ToString() + stringFloor[1]);
             }
         }
 
@@ -282,10 +280,10 @@ namespace BookMeMobile.BL
                 Room currentRoom = this.roomRepository.GetAllRoom().Result.FirstOrDefault(x => x.Number == result);
                 foreach (
                     ReservationModel currentReservation in
-                        currentRoom.Reservations.Where(x => x.Date.Date == DateTime.Now.Date))
+                        currentRoom.Reservations.Where(x => x.From.Date == DateTime.Now.Date))
                 {
-                    if (currentReservation.From >= DateTime.Now.TimeOfDay ||
-                        currentReservation.To <= DateTime.Now.TimeOfDay)
+                    if (currentReservation.From.TimeOfDay >= DateTime.Now.TimeOfDay ||
+                        currentReservation.To.TimeOfDay <= DateTime.Now.TimeOfDay)
                     {
                         roomReserve = false;
                     }
@@ -297,7 +295,6 @@ namespace BookMeMobile.BL
                             {
                                 Reservation = new ReservationModel()
                                 {
-                                    Date = DateTime.Now,
                                     Room = currentRoom,
                                     From = currentReservation.To,
                                     Id = DateTime.Now.Millisecond + new Random().Next(1000),
@@ -329,11 +326,10 @@ namespace BookMeMobile.BL
             {
                 Reservation = new ReservationModel()
                 {
-                    Date = DateTime.Now,
                     Room = currentRoom,
-                    From = DateTime.Now.Subtract(DateTime.Now.Date),
+                    From = DateTime.Now,
                     Id = DateTime.Now.Millisecond + new Random().Next(1000),
-                    To = DateTime.Now.AddHours(1).Subtract(DateTime.Now.Date),
+                    To = DateTime.Now.AddHours(1),
                     Author = this.currentUser
                 },
                 StatusCode = StatusCode.Ok
@@ -362,10 +358,7 @@ namespace BookMeMobile.BL
 
         public async Task<ReservationsStatusModel> GetAllUserReservation()
         {
-            
-                return await reservationRepository.GetUserReservations(currentUser.Login);
-               
-
+            return await this.reservationRepository.GetUserReservations(this.currentUser.Login);
         }
     }
 }

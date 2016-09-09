@@ -63,16 +63,16 @@ namespace BookMeMobile.Pages
                     IsLarge = IsBig.IsToggled
                 };
 
-               RoomsStatusModel searchList = await this.manager.GetEmptyRoom(reservation);
+                RoomsStatusModel searchList = await this.manager.GetEmptyRoom(reservation);
                 if (searchList.StatusCode == StatusCode.Ok)
                 {
-                   await
-                        this.Navigation.PushAsync(new MainPage(CurrentUser,
-                            new ListRoomPage(CurrentUser, searchList)));
+                    await
+                         this.Navigation.PushAsync(new MainPage(CurrentUser,
+                             new ListRoomPage(CurrentUser, searchList)));
                 }
                 else
                 {
-                   await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                    await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
                 }
             }
             else
@@ -83,7 +83,7 @@ namespace BookMeMobile.Pages
 
         public async void MyReservations_OnClicked(object sender, EventArgs e)
         {
-            ReservationsStatusModel allReservatioons =await this.manager.GetAllUserReservation();     
+            ReservationsStatusModel allReservatioons = await this.manager.GetAllUserReservation();
             if (allReservatioons.StatusCode == StatusCode.Ok)
             {
                 await

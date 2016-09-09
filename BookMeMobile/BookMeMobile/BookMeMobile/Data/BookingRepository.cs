@@ -35,7 +35,7 @@ namespace BookMeMobile.Data
                 return null;
             }
         }
-                                                                                          
+
         public async Task<ReservationStatusModel> GetReservation(int id)
         {
             var uri = new Uri(string.Format(this.restUri, id));
@@ -111,7 +111,7 @@ namespace BookMeMobile.Data
                 var response = await this.client.GetAsync(uri);
                 var content = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
-                {  
+                {
                     return new ReservationsStatusModel()
                     {
                         ReservationModels = JsonConvert.DeserializeObject<List<ReservationModel>>(content),

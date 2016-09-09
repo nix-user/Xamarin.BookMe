@@ -7,6 +7,7 @@
   <ContentPage.Resources>
     <ResourceDictionary>
       <binding:ConverterBool x:Key="boolConvert"/>
+      <binding:ConvertFromRoomToString x:Key="FromRoomToString"/>
     </ResourceDictionary>
   </ContentPage.Resources>
   <ContentPage.Padding>
@@ -24,8 +25,8 @@
                   <Button AbsoluteLayout.LayoutBounds="1,0.5,-1,-1"
            AbsoluteLayout.LayoutFlags="PositionProportional" HorizontalOptions="End"   x:Name="btnBooking" ClassId="{Binding Id}" Text="Снять бронь" IsVisible="{Binding IsBook,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Medium" Clicked="BtnBooking_OnClicked"/>
                   <StackLayout VerticalOptions="Center">
-                    <Label Text = "{Binding Room,StringFormat='Комната: № {0}' }" FontSize="Medium"/>
-                    <Label Text="{Binding Date,StringFormat='{0:dd/MMMM/yyyy}'}" FontSize="Medium"></Label>
+                    <Label Text = "{Binding Room, Converter={StaticResource FromRoomToString}, StringFormat='Комната: № {0}' }" FontSize="Medium"/>
+                    <Label Text="{Binding From,StringFormat='{0:dd/MMMM/yyyy}'}" FontSize="Medium"></Label>
                     <StackLayout Orientation="Horizontal">
                       <Label Text="{Binding From,StringFormat='{0:hh\\:mm} -'}" FontSize="Medium"></Label>
                       <Label Text="{Binding To,StringFormat=' {0:hh\\:mm}'}" FontSize="Medium"></Label>

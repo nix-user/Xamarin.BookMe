@@ -40,6 +40,7 @@
     <Compile Include="Binding\CheckerInBookRoom.cs" />
     <Compile Include="Binding\CheckerInColor.cs" />
     <Compile Include="Binding\ConverterBool.cs" />
+    <Compile Include="Binding\ConvertFromRoomToString.cs" />
     <Compile Include="Data\BookingRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\RestURl.cs" />
@@ -48,7 +49,6 @@
     <Compile Include="Model\ReservationsStatusModel.cs" />
     <Compile Include="Entity\ReservationModel.cs" />
     <Compile Include="Model\MenuPageItem.cs" />
-    <Compile Include="Model\MyReservationViewResult.cs" />
     <Compile Include="Model\ProfileViewModel.cs" />
     <Compile Include="Model\ReservationStatusModel.cs" />
     <Compile Include="Entity\Room.cs" />
@@ -70,9 +70,6 @@
     </Compile>
     <Compile Include="Pages\MyBookPages\AllMyBook.xaml.cs">
       <DependentUpon>AllMyBook.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\MyBookPages\MyBooks.xaml.cs">
-      <DependentUpon>MyBooks.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MyBookPages\RecursiveBookPage.xaml.cs">
       <DependentUpon>RecursiveBookPage.xaml</DependentUpon>
@@ -154,12 +151,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\LoginPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Pages\MyBookPages\MyBooks.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

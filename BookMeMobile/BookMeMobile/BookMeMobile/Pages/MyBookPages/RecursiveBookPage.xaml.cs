@@ -45,7 +45,7 @@ namespace BookMeMobile.Pages.MyBookPages
             bool b = await DisplayAlert(this.reservationingHeadChecking, this.reservationIsDelete, this.reservationButonOK, this.reservationButonNO);
             if (b)
             {
-                await this.manager.DeleteReservationRecursive(idBook);
+                //await this.manager.DeleteReservationRecursive(idBook);
                 await this.DisplayAlert(this.reservationingHeadSuccess, this.reservationingBodySucces, this.reservationButonOK);
                 await this.Navigation.PopModalAsync();
             }

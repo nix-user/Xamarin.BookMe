@@ -62,21 +62,12 @@ namespace BookMeMobile.Data
 
         public async Task<IEnumerable<RoomResult>> GetEmptyRoom(RoomFilterParameters filter)
         {
-            //var uri = new Uri(RestURl.GetEmptyRoom);
-            //var json = JsonConvert.SerializeObject(filter);
-            //var content = new StringContent(json, Encoding.UTF8, "application/json");
-            //var response = await this.client.PostAsync(uri, content);
-            //var contentResponce = await response.Content.ReadAsStringAsync();
-            //var roomResult = JsonConvert.DeserializeObject<List<Room>>(contentResponce);
-            var roomResult = new List<Room>()
-            {
-              new Room() { Id = 1, Number = "124ds", IsBig = true, IsHasPolykom = false },
-              new Room() { Id = 2, Number = "124ds", IsBig = true, IsHasPolykom = false },
-              new Room() { Id = 3, Number = "124ds", IsBig = true, IsHasPolykom = false },
-              new Room() { Id = 4, Number = "124ds", IsBig = true, IsHasPolykom = false },
-              new Room() { Id = 5, Number = "124ds", IsBig = true, IsHasPolykom = false }
-            };
-
+            var uri = new Uri(RestURl.GetEmptyRoom);
+            var json = JsonConvert.SerializeObject(filter);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await this.client.PostAsync(uri, content);
+            var contentResponce = await response.Content.ReadAsStringAsync();
+            var roomResult = JsonConvert.DeserializeObject<List<Room>>(contentResponce);
             return roomResult.Select(item => new RoomResult
             {
                 Id = item.Id,
