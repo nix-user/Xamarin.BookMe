@@ -18,13 +18,13 @@ namespace BookMeMobile.Pages.MyBookPages
         private readonly string reservationButonOK = "Да";
         private readonly string reservationButonNO = "Нет";
 
-        public List<MyReservationViewResult> ResultRoom { get; set; }
+        public List<ReservationModel> ResultRoom { get; set; }
 
         private ListRoomManager manager;
 
         public User CurrentUser { get; set; }
 
-        public RecursiveReservationPage(User user, List<MyReservationViewResult> list)
+        public RecursiveReservationPage(User user, List<ReservationModel> list)
         {
             this.InitializeComponent();
             this.manager = new ListRoomManager(user);
@@ -45,7 +45,6 @@ namespace BookMeMobile.Pages.MyBookPages
             bool b = await DisplayAlert(this.reservationingHeadChecking, this.reservationIsDelete, this.reservationButonOK, this.reservationButonNO);
             if (b)
             {
-                await this.manager.DeleteReservationRecursive(idBook);
                 await this.DisplayAlert(this.reservationingHeadSuccess, this.reservationingBodySucces, this.reservationButonOK);
                 await this.Navigation.PopModalAsync();
             }

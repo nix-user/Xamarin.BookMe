@@ -22,13 +22,13 @@ namespace BookMeMobile.Pages.MyBookPages
         private readonly string bookButonOK = "Да";
         private readonly string bookButonNO = "Нет";
 
-        public List<MyReservationViewResult> ResultRoom { get; set; }
+        public List<ReservationModel> ResultRoom { get; set; }
 
         private ListRoomManager manager;
 
         public User CurrentUser { get; set; }
 
-        public AllMyBook(User user, List<MyReservationViewResult> noRecursive, List<MyReservationViewResult> recursive)
+        public AllMyBook(User user, List<ReservationModel> noRecursive, List<ReservationModel> recursive)
         {
             this.InitializeComponent();
             this.manager = new ListRoomManager(user);
@@ -46,28 +46,6 @@ namespace BookMeMobile.Pages.MyBookPages
 
         private async void BtnBooking_OnClicked(object sender, EventArgs e)
         {
-            int idBook = int.Parse(((Button)sender).ClassId);
-            bool b = await DisplayAlert(this.bookingHeadChecking, this.bookIsDelete, this.bookButonOK, this.bookButonNO);
-            if (b)
-            {
-                StatusCode result = await this.manager.DeleteReservationRecursive(idBook);
-                if (result == StatusCode.Ok)
-                {
-                    await this.DisplayAlert(this.bookingHeadSuccess, this.bookingBodySucces, this.bookButonOK);
-                }
-
-                if (result == StatusCode.Error)
-                {
-                    await this.DisplayAlert(this.bookingHeadError, this.bookingBodyError, this.bookButonOK);
-                }
-
-                if (result == StatusCode.NoInternet)
-                {
-                    await this.DisplayAlert(this.bookingHeadError, this.bodyNoInternet, this.bookButonOK);
-                }
-
-                await this.Navigation.PopAsync();
-            }
         }
     }
 }

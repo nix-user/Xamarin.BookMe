@@ -4,6 +4,7 @@ using Android.Locations;
 using BookMeMobile.BL;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
+using BookMeMobile.Model;
 using BookMeMobile.Pages.MyBookPages;
 using Java.Util;
 using Xamarin.Forms;
@@ -15,6 +16,7 @@ namespace BookMeMobile.Pages
         private const string HeadError = "Ошибка";
         private const string BodyInternetIsNotExist = "Нет подключения к интернету";
         private const string BodyIntervalIsInvalid = "Ввведен неверный интервал";
+        private const string BodyError = "Ошибка на сервере";
         private const string Ok = "Ok";
 
         public static User CurrentUser { get; set; }
@@ -54,28 +56,35 @@ namespace BookMeMobile.Pages
             if (TimeFrom.Time < TimeTo.Time)
             {
                 Room room = new Room() { IsBig = IsBig.IsToggled, IsHasPolykom = IsPolinom.IsToggled };
-                ReservationModel reservation = new ReservationModel()
+                RoomFilterParameters reservation = new RoomFilterParameters()
                 {
-                    Date = Date.Date,
-                    Room = room,
-                    From = TimeFrom.Time,
-                    To = TimeTo.Time,
-                    Author = CurrentUser,
-                    IsRecursive = IsRecursive.IsToggled
+                    From = Date.Date + TimeFrom.Time,
+                    To = Date.Date + TimeTo.Time,
+                    HasPolycom = IsPolinom.IsToggled,
+                    IsLarge = IsBig.IsToggled
                 };
 
-                ReservationsStatusModel inRange = this.manager.AddUserReservationInRange(reservation);
-                ReservationsStatusModel partInRange = this.manager.AddUserReservationPartRange(reservation);
-                ReservationsStatusModel searchList = this.manager.Search(reservation);
-                if (inRange.StatusCode == StatusCode.Ok && partInRange.StatusCode == StatusCode.Ok && searchList.StatusCode == StatusCode.Ok)
+                RoomResultStatusCode searchList = await this.manager.GetEmptyRoom(reservation);
+                switch (searchList.StatusCode)
                 {
-                   await
-                        this.Navigation.PushAsync(new MainPage(CurrentUser,
-                            new ListRoomPage(reservation, CurrentUser, inRange.ReservationModels, partInRange.ReservationModels, searchList.ReservationModels)));
-                }
-                else
-                {
-                   await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                    case StatusCode.Ok:
+                        {
+                            await this.Navigation.PushAsync(new MainPage(CurrentUser,
+                             new ListRoomPage(CurrentUser, searchList)));
+                            break;
+                        }
+
+                    case StatusCode.NoInternet:
+                        {
+                            await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                            break;
+                        }
+
+                    case StatusCode.Error:
+                        {
+                            await this.DisplayAlert(HeadError, BodyError, Ok);
+                            break;
+                        }
                 }
             }
             else
@@ -86,30 +95,28 @@ namespace BookMeMobile.Pages
 
         public async void MyReservations_OnClicked(object sender, EventArgs e)
         {
-            ReservationsStatusModel recursive = this.GetRecursiveReservation();
-            ReservationsStatusModel noRecursive = this.GetReservation();
-            if (recursive.StatusCode == StatusCode.Ok && noRecursive.StatusCode == StatusCode.Ok)
+            ReservationsStatusModel allReservatioons = await this.manager.GetAllUserReservation();
+            switch (allReservatioons.StatusCode)
             {
-                await
-                    this.Navigation.PushAsync(new MainPage(CurrentUser,
-                        new TabPanelPage(CurrentUser, recursive.ReservationModels, noRecursive.ReservationModels)));
-            }
-            else
-            {
-                await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
-            }
-        }
+                case StatusCode.Ok:
+                    {
+                        await this.Navigation.PushAsync(
+                            new TabPanelPage(CurrentUser, allReservatioons.ReservationModels));
+                        break;
+                    }
 
-        private ReservationsStatusModel GetRecursiveReservation()
-        {
-            ReservationsStatusModel model = this.manager.GetUserReservationingsRecursive().Result;
-            return model;
-        }
+                case StatusCode.NoInternet:
+                    {
+                        await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                        break;
+                    }
 
-        private ReservationsStatusModel GetReservation()
-        {
-            ReservationsStatusModel model = this.manager.GetUserReservation().Result;
-            return model;
+                case StatusCode.Error:
+                    {
+                        await this.DisplayAlert(HeadError, BodyError, Ok);
+                        break;
+                    }
+            }
         }
     }
 }

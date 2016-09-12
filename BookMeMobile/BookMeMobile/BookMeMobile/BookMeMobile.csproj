@@ -14,8 +14,6 @@
     <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -40,18 +38,25 @@
     <Compile Include="Binding\CheckerInBookRoom.cs" />
     <Compile Include="Binding\CheckerInColor.cs" />
     <Compile Include="Binding\ConverterBool.cs" />
+    <Compile Include="Binding\ConvertFromRoomToString.cs" />
     <Compile Include="Data\BookingRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\RestURl.cs" />
     <Compile Include="Data\RoomRepository.cs" />
-    <Compile Include="Entity\ReservationsStatusModel.cs" />
+    <Compile Include="Model\ListRoomResult.cs" />
+    <Compile Include="Model\ReservationsStatusModel.cs" />
     <Compile Include="Entity\ReservationModel.cs" />
-    <Compile Include="Entity\MenuPageItem.cs" />
-    <Compile Include="Entity\MyReservationViewResult.cs" />
-    <Compile Include="Entity\ProfileViewModel.cs" />
-    <Compile Include="Entity\ReservationStatusModel.cs" />
+    <Compile Include="Model\MenuPageItem.cs" />
+    <Compile Include="Model\ProfileViewModel.cs" />
+    <Compile Include="Model\ReservationStatusModel.cs" />
     <Compile Include="Entity\Room.cs" />
-    <Compile Include="Entity\StatusCode.cs" />
+    <Compile Include="Model\ResponceModelGeneric.cs" />
+    <Compile Include="Model\ResponseModel.cs" />
+    <Compile Include="Model\RoomFilterParameters.cs" />
+    <Compile Include="Model\RoomReservationsRequestModel.cs" />
+    <Compile Include="Model\RoomResultStatusCode.cs" />
+    <Compile Include="Model\RoomsStatusModel.cs" />
+    <Compile Include="Model\StatusCode.cs" />
     <Compile Include="Entity\User.cs" />
     <Compile Include="Pages\ListRoomPage.xaml.cs">
       <DependentUpon>ListRoomPage.xaml</DependentUpon>
@@ -67,9 +72,6 @@
     </Compile>
     <Compile Include="Pages\MyBookPages\AllMyBook.xaml.cs">
       <DependentUpon>AllMyBook.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\MyBookPages\MyBooks.xaml.cs">
-      <DependentUpon>MyBooks.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MyBookPages\RecursiveBookPage.xaml.cs">
       <DependentUpon>RecursiveBookPage.xaml</DependentUpon>
@@ -156,12 +158,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\MyBookPages\MyBooks.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Pages\MenuPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -199,7 +195,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
-      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +210,6 @@
   <Import Project="$(SolutionDir)\Build\StyleCop\StyleCop.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
     <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets'))" />
   </Target>
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

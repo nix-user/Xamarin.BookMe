@@ -1,28 +1,29 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
+using BookMeMobile.Model;
 using Newtonsoft.Json;
 
 namespace BookMeMobile.Data
 {
     public class ReservationRepository
     {
-        private string restUri;
         private HttpClient client;
 
         public ReservationRepository()
         {
-            this.restUri = RestURl.BookURl;
             this.client = new HttpClient();
-            this.client.Timeout = new TimeSpan(0, 0, 5);
+            this.client.Timeout = new TimeSpan(0, 0, 4);
         }
 
         public async Task<IEnumerable<ReservationModel>> GetAll()
         {
-            var uri = new Uri(string.Format(this.restUri, string.Empty));
+            var uri = new Uri(string.Format(RestURl.BookURl, string.Empty));
             var response = this.client.GetAsync(uri);
             if (response.Result.IsSuccessStatusCode)
             {
@@ -35,18 +36,26 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<ReservationModel> GetReservation(int id)
+        public async Task<ReservationStatusModel> GetReservation(int id)
         {
-            var uri = new Uri(string.Format(this.restUri, id));
+            var uri = new Uri(string.Format(RestURl.BookURl, id));
             var response = this.client.GetAsync(uri);
             if (response.Result.IsSuccessStatusCode)
             {
                 var content = await response.Result.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<ReservationModel>(content);
+                return new ReservationStatusModel()
+                {
+                    Reservation = JsonConvert.DeserializeObject<ReservationModel>(content),
+                    StatusCode = StatusCode.Ok
+                };
             }
             else
             {
-                return null;
+                return new ReservationStatusModel()
+                {
+                    Reservation = null,
+                    StatusCode = StatusCode.Ok
+                };
             }
         }
 
@@ -54,7 +63,7 @@ namespace BookMeMobile.Data
         {
             try
             {
-                var uri = new Uri(string.Format(this.restUri, id));
+                var uri = new Uri(string.Format(RestURl.BookURl, id));
                 var response = await this.client.DeleteAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
@@ -71,11 +80,11 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<StatusCode> AddReservation(ReservationModel reservation)
+        public async Task<StatusCode> AddReservation(int idRoom, ReservationModel reservation)
         {
             try
             {
-                var uri = new Uri(string.Format(this.restUri, string.Empty));
+                var uri = new Uri(string.Format(RestURl.BookURl, string.Empty));
                 var json = JsonConvert.SerializeObject(reservation);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await this.client.PostAsync(uri, content);
@@ -91,6 +100,25 @@ namespace BookMeMobile.Data
             catch (Exception)
             {
                 return StatusCode.NoInternet;
+            }
+        }
+
+        public async Task<ResponseModel<IEnumerable<ReservationModel>>> GetUserReservations(string login)
+        {
+            var uri = new Uri(string.Format(RestURl.GetUserReservation, login));
+            var response = await this.client.GetAsync(uri);
+            var content = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<ResponseModel<IEnumerable<ReservationModel>>>(content);
+            }
+            else
+            {
+                return new ResponseModel<IEnumerable<ReservationModel>>
+                {
+                    Result = null,
+                    IsOperationSuccessful = false
+                };
             }
         }
     }
