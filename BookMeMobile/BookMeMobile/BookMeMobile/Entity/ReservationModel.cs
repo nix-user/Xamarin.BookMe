@@ -16,7 +16,7 @@ namespace BookMeMobile.Entity
 
         public Room Room { get; set; }
 
-        public User Author { get; set; }
+        public string Author { get; set; }
 
         public bool IsRecursive { get; set; }
 

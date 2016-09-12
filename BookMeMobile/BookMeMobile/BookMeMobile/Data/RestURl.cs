@@ -16,7 +16,7 @@ namespace BookMeMobile.Data
         {
             get
             {
-                return ApiURL + "Reservation/{0}";
+                return ApiURL + "Reservation/";
             }
         }
 
@@ -24,7 +24,7 @@ namespace BookMeMobile.Data
         {
             get
             {
-                return ApiURL + "Room/{0}";
+                return ApiURL + "Room/";
             }
         }
 
@@ -32,13 +32,18 @@ namespace BookMeMobile.Data
         {
             get
             {
-                return ApiURL + "GetEmptyRoom";
+                return ApiURL + "available";
             }
         }
 
         public static string GetCurrentRoomReservation
         {
             get { return RoomURl + "/reservations"; }
+        }
+
+        public static string GetUserReservation
+        {
+            get { return BookURl + "{0}"; }
         }
     }
 }

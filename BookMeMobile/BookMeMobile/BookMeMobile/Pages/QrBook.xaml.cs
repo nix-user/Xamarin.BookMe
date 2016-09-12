@@ -32,9 +32,7 @@ namespace BookMeMobile.Pages
                     {
                         if (reservation == null)
                         {
-                            string body = string.Format("Комната: {0} \n От: {1:hh\\:mm} \n До: {2:hh\\:mm}",
-                                result.Text, DateTime.Now,
-                                DateTime.Now.AddHours(1));
+                            string body = string.Format("Комната: {0} \n От: {1:hh\\:mm} \n До: {2:hh\\:mm}", result.Text, DateTime.Now, DateTime.Now.AddHours(1));
                             bool saveOrNot = await DisplayAlert("Забронировать комнату?", body, "Да", "Нет");
                             if (saveOrNot)
                             {
@@ -53,6 +51,7 @@ namespace BookMeMobile.Pages
                         {
                             await this.DisplayAlert("Действие не может быть выполнено", "Комната занята", "Ok");
                         }
+
                         break;
                     }
 

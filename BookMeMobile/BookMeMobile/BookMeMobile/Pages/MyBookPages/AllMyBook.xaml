@@ -28,12 +28,12 @@
                     <StackLayout Orientation="Horizontal">
                       <Label Text = "{Binding Room, Converter={StaticResource FromRoomToString}, StringFormat='Комната: № {0}' }" FontSize="Medium"/>
                       <Label Text="Рекурентная" HorizontalOptions="EndAndExpand" FontSize="Medium" IsVisible="{Binding IsRecursive}"/>
+                    </StackLayout>
                       <Label Text="{Binding From,StringFormat='{0:dd/MMMM/yyyy}'}" FontSize="Medium"></Label>
                       <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding From,StringFormat='{0:hh\\:mm} -'}" FontSize="Medium"></Label>
                         <Label Text="{Binding To,StringFormat=' {0:hh\\:mm}'}" FontSize="Medium"></Label>
                       </StackLayout>
-                    </StackLayout>
                   </StackLayout>
                 </AbsoluteLayout>
               </ViewCell.View>

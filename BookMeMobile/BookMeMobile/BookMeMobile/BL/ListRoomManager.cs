@@ -196,7 +196,7 @@ namespace BookMeMobile.BL
                     To = DateTime.Now.AddHours(1),
                     RoomId = int.Parse(number)
                 };
-                var result = await roomRepository.GetCurrentRoomReservation(reservationCurrent);
+                var result = await this.roomRepository.GetCurrentRoomReservation(reservationCurrent);
                 if (result.IsOperationSuccessful)
                 {
                     return new ReservationsStatusModel()
@@ -234,13 +234,13 @@ namespace BookMeMobile.BL
 
         public async Task<StatusCode> AddReservationInHour(string text)
         {
-            currentReservation = new ReservationModel()
+            this.currentReservation = new ReservationModel()
             {
-               Author = SelectPage.CurrentUser,
-               From = DateTime.Now,
-               To = DateTime.Now.AddHours(1),
-            }; 
-         return await reservationRepository.AddReservation(int.Parse(text),currentReservation);
+                Author = SelectPage.CurrentUser.Login,
+                From = DateTime.Now,
+                To = DateTime.Now.AddHours(1),
+            };
+            return await this.reservationRepository.AddReservation(int.Parse(text), this.currentReservation);
         }
     }
 }

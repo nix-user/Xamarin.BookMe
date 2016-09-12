@@ -53,7 +53,6 @@ namespace BookMeMobile.Pages
                 }
                 else
                 {
-                   // this.list.AddRecursiveReservation(idRoom);
                 }
 
                 await Navigation.PopAsync();

@@ -38,7 +38,7 @@ namespace BookMeMobile.Data
 
         public async Task<Room> GetRoom(int id)
         {
-            var uri = new Uri(string.Format(RestURl.RoomURl, id));
+            var uri = new Uri(string.Format(RestURl.RoomURl + id));
             var response = this.client.GetAsync(uri);
             if (response.Result.IsSuccessStatusCode)
             {
@@ -53,7 +53,7 @@ namespace BookMeMobile.Data
 
         public async Task<bool> AddRoom(Room room)
         {
-            var uri = new Uri(string.Format(RestURl.RoomURl, room.Id));
+            var uri = new Uri(string.Format(RestURl.RoomURl + room.Id));
             var json = JsonConvert.SerializeObject(room);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await this.client.PostAsync(uri, content);
@@ -98,7 +98,6 @@ namespace BookMeMobile.Data
                     IsOperationSuccessful = false
                 };
             }
-
         }
     }
 }
