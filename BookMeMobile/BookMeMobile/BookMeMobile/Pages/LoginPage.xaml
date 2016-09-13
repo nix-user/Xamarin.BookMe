@@ -4,8 +4,10 @@
              x:Class="BookMeMobile.Pages.LoginPage"
              Title="Login">
   <StackLayout VerticalOptions="CenterAndExpand">
-    <Label HorizontalOptions="Center" Text="Введите логин" FontSize="Large"/>
+    <Label HorizontalOptions="Center" Text="Логин" FontSize="Large"/>
     <Entry x:Name="TextLogin" Text="User1" HorizontalTextAlignment="Center"/>
+    <Label HorizontalOptions="Center" Text="Пароль" FontSize="Large"/>
+    <Entry x:Name="textPassword" IsPassword="True" Text="1" HorizontalTextAlignment="Center"/>
     <Label x:Name="Error"/>
     <Button x:Name="BtnSignIn" Text="Войти" Clicked="BtnSignIn_OnClicked"></Button>
   </StackLayout>

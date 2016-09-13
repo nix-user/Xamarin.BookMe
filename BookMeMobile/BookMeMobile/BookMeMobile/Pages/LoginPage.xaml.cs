@@ -13,14 +13,14 @@ namespace BookMeMobile.Pages
     public partial class LoginPage : ContentPage
     {
         private const string HeadError = "Ошибка";
-        private const string BodyUserIsNotExist = "Такого пользователя нет";
+        private const string BodyUserIsNotExist = "Логин или пароль введены неверно";
         private const string BodyInternetIsNotExist = "Нет подключения к интернету";
         private const string Ok = "Ok";
 
         public static List<User> Users { get; set; } = new List<User>
         {
-            new User() { Id = 1, Login = "User1", FavoriteRoom = "304D", MyRoom = "410" },
-            new User() { Id = 2, Login = "User2", FavoriteRoom = "303D", MyRoom = "409" }
+            new User() { Id = 1, Password = "1", Login = "User1", FavoriteRoom = "304D", MyRoom = "410" },
+            new User() { Id = 2, Password = "2", Login = "User2", FavoriteRoom = "303D", MyRoom = "409" }
         };
 
         public LoginPage()
@@ -30,7 +30,7 @@ namespace BookMeMobile.Pages
 
         private async void BtnSignIn_OnClicked(object sender, EventArgs e)
         {
-            User user = Users.FirstOrDefault(x => x.Login == TextLogin.Text);
+            User user = Users.FirstOrDefault(x => x.Login == TextLogin.Text && x.Password == textPassword.Text);
             if (user != null)
             {
                 await Navigation.PushAsync(new MainPage(user));
