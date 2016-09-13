@@ -18,7 +18,7 @@ namespace BookMeMobile.Data
         public RoomRepository()
         {
             this.client = new HttpClient();
-            this.client.Timeout = new TimeSpan(0, 0, 4);
+            this.client.Timeout = new TimeSpan(0, 0, 6);
         }
 
         public async Task<IEnumerable<Room>> GetAllRoom()
