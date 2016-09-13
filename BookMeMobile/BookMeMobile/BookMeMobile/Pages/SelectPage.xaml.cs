@@ -55,7 +55,6 @@ namespace BookMeMobile.Pages
         {
             if (TimeFrom.Time < TimeTo.Time)
             {
-                Room room = new Room() { IsBig = IsBig.IsToggled, IsHasPolykom = IsPolinom.IsToggled };
                 RoomFilterParameters reservation = new RoomFilterParameters()
                 {
                     From = Date.Date + TimeFrom.Time,
