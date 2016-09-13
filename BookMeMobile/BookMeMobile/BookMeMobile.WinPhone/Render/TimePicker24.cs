@@ -17,9 +17,7 @@ namespace BookMeMobile.WinPhone.Render
 
             if (this.Control != null)
             {
-                var nativeControl = (Windows.UI.Xaml.Controls.TimePicker)Control;
-                nativeControl.Foreground = new SolidColorBrush(Colors.Gray);
-                Control.ClockIdentifier = "24HourClock";
+               Control.ClockIdentifier = "24HourClock";
             }
         }
     }

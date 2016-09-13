@@ -11,22 +11,15 @@
       <DatePicker x:Name="Date" Format="D"  DateSelected="DatePickerDateSelected">
       </DatePicker>
       <StackLayout x:Name="timeLayout" Padding="0,10,0,0" Orientation="Horizontal" HorizontalOptions="Center">
-
-        <StackLayout >
+        <StackLayout Padding="10">
           <Label Text="От" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Large"/>
           <render:TimePicker24Hour x:Name="TimeFrom" Format="HH:mm" HorizontalOptions="FillAndExpand"></render:TimePicker24Hour>
         </StackLayout>
-
-        <StackLayout Padding="0,60,0,0">
-          <Label Text="-"  FontSize="Large"></Label>
-        </StackLayout>
-
-        <StackLayout >
+        <StackLayout Padding="10">
           <Label Text="До" FontSize="Large" HorizontalTextAlignment="Center"/>
           <render:TimePicker24Hour x:Name="TimeTo" Format="HH:mm" HorizontalOptions="FillAndExpand"></render:TimePicker24Hour>
         </StackLayout>
       </StackLayout>
-      <Label x:Name="ErrorInterval" HorizontalOptions="Center" TextColor="Maroon"/>
       <StackLayout x:Name="checkerLayout" Padding="10,20">
         <StackLayout Orientation="Horizontal">
           <Label  Text="Большая" FontSize="Large"/>
