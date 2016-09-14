@@ -31,7 +31,7 @@ namespace BookMeMobile.Pages.MyBookPages
         public AllMyBook(User user, List<ReservationModel> noRecursive, List<ReservationModel> recursive)
         {
             this.InitializeComponent();
-            this.manager = new ListRoomManager(user);
+            this.manager = new ListRoomManager();
             this.ResultRoom = noRecursive;
             this.ResultRoom.AddRange(recursive);
             if (this.ResultRoom.Any())

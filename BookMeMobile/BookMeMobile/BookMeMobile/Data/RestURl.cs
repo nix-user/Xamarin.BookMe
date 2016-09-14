@@ -43,7 +43,7 @@ namespace BookMeMobile.Data
 
         public static string GetUserReservation
         {
-            get { return BookURl + "{0}"; }
+            get { return BookURl; }
         }
     }
 }

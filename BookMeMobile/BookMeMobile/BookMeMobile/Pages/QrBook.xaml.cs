@@ -22,9 +22,9 @@ namespace BookMeMobile.Pages
         private const string BodyError = "Ошибка на сервере";
         private const string Ok = "Ok";
 
-        public async void ScanResult(Result result, User currentUser)
+        public async void ScanResult(Result result)
         {
-            ListRoomManager manager = new ListRoomManager(currentUser);
+            ListRoomManager manager = new ListRoomManager();
             ReservationsStatusModel reservation = await manager.GetRoomCurrentReservations(result.Text);
             switch (reservation.StatusCode)
             {

@@ -23,14 +23,13 @@ namespace BookMeMobile.Pages
 
         private ListRoomManager manager;
 
-        public SelectPage(User currentUser)
+        public SelectPage()
         {
             this.InitializeComponent();
             this.Date.MinimumDate = DateTime.Now;
             this.TimeTo.Time = DateTime.Now.TimeOfDay;
             this.TimeFrom.Time = DateTime.Now.TimeOfDay;
-            CurrentUser = currentUser;
-            this.manager = new ListRoomManager(currentUser);
+            this.manager = new ListRoomManager();
             this.SettingPaddingForWinPhone();
         }
 
@@ -69,8 +68,7 @@ namespace BookMeMobile.Pages
                 {
                     case StatusCode.Ok:
                         {
-                            await this.Navigation.PushAsync(new MainPage(CurrentUser,
-                             new ListRoomPage(CurrentUser, searchList)));
+                            await this.Navigation.PushAsync(new MainPage(new ListRoomPage(searchList)));
                             break;
                         }
 

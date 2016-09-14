@@ -103,9 +103,9 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<ResponseModel<IEnumerable<ReservationModel>>> GetUserReservations(string login)
+        public async Task<ResponseModel<IEnumerable<ReservationModel>>> GetUserReservations()
         {
-            var uri = new Uri(string.Format(RestURl.GetUserReservation, login));
+            var uri = new Uri(string.Format(RestURl.GetUserReservation));
             var response = await this.client.GetAsync(uri);
             var content = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)

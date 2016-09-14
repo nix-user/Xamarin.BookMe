@@ -27,10 +27,10 @@ namespace BookMeMobile.Pages
 
         private ListRoomManager list;
 
-        public ListRoomPage(User currentUser, RoomResultStatusCode search)
+        public ListRoomPage(RoomResultStatusCode search)
         {
             this.InitializeComponent();
-            this.list = new ListRoomManager(currentUser);
+            this.list = new ListRoomManager();
             this.ResultRoom = search.LIstRoomResults.ToList();
             if (!this.ResultRoom.Any())
             {

@@ -4,8 +4,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Android.Provider;
+using BookMeMobile.Binding;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
+using BookMeMobile.Interface;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
@@ -30,15 +32,7 @@ namespace BookMeMobile.Pages
 
         private async void BtnSignIn_OnClicked(object sender, EventArgs e)
         {
-            User user = Users.FirstOrDefault(x => x.Login == TextLogin.Text && x.Password == textPassword.Text);
-            if (user != null)
-            {
-                await Navigation.PushAsync(new MainPage(user));
-            }
-            else
-            {
-                await this.DisplayAlert(HeadError, BodyUserIsNotExist, Ok);
-            }
+            await Navigation.PushAsync(new MainPage());
         }
     }
 }
