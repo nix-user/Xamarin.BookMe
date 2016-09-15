@@ -43,6 +43,7 @@
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\RestURl.cs" />
     <Compile Include="Data\RoomRepository.cs" />
+    <Compile Include="Entity\Resources.cs" />
     <Compile Include="Interface\IWorkWIthFile.cs" />
     <Compile Include="Model\ListRoomResult.cs" />
     <Compile Include="Model\ReservationsStatusModel.cs" />

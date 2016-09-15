@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BookMeMobile.Droid.FileWork;
+using BookMeMobile.Entity;
 using BookMeMobile.Interface;
 using Xamarin.Forms;
 
@@ -13,7 +14,7 @@ namespace BookMeMobile.Droid.FileWork
 {
     public class FileWorker : IFileWork
     {
-        private const string Filename = "14214124421";
+        private readonly string filename = Resources.FileName;
 
         public Task DeleteAsync()
         {
@@ -55,7 +56,7 @@ namespace BookMeMobile.Droid.FileWork
 
         private string GetFilePath()
         {
-            return Path.Combine(this.GetDocsPath(), Filename);
+            return Path.Combine(this.GetDocsPath(), this.filename);
         }
 
         private string GetDocsPath()

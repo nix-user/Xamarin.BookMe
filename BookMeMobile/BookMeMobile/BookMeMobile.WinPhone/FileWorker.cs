@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BookMeMobile.Entity;
 using BookMeMobile.Interface;
 using BookMeMobile.WinPhone;
 using Windows.Storage;
@@ -11,12 +12,12 @@ namespace BookMeMobile.WinPhone
 {
     public class FileWorker : IFileWork
     {
-        private const string Filename = "14214124421";
+        private readonly string filename = Resources.FileName;
 
         public async Task DeleteAsync()
         {
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile storageFile = await localFolder.GetFileAsync(Filename);
+            StorageFile storageFile = await localFolder.GetFileAsync(this.filename);
             await storageFile.DeleteAsync();
         }
 
@@ -25,7 +26,7 @@ namespace BookMeMobile.WinPhone
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
             try
             {
-                await localFolder.GetFileAsync(Filename);
+                await localFolder.GetFileAsync(this.filename);
             }
             catch
             {
@@ -38,7 +39,7 @@ namespace BookMeMobile.WinPhone
         public async Task<string> LoadTextAsync()
         {
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile helloFile = await localFolder.GetFileAsync(Filename);
+            StorageFile helloFile = await localFolder.GetFileAsync(this.filename);
             string text = await FileIO.ReadTextAsync(helloFile);
             return text;
         }
@@ -46,7 +47,7 @@ namespace BookMeMobile.WinPhone
         public async Task SaveTextAsync(string text)
         {
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile helloFile = await localFolder.CreateFileAsync(Filename,
+            StorageFile helloFile = await localFolder.CreateFileAsync(this.filename,
                                                  CreationCollisionOption.ReplaceExisting);
             await FileIO.WriteTextAsync(helloFile, text);
         }
