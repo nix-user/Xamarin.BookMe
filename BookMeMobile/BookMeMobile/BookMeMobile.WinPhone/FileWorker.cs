@@ -5,7 +5,6 @@ using BookMeMobile.WinPhone;
 using Windows.Storage;
 using Xamarin.Forms;
 
-
 [assembly: Dependency(typeof(FileWorker))]
 
 namespace BookMeMobile.WinPhone

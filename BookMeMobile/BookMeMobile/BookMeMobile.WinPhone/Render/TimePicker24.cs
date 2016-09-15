@@ -18,17 +18,11 @@ namespace BookMeMobile.WinPhone.Render
         protected override void OnElementChanged(ElementChangedEventArgs<TimePicker> e)
         {
             base.OnElementChanged(e);
-            Control.TimeChanged += this.SaveInLocalFolder;
 
             if (this.Control != null)
             {
-                Control.ClockIdentifier = "24HourClock";
+               Control.ClockIdentifier = "24HourClock";
             }
-        }
-
-        public async void SaveInLocalFolder(object o, TimePickerValueChangedEventArgs e)
-        {
-            await ApplicationData.Current.LocalFolder.CreateFileAsync("Dima", CreationCollisionOption.ReplaceExisting);
         }
     }
 }

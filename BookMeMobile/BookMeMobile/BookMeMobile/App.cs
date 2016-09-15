@@ -12,17 +12,7 @@ namespace BookMeMobile
     {
         public App()
         {
-            bool b = DependencyService.Get<IFileWork>().ExistsAsync().Result;
-            if (b)
-            {
-                this.MainPage = new NavigationPage(new LoginPage());
-                DependencyService.Get<IFileWork>().DeleteAsync();
-            }
-            else
-            {
-                this.MainPage = new NavigationPage(new MainPage());
-                DependencyService.Get<IFileWork>().SaveTextAsync("124124");
-            }
+            this.MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()
