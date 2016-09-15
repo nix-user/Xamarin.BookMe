@@ -18,7 +18,6 @@ namespace BookMeMobile.Data
         public RoomRepository()
         {
             this.client = new HttpClient();
-            this.client.Timeout = new TimeSpan(0, 0, 6);
         }
 
         public async Task<IEnumerable<Room>> GetAllRoom()
@@ -49,15 +48,6 @@ namespace BookMeMobile.Data
             {
                 return null;
             }
-        }
-
-        public async Task<bool> AddRoom(Room room)
-        {
-            var uri = new Uri(string.Format(RestURl.RoomURl + room.Id));
-            var json = JsonConvert.SerializeObject(room);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await this.client.PostAsync(uri, content);
-            return response.IsSuccessStatusCode;
         }
 
         public async Task<ResponseModel<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)

@@ -14,9 +14,9 @@ namespace BookMeMobile.Pages
     public partial class SelectPage : ContentPage
     {
         private const string HeadError = "Ошибка";
-        private const string BodyInternetIsNotExist = "Нет подключения к интернету";
+        private const string BodyInternetIsNotExist = "Проверьте подключение к интернету и повторите попытку";
         private const string BodyIntervalIsInvalid = "Ввведен неверный интервал";
-        private const string BodyError = "Ошибка на сервере";
+        private const string BodyError = "Внутренняя ошибка сервера";
         private const string Ok = "Ok";
 
         public static User CurrentUser { get; set; }
