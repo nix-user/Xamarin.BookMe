@@ -45,5 +45,10 @@ namespace BookMeMobile.Data
         {
             get { return BookURl; }
         }
+
+        public static string GetTocken
+        {
+            get { return "http://10.10.41.172/" + "token"; }
+        }
     }
 }

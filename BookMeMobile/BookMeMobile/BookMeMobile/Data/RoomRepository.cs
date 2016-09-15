@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using BookMeMobile.Entity;
+using BookMeMobile.Interface;
 using BookMeMobile.Model;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace BookMeMobile.Data
 {
@@ -19,6 +22,7 @@ namespace BookMeMobile.Data
         {
             this.client = new HttpClient();
             this.client.Timeout = new TimeSpan(0, 0, 6);
+            this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer {0}", DependencyService.Get<IFileWork>().LoadTextAsync().Result);
         }
 
         public async Task<IEnumerable<Room>> GetAllRoom()

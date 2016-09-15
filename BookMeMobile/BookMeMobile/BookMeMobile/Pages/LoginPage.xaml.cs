@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Android.Provider;
 using BookMeMobile.Binding;
+using BookMeMobile.BL;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
 using BookMeMobile.Interface;
@@ -19,12 +20,6 @@ namespace BookMeMobile.Pages
         private const string BodyInternetIsNotExist = "Нет подключения к интернету";
         private const string Ok = "Ok";
 
-        public static List<User> Users { get; set; } = new List<User>
-        {
-            new User() { Id = 1, Password = "1", Login = "User1", FavoriteRoom = "304D", MyRoom = "410" },
-            new User() { Id = 2, Password = "2", Login = "User2", FavoriteRoom = "303D", MyRoom = "409" }
-        };
-
         public LoginPage()
         {
             this.InitializeComponent();
@@ -32,7 +27,34 @@ namespace BookMeMobile.Pages
 
         private async void BtnSignIn_OnClicked(object sender, EventArgs e)
         {
-           await Navigation.PushAsync(new MainPage());
+            AccountService service = new AccountService();
+            User user = new User()
+            {
+                Login = TextLogin.Text,
+                Password = textPassword.Text
+            };
+            var request = await service.GetTocken(user);
+            switch (request.StatusCode)
+            {
+                case StatusCode.Ok:
+                    {
+                        await DependencyService.Get<IFileWork>().SaveTextAsync(request.Token);
+                        await this.Navigation.PushAsync(new MainPage(new SelectPage()));
+                        break;
+                    }
+
+                case StatusCode.NoInternet:
+                    {
+                        await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                        break;
+                    }
+
+                case StatusCode.Error:
+                    {
+                        await this.DisplayAlert(HeadError, BodyUserIsNotExist, Ok);
+                        break;
+                    }
+            }
         }
     }
 }

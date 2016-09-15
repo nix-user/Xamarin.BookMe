@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BookMeMobile.Data;
 using BookMeMobile.Interface;
 using BookMeMobile.Pages;
 using Xamarin.Forms;
@@ -12,7 +13,14 @@ namespace BookMeMobile
     {
         public App()
         {
-            this.MainPage = new NavigationPage(new LoginPage());
+           if (DependencyService.Get<IFileWork>().ExistsAsync().Result)
+            {
+                this.MainPage = new NavigationPage(new MainPage());
+            }
+            else
+            {
+                this.MainPage = new NavigationPage(new LoginPage());
+            }
         }
 
         protected override void OnStart()

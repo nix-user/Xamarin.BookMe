@@ -39,6 +39,8 @@
     <Compile Include="Binding\CheckerInColor.cs" />
     <Compile Include="Binding\ConverterBool.cs" />
     <Compile Include="Binding\ConvertFromRoomToString.cs" />
+    <Compile Include="BL\AccountService.cs" />
+    <Compile Include="Data\AccountController.cs" />
     <Compile Include="Data\BookingRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\RestURl.cs" />
@@ -60,6 +62,7 @@
     <Compile Include="Model\RoomsStatusModel.cs" />
     <Compile Include="Model\StatusCode.cs" />
     <Compile Include="Entity\User.cs" />
+    <Compile Include="Model\TokenStatusCode.cs" />
     <Compile Include="Pages\ListRoomPage.xaml.cs">
       <DependentUpon>ListRoomPage.xaml</DependentUpon>
     </Compile>
