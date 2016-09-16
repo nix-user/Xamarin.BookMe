@@ -41,6 +41,7 @@
     <Compile Include="Binding\ConvertFromRoomToString.cs" />
     <Compile Include="Data\BookingRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
+    <Compile Include="Data\HttpService.cs" />
     <Compile Include="Data\RestURl.cs" />
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Model\ListRoomResult.cs" />
@@ -58,6 +59,8 @@
     <Compile Include="Model\RoomsStatusModel.cs" />
     <Compile Include="Model\StatusCode.cs" />
     <Compile Include="Entity\User.cs" />
+    <Compile Include="OperationResults\OperationResult.cs" />
+    <Compile Include="OperationResults\OperationResultGeneric.cs" />
     <Compile Include="Pages\ListRoomPage.xaml.cs">
       <DependentUpon>ListRoomPage.xaml</DependentUpon>
     </Compile>

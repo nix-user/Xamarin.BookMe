@@ -65,14 +65,14 @@ namespace BookMeMobile.Pages
                 };
 
                 this.loader.Show();
-                RoomResultStatusCode searchList = await this.manager.GetEmptyRoom(reservation);
+                var searchListRetrieval = await this.manager.GetEmptyRoom(reservation);
                 this.loader.Hide();
-                switch (searchList.StatusCode)
+                switch (searchListRetrieval.Status)
                 {
                     case StatusCode.Ok:
                         {
                             await this.Navigation.PushAsync(new MainPage(CurrentUser,
-                             new ListRoomPage(CurrentUser, searchList)));
+                             new ListRoomPage(CurrentUser, searchListRetrieval)));
                             break;
                         }
 
