@@ -90,6 +90,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\TimePicker24Hour.cs" />
+    <Compile Include="Render\Loader.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">

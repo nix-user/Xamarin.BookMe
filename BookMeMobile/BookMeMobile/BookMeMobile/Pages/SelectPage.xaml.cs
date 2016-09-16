@@ -6,6 +6,7 @@ using BookMeMobile.Data;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
 using BookMeMobile.Pages.MyBookPages;
+using BookMeMobile.Render;
 using Java.Util;
 using Xamarin.Forms;
 
@@ -63,7 +64,9 @@ namespace BookMeMobile.Pages
                     IsLarge = IsBig.IsToggled
                 };
 
+                this.loader.Show();
                 RoomResultStatusCode searchList = await this.manager.GetEmptyRoom(reservation);
+                this.loader.Hide();
                 switch (searchList.StatusCode)
                 {
                     case StatusCode.Ok:
