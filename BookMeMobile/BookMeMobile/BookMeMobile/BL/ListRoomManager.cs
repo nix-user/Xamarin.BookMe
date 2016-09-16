@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
+using BookMeMobile.OperationResults;
 using BookMeMobile.Pages;
 using Org.Apache.Http.Impl.Cookie;
 
@@ -38,8 +39,8 @@ namespace BookMeMobile.BL
 
         public async Task<string> ReservationMessag(int idRoom)
         {
-            this.currentReservation.Room = await this.roomRepository.GetRoom(idRoom);
-            Room currentRoom = this.roomRepository.GetRoom(idRoom).Result;
+            this.currentReservation.Room = (await this.roomRepository.GetRoom(idRoom)).Result;
+            Room currentRoom = (await this.roomRepository.GetRoom(idRoom)).Result;
             return string.Format(
                 " Комната: {3}\n Дата: {0}\n Время: {1} - {2}\n Большая:{4} Поликом:{5}",
                 this.currentReservation.From.Date.ToString("d"),
@@ -106,44 +107,9 @@ namespace BookMeMobile.BL
             }
         }
 
-        public async Task<RoomResultStatusCode> GetEmptyRoom(RoomFilterParameters filter)
+        public async Task<OperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
         {
-            try
-            {
-                var roomResult = await this.roomRepository.GetEmptyRoom(filter);
-                if (roomResult.IsOperationSuccessful)
-                {
-                    return new RoomResultStatusCode()
-                    {
-                        LIstRoomResults = roomResult.Result,
-                        StatusCode = StatusCode.Ok
-                    };
-                }
-                else
-                {
-                    return new RoomResultStatusCode()
-                    {
-                        LIstRoomResults = null,
-                        StatusCode = StatusCode.Error
-                    };
-                }
-            }
-            catch (WebException)
-            {
-                return new RoomResultStatusCode()
-                {
-                    LIstRoomResults = null,
-                    StatusCode = StatusCode.NoInternet
-                };
-            }
-            catch (TaskCanceledException)
-            {
-                return new RoomResultStatusCode()
-                {
-                    LIstRoomResults = null,
-                    StatusCode = StatusCode.Error
-                };
-            }
+            return await this.roomRepository.GetEmptyRoom(filter);
         }
 
         public async Task<ReservationsStatusModel> GetAllUserReservation()
@@ -186,50 +152,15 @@ namespace BookMeMobile.BL
             }
         }
 
-        public async Task<ReservationsStatusModel> GetRoomCurrentReservations(string number)
+        public async Task<OperationResult<IEnumerable<ReservationModel>>> GetRoomCurrentReservations(string number)
         {
-            try
+            var reservationCurrent = new RoomReservationsRequestModel()
             {
-                var reservationCurrent = new RoomReservationsRequestModel()
-                {
-                    From = DateTime.Now,
-                    To = DateTime.Now.AddHours(1),
-                    RoomId = int.Parse(number)
-                };
-                var result = await this.roomRepository.GetCurrentRoomReservation(reservationCurrent);
-                if (result.IsOperationSuccessful)
-                {
-                    return new ReservationsStatusModel()
-                    {
-                        ReservationModels = result.Result.ToList(),
-                        StatusCode = StatusCode.Ok
-                    };
-                }
-                else
-                {
-                    return new ReservationsStatusModel()
-                    {
-                        ReservationModels = null,
-                        StatusCode = StatusCode.Error
-                    };
-                }
-            }
-            catch (WebException)
-            {
-                return new ReservationsStatusModel()
-                {
-                    ReservationModels = null,
-                    StatusCode = StatusCode.NoInternet
-                };
-            }
-            catch (TaskCanceledException)
-            {
-                return new ReservationsStatusModel()
-                {
-                    ReservationModels = null,
-                    StatusCode = StatusCode.Error
-                };
-            }
+                From = DateTime.Now,
+                To = DateTime.Now.AddHours(1),
+                RoomId = int.Parse(number)
+            };
+            return await this.roomRepository.GetCurrentRoomReservation(reservationCurrent);
         }
 
         public async Task<StatusCode> AddReservationInHour(string text)

@@ -7,87 +7,33 @@ using System.Threading.Tasks;
 using Android.App;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
+using BookMeMobile.OperationResults;
 using Newtonsoft.Json;
 
 namespace BookMeMobile.Data
 {
     public class RoomRepository
     {
-        private HttpClient client;
+        private readonly HttpService httpService = new HttpService();
 
-        public RoomRepository()
+        public async Task<OperationResult<IEnumerable<Room>>> GetAllRoom()
         {
-            this.client = new HttpClient();
+            return await this.httpService.Get<IEnumerable<Room>>(RestURl.RoomURl);
         }
 
-        public async Task<IEnumerable<Room>> GetAllRoom()
+        public async Task<OperationResult<Room>> GetRoom(int id)
         {
-            var uri = new Uri(string.Format(RestURl.RoomURl, string.Empty));
-            var response = this.client.GetAsync(uri);
-            if (response.Result.IsSuccessStatusCode)
-            {
-                var content = await response.Result.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<IEnumerable<Room>>(content);
-            }
-            else
-            {
-                return null;
-            }
+            return await this.httpService.Get<Room>(RestURl.RoomURl + id);
         }
 
-        public async Task<Room> GetRoom(int id)
+        public async Task<OperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
         {
-            var uri = new Uri(string.Format(RestURl.RoomURl + id));
-            var response = this.client.GetAsync(uri);
-            if (response.Result.IsSuccessStatusCode)
-            {
-                var content = await response.Result.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<Room>(content);
-            }
-            else
-            {
-                return null;
-            }
+            return await this.httpService.Post<RoomFilterParameters, IEnumerable<Room>>(RestURl.GetEmptyRoom, filter);
         }
 
-        public async Task<ResponseModel<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
+        public async Task<OperationResult<IEnumerable<ReservationModel>>> GetCurrentRoomReservation(RoomReservationsRequestModel reservationsModel)
         {
-            var uri = new Uri(RestURl.GetEmptyRoom);
-            var json = JsonConvert.SerializeObject(filter);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await this.client.PostAsync(uri, content);
-            if (response.IsSuccessStatusCode)
-            {
-                var contentResponce = await response.Content.ReadAsStringAsync();
-                var roomResult = JsonConvert.DeserializeObject<ResponseModel<IEnumerable<Room>>>(contentResponce);
-                return roomResult;
-            }
-            else
-            {
-                return new ResponseModel<IEnumerable<Room>>() { Result = null, IsOperationSuccessful = false };
-            }
-        }
-
-        public async Task<ResponseModel<IEnumerable<ReservationModel>>> GetCurrentRoomReservation(RoomReservationsRequestModel reservationsModel)
-        {
-            var uri = new Uri(RestURl.GetCurrentRoomReservation);
-            var json = JsonConvert.SerializeObject(reservationsModel);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await this.client.PostAsync(uri, content);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var contentResponce = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<ResponseModel<IEnumerable<ReservationModel>>>(contentResponce);
-            }
-            else
-            {
-                return new ResponseModel<IEnumerable<ReservationModel>>()
-                {
-                    Result = null,
-                    IsOperationSuccessful = false
-                };
-            }
+            return await this.httpService.Post<RoomReservationsRequestModel, IEnumerable<ReservationModel>>(RestURl.GetCurrentRoomReservation, reservationsModel);
         }
     }
 }

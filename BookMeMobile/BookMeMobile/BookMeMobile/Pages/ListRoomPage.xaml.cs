@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BookMeMobile.BL;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
+using BookMeMobile.OperationResults;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
@@ -27,11 +28,11 @@ namespace BookMeMobile.Pages
 
         private ListRoomManager list;
 
-        public ListRoomPage(User currentUser, RoomResultStatusCode search)
+        public ListRoomPage(User currentUser, OperationResult<IEnumerable<Room>> search)
         {
             this.InitializeComponent();
             this.list = new ListRoomManager(currentUser);
-            this.ResultRoom = search.LIstRoomResults.ToList();
+            this.ResultRoom = search.Result.ToList();
             if (!this.ResultRoom.Any())
             {
                 isRoom.IsVisible = true;
