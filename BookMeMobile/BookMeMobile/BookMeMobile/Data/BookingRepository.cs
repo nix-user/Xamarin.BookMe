@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -22,7 +23,7 @@ namespace BookMeMobile.Data
         {
             this.client = new HttpClient();
             this.client.Timeout = new TimeSpan(0, 0, 4);
-            this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer {0}", DependencyService.Get<IFileWork>().LoadTextAsync().Result);
+            this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", DependencyService.Get<IFileWork>().LoadTextAsync().ConfigureAwait(false).ToString());
         }
 
         public async Task<IEnumerable<ReservationModel>> GetAll()
@@ -107,21 +108,69 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<ResponseModel<IEnumerable<ReservationModel>>> GetUserReservations()
+        public async Task<ResponceModelStatusCode<IEnumerable<ReservationModel>>> GetUserReservations()
         {
-            var uri = new Uri(string.Format(RestURl.GetUserReservation));
-            var response = await this.client.GetAsync(uri);
-            var content = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return JsonConvert.DeserializeObject<ResponseModel<IEnumerable<ReservationModel>>>(content);
+                var uri = new Uri(string.Format(RestURl.GetUserReservation));
+                var response = await this.client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    return await this.ResponceSuccess<IEnumerable<ReservationModel>>(response);
+                }
+                else
+                {
+                    return this.ResponceFailed<IEnumerable<ReservationModel>>(response);
+                }
+            }
+            catch (WebException)
+            {
+                return new ResponceModelStatusCode<IEnumerable<ReservationModel>>()
+                {
+                    Result = null,
+                    StatusCode = StatusCode.NoInternet
+                };
+            }
+        }
+
+        public async Task<ResponceModelStatusCode<T>> ResponceSuccess<T>(HttpResponseMessage response) where T : class
+        {
+            var contentResponce = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<ResponseModel<T>>(contentResponce);
+            if (result.IsOperationSuccessful)
+            {
+                return new ResponceModelStatusCode<T>()
+                {
+                    Result = (T)result.Result,
+                    StatusCode = StatusCode.Ok
+                };
             }
             else
             {
-                return new ResponseModel<IEnumerable<ReservationModel>>
+                return new ResponceModelStatusCode<T>()
                 {
                     Result = null,
-                    IsOperationSuccessful = false
+                    StatusCode = StatusCode.Error
+                };
+            }
+        }
+
+        public ResponceModelStatusCode<T> ResponceFailed<T>(HttpResponseMessage response) where T : class
+        {
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                return new ResponceModelStatusCode<T>()
+                {
+                    Result = null,
+                    StatusCode = StatusCode.NoAuthorize
+                };
+            }
+            else
+            {
+                return new ResponceModelStatusCode<T>()
+                {
+                    Result = null,
+                    StatusCode = StatusCode.Error
                 };
             }
         }

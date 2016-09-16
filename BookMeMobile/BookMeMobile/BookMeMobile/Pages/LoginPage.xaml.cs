@@ -17,6 +17,7 @@ namespace BookMeMobile.Pages
     {
         private const string HeadError = "Ошибка";
         private const string BodyUserIsNotExist = "Логин или пароль введены неверно";
+        private const string BodyServerError = "Ошибка на стороне сервера";
         private const string BodyInternetIsNotExist = "Нет подключения к интернету";
         private const string Ok = "Ok";
 
@@ -34,11 +35,10 @@ namespace BookMeMobile.Pages
                 Password = textPassword.Text
             };
             var request = await service.GetTocken(user);
-            switch (request.StatusCode)
+            switch (request)
             {
                 case StatusCode.Ok:
                     {
-                        await DependencyService.Get<IFileWork>().SaveTextAsync(request.Token);
                         await this.Navigation.PushAsync(new MainPage(new SelectPage()));
                         break;
                     }
@@ -50,6 +50,12 @@ namespace BookMeMobile.Pages
                     }
 
                 case StatusCode.Error:
+                    {
+                        await this.DisplayAlert(HeadError, BodyServerError, Ok);
+                        break;
+                    }
+
+                case StatusCode.NoAuthorize:
                     {
                         await this.DisplayAlert(HeadError, BodyUserIsNotExist, Ok);
                         break;

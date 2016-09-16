@@ -10,7 +10,8 @@ namespace BookMeMobile.Data
 {
     public static class RestURl
     {
-        private const string ApiURL = "http://10.10.41.172/api/";
+        private const string Adress = "http://10.10.41.172/";
+        private const string ApiURL = Adress + "api/";
 
         public static string BookURl
         {
@@ -48,7 +49,7 @@ namespace BookMeMobile.Data
 
         public static string GetTocken
         {
-            get { return "http://10.10.41.172/" + "token"; }
+            get { return Adress + "token"; }
         }
     }
 }

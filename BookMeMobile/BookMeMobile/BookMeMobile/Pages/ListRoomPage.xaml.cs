@@ -27,11 +27,11 @@ namespace BookMeMobile.Pages
 
         private ListRoomManager list;
 
-        public ListRoomPage(RoomResultStatusCode search)
+        public ListRoomPage(IEnumerable<Room> search)
         {
             this.InitializeComponent();
             this.list = new ListRoomManager();
-            this.ResultRoom = search.LIstRoomResults.ToList();
+            this.ResultRoom = search.ToList();
             if (!this.ResultRoom.Any())
             {
                 isRoom.IsVisible = true;

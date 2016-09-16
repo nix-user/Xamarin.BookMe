@@ -54,7 +54,9 @@
     <Compile Include="Model\ProfileViewModel.cs" />
     <Compile Include="Model\ReservationStatusModel.cs" />
     <Compile Include="Entity\Room.cs" />
+    <Compile Include="Model\ResponceModelStatusCode.cs" />
     <Compile Include="Model\ResponceModelGeneric.cs" />
+    <Compile Include="Model\ResponceStatusCode.cs" />
     <Compile Include="Model\ResponseModel.cs" />
     <Compile Include="Model\RoomFilterParameters.cs" />
     <Compile Include="Model\RoomReservationsRequestModel.cs" />

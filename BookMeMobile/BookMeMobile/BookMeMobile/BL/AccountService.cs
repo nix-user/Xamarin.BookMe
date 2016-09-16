@@ -12,37 +12,10 @@ namespace BookMeMobile.BL
 {
     public class AccountService
     {
-        public async Task<TokenStatusCode> GetTocken(User user)
+        public async Task<StatusCode> GetTocken(User user)
         {
-            try
-            {
-                AccountController account = new AccountController();
-                var response = await account.GetTockenKey(user);
-                if (response.IsOperationSuccessful)
-                {
-                    return new TokenStatusCode()
-                    {
-                        StatusCode = StatusCode.Ok,
-                        Token = response.Result
-                    };
-                }
-                else
-                {
-                    return new TokenStatusCode()
-                    {
-                        StatusCode = StatusCode.Error,
-                        Token = null
-                    };
-                }
-            }
-            catch (WebException e)
-            {
-                return new TokenStatusCode()
-                {
-                    StatusCode = StatusCode.NoInternet,
-                    Token = null
-                };
-            }
+            AccountController account = new AccountController();
+            return await account.GetTockenKey(user);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace BookMeMobile.Data
             this.client = new HttpClient();
         }
 
-        public async Task<ResponseModel<string>> GetTockenKey(User user)
+        public async Task<StatusCode> GetTockenKey(User user)
         {
             try
             {
@@ -34,36 +34,37 @@ namespace BookMeMobile.Data
                 if (response.IsSuccessStatusCode)
                 {
                     var contentResponce = await response.Content.ReadAsStringAsync();
-                    var roomResult = JsonConvert.DeserializeObject<string>(contentResponce);
-                    await DependencyService.Get<IFileWork>().SaveTextAsync(roomResult);
-                    return new ResponseModel<string>()
-                    {
-                        Result = roomResult,
-                        IsOperationSuccessful = true
-                    };
+                    var token = this.ParseResponse(contentResponce);
+                    await DependencyService.Get<IFileWork>().SaveTextAsync(token);
+                    return StatusCode.Ok;
                 }
                 else
                 {
-                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    if (response.StatusCode == HttpStatusCode.BadRequest)
                     {
+                        return StatusCode.NoAuthorize;
                     }
-                    return new ResponseModel<string>()
+                    else
                     {
-                        Result = null,
-                        IsOperationSuccessful = false
-                    };
+                        return StatusCode.Error;
+                    }
                 }
             }
-            catch (Exception e)
+            catch (WebException e)
             {
-                var ec = e;
-                return null;
+                return StatusCode.NoInternet;
             }
         }
 
         private string GetLineRequest(string login, string password)
         {
             return string.Format("grant_type=password&username={0}&password={1}", login, password);
+        }
+
+        private string ParseResponse(string contentResponse)
+        {
+            var getMassive = contentResponse.Split('"');
+            return getMassive[3];
         }
     }
 }

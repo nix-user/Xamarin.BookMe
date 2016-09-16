@@ -63,12 +63,12 @@ namespace BookMeMobile.Pages
                     IsLarge = IsBig.IsToggled
                 };
 
-                RoomResultStatusCode searchList = await this.manager.GetEmptyRoom(reservation);
+                var searchList = await this.manager.GetEmptyRoom(reservation);
                 switch (searchList.StatusCode)
                 {
                     case StatusCode.Ok:
                         {
-                            await this.Navigation.PushAsync(new MainPage(new ListRoomPage(searchList)));
+                            await this.Navigation.PushAsync(new MainPage(new ListRoomPage(searchList.Result)));
                             break;
                         }
 
@@ -93,13 +93,13 @@ namespace BookMeMobile.Pages
 
         public async void MyReservations_OnClicked(object sender, EventArgs e)
         {
-            ReservationsStatusModel allReservatioons = await this.manager.GetAllUserReservation();
+            var allReservatioons = await this.manager.GetAllUserReservation();
             switch (allReservatioons.StatusCode)
             {
                 case StatusCode.Ok:
                     {
                         await this.Navigation.PushAsync(
-                            new TabPanelPage(CurrentUser, allReservatioons.ReservationModels));
+                            new TabPanelPage(CurrentUser, allReservatioons.Result));
                         break;
                     }
 
@@ -112,6 +112,12 @@ namespace BookMeMobile.Pages
                 case StatusCode.Error:
                     {
                         await this.DisplayAlert(HeadError, BodyError, Ok);
+                        break;
+                    }
+
+                case StatusCode.NoAuthorize:
+                    {
+                        await this.Navigation.PushAsync(new LoginPage());
                         break;
                     }
             }
