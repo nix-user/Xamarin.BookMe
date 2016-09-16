@@ -3,18 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
+using BookMeMobile.Interface;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace BookMeMobile.Data
 {
     internal class HttpService
     {
         private HttpClient httpClient = new HttpClient();
+
+        public HttpService()
+        {
+            string token = DependencyService.Get<IFileWork>().LoadTextAsync().Result;
+            this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+        }
 
         public async Task<OperationResult<T>> Get<T>(string root)
         {
@@ -54,17 +63,53 @@ namespace BookMeMobile.Data
             }
         }
 
+        public async Task<OperationResult> Delete(string root, int id)
+        {
+            try
+            {
+                var uri = new Uri(string.Format(root, id));
+                var response = await httpClient.DeleteAsync(uri);
+                OperationResult result = new OperationResult();
+                if (response.IsSuccessStatusCode)
+                {
+                    var contentResponse = await response.Content.ReadAsStringAsync();
+                    ResponseModel responseModel = JsonConvert.DeserializeObject<ResponseModel>(contentResponse);
+                    if (responseModel.IsOperationSuccessful)
+                    {
+                        result.Status = StatusCode.Ok;
+                    }
+                    else
+                    {
+                        result.Status = StatusCode.Error;
+                    }
+                }
+                else
+                {
+                    result.Status = StatusCode.Error;
+                }
+
+                return result;
+            }
+            catch (WebException)
+            {
+                return new OperationResult()
+                {
+                    Status = StatusCode.NoInternet
+                };
+            }
+        }
+
         private async Task<OperationResult<T>> CreateOperationResultFromResult<T>(HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode)
             {
                 var contentResponse = await response.Content.ReadAsStringAsync();
                 var operationResult = new OperationResult<T>();
-                if (response.IsSuccessStatusCode)
+                ResponseModel<T> responseModel = JsonConvert.DeserializeObject<ResponseModel<T>>(contentResponse);
+                if (responseModel.IsOperationSuccessful)
                 {
                     operationResult.Status = StatusCode.Ok;
-                    operationResult.Result =
-                        JsonConvert.DeserializeObject<ResponseModel<T>>(contentResponse).Result;
+                    operationResult.Result = responseModel.Result;
                 }
                 else
                 {
@@ -88,8 +133,6 @@ namespace BookMeMobile.Data
                     Status = StatusCode.Error
                 };
             }
-
-            return null;
         }
     }
 }

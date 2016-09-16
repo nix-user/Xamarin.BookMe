@@ -50,7 +50,8 @@ namespace BookMeMobile.BL
 
         public async Task<StatusCode> AddReservation(int idRoom)
         {
-            return await this.reservationRepository.AddReservation(idRoom, this.currentReservation);
+            return StatusCode.Error;
+            //return await this.reservationRepository.AddReservation(idRoom, this.currentReservation);
         }
 
         public async Task<StatusCode> DeleteReservation(int idReservation)
@@ -107,12 +108,12 @@ namespace BookMeMobile.BL
             }
         }
 
-       public async Task<OperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
+        public async Task<OperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
         {
             return await this.roomRepository.GetEmptyRoom(filter);
         }
 
-        public async Task<ResponceModelStatusCode<IEnumerable<ReservationModel>>> GetAllUserReservation()
+        public async Task<OperationResult<IEnumerable<ReservationModel>>> GetAllUserReservation()
         {
             return await this.reservationRepository.GetUserReservations();
         }
@@ -128,7 +129,7 @@ namespace BookMeMobile.BL
             return await this.roomRepository.GetCurrentRoomReservation(reservationCurrent);
         }
 
-        public async Task<StatusCode> AddReservationInHour(string text)
+        public async Task<OperationResult> AddReservationInHour(string text)
         {
             this.currentReservation = new ReservationModel()
             {

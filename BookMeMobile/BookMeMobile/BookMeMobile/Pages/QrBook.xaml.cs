@@ -32,7 +32,7 @@ namespace BookMeMobile.Pages
         {
             this.manager = new ListRoomManager();
             var reservation = await this.manager.GetRoomCurrentReservations(result.Text);
-            switch (reservation.StatusCode)
+            switch (reservation.Status)
             {
                 case StatusCode.Ok:
                     {

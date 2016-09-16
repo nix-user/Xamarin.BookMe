@@ -64,7 +64,7 @@ namespace BookMeMobile.Pages
                 };
 
                 var searchList = await this.manager.GetEmptyRoom(reservation);
-                switch (searchList.StatusCode)
+                switch (searchList.Status)
                 {
                     case StatusCode.Ok:
                         {
@@ -100,7 +100,7 @@ namespace BookMeMobile.Pages
         public async void MyReservations_OnClicked(object sender, EventArgs e)
         {
             var allReservatioons = await this.manager.GetAllUserReservation();
-            switch (allReservatioons.StatusCode)
+            switch (allReservatioons.Status)
             {
                 case StatusCode.Ok:
                     {

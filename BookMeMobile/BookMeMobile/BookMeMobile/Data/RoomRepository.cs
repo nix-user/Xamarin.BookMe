@@ -14,7 +14,12 @@ namespace BookMeMobile.Data
 {
     public class RoomRepository
     {
-        private readonly HttpService httpService = new HttpService();
+        private readonly HttpService httpService;
+
+        public RoomRepository()
+        {
+            this.httpService = new HttpService();
+        }
 
         public async Task<OperationResult<IEnumerable<Room>>> GetAllRoom()
         {
