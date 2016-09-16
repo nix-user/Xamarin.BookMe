@@ -29,10 +29,6 @@
           <Label Text="C Поликомом" FontSize="Large" HorizontalOptions="Start" VerticalOptions="End"/>
           <Switch x:Name="IsPolinom" IsToggled="False" HorizontalOptions="EndAndExpand"/>
         </StackLayout>
-        <StackLayout  Orientation="Horizontal" VerticalOptions="EndAndExpand">
-          <Label Text="Рекурентные" FontSize="Large" HorizontalOptions="Start" VerticalOptions="End"/>
-          <Switch x:Name="IsRecursive" IsToggled="False" HorizontalOptions="EndAndExpand"/>
-        </StackLayout>
       </StackLayout>
     </StackLayout>
     <StackLayout >

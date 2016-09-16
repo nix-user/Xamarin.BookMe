@@ -105,7 +105,6 @@ namespace BookMeMobile.Data
                     {
                         return StatusCode.Error;
                     }
-                    
                 }
                 else
                 {
