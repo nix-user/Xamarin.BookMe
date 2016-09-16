@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BookMeMobile.BL;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
+using BookMeMobile.OperationResults;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Pages

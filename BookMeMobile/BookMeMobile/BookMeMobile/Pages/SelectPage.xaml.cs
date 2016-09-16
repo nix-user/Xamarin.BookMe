@@ -6,6 +6,7 @@ using BookMeMobile.Data;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
 using BookMeMobile.Pages.MyBookPages;
+using BookMeMobile.Render;
 using Java.Util;
 using Xamarin.Forms;
 

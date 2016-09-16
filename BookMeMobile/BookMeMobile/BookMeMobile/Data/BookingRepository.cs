@@ -18,10 +18,11 @@ namespace BookMeMobile.Data
     public class ReservationRepository
     {
         private HttpClient client;
+        private readonly HttpService httpService;
 
         public ReservationRepository()
         {
-            this.client = new HttpClient();
+            this.httpService = new HttpService();
             string token = DependencyService.Get<IFileWork>().LoadTextAsync().Result;
             this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
         }
@@ -90,6 +91,8 @@ namespace BookMeMobile.Data
             try
             {
                 var uri = new Uri(string.Format(RestURl.BookURl, string.Empty));
+
+
                 var json = JsonConvert.SerializeObject(reservation);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await this.client.PostAsync(uri, content);
@@ -122,6 +125,8 @@ namespace BookMeMobile.Data
             try
             {
                 var uri = new Uri(string.Format(RestURl.GetUserReservation));
+
+
                 var response = await this.client.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {

@@ -107,7 +107,11 @@ namespace BookMeMobile.BL
             }
         }
 
-       public async Task<OperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
+<<<<<<< HEAD
+        public async Task<ResponceModelStatusCode<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
+=======
+        public async Task<OperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
+>>>>>>> develop
         {
             return await this.roomRepository.GetEmptyRoom(filter);
         }
@@ -117,7 +121,11 @@ namespace BookMeMobile.BL
             return await this.reservationRepository.GetUserReservations();
         }
 
+<<<<<<< HEAD
+        public async Task<ResponceModelStatusCode<IEnumerable<ReservationModel>>> GetRoomCurrentReservations(string number)
+=======
         public async Task<OperationResult<IEnumerable<ReservationModel>>> GetRoomCurrentReservations(string number)
+>>>>>>> develop
         {
             var reservationCurrent = new RoomReservationsRequestModel()
             {

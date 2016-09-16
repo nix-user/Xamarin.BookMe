@@ -65,9 +65,12 @@
     <Compile Include="Model\RoomsStatusModel.cs" />
     <Compile Include="Model\StatusCode.cs" />
     <Compile Include="Entity\User.cs" />
+<<<<<<< HEAD
     <Compile Include="Model\TokenStatusCode.cs" />
+=======
     <Compile Include="OperationResults\OperationResult.cs" />
     <Compile Include="OperationResults\OperationResultGeneric.cs" />
+>>>>>>> develop
     <Compile Include="Pages\ListRoomPage.xaml.cs">
       <DependentUpon>ListRoomPage.xaml</DependentUpon>
     </Compile>
