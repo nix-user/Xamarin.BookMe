@@ -22,8 +22,8 @@ namespace BookMeMobile.Data
         public RoomRepository()
         {
             this.client = new HttpClient();
-            this.client.Timeout = new TimeSpan(0, 0, 6);
-            this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", DependencyService.Get<IFileWork>().LoadTextAsync().ConfigureAwait(false).ToString());
+            string token = DependencyService.Get<IFileWork>().LoadTextAsync().Result;
+            this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
         }
 
         public async Task<IEnumerable<Room>> GetAllRoom()

@@ -14,6 +14,7 @@ namespace BookMeMobile.Droid.FileWork
 {
     public class FileWorker : IFileWork
     {
+        private static readonly object LockThis = new object();
         private readonly string filename = Resources.FileName;
 
         public Task DeleteAsync()
@@ -39,9 +40,12 @@ namespace BookMeMobile.Droid.FileWork
         public async Task<string> LoadTextAsync()
         {
             string filepath = this.GetFilePath();
-            using (StreamReader reader = File.OpenText(filepath))
+            lock (LockThis)
             {
-                return await reader.ReadToEndAsync();
+                using (StreamReader reader = File.OpenText(filepath))
+                {
+                    return reader.ReadToEndAsync().Result;
+                }
             }
         }
 

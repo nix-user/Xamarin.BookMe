@@ -83,6 +83,12 @@ namespace BookMeMobile.Pages
                             await this.DisplayAlert(HeadError, BodyError, Ok);
                             break;
                         }
+
+                    case StatusCode.NoAuthorize:
+                        {
+                            await this.Navigation.PushAsync(new LoginPage());
+                            break;
+                        }
                 }
             }
             else

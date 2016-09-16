@@ -25,7 +25,7 @@ namespace BookMeMobile.Data
         {
             get
             {
-                return ApiURL + "Room/";
+                return ApiURL + "room/";
             }
         }
 
@@ -33,7 +33,7 @@ namespace BookMeMobile.Data
         {
             get
             {
-                return ApiURL + "available";
+                return RoomURl + "available";
             }
         }
 

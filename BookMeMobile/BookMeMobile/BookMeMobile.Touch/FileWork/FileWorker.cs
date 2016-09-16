@@ -34,7 +34,7 @@ namespace BookMeMobile.Touch.FileWork
             string filepath = this.GetFilePath();
             using (StreamReader reader = File.OpenText(filepath))
             {
-                return await reader.ReadToEndAsync();
+                return reader.ReadToEndAsync().Result;
             }
         }
 

@@ -22,8 +22,8 @@ namespace BookMeMobile.Data
         public ReservationRepository()
         {
             this.client = new HttpClient();
-            this.client.Timeout = new TimeSpan(0, 0, 4);
-            this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", DependencyService.Get<IFileWork>().LoadTextAsync().ConfigureAwait(false).ToString());
+            string token = DependencyService.Get<IFileWork>().LoadTextAsync().Result;
+            this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
         }
 
         public async Task<IEnumerable<ReservationModel>> GetAll()
@@ -95,7 +95,17 @@ namespace BookMeMobile.Data
                 var response = await this.client.PostAsync(uri, content);
                 if (response.IsSuccessStatusCode)
                 {
-                    return StatusCode.Ok;
+                    var contentResponce = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<ResponseModel>(contentResponce);
+                    if (result.IsOperationSuccessful)
+                    {
+                        return StatusCode.Ok;
+                    }
+                    else
+                    {
+                        return StatusCode.Error;
+                    }
+                    
                 }
                 else
                 {

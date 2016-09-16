@@ -44,8 +44,8 @@ namespace BookMeMobile.Pages
         {
             int idRoom = int.Parse(((Button)sender).ClassId);
             string reservationBody = await this.list.ReservationMessag(idRoom);
-            bool b = await this.DisplayAlert(this.reservationingHeadChecking, reservationBody, this.reservationButonOK, this.reservationButonNO);
-            if (b)
+            bool isBook = await this.DisplayAlert(this.reservationingHeadChecking, reservationBody, this.reservationButonOK, this.reservationButonNO);
+            if (isBook)
             {
                 if (!this.currentBooking.IsRecursive)
                 {
