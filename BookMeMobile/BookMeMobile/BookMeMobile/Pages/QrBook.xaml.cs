@@ -62,7 +62,7 @@ namespace BookMeMobile.Pages
 
         private async void Sucess(IEnumerable<ReservationModel> reservation, Result result)
         {
-            if (reservation == null)
+            if (reservation == null || !reservation.Any())
             {
                 string body = string.Format("Комната: {0} \n От: {1:hh\\:mm} \n До: {2:hh\\:mm}", result.Text, DateTime.Now, DateTime.Now.AddHours(1));
                 bool saveOrNot = await DisplayAlert("Забронировать комнату?", body, "Да", "Нет");

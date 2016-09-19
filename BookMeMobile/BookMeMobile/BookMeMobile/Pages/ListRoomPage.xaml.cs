@@ -43,7 +43,8 @@ namespace BookMeMobile.Pages
         public ListRoomPage(IEnumerable<Room> search, RoomFilterParameters reservation)
         {
             this.InitializeComponent();
-            this.ResultRoom = search.ToList();
+            this.ResultRoom = search.Where(x => !UnallowedResources.Contains(x.Number)).ToList();
+            this.ResultRoom = this.list.Sort(this.ResultRoom);
             if (!this.ResultRoom.Any())
             {
                 isRoom.IsVisible = true;
