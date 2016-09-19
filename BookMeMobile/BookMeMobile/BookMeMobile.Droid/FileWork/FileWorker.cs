@@ -19,8 +19,15 @@ namespace BookMeMobile.Droid.FileWork
 
         public Task DeleteAsync()
         {
-            File.Delete(this.GetFilePath());
-            return Task.FromResult(true);
+            try
+            {
+                File.Delete(this.GetFilePath());
+                return Task.FromResult(true);
+            }
+            catch (Exception e)
+            {
+                return Task.FromResult(false);
+            }
         }
 
         public Task<bool> ExistsAsync()

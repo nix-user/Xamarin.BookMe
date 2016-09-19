@@ -16,44 +16,25 @@ namespace BookMeMobile.Data
 {
     public class AccountController
     {
-        private HttpClient client;
+        private HttpService client;
 
         public AccountController()
         {
-            this.client = new HttpClient();
+            this.client = new HttpService();
         }
 
-        public async Task<StatusCode> GetTockenKey(User user)
+        public async Task<StatusCode> GetTokenKey(User user)
         {
-            try
+            var contentRequeest = this.GetLineRequest(user.Login, user.Password);
+            var contentType = "application/x-www-form-urlencoded";
+            var result = await this.client.Post<string, string>(RestURl.GetToken, contentRequeest, contentType);
+            if (result.Status == StatusCode.Ok)
             {
-                var uri = new Uri(RestURl.GetTocken);
-                var contentRequeest = this.GetLineRequest(user.Login, user.Password);
-                var content = new StringContent(contentRequeest, Encoding.UTF8, "application/x-www-form-urlencoded");
-                var response = await this.client.PostAsync(uri, content);
-                if (response.IsSuccessStatusCode)
-                {
-                    var contentResponce = await response.Content.ReadAsStringAsync();
-                    var token = this.ParseResponse(contentResponce);
-                    await DependencyService.Get<IFileWork>().SaveTextAsync(token);
-                    return StatusCode.Ok;
-                }
-                else
-                {
-                    if (response.StatusCode == HttpStatusCode.BadRequest)
-                    {
-                        return StatusCode.NoAuthorize;
-                    }
-                    else
-                    {
-                        return StatusCode.Error;
-                    }
-                }
+                var token = this.ParseResponse(result.Result);
+                await DependencyService.Get<IFileWork>().SaveTextAsync(token);
             }
-            catch (WebException e)
-            {
-                return StatusCode.NoInternet;
-            }
+
+            return result.Status;
         }
 
         private string GetLineRequest(string login, string password)

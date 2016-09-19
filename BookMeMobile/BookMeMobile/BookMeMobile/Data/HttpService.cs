@@ -42,10 +42,8 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<OperationResult<TResult>> Post<TContent, TResult>(string root, TContent content) //todo: add code to account for unsuccessful operation.result
+        public async Task<OperationResult<TResult>> Post<TContent, TResult>(string root, TContent content, string jsonFormat = "application/json")
         {
-            string jsonFormat = "application/json";
-
             var uri = new Uri(root);
             var json = JsonConvert.SerializeObject(content);
             var jsonContent = new StringContent(json, Encoding.UTF8, jsonFormat);
@@ -119,7 +117,7 @@ namespace BookMeMobile.Data
                 return operationResult;
             }
 
-            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.BadRequest)
             {
                 return new OperationResult<T>()
                 {

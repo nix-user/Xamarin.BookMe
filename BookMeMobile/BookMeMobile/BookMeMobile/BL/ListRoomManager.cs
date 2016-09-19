@@ -50,8 +50,7 @@ namespace BookMeMobile.BL
 
         public async Task<StatusCode> AddReservation(int idRoom)
         {
-            return StatusCode.Error;
-            //return await this.reservationRepository.AddReservation(idRoom, this.currentReservation);
+            return (await this.reservationRepository.AddReservation(idRoom, this.currentReservation)).Status;
         }
 
         public async Task<StatusCode> DeleteReservation(int idReservation)

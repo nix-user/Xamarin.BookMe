@@ -15,7 +15,7 @@ namespace BookMeMobile.BL
         public async Task<StatusCode> GetTocken(User user)
         {
             AccountController account = new AccountController();
-            return await account.GetTockenKey(user);
+            return await account.GetTokenKey(user);
         }
     }
 }
