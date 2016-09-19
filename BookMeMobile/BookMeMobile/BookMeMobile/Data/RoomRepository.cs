@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -26,13 +27,19 @@ namespace BookMeMobile.Data
 
         public async Task<OperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
         {
-            var root = string.Format(RestURl.GetEmptyRoom, filter.From, filter.To, filter.HasPolycom, filter.IsLarge);
+            filter.From = filter.From.AddHours(-3);
+            filter.To = filter.From.AddHours(-3);
+            var root = string.Format(RestURl.GetEmptyRoom, filter.From.ToString(new CultureInfo("en-US")), filter.To.ToString(new CultureInfo("en-US")), filter.HasPolycom, filter.IsLarge);
             return await this.HttpService.Get<IEnumerable<Room>>(root);
         }
 
         public async Task<OperationResult<IEnumerable<ReservationModel>>> GetCurrentRoomReservation(RoomReservationsRequestModel reservationsModel)
         {
-            var root = string.Format(RestURl.GetCurrentRoomReservation, reservationsModel.From, reservationsModel.To, reservationsModel.RoomId);
+            reservationsModel.From = reservationsModel.From.AddHours(-3);
+            reservationsModel.To = reservationsModel.From.AddHours(-3);
+            var root =
+                string.Format(
+                RestURl.GetCurrentRoomReservation, reservationsModel.From.ToString(new CultureInfo("en-US")), reservationsModel.To.ToString(new CultureInfo("en-US")), reservationsModel.RoomId);
             return await this.HttpService.Get<IEnumerable<ReservationModel>>(root);
         }
     }
