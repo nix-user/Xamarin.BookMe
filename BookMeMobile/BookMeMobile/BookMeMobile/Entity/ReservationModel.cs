@@ -20,6 +20,8 @@ namespace BookMeMobile.Entity
 
         public bool IsRecursive { get; set; }
 
+        public int? ResourceId { get; set; }
+
         public TimeSpan Duration { get; set; }
 
         public bool Equals(ReservationModel other)

@@ -40,7 +40,9 @@ namespace BookMeMobile.Data
                 {
                     Id = idRoom
                 },
-                IsRecursive = false
+                IsRecursive = false,
+                ResourceId = idRoom,
+                Duration = reservation.To - reservation.From
             };
             return await this.httpService.Post(RestURl.BookURl, model);
         }
