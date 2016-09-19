@@ -68,7 +68,7 @@ namespace BookMeMobile.Data
             try
             {
                 var uri = new Uri(string.Format(root, id));
-                var response = await httpClient.DeleteAsync(uri);
+                var response = await this.httpClient.DeleteAsync(uri);
                 OperationResult result = new OperationResult();
                 if (response.IsSuccessStatusCode)
                 {

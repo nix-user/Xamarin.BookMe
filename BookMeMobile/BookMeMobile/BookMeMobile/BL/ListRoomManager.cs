@@ -62,7 +62,7 @@ namespace BookMeMobile.BL
         public List<ReservationModel> Sort(List<ReservationModel> list)
         {
             User currentUser = new User();
-            currentUser.MyRoom = "303";
+            currentUser.MyRoom = "410";
             currentUser.FavoriteRoom = "505";
             int userFloor = this.GetFloorInNumber(currentUser.MyRoom);
             list.Sort((view1, view2) =>

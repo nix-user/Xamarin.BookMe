@@ -27,13 +27,13 @@ namespace BookMeMobile.Data
 
         public async Task<StatusCode> RemoveReservation(int id)
         {
-          return (await httpService.Delete(RestURl.BookURl+"{0}",id)).Status;
+            return (await this.httpService.Delete(RestURl.BookURl + "{0}", id)).Status;
         }
 
         public async Task<OperationResult<object>> AddReservation(int idRoom, ReservationModel reservation)
         {
             reservation.Room.Id = idRoom;
-            return await httpService.Post<ReservationModel, object>(RestURl.BookURl ,reservation);
+            return await this.httpService.Post<ReservationModel, object>(RestURl.BookURl, reservation);
         }
 
         public async Task<OperationResult<IEnumerable<ReservationModel>>> GetUserReservations()
