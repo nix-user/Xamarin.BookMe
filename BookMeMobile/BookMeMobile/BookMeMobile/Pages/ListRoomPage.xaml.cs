@@ -45,6 +45,7 @@ namespace BookMeMobile.Pages
             this.InitializeComponent();
             this.list = new ListRoomManager();
             this.ResultRoom = search.Where(x => !UnallowedResources.Contains(x.Number)).ToList();
+            this.ResultRoom = this.list.Sort(this.ResultRoom);
             if (!this.ResultRoom.Any())
             {
                 isRoom.IsVisible = true;
