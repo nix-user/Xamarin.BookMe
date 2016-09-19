@@ -13,6 +13,18 @@ namespace BookMeMobile.Pages
 {
     public partial class ListRoomPage : ContentPage
     {
+        private static readonly IEnumerable<string> UnallowedResources = new List<string>()
+        {
+            "709",
+            "710",
+            "712a",
+            "713",
+            "Netatmo",
+            "NetatmoCityHall",
+            "Projector 1",
+            "Projector 2"
+        };
+
         private readonly string reservationingHeadChecking = "Подтвердите действие";
         private readonly string reservationingBodySucces = "Комната успешно забронирована";
         private readonly string reservationingHeadSuccess = "Действие успешно выполнено";
@@ -32,7 +44,7 @@ namespace BookMeMobile.Pages
         {
             this.InitializeComponent();
             this.list = new ListRoomManager(currentUser);
-            this.ResultRoom = search.Result.ToList();
+            this.ResultRoom = search.Result.Where(x => !UnallowedResources.Contains(x.Number)).ToList();
             if (!this.ResultRoom.Any())
             {
                 isRoom.IsVisible = true;
