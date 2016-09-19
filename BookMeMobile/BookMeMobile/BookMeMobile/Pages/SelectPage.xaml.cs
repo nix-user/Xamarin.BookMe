@@ -24,14 +24,13 @@ namespace BookMeMobile.Pages
 
         private ListRoomManager manager;
 
-        public SelectPage(User currentUser)
+        public SelectPage()
         {
             this.InitializeComponent();
             this.Date.MinimumDate = DateTime.Now;
             this.TimeTo.Time = DateTime.Now.TimeOfDay;
             this.TimeFrom.Time = DateTime.Now.TimeOfDay;
-            CurrentUser = currentUser;
-            this.manager = new ListRoomManager(currentUser);
+            this.manager = new ListRoomManager();
             this.SettingPaddingForWinPhone();
         }
 
@@ -64,15 +63,12 @@ namespace BookMeMobile.Pages
                     IsLarge = IsBig.IsToggled
                 };
 
-                this.loader.Show();
-                var searchListRetrieval = await this.manager.GetEmptyRoom(reservation);
-                this.loader.Hide();
-                switch (searchListRetrieval.Status)
+                var searchList = await this.manager.GetEmptyRoom(reservation);
+                switch (searchList.Status)
                 {
                     case StatusCode.Ok:
                         {
-                            await this.Navigation.PushAsync(new MainPage(CurrentUser,
-                             new ListRoomPage(CurrentUser, searchListRetrieval)));
+                            await this.Navigation.PushAsync(new MainPage(new ListRoomPage(searchList.Result)));
                             break;
                         }
 
@@ -85,6 +81,12 @@ namespace BookMeMobile.Pages
                     case StatusCode.Error:
                         {
                             await this.DisplayAlert(HeadError, BodyError, Ok);
+                            break;
+                        }
+
+                    case StatusCode.NoAuthorize:
+                        {
+                            await this.Navigation.PushAsync(new LoginPage());
                             break;
                         }
                 }
@@ -116,6 +118,12 @@ namespace BookMeMobile.Pages
                 case StatusCode.Error:
                     {
                         await this.DisplayAlert(HeadError, BodyError, Ok);
+                        break;
+                    }
+
+                case StatusCode.NoAuthorize:
+                    {
+                        await this.Navigation.PushAsync(new LoginPage());
                         break;
                     }
             }

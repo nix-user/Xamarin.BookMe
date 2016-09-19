@@ -4,8 +4,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Android.Provider;
+using BookMeMobile.Binding;
+using BookMeMobile.BL;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
+using BookMeMobile.Interface;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
@@ -13,15 +16,10 @@ namespace BookMeMobile.Pages
     public partial class LoginPage : ContentPage
     {
         private const string HeadError = "Ошибка";
-        private const string BodyUserIsNotExist = "Такого пользователя нет";
+        private const string BodyUserIsNotExist = "Логин или пароль введены неверно";
+        private const string BodyServerError = "Ошибка на стороне сервера";
         private const string BodyInternetIsNotExist = "Нет подключения к интернету";
         private const string Ok = "Ok";
-
-        public static List<User> Users { get; set; } = new List<User>
-        {
-            new User() { Id = 1, Login = "User1", FavoriteRoom = "304D", MyRoom = "410" },
-            new User() { Id = 2, Login = "User2", FavoriteRoom = "303D", MyRoom = "409" }
-        };
 
         public LoginPage()
         {
@@ -30,14 +28,38 @@ namespace BookMeMobile.Pages
 
         private async void BtnSignIn_OnClicked(object sender, EventArgs e)
         {
-            User user = Users.FirstOrDefault(x => x.Login == TextLogin.Text);
-            if (user != null)
+            AccountService service = new AccountService();
+            User user = new User()
             {
-                await Navigation.PushAsync(new MainPage(user));
-            }
-            else
+                Login = TextLogin.Text,
+                Password = textPassword.Text
+            };
+            var request = await service.GetTocken(user);
+            switch (request)
             {
-                await this.DisplayAlert(HeadError, BodyUserIsNotExist, Ok);
+                case StatusCode.Ok:
+                    {
+                        await this.Navigation.PushAsync(new MainPage(new SelectPage()));
+                        break;
+                    }
+
+                case StatusCode.NoInternet:
+                    {
+                        await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+                        break;
+                    }
+
+                case StatusCode.Error:
+                    {
+                        await this.DisplayAlert(HeadError, BodyServerError, Ok);
+                        break;
+                    }
+
+                case StatusCode.NoAuthorize:
+                    {
+                        await this.DisplayAlert(HeadError, BodyUserIsNotExist, Ok);
+                        break;
+                    }
             }
         }
     }

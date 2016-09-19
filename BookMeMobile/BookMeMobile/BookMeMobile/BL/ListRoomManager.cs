@@ -20,21 +20,18 @@ namespace BookMeMobile.BL
         private ReservationRepository reservationRepository;
 
         private ReservationModel currentReservation;
-        private User currentUser;
 
         public ListRoomManager(ReservationModel reservation, User currentUser)
         {
             this.reservationRepository = new ReservationRepository();
             this.roomRepository = new RoomRepository();
             this.currentReservation = reservation;
-            this.currentUser = currentUser;
         }
 
-        public ListRoomManager(User user)
+        public ListRoomManager()
         {
             this.reservationRepository = new ReservationRepository();
             this.roomRepository = new RoomRepository();
-            this.currentUser = user;
         }
 
         public async Task<string> ReservationMessag(int idRoom)
@@ -53,7 +50,7 @@ namespace BookMeMobile.BL
 
         public async Task<OperationResult> AddReservation(int idRoom)
         {
-            return await this.reservationRepository.AddReservation(idRoom, this.currentReservation);
+            return (await this.reservationRepository.AddReservation(idRoom, this.currentReservation));
         }
 
         public async Task<OperationResult> DeleteReservation(int idReservation)
@@ -63,7 +60,10 @@ namespace BookMeMobile.BL
 
         public List<ReservationModel> Sort(List<ReservationModel> list)
         {
-            int userFloor = this.GetFloorInNumber(this.currentUser.MyRoom);
+            User currentUser = new User();
+            currentUser.MyRoom = "410";
+            currentUser.FavoriteRoom = "505";
+            int userFloor = this.GetFloorInNumber(currentUser.MyRoom);
             list.Sort((view1, view2) =>
             {
                 if (Math.Abs(GetFloorInNumber(view1.Room.ToString()) - userFloor) >
@@ -84,9 +84,9 @@ namespace BookMeMobile.BL
                     }
                 }
             });
-            if (list.FindIndex(x => x.Room.Number == this.currentUser.FavoriteRoom) > 0)
+            if (list.FindIndex(x => x.Room.Number == currentUser.FavoriteRoom) > 0)
             {
-                ReservationModel first = list[list.FindIndex(x => x.Room.Number == this.currentUser.FavoriteRoom)];
+                ReservationModel first = list[list.FindIndex(x => x.Room.Number == currentUser.FavoriteRoom)];
                 list.Remove(first);
                 list.Insert(0, first);
             }
@@ -114,7 +114,7 @@ namespace BookMeMobile.BL
 
         public async Task<OperationResult<IEnumerable<ReservationModel>>> GetAllUserReservation()
         {
-            return await this.reservationRepository.GetUserReservations(this.currentUser.Login);
+            return await this.reservationRepository.GetUserReservations();
         }
 
         public async Task<OperationResult<IEnumerable<ReservationModel>>> GetRoomCurrentReservations(string number)

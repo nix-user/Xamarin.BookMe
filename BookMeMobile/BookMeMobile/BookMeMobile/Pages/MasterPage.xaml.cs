@@ -14,23 +14,20 @@ namespace BookMeMobile.Pages
     public partial class MainPage : MasterDetailPage
     {
         private MenuPage masterPage;
-        private User currentUser;
         private ZXingScannerPage scanPage;
 
-        public MainPage(User currentUser)
+        public MainPage()
         {
-            this.currentUser = currentUser;
             this.MasterBehavior = MasterBehavior.SplitOnPortrait;
             this.masterPage = new MenuPage();
             this.Master = this.masterPage;
-            this.Detail = new SelectPage(currentUser);
+            this.Detail = new SelectPage();
             this.Detail.Padding = new Thickness(0, 20, 0, 0);
             this.masterPage.ListView.ItemSelected += this.OnItemSelected;
         }
 
-        public MainPage(User currentUser, Page page)
+        public MainPage(Page page)
         {
-            this.currentUser = currentUser;
             this.MasterBehavior = MasterBehavior.SplitOnPortrait;
             this.masterPage = new MenuPage();
             this.Master = this.masterPage;
@@ -70,7 +67,7 @@ namespace BookMeMobile.Pages
             {
                 Navigation.PopAsync();
                 QrReservation code = new QrReservation();
-                code.ScanResult(result, currentUser);
+                code.ScanResult(result);
             });
         }
     }

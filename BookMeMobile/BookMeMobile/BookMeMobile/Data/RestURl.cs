@@ -10,7 +10,8 @@ namespace BookMeMobile.Data
 {
     public static class RestURl
     {
-        private const string ApiURL = "http://10.10.41.76/api/";
+        private const string Adress = "http://10.10.41.76/";
+        private const string ApiURL = Adress + "api/";
 
         public static string BookURl => ApiURL + "Reservation/";
 
@@ -20,6 +21,14 @@ namespace BookMeMobile.Data
 
         public static string GetCurrentRoomReservation => RoomURl + "/reservations?From={0}&To={1}&roomId={2}";
 
-        public static string GetUserReservation => BookURl + "{0}";
+        public static string GetUserReservation
+        {
+            get { return BookURl; }
+        }
+
+        public static string GetToken
+        {
+            get { return Adress + "token"; }
+        }
     }
 }
