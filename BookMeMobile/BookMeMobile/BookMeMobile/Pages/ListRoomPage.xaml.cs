@@ -43,6 +43,7 @@ namespace BookMeMobile.Pages
         public ListRoomPage(IEnumerable<Room> search, RoomFilterParameters reservation)
         {
             this.InitializeComponent();
+            this.manager = new ListRoomManager();
             this.ResultRoom = search.Where(x => !UnallowedResources.Contains(x.Number)).ToList();
             this.ResultRoom = this.manager.Sort(this.ResultRoom);
             if (!this.ResultRoom.Any())
@@ -50,7 +51,6 @@ namespace BookMeMobile.Pages
                 isRoom.IsVisible = true;
             }
 
-            this.manager = new ListRoomManager();
             this.currentReservation = reservation;
 
             listUserRoomInRange.BindingContext = this.ResultRoom;
@@ -63,8 +63,8 @@ namespace BookMeMobile.Pages
             bool isBook = await this.DisplayAlert(this.reservationingHeadChecking, reservationBody, this.reservationButonOK, this.reservationButonNO);
             if (isBook)
             {
-               this.AddNoRecursive(idRoom);
-               await Navigation.PopAsync();
+                this.AddNoRecursive(idRoom);
+                await Navigation.PopAsync();
             }
         }
 
