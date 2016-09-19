@@ -3,18 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
+using BookMeMobile.Interface;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace BookMeMobile.Data
 {
     public class HttpService
     {
         private readonly HttpClient httpClient = new HttpClient();
+
+        public HttpService()
+        {
+            string token = DependencyService.Get<IFileWork>().LoadTextAsync().Result;
+            if (token != null)
+            {
+                this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+            }
+        }
 
         public async Task<OperationResult<T>> Get<T>(string root)
         {

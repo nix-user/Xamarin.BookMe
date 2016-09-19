@@ -72,7 +72,7 @@ namespace BookMeMobile.Droid.FileWork
 
         private string GetDocsPath()
         {
-            return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            return Environment.GetFolderPath(Environment.SpecialFolder.Personal);
         }
     }
 }
