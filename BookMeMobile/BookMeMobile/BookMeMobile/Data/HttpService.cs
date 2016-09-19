@@ -12,19 +12,19 @@ using Newtonsoft.Json;
 
 namespace BookMeMobile.Data
 {
-    internal class HttpService
+    public class HttpService
     {
-        private HttpClient httpClient = new HttpClient();
+        private readonly HttpClient httpClient = new HttpClient();
 
         public async Task<OperationResult<T>> Get<T>(string root)
         {
-            var uri = new Uri(string.Format(root, string.Empty));
+            var uri = new Uri(root);
             try
             {
                 var response = await this.httpClient.GetAsync(uri);
-                return await this.CreateOperationResultFromResult<T>(response);
+                return await this.CreateOperationResultFromResponse<T>(response);
             }
-            catch (WebException)
+            catch (Exception)
             {
                 return new OperationResult<T>()
                 {
@@ -33,24 +33,43 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<OperationResult<TResult>> Post<TContent, TResult>(string root, TContent content) //todo: add code to account for unsuccessful operation.result
+        public async Task<OperationResult> Post<TContent>(string root, TContent content)
         {
             string jsonFormat = "application/json";
 
-            var uri = new Uri(RestURl.GetEmptyRoom);
+            var uri = new Uri(root);
             var json = JsonConvert.SerializeObject(content);
             var jsonContent = new StringContent(json, Encoding.UTF8, jsonFormat);
             try
             {
                 var response = await this.httpClient.PostAsync(uri, jsonContent);
-                return await this.CreateOperationResultFromResult<TResult>(response);
+                return await this.CreateOperationResultFromResponse(response);
             }
-            catch (WebException)
+            catch (Exception)
             {
-                return new OperationResult<TResult>()
+                return new OperationResult()
                 {
                     Status = StatusCode.NoInternet
                 };
+            }
+        }
+
+        public async Task<OperationResult> Delete(string root)
+        {
+            try
+            {
+                var uri = new Uri(root);
+                var response = await this.httpClient.DeleteAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    return new OperationResult() { Status = StatusCode.Ok };
+                }
+
+                return new OperationResult() { Status = StatusCode.Error };
+            }
+            catch (Exception)
+            {
+                return new OperationResult() { Status = StatusCode.NoInternet };
             }
         }
 
@@ -59,7 +78,17 @@ namespace BookMeMobile.Data
             return message.StatusCode >= HttpStatusCode.InternalServerError;
         }
 
-        private async Task<OperationResult<T>> CreateOperationResultFromResult<T>(HttpResponseMessage response)
+        private async Task<OperationResult> CreateOperationResultFromResponse(HttpResponseMessage response)
+        {
+            if (response.IsSuccessStatusCode)
+            {
+                return new OperationResult() { Status = StatusCode.Ok };
+            }
+
+            return new OperationResult() { Status = StatusCode.Error };
+        }
+
+        private async Task<OperationResult<T>> CreateOperationResultFromResponse<T>(HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode)
             {

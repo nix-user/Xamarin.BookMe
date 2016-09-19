@@ -97,13 +97,13 @@ namespace BookMeMobile.Pages
 
         public async void MyReservations_OnClicked(object sender, EventArgs e)
         {
-            ReservationsStatusModel allReservatioons = await this.manager.GetAllUserReservation();
-            switch (allReservatioons.StatusCode)
+            var allReservatioons = await this.manager.GetAllUserReservation();
+            switch (allReservatioons.Status)
             {
                 case StatusCode.Ok:
                     {
                         await this.Navigation.PushAsync(
-                            new TabPanelPage(CurrentUser, allReservatioons.ReservationModels));
+                            new TabPanelPage(CurrentUser, allReservatioons.Result));
                         break;
                     }
 

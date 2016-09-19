@@ -7,119 +7,36 @@ using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
+using BookMeMobile.OperationResults;
 using Newtonsoft.Json;
 
 namespace BookMeMobile.Data
 {
-    public class ReservationRepository
+    public class ReservationRepository : BaseRepository
     {
-        private HttpClient client;
-
-        public ReservationRepository()
+        public async Task<OperationResult<IEnumerable<ReservationModel>>> GetAll()
         {
-            this.client = new HttpClient();
-            this.client.Timeout = new TimeSpan(0, 0, 4);
+            return await this.HttpService.Get<IEnumerable<ReservationModel>>(RestURl.BookURl);
         }
 
-        public async Task<IEnumerable<ReservationModel>> GetAll()
+        public async Task<OperationResult<ReservationModel>> GetReservation(int id)
         {
-            var uri = new Uri(string.Format(RestURl.BookURl, string.Empty));
-            var response = this.client.GetAsync(uri);
-            if (response.Result.IsSuccessStatusCode)
-            {
-                var content = await response.Result.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<IEnumerable<ReservationModel>>(content);
-            }
-            else
-            {
-                return null;
-            }
+            return await this.HttpService.Get<ReservationModel>(RestURl.BookURl + id);
         }
 
-        public async Task<ReservationStatusModel> GetReservation(int id)
+        public async Task<OperationResult> RemoveReservation(int id)
         {
-            var uri = new Uri(string.Format(RestURl.BookURl, id));
-            var response = this.client.GetAsync(uri);
-            if (response.Result.IsSuccessStatusCode)
-            {
-                var content = await response.Result.Content.ReadAsStringAsync();
-                return new ReservationStatusModel()
-                {
-                    Reservation = JsonConvert.DeserializeObject<ReservationModel>(content),
-                    StatusCode = StatusCode.Ok
-                };
-            }
-            else
-            {
-                return new ReservationStatusModel()
-                {
-                    Reservation = null,
-                    StatusCode = StatusCode.Ok
-                };
-            }
+            return await this.HttpService.Delete(RestURl.BookURl + id);
         }
 
-        public async Task<StatusCode> RemoveReservation(int id)
+        public async Task<OperationResult> AddReservation(int idRoom, ReservationModel reservation)
         {
-            try
-            {
-                var uri = new Uri(string.Format(RestURl.BookURl, id));
-                var response = await this.client.DeleteAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    return StatusCode.Ok;
-                }
-                else
-                {
-                    return StatusCode.Error;
-                }
-            }
-            catch (Exception)
-            {
-                return StatusCode.NoInternet;
-            }
+            return await this.HttpService.Post<ReservationModel>(RestURl.BookURl, reservation);
         }
 
-        public async Task<StatusCode> AddReservation(int idRoom, ReservationModel reservation)
+        public async Task<OperationResult<IEnumerable<ReservationModel>>> GetUserReservations(string login)
         {
-            try
-            {
-                var uri = new Uri(string.Format(RestURl.BookURl, string.Empty));
-                var json = JsonConvert.SerializeObject(reservation);
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await this.client.PostAsync(uri, content);
-                if (response.IsSuccessStatusCode)
-                {
-                    return StatusCode.Ok;
-                }
-                else
-                {
-                    return StatusCode.Error;
-                }
-            }
-            catch (Exception)
-            {
-                return StatusCode.NoInternet;
-            }
-        }
-
-        public async Task<ResponseModel<IEnumerable<ReservationModel>>> GetUserReservations(string login)
-        {
-            var uri = new Uri(string.Format(RestURl.GetUserReservation, login));
-            var response = await this.client.GetAsync(uri);
-            var content = await response.Content.ReadAsStringAsync();
-            if (response.IsSuccessStatusCode)
-            {
-                return JsonConvert.DeserializeObject<ResponseModel<IEnumerable<ReservationModel>>>(content);
-            }
-            else
-            {
-                return new ResponseModel<IEnumerable<ReservationModel>>
-                {
-                    Result = null,
-                    IsOperationSuccessful = false
-                };
-            }
+            return await this.HttpService.Get<IEnumerable<ReservationModel>>(string.Format(RestURl.GetUserReservation, login));
         }
     }
 }
