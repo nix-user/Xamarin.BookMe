@@ -51,15 +51,14 @@ namespace BookMeMobile.BL
                 string.Format("{0:Да;0;Нет}", currentRoom.IsHasPolykom.GetHashCode()));
         }
 
-        //todo: return OperationResult from here
-        public async Task<StatusCode> AddReservation(int idRoom)
+        public async Task<OperationResult> AddReservation(int idRoom)
         {
-            return (await this.reservationRepository.AddReservation(idRoom, this.currentReservation)).Status;
+            return await this.reservationRepository.AddReservation(idRoom, this.currentReservation);
         }
 
-        public async Task<StatusCode> DeleteReservation(int idReservation)
+        public async Task<OperationResult> DeleteReservation(int idReservation)
         {
-            return (await this.reservationRepository.RemoveReservation(idReservation)).Status;
+            return await this.reservationRepository.RemoveReservation(idReservation);
         }
 
         public List<ReservationModel> Sort(List<ReservationModel> list)
@@ -129,7 +128,7 @@ namespace BookMeMobile.BL
             return await this.roomRepository.GetCurrentRoomReservation(reservationCurrent);
         }
 
-        public async Task<StatusCode> AddReservationInHour(string text)
+        public async Task<OperationResult> AddReservationInHour(string text)
         {
             this.currentReservation = new ReservationModel()
             {
@@ -137,7 +136,7 @@ namespace BookMeMobile.BL
                 From = DateTime.Now,
                 To = DateTime.Now.AddHours(1),
             };
-            return (await this.reservationRepository.AddReservation(int.Parse(text), this.currentReservation)).Status;
+            return await this.reservationRepository.AddReservation(int.Parse(text), this.currentReservation);
         }
     }
 }

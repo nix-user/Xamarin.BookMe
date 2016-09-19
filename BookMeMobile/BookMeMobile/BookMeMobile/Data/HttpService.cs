@@ -73,50 +73,26 @@ namespace BookMeMobile.Data
             }
         }
 
-        private bool DidInteralServerErrorHappen(HttpResponseMessage message)
-        {
-            return message.StatusCode >= HttpStatusCode.InternalServerError;
-        }
-
         private async Task<OperationResult> CreateOperationResultFromResponse(HttpResponseMessage response)
         {
-            if (response.IsSuccessStatusCode)
+            var contentResponse = await response.Content.ReadAsStringAsync();
+            var responseModel = JsonConvert.DeserializeObject<ResponseModel>(contentResponse);
+            return new OperationResult
             {
-                return new OperationResult() { Status = StatusCode.Ok };
-            }
-
-            return new OperationResult() { Status = StatusCode.Error };
+                Status = responseModel.IsOperationSuccessful ? StatusCode.Ok : StatusCode.Error
+            };
         }
 
         private async Task<OperationResult<T>> CreateOperationResultFromResponse<T>(HttpResponseMessage response)
         {
-            if (response.IsSuccessStatusCode)
+            var operationResult = await this.CreateOperationResultFromResponse(response);
+            if (operationResult.Status == StatusCode.Ok)
             {
                 var contentResponse = await response.Content.ReadAsStringAsync();
-                var operationResult = new OperationResult<T>();
-                if (response.IsSuccessStatusCode)
-                {
-                    operationResult.Status = StatusCode.Ok;
-                    operationResult.Result =
-                        JsonConvert.DeserializeObject<ResponseModel<T>>(contentResponse).Result;
-                }
-                else
-                {
-                    operationResult.Status = StatusCode.Error;
-                }
-
-                return operationResult;
+                return new OperationResult<T>() { Status = StatusCode.Ok, Result = JsonConvert.DeserializeObject<ResponseModel<T>>(contentResponse).Result };
             }
 
-            if (this.DidInteralServerErrorHappen(response))
-            {
-                return new OperationResult<T>()
-                {
-                    Status = StatusCode.Error
-                };
-            }
-
-            return null;
+            return new OperationResult<T>() { Status = operationResult.Status };
         }
     }
 }
