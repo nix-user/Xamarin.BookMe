@@ -13,6 +13,18 @@ namespace BookMeMobile.Pages
 {
     public partial class ListRoomPage : ContentPage
     {
+        private static readonly IEnumerable<string> UnallowedResources = new List<string>()
+        {
+            "709",
+            "710",
+            "712a",
+            "713",
+            "Netatmo",
+            "NetatmoCityHall",
+            "Projector 1",
+            "Projector 2"
+        };
+
         private readonly string reservationingHeadChecking = "Подтвердите действие";
         private readonly string reservationingBodySucces = "Комната успешно забронирована";
         private readonly string reservationingHeadSuccess = "Действие успешно выполнено";
@@ -62,7 +74,7 @@ namespace BookMeMobile.Pages
 
         private async void AddNoRecursive(int idRoom)
         {
-            StatusCode statusCode = await this.list.AddReservation(idRoom);
+            StatusCode statusCode = (await this.list.AddReservation(idRoom)).Status;
             switch (statusCode)
             {
                 case StatusCode.Ok:

@@ -50,7 +50,7 @@ namespace BookMeMobile.BL
 
         public async Task<OperationResult> AddReservation(int idRoom)
         {
-            return (await this.reservationRepository.AddReservation(idRoom, this.currentReservation));
+            return (await this.reservationRepository.AddReservation(idRoom, this.currentReservation)).Status;
         }
 
         public async Task<OperationResult> DeleteReservation(int idReservation)
@@ -114,7 +114,11 @@ namespace BookMeMobile.BL
 
         public async Task<OperationResult<IEnumerable<ReservationModel>>> GetAllUserReservation()
         {
+<<<<<<< HEAD
             return await this.reservationRepository.GetUserReservations();
+=======
+            return await this.reservationRepository.GetUserReservations(this.currentUser.Login);
+>>>>>>> develop
         }
 
         public async Task<OperationResult<IEnumerable<ReservationModel>>> GetRoomCurrentReservations(string number)

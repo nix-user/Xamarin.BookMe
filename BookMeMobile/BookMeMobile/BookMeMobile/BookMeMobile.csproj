@@ -41,6 +41,7 @@
     <Compile Include="Binding\ConvertFromRoomToString.cs" />
     <Compile Include="BL\AccountService.cs" />
     <Compile Include="Data\AccountController.cs" />
+    <Compile Include="Data\BaseRepository.cs" />
     <Compile Include="Data\BookingRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\HttpService.cs" />
