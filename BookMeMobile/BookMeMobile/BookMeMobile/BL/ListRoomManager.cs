@@ -51,12 +51,12 @@ namespace BookMeMobile.BL
                 string.Format("{0:Да;0;Нет}", currentRoom.IsHasPolykom.GetHashCode()));
         }
 
-        public async Task<StatusCode> AddReservation(int idRoom)
+        public async Task<OperationResult> AddReservation(int idRoom)
         {
             return await this.reservationRepository.AddReservation(idRoom, this.currentReservation);
         }
 
-        public async Task<StatusCode> DeleteReservation(int idReservation)
+        public async Task<OperationResult> DeleteReservation(int idReservation)
         {
             return await this.reservationRepository.RemoveReservation(idReservation);
         }
@@ -112,44 +112,9 @@ namespace BookMeMobile.BL
             return await this.roomRepository.GetEmptyRoom(filter);
         }
 
-        public async Task<ReservationsStatusModel> GetAllUserReservation()
+        public async Task<OperationResult<IEnumerable<ReservationModel>>> GetAllUserReservation()
         {
-            try
-            {
-                var roomResult = await this.reservationRepository.GetUserReservations(this.currentUser.Login);
-                if (roomResult.IsOperationSuccessful)
-                {
-                    return new ReservationsStatusModel()
-                    {
-                        ReservationModels = roomResult.Result.ToList(),
-                        StatusCode = StatusCode.Ok
-                    };
-                }
-                else
-                {
-                    return new ReservationsStatusModel()
-                    {
-                        ReservationModels = null,
-                        StatusCode = StatusCode.Error
-                    };
-                }
-            }
-            catch (WebException)
-            {
-                return new ReservationsStatusModel()
-                {
-                    ReservationModels = null,
-                    StatusCode = StatusCode.NoInternet
-                };
-            }
-            catch (TaskCanceledException)
-            {
-                return new ReservationsStatusModel()
-                {
-                    ReservationModels = null,
-                    StatusCode = StatusCode.NoInternet
-                };
-            }
+            return await this.reservationRepository.GetUserReservations(this.currentUser.Login);
         }
 
         public async Task<OperationResult<IEnumerable<ReservationModel>>> GetRoomCurrentReservations(string number)
@@ -163,7 +128,7 @@ namespace BookMeMobile.BL
             return await this.roomRepository.GetCurrentRoomReservation(reservationCurrent);
         }
 
-        public async Task<StatusCode> AddReservationInHour(string text)
+        public async Task<OperationResult> AddReservationInHour(string text)
         {
             this.currentReservation = new ReservationModel()
             {

@@ -74,7 +74,7 @@ namespace BookMeMobile.Pages
 
         private async void AddNoRecursive(int idRoom)
         {
-            StatusCode statusCode = await this.list.AddReservation(idRoom);
+            StatusCode statusCode = (await this.list.AddReservation(idRoom)).Status;
             switch (statusCode)
             {
                 case StatusCode.Ok:

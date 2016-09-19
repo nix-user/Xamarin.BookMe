@@ -12,28 +12,28 @@ using Newtonsoft.Json;
 
 namespace BookMeMobile.Data
 {
-    public class RoomRepository
+    public class RoomRepository : BaseRepository
     {
-        private readonly HttpService httpService = new HttpService();
-
         public async Task<OperationResult<IEnumerable<Room>>> GetAllRoom()
         {
-            return await this.httpService.Get<IEnumerable<Room>>(RestURl.RoomURl);
+            return await this.HttpService.Get<IEnumerable<Room>>(RestURl.RoomURl);
         }
 
         public async Task<OperationResult<Room>> GetRoom(int id)
         {
-            return await this.httpService.Get<Room>(RestURl.RoomURl + id);
+            return await this.HttpService.Get<Room>(RestURl.RoomURl + id);
         }
 
         public async Task<OperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
         {
-            return await this.httpService.Post<RoomFilterParameters, IEnumerable<Room>>(RestURl.GetEmptyRoom, filter);
+            var root = string.Format(RestURl.GetEmptyRoom, filter.From, filter.To, filter.HasPolycom, filter.IsLarge);
+            return await this.HttpService.Get<IEnumerable<Room>>(root);
         }
 
         public async Task<OperationResult<IEnumerable<ReservationModel>>> GetCurrentRoomReservation(RoomReservationsRequestModel reservationsModel)
         {
-            return await this.httpService.Post<RoomReservationsRequestModel, IEnumerable<ReservationModel>>(RestURl.GetCurrentRoomReservation, reservationsModel);
+            var root = string.Format(RestURl.GetCurrentRoomReservation, reservationsModel.From, reservationsModel.To, reservationsModel.RoomId);
+            return await this.HttpService.Get<IEnumerable<ReservationModel>>(root);
         }
     }
 }

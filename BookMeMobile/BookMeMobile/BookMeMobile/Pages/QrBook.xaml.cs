@@ -36,7 +36,7 @@ namespace BookMeMobile.Pages
                             bool saveOrNot = await DisplayAlert("Забронировать комнату?", body, "Да", "Нет");
                             if (saveOrNot)
                             {
-                                StatusCode savStatusCode = await manager.AddReservationInHour(result.Text);
+                                StatusCode savStatusCode = (await manager.AddReservationInHour(result.Text)).Status;
                                 if (savStatusCode == StatusCode.Ok)
                                 {
                                     await this.DisplayAlert("Успешно", "Комната успешно занята", "Ok");

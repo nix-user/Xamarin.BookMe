@@ -39,6 +39,7 @@
     <Compile Include="Binding\CheckerInColor.cs" />
     <Compile Include="Binding\ConverterBool.cs" />
     <Compile Include="Binding\ConvertFromRoomToString.cs" />
+    <Compile Include="Data\BaseRepository.cs" />
     <Compile Include="Data\BookingRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\HttpService.cs" />

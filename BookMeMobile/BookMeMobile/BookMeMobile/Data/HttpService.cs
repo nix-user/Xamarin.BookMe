@@ -12,19 +12,19 @@ using Newtonsoft.Json;
 
 namespace BookMeMobile.Data
 {
-    internal class HttpService
+    public class HttpService
     {
-        private HttpClient httpClient = new HttpClient();
+        private readonly HttpClient httpClient = new HttpClient();
 
         public async Task<OperationResult<T>> Get<T>(string root)
         {
-            var uri = new Uri(string.Format(root, string.Empty));
+            var uri = new Uri(root);
             try
             {
                 var response = await this.httpClient.GetAsync(uri);
-                return await this.CreateOperationResultFromResult<T>(response);
+                return await this.CreateOperationResultFromResponse<T>(response);
             }
-            catch (WebException)
+            catch (Exception)
             {
                 return new OperationResult<T>()
                 {
@@ -33,61 +33,66 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<OperationResult<TResult>> Post<TContent, TResult>(string root, TContent content) //todo: add code to account for unsuccessful operation.result
+        public async Task<OperationResult> Post<TContent>(string root, TContent content)
         {
             string jsonFormat = "application/json";
 
-            var uri = new Uri(RestURl.GetEmptyRoom);
+            var uri = new Uri(root);
             var json = JsonConvert.SerializeObject(content);
             var jsonContent = new StringContent(json, Encoding.UTF8, jsonFormat);
             try
             {
                 var response = await this.httpClient.PostAsync(uri, jsonContent);
-                return await this.CreateOperationResultFromResult<TResult>(response);
+                return await this.CreateOperationResultFromResponse(response);
             }
-            catch (WebException)
+            catch (Exception)
             {
-                return new OperationResult<TResult>()
+                return new OperationResult()
                 {
                     Status = StatusCode.NoInternet
                 };
             }
         }
 
-        private bool DidInteralServerErrorHappen(HttpResponseMessage message)
+        public async Task<OperationResult> Delete(string root)
         {
-            return message.StatusCode >= HttpStatusCode.InternalServerError;
-        }
-
-        private async Task<OperationResult<T>> CreateOperationResultFromResult<T>(HttpResponseMessage response)
-        {
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var contentResponse = await response.Content.ReadAsStringAsync();
-                var operationResult = new OperationResult<T>();
+                var uri = new Uri(root);
+                var response = await this.httpClient.DeleteAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
-                    operationResult.Status = StatusCode.Ok;
-                    operationResult.Result =
-                        JsonConvert.DeserializeObject<ResponseModel<T>>(contentResponse).Result;
-                }
-                else
-                {
-                    operationResult.Status = StatusCode.Error;
+                    return new OperationResult() { Status = StatusCode.Ok };
                 }
 
-                return operationResult;
+                return new OperationResult() { Status = StatusCode.Error };
             }
-
-            if (this.DidInteralServerErrorHappen(response))
+            catch (Exception)
             {
-                return new OperationResult<T>()
-                {
-                    Status = StatusCode.Error
-                };
+                return new OperationResult() { Status = StatusCode.NoInternet };
+            }
+        }
+
+        private async Task<OperationResult> CreateOperationResultFromResponse(HttpResponseMessage response)
+        {
+            var contentResponse = await response.Content.ReadAsStringAsync();
+            var responseModel = JsonConvert.DeserializeObject<ResponseModel>(contentResponse);
+            return new OperationResult
+            {
+                Status = responseModel.IsOperationSuccessful ? StatusCode.Ok : StatusCode.Error
+            };
+        }
+
+        private async Task<OperationResult<T>> CreateOperationResultFromResponse<T>(HttpResponseMessage response)
+        {
+            var operationResult = await this.CreateOperationResultFromResponse(response);
+            if (operationResult.Status == StatusCode.Ok)
+            {
+                var contentResponse = await response.Content.ReadAsStringAsync();
+                return new OperationResult<T>() { Status = StatusCode.Ok, Result = JsonConvert.DeserializeObject<ResponseModel<T>>(contentResponse).Result };
             }
 
-            return null;
+            return new OperationResult<T>() { Status = operationResult.Status };
         }
     }
 }
