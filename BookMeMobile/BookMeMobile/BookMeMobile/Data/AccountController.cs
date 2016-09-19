@@ -16,25 +16,44 @@ namespace BookMeMobile.Data
 {
     public class AccountController
     {
-        private HttpService client;
+        private HttpClient client;
 
         public AccountController()
         {
-            this.client = new HttpService();
+            this.client = new HttpClient();
         }
 
         public async Task<StatusCode> GetTokenKey(User user)
         {
-            var contentRequeest = this.GetLineRequest(user.Login, user.Password);
-            var contentType = "application/x-www-form-urlencoded";
-            var result = await this.client.Post<string, string>(RestURl.GetToken, contentRequeest, contentType);
-            if (result.Status == StatusCode.Ok)
+            try
             {
-                var token = this.ParseResponse(result.Result);
-                await DependencyService.Get<IFileWork>().SaveTextAsync(token);
+                var uri = new Uri(RestURl.GetToken);
+                var contentRequeest = this.GetLineRequest(user.Login, user.Password);
+                var content = new StringContent(contentRequeest, Encoding.UTF8, "application/x-www-form-urlencoded");
+                var response = await this.client.PostAsync(uri, content);
+                if (response.IsSuccessStatusCode)
+                {
+                    var contentResponce = await response.Content.ReadAsStringAsync();
+                    var token = this.ParseResponse(contentResponce);
+                    await DependencyService.Get<IFileWork>().SaveTextAsync(token);
+                    return StatusCode.Ok;
+                }
+                else
+                {
+                    if (response.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        return StatusCode.NoAuthorize;
+                    }
+                    else
+                    {
+                        return StatusCode.Error;
+                    }
+                }
             }
-
-            return result.Status;
+            catch (WebException e)
+            {
+                return StatusCode.NoInternet;
+            }
         }
 
         private string GetLineRequest(string login, string password)

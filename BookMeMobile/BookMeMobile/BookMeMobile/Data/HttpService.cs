@@ -22,7 +22,10 @@ namespace BookMeMobile.Data
         public HttpService()
         {
             string token = DependencyService.Get<IFileWork>().LoadTextAsync().Result;
-            this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+            if (token != null)
+            {
+                this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+            }
         }
 
         public async Task<OperationResult<T>> Get<T>(string root)

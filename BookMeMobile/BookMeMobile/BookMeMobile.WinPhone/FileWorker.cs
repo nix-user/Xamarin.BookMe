@@ -38,10 +38,17 @@ namespace BookMeMobile.WinPhone
 
         public async Task<string> LoadTextAsync()
         {
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile helloFile = await localFolder.GetFileAsync(this.filename);
-            string text = await FileIO.ReadTextAsync(helloFile);
-            return text;
+            try
+            {
+                StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+                StorageFile helloFile = await localFolder.GetFileAsync(this.filename);
+                string text = await FileIO.ReadTextAsync(helloFile);
+                return text;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task SaveTextAsync(string text)
