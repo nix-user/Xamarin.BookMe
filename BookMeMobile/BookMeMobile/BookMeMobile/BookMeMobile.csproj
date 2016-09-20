@@ -47,6 +47,7 @@
     <Compile Include="Data\HttpService.cs" />
     <Compile Include="Data\RestURl.cs" />
     <Compile Include="Data\RoomRepository.cs" />
+    <Compile Include="Pages\ActivityIndicatorPage.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="Interface\IWorkWIthFile.cs" />
     <Compile Include="Model\ListRoomResult.cs" />

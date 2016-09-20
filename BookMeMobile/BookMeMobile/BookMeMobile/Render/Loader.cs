@@ -2,7 +2,7 @@
 
 namespace BookMeMobile.Render
 {
-    internal class Loader : ActivityIndicator
+    public class Loader : ActivityIndicator
     {
         public void Show()
         {

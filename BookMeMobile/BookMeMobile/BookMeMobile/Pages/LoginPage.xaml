@@ -1,14 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<pages:ActivityIndicatorPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
+             xmlns:render="clr-namespace:BookMeMobile.Render;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.LoginPage"
              Title="Login">
-  <StackLayout VerticalOptions="CenterAndExpand">
-    <Label HorizontalOptions="Center" Text="Логин" FontSize="Large"/>
-    <Entry x:Name="TextLogin" Text="User1" HorizontalTextAlignment="Center"/>
-    <Label HorizontalOptions="Center" Text="Пароль" FontSize="Large"/>
-    <Entry x:Name="textPassword" IsPassword="True" Text="1" HorizontalTextAlignment="Center"/>
-    <Label x:Name="Error"/>
-    <Button x:Name="BtnSignIn" Text="Войти" Clicked="BtnSignIn_OnClicked"></Button>
-  </StackLayout>
-</ContentPage>
+  <AbsoluteLayout x:Name="rootLayout" Padding="0" VerticalOptions="CenterAndExpand">
+    <StackLayout  Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0.5, 0.42, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional">
+      <render:Loader x:Name="loader" VerticalOptions="Center" />
+    </StackLayout>
+    <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+      <Label HorizontalOptions="Center" Text="Логин" FontSize="Large"/>
+      <Entry x:Name="TextLogin" Text="User1" HorizontalTextAlignment="Center"/>
+      <Label HorizontalOptions="Center" Text="Пароль" FontSize="Large"/>
+      <Entry x:Name="textPassword" IsPassword="True" Text="1" HorizontalTextAlignment="Center"/>
+      <Label x:Name="Error"/>
+      <Button x:Name="BtnSignIn" Text="Войти" Clicked="BtnSignIn_OnClicked"></Button>
+    </StackLayout>
+  </AbsoluteLayout>
+</pages:ActivityIndicatorPage>

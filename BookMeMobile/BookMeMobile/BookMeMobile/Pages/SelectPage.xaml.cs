@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Android.Locations;
 using BookMeMobile.BL;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
+using BookMeMobile.OperationResults;
 using BookMeMobile.Pages.MyBookPages;
 using BookMeMobile.Render;
 using Java.Util;
@@ -12,7 +15,7 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
 {
-    public partial class SelectPage : ContentPage
+    public partial class SelectPage : ActivityIndicatorPage
     {
         private const string HeadError = "Ошибка";
         private const string BodyInternetIsNotExist = "Проверьте подключение к интернету и повторите попытку";
@@ -32,6 +35,8 @@ namespace BookMeMobile.Pages
             this.TimeFrom.Time = DateTime.Now.TimeOfDay;
             this.manager = new ListRoomManager();
             this.SettingPaddingForWinPhone();
+
+            this.SetUpActivityIndicator(this.loader, this.rootLayout);
         }
 
         private void SettingPaddingForWinPhone()
@@ -63,8 +68,14 @@ namespace BookMeMobile.Pages
                     IsLarge = IsBig.IsToggled
                 };
 
+                OperationResult<IEnumerable<Room>> searchListRetrieval = null;
+                await this.PerformWithActivityIndicator(async () =>
+                {
+                    searchListRetrieval = await this.manager.GetEmptyRoom(reservation);
+                });
+
                 var searchList = await this.manager.GetEmptyRoom(reservation);
-                switch (searchList.Status)
+                switch (searchListRetrieval.Status)
                 {
                     case StatusCode.Ok:
                         {
