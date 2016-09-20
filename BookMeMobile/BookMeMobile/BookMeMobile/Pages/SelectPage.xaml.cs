@@ -29,7 +29,7 @@ namespace BookMeMobile.Pages
             this.InitializeComponent();
             this.manager = new ListRoomManager();
             this.SettingPaddingForWinPhone();
-            this.TimeTo.SetValue(TimePicker.TimeProperty, this.TimeFrom.Time.Add(new TimeSpan(1, 0, 0)));
+            this.TimeTo.SetValue(TimePicker.TimeProperty, this.TimeFrom.Time.Add(TimeSpan.FromHours(1)));
         }
 
         private void SettingPaddingForWinPhone()

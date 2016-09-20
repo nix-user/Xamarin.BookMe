@@ -9,40 +9,20 @@ namespace BookMeMobile.Render
 {
     public class TimePicker24Hour : TimePicker
     {
+        private TimeSpan time = TimeSpan.FromMinutes(15);
+
         public TimePicker24Hour() : base()
         {
-            this.Time = this.RoundTime(DateTime.Now.TimeOfDay);
+            this.Time = this.RoundTime(DateTime.Now).TimeOfDay;
         }
 
-        protected TimeSpan RoundTime(TimeSpan time)
+        public DateTime RoundTime(DateTime dt)
         {
-            int minute = time.Minutes;
-            if (minute <= 7)
-            {
-                minute = 0;
-            }
+            var delta = dt.Ticks % this.time.Ticks;
+            bool roundUp = delta > this.time.Ticks / 2;
+            var offset = roundUp ? this.time.Ticks : 0;
 
-            if (minute >= 8 && minute <= 22)
-            {
-                minute = 15;
-            }
-
-            if (minute >= 23 && minute <= 37)
-            {
-                minute = 30;
-            }
-
-            if (minute >= 38 && minute <= 52)
-            {
-                minute = 45;
-            }
-
-            if (minute >= 53)
-            {
-                minute = 0;
-            }
-
-            return new TimeSpan(DateTime.Now.Hour, minute, 0);
+            return new DateTime(dt.Ticks + offset - delta, dt.Kind);
         }
     }
 }

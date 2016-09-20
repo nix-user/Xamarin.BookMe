@@ -20,11 +20,6 @@
             <Label Text="От" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Large"/>
             <render:TimePicker24Hour x:Name="TimeFrom" Format="HH:mm" HorizontalOptions="FillAndExpand"></render:TimePicker24Hour>
           </StackLayout>
-
-          <StackLayout Padding="0,60,0,0">
-            <Label Text="-"  FontSize="Large"></Label>
-          </StackLayout>
-
           <StackLayout >
             <Label Text="До" FontSize="Large" HorizontalTextAlignment="Center"/>
             <render:TimePicker24Hour x:Name="TimeTo" Format="HH:mm" HorizontalOptions="FillAndExpand"></render:TimePicker24Hour>

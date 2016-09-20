@@ -26,7 +26,7 @@ namespace BookMeMobile.WinPhone
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
             try
             {
-                localFolder.GetFileAsync(this.filename).GetResults();
+               await localFolder.GetFileAsync(this.filename);
             }
             catch
             {
