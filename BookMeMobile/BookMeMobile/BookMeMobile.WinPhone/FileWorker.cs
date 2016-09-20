@@ -26,7 +26,7 @@ namespace BookMeMobile.WinPhone
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
             try
             {
-                localFolder.GetFileAsync(this.filename).GetResults();
+               localFolder.GetFileAsync(this.filename).GetResults();
             }
             catch
             {
@@ -41,8 +41,8 @@ namespace BookMeMobile.WinPhone
             try
             {
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                StorageFile helloFile = await localFolder.GetFileAsync(this.filename);
-                string text = await FileIO.ReadTextAsync(helloFile);
+                StorageFile tokenFile = localFolder.GetFileAsync(this.filename).GetResults();
+                string text = FileIO.ReadTextAsync(tokenFile).GetResults();
                 return text;
             }
             catch (Exception e)
@@ -54,9 +54,9 @@ namespace BookMeMobile.WinPhone
         public async Task SaveTextAsync(string text)
         {
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile helloFile = await localFolder.CreateFileAsync(this.filename,
+            StorageFile tokenFile = await localFolder.CreateFileAsync(this.filename,
                                                  CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteTextAsync(helloFile, text);
+            await FileIO.WriteTextAsync(tokenFile, text);
         }
     }
 }

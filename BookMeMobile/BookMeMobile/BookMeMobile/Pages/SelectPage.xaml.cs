@@ -30,11 +30,9 @@ namespace BookMeMobile.Pages
         public SelectPage()
         {
             this.InitializeComponent();
-            this.Date.MinimumDate = DateTime.Now;
-            this.TimeTo.Time = DateTime.Now.TimeOfDay;
-            this.TimeFrom.Time = DateTime.Now.TimeOfDay;
             this.manager = new ListRoomManager();
             this.SettingPaddingForWinPhone();
+            this.TimeTo.SetValue(TimePicker.TimeProperty, this.TimeFrom.Time.Add(TimeSpan.FromHours(1)));
 
             this.SetUpActivityIndicator(this.loader, this.rootLayout);
         }
