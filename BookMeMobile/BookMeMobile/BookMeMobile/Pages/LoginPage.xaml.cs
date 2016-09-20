@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Android.Provider;
+using Android.Widget;
 using BookMeMobile.Binding;
 using BookMeMobile.BL;
 using BookMeMobile.Data;
@@ -13,7 +14,7 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
 {
-    public partial class LoginPage : ContentPage
+    public partial class LoginPage : ActivityIndicatorPage
     {
         private const string HeadError = "Ошибка";
         private const string BodyUserIsNotExist = "Логин или пароль введены неверно";
@@ -24,6 +25,7 @@ namespace BookMeMobile.Pages
         public LoginPage()
         {
             this.InitializeComponent();
+            this.SetUpActivityIndicator(this.loader, this.rootLayout);
         }
 
         private async void BtnSignIn_OnClicked(object sender, EventArgs e)
@@ -34,7 +36,10 @@ namespace BookMeMobile.Pages
                 Login = TextLogin.Text,
                 Password = textPassword.Text
             };
-            var request = await service.GetTocken(user);
+
+            var request = default(StatusCode);
+            await this.PerformWithActivityIndicator(async () => request = await service.GetTocken(user));
+
             switch (request)
             {
                 case StatusCode.Ok:
