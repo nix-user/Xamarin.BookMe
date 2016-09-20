@@ -20,21 +20,18 @@ namespace BookMeMobile.BL
         private ReservationRepository reservationRepository;
 
         private ReservationModel currentReservation;
-        private User currentUser;
 
         public ListRoomManager(ReservationModel reservation, User currentUser)
         {
             this.reservationRepository = new ReservationRepository();
             this.roomRepository = new RoomRepository();
             this.currentReservation = reservation;
-            this.currentUser = currentUser;
         }
 
-        public ListRoomManager(User user)
+        public ListRoomManager()
         {
             this.reservationRepository = new ReservationRepository();
             this.roomRepository = new RoomRepository();
-            this.currentUser = user;
         }
 
         public async Task<string> ReservationMessag(int idRoom)
@@ -53,7 +50,7 @@ namespace BookMeMobile.BL
 
         public async Task<OperationResult> AddReservation(int idRoom)
         {
-            return await this.reservationRepository.AddReservation(idRoom, this.currentReservation);
+            return (await this.reservationRepository.AddReservation(idRoom, this.currentReservation));
         }
 
         public async Task<OperationResult> DeleteReservation(int idReservation)
@@ -61,20 +58,23 @@ namespace BookMeMobile.BL
             return await this.reservationRepository.RemoveReservation(idReservation);
         }
 
-        public List<ReservationModel> Sort(List<ReservationModel> list)
+        public List<Room> Sort(List<Room> list)
         {
-            int userFloor = this.GetFloorInNumber(this.currentUser.MyRoom);
+            User currentUser = new User();
+            currentUser.MyRoom = "410";
+            currentUser.FavoriteRoom = "505";
+            int userFloor = this.GetFloorInNumber(currentUser.MyRoom);
             list.Sort((view1, view2) =>
             {
-                if (Math.Abs(GetFloorInNumber(view1.Room.ToString()) - userFloor) >
-                    Math.Abs(GetFloorInNumber(view2.Room.ToString()) - userFloor))
+                if (Math.Abs(GetFloorInNumber(view1.Number.ToString()) - userFloor) >
+                    Math.Abs(GetFloorInNumber(view2.Number.ToString()) - userFloor))
                 {
                     return 1;
                 }
                 else
                 {
-                    if (Math.Abs(GetFloorInNumber(view1.Room.ToString()) - userFloor) <
-                        Math.Abs(GetFloorInNumber(view2.Room.ToString()) - userFloor))
+                    if (Math.Abs(GetFloorInNumber(view1.Number.ToString()) - userFloor) <
+                        Math.Abs(GetFloorInNumber(view2.Number.ToString()) - userFloor))
                     {
                         return -1;
                     }
@@ -84,9 +84,9 @@ namespace BookMeMobile.BL
                     }
                 }
             });
-            if (list.FindIndex(x => x.Room.Number == this.currentUser.FavoriteRoom) > 0)
+            if (list.FindIndex(x => x.Number == currentUser.FavoriteRoom) > 0)
             {
-                ReservationModel first = list[list.FindIndex(x => x.Room.Number == this.currentUser.FavoriteRoom)];
+                Room first = list[list.FindIndex(x => x.Number == currentUser.FavoriteRoom)];
                 list.Remove(first);
                 list.Insert(0, first);
             }
@@ -96,15 +96,7 @@ namespace BookMeMobile.BL
 
         public int GetFloorInNumber(string s)
         {
-            string stringFloor = new string(s.ToCharArray().Where(ch => !char.IsLetter(ch)).ToArray());
-            if (stringFloor.Length < 4)
-            {
-                return int.Parse(stringFloor[0].ToString());
-            }
-            else
-            {
-                return int.Parse(stringFloor[0].ToString() + stringFloor[1]);
-            }
+            return s[0];
         }
 
         public async Task<OperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
@@ -114,7 +106,7 @@ namespace BookMeMobile.BL
 
         public async Task<OperationResult<IEnumerable<ReservationModel>>> GetAllUserReservation()
         {
-            return await this.reservationRepository.GetUserReservations(this.currentUser.Login);
+            return await this.reservationRepository.GetUserReservations();
         }
 
         public async Task<OperationResult<IEnumerable<ReservationModel>>> GetRoomCurrentReservations(string number)

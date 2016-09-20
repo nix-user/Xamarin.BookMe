@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookMeMobile.Entity
+namespace BookMeMobile.Model
 {
-    public enum StatusCode
+    public class ResponceModelStatusCode<T> : ResponceStatusCode
     {
-        Ok,
-        Error,
-        NoInternet,
-        NoAuthorize
+        public T Result { get; set; }
     }
 }

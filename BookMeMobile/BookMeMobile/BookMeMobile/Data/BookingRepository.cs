@@ -2,41 +2,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
+using BookMeMobile.Interface;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace BookMeMobile.Data
 {
-    public class ReservationRepository : BaseRepository
+    public class ReservationRepository
     {
-        public async Task<OperationResult<IEnumerable<ReservationModel>>> GetAll()
-        {
-            return await this.HttpService.Get<IEnumerable<ReservationModel>>(RestURl.BookURl);
-        }
+        private HttpService httpService;
 
-        public async Task<OperationResult<ReservationModel>> GetReservation(int id)
+        public ReservationRepository()
         {
-            return await this.HttpService.Get<ReservationModel>(RestURl.BookURl + id);
+            this.httpService = new HttpService();
         }
 
         public async Task<OperationResult> RemoveReservation(int id)
         {
-            return await this.HttpService.Delete(RestURl.BookURl + id);
+            return (await this.httpService.Delete(string.Format(RestURl.BookURl + "{0}", id)));
         }
 
         public async Task<OperationResult> AddReservation(int idRoom, ReservationModel reservation)
         {
-            return await this.HttpService.Post<ReservationModel>(RestURl.BookURl, reservation);
+            reservation.Room.Id = idRoom;
+            return await this.httpService.Delete(string.Format(RestURl.BookURl + reservation.Id));
         }
 
-        public async Task<OperationResult<IEnumerable<ReservationModel>>> GetUserReservations(string login)
+        public async Task<OperationResult<IEnumerable<ReservationModel>>> GetUserReservations()
         {
-            return await this.HttpService.Get<IEnumerable<ReservationModel>>(string.Format(RestURl.GetUserReservation, login));
+            return await this.httpService.Get<IEnumerable<ReservationModel>>(RestURl.GetUserReservation);
         }
     }
 }

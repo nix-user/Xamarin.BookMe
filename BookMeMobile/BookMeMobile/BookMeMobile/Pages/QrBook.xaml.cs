@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Android.App;
 using Android.Text.Style;
 using BookMeMobile.BL;
 using BookMeMobile.Entity;
 using Java.Lang;
+using Javax.Security.Auth;
 using Xamarin.Forms;
-using ZXing;
 using ZXing.Net.Mobile.Forms;
-using String = System.String;
+using Result = ZXing.Result;
 
 namespace BookMeMobile.Pages
 {
@@ -18,40 +20,23 @@ namespace BookMeMobile.Pages
     {
         private const string HeadError = "Ошибка";
         private const string BodyInternetIsNotExist = "Нет подключения к интернету";
+        private const string BodyErrorInternetOrServer = "Ошибка с сервером либо с интернетом";
         private const string BodyIntervalIsInvalid = "Ввведен неверный интервал";
         private const string BodyError = "Ошибка на сервере";
-        private const string Ok = "Ok";
+        private const string RoomIsBook = "Комната занята";
 
-        public async void ScanResult(Result result, User currentUser)
+        private const string Ok = "Ok";
+        private ListRoomManager manager;
+
+        public async void ScanResult(Result result)
         {
-            ListRoomManager manager = new ListRoomManager(currentUser);
-            var reservationRetrievalResult = await manager.GetRoomCurrentReservations(result.Text);
-            switch (reservationRetrievalResult.Status)
+            this.manager = new ListRoomManager();
+            var reservation = await this.manager.GetRoomCurrentReservations(result.Text);
+            switch (reservation.Status)
             {
                 case StatusCode.Ok:
                     {
-                        if (reservationRetrievalResult.Result == null)
-                        {
-                            string body = string.Format("Комната: {0} \n От: {1:hh\\:mm} \n До: {2:hh\\:mm}", result.Text, DateTime.Now, DateTime.Now.AddHours(1));
-                            bool saveOrNot = await DisplayAlert("Забронировать комнату?", body, "Да", "Нет");
-                            if (saveOrNot)
-                            {
-                                StatusCode savStatusCode = (await manager.AddReservationInHour(result.Text)).Status;
-                                if (savStatusCode == StatusCode.Ok)
-                                {
-                                    await this.DisplayAlert("Успешно", "Комната успешно занята", "Ok");
-                                }
-                                else
-                                {
-                                    await this.DisplayAlert("Ошибка", "Ошибка с сервером либо с интернетом", "Ok");
-                                }
-                            }
-                        }
-                        else
-                        {
-                            await this.DisplayAlert("Действие не может быть выполнено", "Комната занята", "Ok");
-                        }
-
+                        this.Sucess(reservation.Result, result);
                         break;
                     }
 
@@ -66,6 +51,37 @@ namespace BookMeMobile.Pages
                         await this.DisplayAlert(HeadError, BodyError, Ok);
                         break;
                     }
+
+                case StatusCode.NoAuthorize:
+                    {
+                        await this.Navigation.PushAsync(new LoginPage());
+                        break;
+                    }
+            }
+        }
+
+        private async void Sucess(IEnumerable<ReservationModel> reservation, Result result)
+        {
+            if (reservation == null || !reservation.Any())
+            {
+                string body = string.Format("Комната: {0} \n От: {1:hh\\:mm} \n До: {2:hh\\:mm}", result.Text, DateTime.Now, DateTime.Now.AddHours(1));
+                bool saveOrNot = await DisplayAlert("Забронировать комнату?", body, "Да", "Нет");
+                if (saveOrNot)
+                {
+                    StatusCode savStatusCode = (await this.manager.AddReservationInHour(result.Text)).Status;
+                    if (savStatusCode == StatusCode.Ok)
+                    {
+                        await this.DisplayAlert("Успешно", "Комната успешно занята", Ok);
+                    }
+                    else
+                    {
+                        await this.DisplayAlert(HeadError, BodyErrorInternetOrServer, Ok);
+                    }
+                }
+            }
+            else
+            {
+                await this.DisplayAlert(HeadError, RoomIsBook, Ok);
             }
         }
     }

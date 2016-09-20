@@ -18,7 +18,6 @@ namespace BookMeMobile.Pages
         {
             this.InitializeComponent();
             this.BindingContext = new ProfileViewModel(SelectPage.CurrentUser);
-            this.currentUser = SelectPage.CurrentUser;
             this.txtFavoriteRoomCell.PropertyChanged += this.FavoriteRoomCell_OnCompleted;
             this.txtMyRoomCell.PropertyChanged += this.MyRoomCell_OnCompleted;
         }

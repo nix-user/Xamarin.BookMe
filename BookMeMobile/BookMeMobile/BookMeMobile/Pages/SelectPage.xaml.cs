@@ -15,7 +15,7 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
 {
-    public partial class SelectPage : ContentPage
+    public partial class SelectPage : ActivityIndicatorPage
     {
         private const string HeadError = "Ошибка";
         private const string BodyInternetIsNotExist = "Проверьте подключение к интернету и повторите попытку";
@@ -29,37 +29,21 @@ namespace BookMeMobile.Pages
 
         private ListRoomManager manager;
 
-        private async Task PerformWithActivityIndicator(Func<Task> action)
-        {
-            this.loader.Show();
-            foreach (var view in this.viewsToDisable)
-            {
-                view.IsEnabled = false;
-            }
-
-            await action();
-
-            this.loader.Hide();
-            foreach (var view in this.viewsToDisable)
-            {
-                view.IsEnabled = true;
-            }
-        }
-
-        public SelectPage(User currentUser)
+        public SelectPage()
         {
             this.InitializeComponent();
             this.Date.MinimumDate = DateTime.Now;
             this.TimeTo.Time = DateTime.Now.TimeOfDay;
             this.TimeFrom.Time = DateTime.Now.TimeOfDay;
-            CurrentUser = currentUser;
-            this.manager = new ListRoomManager(currentUser);
+            this.manager = new ListRoomManager();
             this.SettingPaddingForWinPhone();
 
             this.viewsToDisable = new List<View>()
             {
                 this.Date, this.TimeFrom, this.TimeTo, this.IsBig, this.IsPolinom, this.MyReservationsButton, this.SearchButton
             };
+
+            this.SetUpActivityIndicator(this.loader, this.rootLayout);
         }
 
         private void SettingPaddingForWinPhone()
@@ -92,18 +76,17 @@ namespace BookMeMobile.Pages
                 };
 
                 OperationResult<IEnumerable<Room>> searchListRetrieval = null;
-
                 await this.PerformWithActivityIndicator(async () =>
                 {
                     searchListRetrieval = await this.manager.GetEmptyRoom(reservation);
                 });
 
+                var searchList = await this.manager.GetEmptyRoom(reservation);
                 switch (searchListRetrieval.Status)
                 {
                     case StatusCode.Ok:
                         {
-                            await this.Navigation.PushAsync(new MainPage(CurrentUser,
-                             new ListRoomPage(CurrentUser, searchListRetrieval)));
+                            await this.Navigation.PushAsync(new MainPage(new ListRoomPage(searchList.Result)));
                             break;
                         }
 
@@ -116,6 +99,12 @@ namespace BookMeMobile.Pages
                     case StatusCode.Error:
                         {
                             await this.DisplayAlert(HeadError, BodyError, Ok);
+                            break;
+                        }
+
+                    case StatusCode.NoAuthorize:
+                        {
+                            await this.Navigation.PushAsync(new LoginPage());
                             break;
                         }
                 }
@@ -147,6 +136,12 @@ namespace BookMeMobile.Pages
                 case StatusCode.Error:
                     {
                         await this.DisplayAlert(HeadError, BodyError, Ok);
+                        break;
+                    }
+
+                case StatusCode.NoAuthorize:
+                    {
+                        await this.Navigation.PushAsync(new LoginPage());
                         break;
                     }
             }
