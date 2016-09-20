@@ -18,7 +18,7 @@
             <ViewCell.View>
               <StackLayout BackgroundColor="{Binding InRange,Converter={StaticResource ColorConverter}}" VerticalOptions="CenterAndExpand">
                <StackLayout Orientation="Horizontal">
-                  <Label Text = "{Binding Number,StringFormat='Комната: № {0}' }" FontSize="Medium"  VerticalOptions="CenterAndExpand"/>
+                  <Label Text = "{Binding Number,StringFormat='{0}' }" FontSize="Medium"  VerticalOptions="CenterAndExpand"/>
                   <Button HorizontalOptions="EndAndExpand" x:Name="btnBooking" ClassId="{Binding Id}" Text="Бронировать" IsVisible="{Binding IsReservation,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Large" Clicked="BtnBooking_OnClicked"/>
                 </StackLayout>
               </StackLayout>

@@ -45,12 +45,12 @@ namespace BookMeMobile.Pages
             this.InitializeComponent();
             this.manager = new ListRoomManager();
             this.ResultRoom = search.Where(x => !UnallowedResources.Contains(x.Number)).ToList();
+            this.manager.Sort(this.ResultRoom);
             if (!this.ResultRoom.Any())
             {
                 isRoom.IsVisible = true;
             }
 
-            this.manager = new ListRoomManager();
             this.currentReservation = reservation;
 
             listUserRoomInRange.BindingContext = this.ResultRoom;
