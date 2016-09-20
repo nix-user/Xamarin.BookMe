@@ -27,11 +27,9 @@ namespace BookMeMobile.Pages
         public SelectPage()
         {
             this.InitializeComponent();
-            this.Date.MinimumDate = DateTime.Now;
-            this.TimeTo.Time = DateTime.Now.TimeOfDay;
-            this.TimeFrom.Time = DateTime.Now.TimeOfDay;
             this.manager = new ListRoomManager();
             this.SettingPaddingForWinPhone();
+            this.TimeTo.SetValue(TimePicker.TimeProperty, this.TimeFrom.Time.Add(new TimeSpan(1, 0, 0)));
         }
 
         private void SettingPaddingForWinPhone()
