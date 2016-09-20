@@ -26,7 +26,7 @@ namespace BookMeMobile.WinPhone
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
             try
             {
-               await localFolder.GetFileAsync(this.filename);
+               localFolder.GetFileAsync(this.filename).GetResults();
             }
             catch
             {
@@ -41,7 +41,7 @@ namespace BookMeMobile.WinPhone
             try
             {
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                StorageFile helloFile = await localFolder.GetFileAsync(this.filename);
+                StorageFile helloFile = localFolder.GetFileAsync(this.filename).GetResults();
                 string text = FileIO.ReadTextAsync(helloFile).GetResults();
                 return text;
             }
