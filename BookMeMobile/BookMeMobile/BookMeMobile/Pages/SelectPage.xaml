@@ -38,8 +38,6 @@
         </StackLayout>
       </StackLayout>
       <StackLayout >
-        <Label Text="Назначение" FontSize="Large" HorizontalOptions="CenterAndExpand"/>
-        <Entry HorizontalOptions="FillAndExpand"/>
         <Button x:Name="MyReservationsButton" HorizontalOptions="FillAndExpand" Text="Мои бронирования" Clicked="MyReservations_OnClicked"/>
         <Button x:Name="SearchButton" HorizontalOptions="FillAndExpand" Text="Поиск" Clicked="Button_OnClicked" />
       </StackLayout>
