@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Android.Locations;
 using BookMeMobile.BL;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
+using BookMeMobile.OperationResults;
 using BookMeMobile.Pages.MyBookPages;
 using BookMeMobile.Render;
 using Java.Util;
@@ -22,7 +25,26 @@ namespace BookMeMobile.Pages
 
         public static User CurrentUser { get; set; }
 
+        private readonly IEnumerable<View> viewsToDisable;
+
         private ListRoomManager manager;
+
+        private async Task PerformWithActivityIndicator(Func<Task> action)
+        {
+            this.loader.Show();
+            foreach (var view in this.viewsToDisable)
+            {
+                view.IsEnabled = false;
+            }
+
+            await action();
+
+            this.loader.Hide();
+            foreach (var view in this.viewsToDisable)
+            {
+                view.IsEnabled = true;
+            }
+        }
 
         public SelectPage(User currentUser)
         {
@@ -33,6 +55,11 @@ namespace BookMeMobile.Pages
             CurrentUser = currentUser;
             this.manager = new ListRoomManager(currentUser);
             this.SettingPaddingForWinPhone();
+
+            this.viewsToDisable = new List<View>()
+            {
+                this.Date, this.TimeFrom, this.TimeTo, this.IsBig, this.IsPolinom, this.MyReservationsButton, this.SearchButton
+            };
         }
 
         private void SettingPaddingForWinPhone()
@@ -64,9 +91,13 @@ namespace BookMeMobile.Pages
                     IsLarge = IsBig.IsToggled
                 };
 
-                this.loader.Show();
-                var searchListRetrieval = await this.manager.GetEmptyRoom(reservation);
-                this.loader.Hide();
+                OperationResult<IEnumerable<Room>> searchListRetrieval = null;
+
+                await this.PerformWithActivityIndicator(async () =>
+                {
+                    searchListRetrieval = await this.manager.GetEmptyRoom(reservation);
+                });
+
                 switch (searchListRetrieval.Status)
                 {
                     case StatusCode.Ok:
