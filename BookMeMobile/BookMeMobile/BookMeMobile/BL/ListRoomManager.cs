@@ -34,23 +34,9 @@ namespace BookMeMobile.BL
             this.roomRepository = new RoomRepository();
         }
 
-        public async Task<string> ReservationMessag(int idRoom)
+        public async Task<OperationResult> AddReservation(RoomFilterParameters reservation, int idRoom)
         {
-            this.currentReservation.Room = (await this.roomRepository.GetRoom(idRoom)).Result;
-            Room currentRoom = (await this.roomRepository.GetRoom(idRoom)).Result;
-            return string.Format(
-                " Комната: {3}\n Дата: {0}\n Время: {1} - {2}\n Большая:{4} Поликом:{5}",
-                this.currentReservation.From.Date.ToString("d"),
-                this.currentReservation.From.TimeOfDay.ToString(@"hh\:mm"),
-                this.currentReservation.To.TimeOfDay.ToString(@"hh\:mm"),
-                currentRoom.Number,
-                string.Format("{0:Да;0;Нет}", currentRoom.IsBig.GetHashCode()),
-                string.Format("{0:Да;0;Нет}", currentRoom.IsHasPolykom.GetHashCode()));
-        }
-
-        public async Task<OperationResult> AddReservation(int idRoom)
-        {
-            return (await this.reservationRepository.AddReservation(idRoom, this.currentReservation));
+            return (await this.reservationRepository.AddReservation(reservation, idRoom));
         }
 
         public async Task<OperationResult> DeleteReservation(int idReservation)
@@ -122,13 +108,12 @@ namespace BookMeMobile.BL
 
         public async Task<OperationResult> AddReservationInHour(string text)
         {
-            this.currentReservation = new ReservationModel()
+           RoomFilterParameters parametr  = new RoomFilterParameters()
             {
-                Author = SelectPage.CurrentUser.Login,
-                From = DateTime.Now,
-                To = DateTime.Now.AddHours(1),
+               From = DateTime.Now,
+               To = DateTime.Now.AddHours(1),
             };
-            return await this.reservationRepository.AddReservation(int.Parse(text), this.currentReservation);
+            return await this.reservationRepository.AddReservation(parametr, int.Parse(text));
         }
     }
 }

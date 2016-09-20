@@ -37,19 +37,21 @@ namespace BookMeMobile.Pages
         public List<Room> ResultRoom { get; set; }
 
         private ReservationModel currentBooking;
+        private ListRoomManager manager;
+        private RoomFilterParameters currentReservation;
 
-        private ListRoomManager list;
-
-        public ListRoomPage(IEnumerable<Room> search)
+        public ListRoomPage(IEnumerable<Room> search, RoomFilterParameters reservation)
         {
             this.InitializeComponent();
-            this.list = new ListRoomManager();
+            this.manager = new ListRoomManager();
             this.ResultRoom = search.Where(x => !UnallowedResources.Contains(x.Number)).ToList();
-            this.ResultRoom = this.list.Sort(this.ResultRoom);
+            this.manager.Sort(this.ResultRoom);
             if (!this.ResultRoom.Any())
             {
                 isRoom.IsVisible = true;
             }
+
+            this.currentReservation = reservation;
 
             listUserRoomInRange.BindingContext = this.ResultRoom;
         }
@@ -57,25 +59,18 @@ namespace BookMeMobile.Pages
         private async void BtnBooking_OnClicked(object sender, EventArgs e)
         {
             int idRoom = int.Parse(((Button)sender).ClassId);
-            string reservationBody = await this.list.ReservationMessag(idRoom);
+            string reservationBody = await this.ReservationMessag(idRoom);
             bool isBook = await this.DisplayAlert(this.reservationingHeadChecking, reservationBody, this.reservationButonOK, this.reservationButonNO);
             if (isBook)
             {
-                if (!this.currentBooking.IsRecursive)
-                {
-                    this.AddNoRecursive(idRoom);
-                }
-                else
-                {
-                }
-
-                await Navigation.PopAsync();
+               this.AddNoRecursive(idRoom);
+               await Navigation.PopAsync();
             }
         }
 
         private async void AddNoRecursive(int idRoom)
         {
-            StatusCode statusCode = (await this.list.AddReservation(idRoom)).Status;
+            StatusCode statusCode = (await this.manager.AddReservation(this.currentReservation, idRoom)).Status;
             switch (statusCode)
             {
                 case StatusCode.Ok:
@@ -96,6 +91,19 @@ namespace BookMeMobile.Pages
                         break;
                     }
             }
+        }
+
+        public async Task<string> ReservationMessag(int idRoom)
+        {
+            Room currentRoom = this.ResultRoom.FirstOrDefault(x => x.Id == idRoom);
+            return string.Format(
+                " Комната: {3}\n Дата: {0}\n Время: {1} - {2}\n Большая:{4} Поликом:{5}",
+                this.currentReservation.From.Date.ToString("d"),
+                this.currentReservation.From.TimeOfDay.ToString(@"hh\:mm"),
+                this.currentReservation.To.TimeOfDay.ToString(@"hh\:mm"),
+                currentRoom.Number,
+                string.Format("{0:Да;0;Нет}", currentRoom.IsBig.GetHashCode()),
+                string.Format("{0:Да;0;Нет}", currentRoom.IsHasPolykom.GetHashCode()));
         }
     }
 }

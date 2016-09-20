@@ -68,7 +68,7 @@ namespace BookMeMobile.Pages
                 {
                     case StatusCode.Ok:
                         {
-                            await this.Navigation.PushAsync(new MainPage(new ListRoomPage(searchList.Result)));
+                            await this.Navigation.PushAsync(new MainPage(new ListRoomPage(searchList.Result, reservation)));
                             break;
                         }
 

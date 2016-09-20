@@ -27,7 +27,6 @@ namespace BookMeMobile.Data
 
         public async Task<OperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
         {
-            //TODO:Refactor with counting UTC offset
             var root = string.Format(
                 RestURl.GetEmptyRoom,
                 filter.From.AddHours(-3).ToString(new CultureInfo("en-US")),
@@ -45,7 +44,6 @@ namespace BookMeMobile.Data
                 reservationsModel.From.AddHours(-3).ToString(new CultureInfo("en-US")),
                 reservationsModel.To.AddHours(-3).ToString(new CultureInfo("en-US")),
                 reservationsModel.RoomId);
-
             return await this.HttpService.Get<IEnumerable<ReservationModel>>(root);
         }
     }
