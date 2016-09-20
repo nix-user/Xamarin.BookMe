@@ -25,8 +25,6 @@ namespace BookMeMobile.Pages
 
         public static User CurrentUser { get; set; }
 
-        private readonly IEnumerable<View> viewsToDisable;
-
         private ListRoomManager manager;
 
         public SelectPage()
@@ -37,11 +35,6 @@ namespace BookMeMobile.Pages
             this.TimeFrom.Time = DateTime.Now.TimeOfDay;
             this.manager = new ListRoomManager();
             this.SettingPaddingForWinPhone();
-
-            this.viewsToDisable = new List<View>()
-            {
-                this.Date, this.TimeFrom, this.TimeTo, this.IsBig, this.IsPolinom, this.MyReservationsButton, this.SearchButton
-            };
 
             this.SetUpActivityIndicator(this.loader, this.rootLayout);
         }
