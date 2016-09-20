@@ -42,7 +42,7 @@ namespace BookMeMobile.WinPhone
             {
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
                 StorageFile helloFile = await localFolder.GetFileAsync(this.filename);
-                string text = await FileIO.ReadTextAsync(helloFile);
+                string text = FileIO.ReadTextAsync(helloFile).GetResults();
                 return text;
             }
             catch (Exception e)

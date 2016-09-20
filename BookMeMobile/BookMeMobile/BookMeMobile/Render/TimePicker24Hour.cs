@@ -9,7 +9,7 @@ namespace BookMeMobile.Render
 {
     public class TimePicker24Hour : TimePicker
     {
-        private TimeSpan time = TimeSpan.FromMinutes(15);
+        private TimeSpan timeStep = TimeSpan.FromMinutes(15);
 
         public TimePicker24Hour() : base()
         {
@@ -18,9 +18,9 @@ namespace BookMeMobile.Render
 
         public DateTime RoundTime(DateTime dt)
         {
-            var delta = dt.Ticks % this.time.Ticks;
-            bool roundUp = delta > this.time.Ticks / 2;
-            var offset = roundUp ? this.time.Ticks : 0;
+            var delta = dt.Ticks % this.timeStep.Ticks;
+            bool roundUp = delta > this.timeStep.Ticks / 2;
+            var offset = roundUp ? this.timeStep.Ticks : 0;
 
             return new DateTime(dt.Ticks + offset - delta, dt.Kind);
         }

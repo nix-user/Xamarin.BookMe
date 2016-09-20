@@ -21,7 +21,7 @@ namespace BookMeMobile.Data
 
         public HttpService()
         {
-            string token = DependencyService.Get<IFileWork>().LoadTextAsync().GetAwaiter().GetResult();
+            string token = DependencyService.Get<IFileWork>().LoadTextAsync().Result;
             if (token != null)
             {
                 this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);

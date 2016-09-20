@@ -25,7 +25,6 @@
             <render:TimePicker24Hour x:Name="TimeTo" Format="HH:mm" HorizontalOptions="FillAndExpand"></render:TimePicker24Hour>
           </StackLayout>
         </StackLayout>
-        <Label x:Name="ErrorInterval" HorizontalOptions="Center" TextColor="Maroon"/>
         <StackLayout x:Name="checkerLayout" Padding="10,20">
           <StackLayout Orientation="Horizontal">
             <Label  Text="Большая" FontSize="Large"/>
@@ -38,6 +37,8 @@
         </StackLayout>
       </StackLayout>
       <StackLayout >
+        <Label Text="Назначение" FontSize="Large" HorizontalOptions="CenterAndExpand"/>
+        <Entry HorizontalOptions="FillAndExpand"/>
         <Button HorizontalOptions="FillAndExpand" Text="Мои бронирования" Clicked="MyReservations_OnClicked"/>
         <Button HorizontalOptions="FillAndExpand" Text="Поиск" Clicked="Button_OnClicked" />
       </StackLayout>
