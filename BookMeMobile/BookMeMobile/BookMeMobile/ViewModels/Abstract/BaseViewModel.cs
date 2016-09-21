@@ -23,6 +23,8 @@ namespace BookMeMobile.ViewModels
 
         public Action<string, string> ShowInfoMessage { get; set; }
 
+        public Action<bool> IsOperationTakingPlace { get; set; }
+
         protected INavigation Navigation { get; set; }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -38,6 +40,14 @@ namespace BookMeMobile.ViewModels
         protected void ShowErrorMessage(StatusCode statusCode)
         {
             this.ShowMessage(AlertMessages.ErrorHeader, this.errorMessagesDictionary[statusCode]);
+        }
+
+        protected async Task<TReturn> ExecuteOperation<TReturn>(Func<Task<TReturn>> operation)
+        {
+            this.IsOperationTakingPlace?.Invoke(true);
+            var result = await operation();
+            this.IsOperationTakingPlace?.Invoke(false);
+            return result;
         }
     }
 }

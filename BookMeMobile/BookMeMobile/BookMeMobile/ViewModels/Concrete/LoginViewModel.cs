@@ -7,6 +7,7 @@ using System.Windows.Input;
 using BookMeMobile.BL;
 using BookMeMobile.Entity;
 using BookMeMobile.Enums;
+using BookMeMobile.OperationResults;
 using BookMeMobile.Pages;
 using BookMeMobile.Resources;
 using Xamarin.Forms;
@@ -48,9 +49,7 @@ namespace BookMeMobile.ViewModels.Concrete
         private async void SignIn()
         {
             AccountService service = new AccountService();
-
-            //await this.PerformWithActivityIndicator(async () => request = await service.GetTocken(user)); todo: add code to use activity indicator
-            var operationStatus = await service.GetTocken(new User() { Login = this.Login, Password = this.Password });
+            var operationStatus = await this.ExecuteOperation(async () => await service.GetTocken(new User() { Login = this.Login, Password = this.Password }));
             if (operationStatus == StatusCode.Ok)
             {
                 await this.Navigation.PushAsync(new MainPage(new SelectPage()));
