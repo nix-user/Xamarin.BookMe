@@ -54,6 +54,9 @@
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Enums\StatusCode.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
+    <Compile Include="Pages\Login\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources.cs" />
     <Compile Include="Interface\IFileWorker.cs" />
     <Compile Include="Model\ListRoomResult.cs" />
@@ -77,9 +80,6 @@
     <Compile Include="OperationResults\OperationResult.cs" />
     <Compile Include="Pages\ListRoomPage.xaml.cs">
       <DependentUpon>ListRoomPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\LoginPage.xaml.cs">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MasterPage.xaml.cs">
       <DependentUpon>MasterPage.xaml</DependentUpon>
@@ -181,12 +181,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\LoginPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Pages\MenuPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -235,7 +229,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataModel\" />
-    <Folder Include="Pages\Login\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\Login\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\Build\StyleCop\StyleCop.targets" />

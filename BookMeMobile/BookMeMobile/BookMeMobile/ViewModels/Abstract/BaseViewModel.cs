@@ -21,32 +21,32 @@ namespace BookMeMobile.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Action<string, string> ShowInfoMessage { get; set; }
+        public Action<string, string, string> ShowInfoMessage { get; set; }
 
-        public Action<bool> IsOperationTakingPlace { get; set; }
+        public Action<bool> ToggleProgressIndicator { get; set; }
 
-        protected INavigation Navigation { get; set; }
+        public INavigation Navigation { get; set; }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected void ShowMessage(string header, string content)
+        protected void ShowInformationDialog(string header, string content)
         {
-            this.ShowInfoMessage?.Invoke(header, content);
+            this.ShowInfoMessage?.Invoke(header, content, AlertMessages.InfoAlertCanelText);
         }
 
         protected void ShowErrorMessage(StatusCode statusCode)
         {
-            this.ShowMessage(AlertMessages.ErrorHeader, this.errorMessagesDictionary[statusCode]);
+            this.ShowInformationDialog(AlertMessages.ErrorHeader, this.errorMessagesDictionary[statusCode]);
         }
 
         protected async Task<TReturn> ExecuteOperation<TReturn>(Func<Task<TReturn>> operation)
         {
-            this.IsOperationTakingPlace?.Invoke(true);
+            this.ToggleProgressIndicator?.Invoke(true);
             var result = await operation();
-            this.IsOperationTakingPlace?.Invoke(false);
+            this.ToggleProgressIndicator?.Invoke(false);
             return result;
         }
     }

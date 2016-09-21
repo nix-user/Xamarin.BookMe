@@ -120,6 +120,9 @@
   <data name="ErrorHeader" xml:space="preserve">
     <value>Ошибка</value>
   </data>
+  <data name="InfoAlertCanelText" xml:space="preserve">
+    <value>Ok</value>
+  </data>
   <data name="NoInternetConnection" xml:space="preserve">
     <value>Нет подключения к интернету</value>
   </data>

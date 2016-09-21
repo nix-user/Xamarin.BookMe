@@ -56,9 +56,9 @@ namespace BookMeMobile.ViewModels.Concrete
                 return;
             }
 
-            if (operationStatus == StatusCode.Unsuccessful)
+            if (operationStatus == StatusCode.NoAuthorize)
             {
-                this.ShowMessage(AlertMessages.ErrorHeader, AlertMessages.WrongLoginOrPassword);
+                this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongLoginOrPassword);
                 return;
             }
 

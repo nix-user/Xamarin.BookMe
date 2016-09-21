@@ -19,6 +19,18 @@ namespace BookMeMobile.Pages
             this.rootLayout = rootLayout;
         }
 
+        protected void ShowActivityIndicator()
+        {
+            this.SetIsEnabledToChildren(this.rootLayout, false);
+            this.loader.Show();
+        }
+
+        protected void HideActivityIndicator()
+        {
+            this.SetIsEnabledToChildren(this.rootLayout, true);
+            this.loader.Hide();
+        }
+
         protected async Task PerformWithActivityIndicator(Func<Task> action)
         {
             this.SetIsEnabledToChildren(this.rootLayout, false);

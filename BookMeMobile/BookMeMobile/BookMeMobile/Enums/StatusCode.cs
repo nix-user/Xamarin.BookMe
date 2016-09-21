@@ -5,7 +5,6 @@
         Ok,
         Error,
         NoInternet,
-        NoAuthorize,
-        Unsuccessful
+        NoAuthorize
     }
 }

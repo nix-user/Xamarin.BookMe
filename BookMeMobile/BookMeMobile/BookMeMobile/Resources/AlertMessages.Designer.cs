@@ -71,6 +71,15 @@ namespace BookMeMobile.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        internal static string InfoAlertCanelText {
+            get {
+                return ResourceManager.GetString("InfoAlertCanelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Нет подключения к интернету.
         /// </summary>
         internal static string NoInternetConnection {
