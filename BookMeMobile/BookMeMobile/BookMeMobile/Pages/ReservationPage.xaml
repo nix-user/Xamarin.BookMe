@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:ActivityIndicatorPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
+             xmlns:render="clr-namespace:BookMeMobile.Render;assembly=BookMeMobile"
+             x:Class="BookMeMobile.Pages.ReservationPage">
+
+  <AbsoluteLayout x:Name="rootLayout" Padding="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+    <render:Loader x:Name="loader" VerticalOptions="Center" />
+    <Label Text="Назначение" VerticalOptions="CenterAndExpand"/>
+    <Entry Text="{Binding Title}" FontSize="Large"/>
+    <Label Text="{Binding Date,StringFormat=Дата: '{0}'}" FontSize="Medium"/>
+    <Label Text="{Binding From,StringFormat=От: '{0}'}" FontSize="Medium"/>
+    <Label Text="{Binding To,StringFormat=До: '{0}'}" FontSize="Medium"/>
+    <StackLayout Orientation="Horizontal">
+      <Label Text="{Binding IsLarge,StringFormat=Большая: '{0}'}" FontSize="Medium"/>
+      <Label Text="{Binding HasPolycom,StringFormat=Поликом: '{0}'}" FontSize="Medium"/>
+    </StackLayout>
+    <StackLayout Orientation="Horizontal">
+      <Button Text="Нет" HorizontalOptions="FillAndExpand" Command="{Binding GoBackCommand}"/>
+      <Button Text="Да" HorizontalOptions="FillAndExpand" Command="{Binding AddReservationCommand}"/>
+    </StackLayout>
+  </StackLayout>
+    </AbsoluteLayout>
+</pages:ActivityIndicatorPage>

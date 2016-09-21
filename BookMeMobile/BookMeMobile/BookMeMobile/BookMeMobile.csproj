@@ -54,6 +54,9 @@
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Enums\StatusCode.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
+    <Compile Include="Pages\ReservationPage.xaml.cs">
+      <DependentUpon>ReservationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources.cs" />
     <Compile Include="Interface\IFileWorker.cs" />
     <Compile Include="Model\ListRoomResult.cs" />
@@ -109,6 +112,7 @@
     <Compile Include="Render\TimePicker24Hour.cs" />
     <Compile Include="Render\Loader.cs" />
     <Compile Include="ViewModels\Abstract\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\AddReservationViewModel.cs" />
     <Compile Include="ViewModels\Concrete\LoginViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +230,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\ReservationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\Build\StyleCop\StyleCop.targets" />
