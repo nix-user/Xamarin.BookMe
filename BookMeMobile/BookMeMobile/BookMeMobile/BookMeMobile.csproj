@@ -39,6 +39,7 @@
     <Compile Include="Binding\CheckerInColor.cs" />
     <Compile Include="Binding\ConverterBool.cs" />
     <Compile Include="Binding\ConvertFromRoomToString.cs" />
+    <Compile Include="Binding\IsStringNullOrEmptyConverter.cs" />
     <Compile Include="BL\Abstract\BaseService.cs" />
     <Compile Include="BL\Abstract\IReservationService.cs" />
     <Compile Include="BL\Abstract\IRoomService.cs" />
@@ -54,6 +55,12 @@
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Enums\StatusCode.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
+    <Compile Include="Pages\MyReservations\MyReservationsPage.xaml.cs">
+      <DependentUpon>MyReservationsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MyReservations\ReservationsTab.xaml.cs">
+      <DependentUpon>ReservationsTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources.cs" />
     <Compile Include="Interface\IFileWorker.cs" />
     <Compile Include="Model\ListRoomResult.cs" />
@@ -226,6 +233,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\MyReservations\MyReservationsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\MyReservations\ReservationsTab.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\Build\StyleCop\StyleCop.targets" />

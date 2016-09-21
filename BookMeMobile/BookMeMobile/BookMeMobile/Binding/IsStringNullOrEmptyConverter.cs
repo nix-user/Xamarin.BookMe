@@ -4,16 +4,16 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BookMeMobile.Entity;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Binding
 {
-    public class ConvertFromRoomToString : IValueConverter
+    public class IsStringNullOrEmptyConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((Room)value).Number;
+            var stringValue = (string)value;
+            return !string.IsNullOrEmpty(stringValue);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

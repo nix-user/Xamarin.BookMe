@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:binding="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
+             x:Class="BookMeMobile.Pages.MyReservations.ReservationsTab">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <binding:ConverterBool x:Key="boolConvert"/>
+      <binding:ConvertFromRoomToString x:Key="FromRoomToString"/>
+      <binding:IsStringNullOrEmptyConverter x:Key="IsStringNullOrEmpty"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Padding>
+    10, 10, 10, 10
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <StackLayout>
+      <Label x:Name="messageIsEmpty" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Text="Нету резерваций" IsVisible="False"/>
+      <ListView x:Name="listRoom" ItemsSource="{Binding}" HasUnevenRows="True" SeparatorColor="Black">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell Tapped="Cell_OnTapped">
+              <ViewCell.View>
+                  <StackLayout VerticalOptions="Center">
+                    <Grid>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                      </Grid.RowDefinitions>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                      </Grid.ColumnDefinitions>
+                      <Label Grid.Row="0" Grid.Column="0" Text="{Binding Room, Converter={StaticResource FromRoomToString}, StringFormat='{0}' }" FontSize="Large"/>
+                      <Image Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Source="cycle.png" IsVisible="{Binding IsRecursive}"/>
+                    </Grid>
+                    <Label Text="{Binding TextPeriod}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
+                    <Label IsVisible="{Binding TextRool, Converter={StaticResource IsStringNullOrEmpty} }" Text="{Binding TextRool}" FontSize="Small" LineBreakMode="TailTruncation"></Label>
+                  </StackLayout>
+              </ViewCell.View>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>
