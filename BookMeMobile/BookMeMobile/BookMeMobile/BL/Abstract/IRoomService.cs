@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookMeMobile.BL.Abstract
 {
-    interface IRoomService
+    internal interface IRoomService
     {
     }
 }

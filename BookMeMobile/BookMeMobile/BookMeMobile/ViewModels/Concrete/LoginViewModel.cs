@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookMeMobile.ViewModels.Concrete
 {
-    class LoginViewModel : BaseViewModel
+    internal class LoginViewModel : BaseViewModel
     {
     }
 }
