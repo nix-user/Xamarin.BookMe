@@ -47,29 +47,29 @@
     <Compile Include="Data\HttpService.cs" />
     <Compile Include="Data\RestURl.cs" />
     <Compile Include="Data\RoomRepository.cs" />
+    <Compile Include="Enums\StatusCode.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
     <Compile Include="Resources.cs" />
-    <Compile Include="Interface\IWorkWIthFile.cs" />
+    <Compile Include="Interface\IFileWorker.cs" />
     <Compile Include="Model\ListRoomResult.cs" />
     <Compile Include="Model\ReservationsStatusModel.cs" />
-    <Compile Include="Entity\ReservationModel.cs" />
+    <Compile Include="Entity\Reservation.cs" />
     <Compile Include="Model\MenuPageItem.cs" />
     <Compile Include="Model\ProfileViewModel.cs" />
     <Compile Include="Model\ReservationStatusModel.cs" />
     <Compile Include="Entity\Room.cs" />
-    <Compile Include="Model\ResponceModelStatusCode.cs" />
-    <Compile Include="Model\ResponceModelGeneric.cs" />
-    <Compile Include="Model\ResponceStatusCode.cs" />
+    <Compile Include="Model\ResponseModelStatusCode.cs" />
     <Compile Include="Model\ResponseModel.cs" />
+    <Compile Include="Model\ResponseStatusCode.cs" />
+    <Compile Include="Model\BaseResponseModel.cs" />
     <Compile Include="Model\RoomFilterParameters.cs" />
     <Compile Include="Model\RoomReservationsRequestModel.cs" />
     <Compile Include="Model\RoomResultStatusCode.cs" />
     <Compile Include="Model\RoomsStatusModel.cs" />
-    <Compile Include="Model\StatusCode.cs" />
     <Compile Include="Entity\User.cs" />
     <Compile Include="Model\TokenStatusCode.cs" />
+    <Compile Include="OperationResults\BaseOperationResult.cs" />
     <Compile Include="OperationResults\OperationResult.cs" />
-    <Compile Include="OperationResults\OperationResultGeneric.cs" />
     <Compile Include="Pages\ListRoomPage.xaml.cs">
       <DependentUpon>ListRoomPage.xaml</DependentUpon>
     </Compile>

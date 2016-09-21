@@ -13,7 +13,7 @@ namespace BookMeMobile
     {
         public App()
         {
-            if (DependencyService.Get<IFileWork>().ExistsAsync().Result)
+            if (DependencyService.Get<IFileWorker>().ExistsAsync().Result)
             {
                 this.MainPage = new NavigationPage(new MainPage());
             }

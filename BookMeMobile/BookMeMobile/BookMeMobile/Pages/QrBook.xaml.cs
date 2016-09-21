@@ -8,6 +8,8 @@ using Android.App;
 using Android.Text.Style;
 using BookMeMobile.BL;
 using BookMeMobile.Entity;
+using BookMeMobile.Enums;
+using BookMeMobile.Model;
 using Java.Lang;
 using Javax.Security.Auth;
 using Xamarin.Forms;
@@ -60,7 +62,7 @@ namespace BookMeMobile.Pages
             }
         }
 
-        private async void Sucess(IEnumerable<ReservationModel> reservation, Result result)
+        private async void Sucess(IEnumerable<Reservation> reservation, Result result)
         {
             if (reservation == null || !reservation.Any())
             {

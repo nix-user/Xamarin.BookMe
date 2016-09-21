@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookMeMobile.Entity;
-
-namespace BookMeMobile.OperationResults
+﻿namespace BookMeMobile.OperationResults
 {
-    public class OperationResult
+    public class BaseOperationResult<T> : BaseOperationResult
     {
-        public StatusCode Status { get; set; }
+        public T Result { get; set; }
     }
 }

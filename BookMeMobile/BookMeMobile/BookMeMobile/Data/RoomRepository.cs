@@ -1,50 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Android.App;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
-using Newtonsoft.Json;
 
 namespace BookMeMobile.Data
 {
     public class RoomRepository : BaseRepository
     {
-        public async Task<OperationResult<IEnumerable<Room>>> GetAllRoom()
+        private readonly CultureInfo dateTimeCultureInfo = new CultureInfo("en-US");
+
+        public async Task<BaseOperationResult<IEnumerable<Room>>> GetAllRoom()
         {
             return await this.HttpService.Get<IEnumerable<Room>>(RestURl.RoomURl);
         }
 
-        public async Task<OperationResult<Room>> GetRoom(int id)
+        public async Task<BaseOperationResult<Room>> GetRoom(int id)
         {
             return await this.HttpService.Get<Room>(RestURl.RoomURl + id);
         }
 
-        public async Task<OperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
+        public async Task<BaseOperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
         {
             var root = string.Format(
                 RestURl.GetEmptyRoom,
-                filter.From.AddHours(-3).ToString(new CultureInfo("en-US")),
-                filter.To.AddHours(-3).ToString(new CultureInfo("en-US")),
+                filter.From.ToUniversalTime().ToString(this.dateTimeCultureInfo),
+                filter.To.ToUniversalTime().ToString(this.dateTimeCultureInfo),
                 filter.HasPolycom,
                 filter.IsLarge);
             return await this.HttpService.Get<IEnumerable<Room>>(root);
         }
 
-        public async Task<OperationResult<IEnumerable<ReservationModel>>> GetCurrentRoomReservation(RoomReservationsRequestModel reservationsModel)
+        public async Task<BaseOperationResult<IEnumerable<Reservation>>> GetCurrentRoomReservation(RoomReservationsRequestModel reservationsModel)
         {
-            //TODO:Refactor with counting UTC offset
             var root = string.Format(
                 RestURl.GetCurrentRoomReservation,
-                reservationsModel.From.AddHours(-3).ToString(new CultureInfo("en-US")),
-                reservationsModel.To.AddHours(-3).ToString(new CultureInfo("en-US")),
+                reservationsModel.From.ToUniversalTime().ToString(this.dateTimeCultureInfo),
+                reservationsModel.To.ToUniversalTime().ToString(this.dateTimeCultureInfo),
                 reservationsModel.RoomId);
-            return await this.HttpService.Get<IEnumerable<ReservationModel>>(root);
+            return await this.HttpService.Get<IEnumerable<Reservation>>(root);
         }
     }
 }

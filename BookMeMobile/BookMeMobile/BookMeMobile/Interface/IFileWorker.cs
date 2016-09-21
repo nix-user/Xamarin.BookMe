@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace BookMeMobile.Interface
 {
-    public interface IFileWork
+    public interface IFileWorker
     {
         Task<bool> ExistsAsync();
 

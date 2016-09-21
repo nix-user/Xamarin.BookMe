@@ -6,6 +6,7 @@ using Android.Locations;
 using BookMeMobile.BL;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
+using BookMeMobile.Enums;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 using BookMeMobile.Pages.MyBookPages;
@@ -66,7 +67,7 @@ namespace BookMeMobile.Pages
                     IsLarge = IsBig.IsToggled
                 };
 
-                OperationResult<IEnumerable<Room>> searchListRetrieval = null;
+                BaseOperationResult<IEnumerable<Room>> searchListRetrieval = null;
                 await this.PerformWithActivityIndicator(async () =>
                 {
                     searchListRetrieval = await this.manager.GetEmptyRoom(reservation);

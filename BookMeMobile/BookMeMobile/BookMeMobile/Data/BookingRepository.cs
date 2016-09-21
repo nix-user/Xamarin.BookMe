@@ -25,14 +25,14 @@ namespace BookMeMobile.Data
             this.httpService = new HttpService();
         }
 
-        public async Task<OperationResult> RemoveReservation(int id)
+        public async Task<BaseOperationResult> RemoveReservation(int id)
         {
             return (await this.httpService.Delete(string.Format(RestURl.BookURl + "{0}", id)));
         }
 
-        public async Task<OperationResult> AddReservation(RoomFilterParameters reservation, int idRoom)
+        public async Task<BaseOperationResult> AddReservation(RoomFilterParameters reservation, int idRoom)
         {
-            ReservationModel model = new ReservationModel()
+            Reservation model = new Reservation()
             {
                 From = reservation.From,
                 To = reservation.To,
@@ -47,9 +47,9 @@ namespace BookMeMobile.Data
             return await this.httpService.Post(RestURl.BookURl, model);
         }
 
-        public async Task<OperationResult<IEnumerable<ReservationModel>>> GetUserReservations()
+        public async Task<BaseOperationResult<IEnumerable<Reservation>>> GetUserReservations()
         {
-            return await this.httpService.Get<IEnumerable<ReservationModel>>(RestURl.GetUserReservation);
+            return await this.httpService.Get<IEnumerable<Reservation>>(RestURl.GetUserReservation);
         }
     }
 }

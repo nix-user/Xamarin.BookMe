@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookMeMobile.Entity
 {
-    public class ReservationModel : IEquatable<ReservationModel>
+    public class Reservation
     {
         public int Id { get; set; }
 
@@ -23,10 +19,5 @@ namespace BookMeMobile.Entity
         public int? ResourceId { get; set; }
 
         public TimeSpan Duration { get; set; }
-
-        public bool Equals(ReservationModel other)
-        {
-            return this.Id == other.Id;
-        }
     }
 }

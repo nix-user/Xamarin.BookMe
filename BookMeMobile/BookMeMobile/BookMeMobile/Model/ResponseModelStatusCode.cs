@@ -1,6 +1,6 @@
 ﻿namespace BookMeMobile.Model
 {
-    public class ResponseModel<T> : BaseResponseModel
+    public class ResponseModelStatusCode<T> : ResponseStatusCode
     {
         public T Result { get; set; }
     }

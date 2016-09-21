@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace BookMeMobile.Entity
+﻿namespace BookMeMobile.Entity
 {
     public class Room
     {

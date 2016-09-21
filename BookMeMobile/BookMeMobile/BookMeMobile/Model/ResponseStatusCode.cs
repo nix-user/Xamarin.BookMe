@@ -2,10 +2,8 @@
 
 namespace BookMeMobile.Model
 {
-    public class TokenStatusCode
+   public class ResponseStatusCode
     {
-        public string Token { get; set; }
-
         public StatusCode StatusCode { get; set; }
     }
 }
