@@ -35,10 +35,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="Binding\CheckerInBookRoom.cs" />
-    <Compile Include="Binding\CheckerInColor.cs" />
-    <Compile Include="Binding\ConverterBool.cs" />
-    <Compile Include="Binding\ConvertFromRoomToString.cs" />
+    <Compile Include="Converters\BoolToTextconverter.cs" />
+    <Compile Include="Converters\RoomToStringConverter.cs" />
     <Compile Include="BL\Abstract\BaseService.cs" />
     <Compile Include="BL\Abstract\IReservationService.cs" />
     <Compile Include="BL\Abstract\IRoomService.cs" />
@@ -57,32 +55,25 @@
     <Compile Include="Pages\ReservationPage.xaml.cs">
       <DependentUpon>ReservationPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\BasePage.cs" />
+    <Compile Include="Pages\Login\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Resources.cs" />
     <Compile Include="Interface\IFileWorker.cs" />
-    <Compile Include="Model\ListRoomResult.cs" />
-    <Compile Include="Model\ReservationsStatusModel.cs" />
     <Compile Include="Entity\Reservation.cs" />
     <Compile Include="Model\MenuPageItem.cs" />
     <Compile Include="Model\ProfileViewModel.cs" />
-    <Compile Include="Model\ReservationStatusModel.cs" />
     <Compile Include="Entity\Room.cs" />
-    <Compile Include="Model\ResponseModelStatusCode.cs" />
     <Compile Include="Model\ResponseModel.cs" />
-    <Compile Include="Model\ResponseStatusCode.cs" />
     <Compile Include="Model\BaseResponseModel.cs" />
     <Compile Include="Model\RoomFilterParameters.cs" />
     <Compile Include="Model\RoomReservationsRequestModel.cs" />
-    <Compile Include="Model\RoomResultStatusCode.cs" />
-    <Compile Include="Model\RoomsStatusModel.cs" />
     <Compile Include="Entity\User.cs" />
-    <Compile Include="Model\TokenStatusCode.cs" />
     <Compile Include="OperationResults\BaseOperationResult.cs" />
     <Compile Include="OperationResults\OperationResult.cs" />
     <Compile Include="Pages\ListRoomPage.xaml.cs">
       <DependentUpon>ListRoomPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\LoginPage.xaml.cs">
-      <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MasterPage.xaml.cs">
       <DependentUpon>MasterPage.xaml</DependentUpon>
@@ -111,6 +102,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\TimePicker24Hour.cs" />
     <Compile Include="Render\Loader.cs" />
+    <Compile Include="Resources\AlertMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AlertMessages.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Abstract\BaseViewModel.cs" />
     <Compile Include="ViewModels\Concrete\AddReservationViewModel.cs" />
     <Compile Include="ViewModels\Concrete\LoginViewModel.cs" />
@@ -168,14 +164,13 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Pages\ListRoomPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Resources\AlertMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AlertMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Pages\ListRoomPage.xaml">
     <EmbeddedResource Include="Pages\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
@@ -233,6 +228,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\ReservationPage.xaml">
+    <EmbeddedResource Include="Pages\Login\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

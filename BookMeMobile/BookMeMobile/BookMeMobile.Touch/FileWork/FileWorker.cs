@@ -14,7 +14,7 @@ namespace BookMeMobile.Touch.FileWork
 {
     public class FileWorker : IFileWorker
     {
-        private readonly string fileName = Resources.FileName;
+        private readonly string fileName = Entity.Resources.FileName;
 
         public Task DeleteAsync()
         {
