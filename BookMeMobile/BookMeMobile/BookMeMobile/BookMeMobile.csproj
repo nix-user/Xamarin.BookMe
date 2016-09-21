@@ -35,10 +35,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="Binding\CheckerInBookRoom.cs" />
-    <Compile Include="Binding\CheckerInColor.cs" />
-    <Compile Include="Binding\ConverterBool.cs" />
-    <Compile Include="Binding\ConvertFromRoomToString.cs" />
+    <Compile Include="Converters\BoolToTextconverter.cs" />
+    <Compile Include="Converters\RoomToStringConverter.cs" />
     <Compile Include="BL\Abstract\BaseService.cs" />
     <Compile Include="BL\Abstract\IReservationService.cs" />
     <Compile Include="BL\Abstract\IRoomService.cs" />
