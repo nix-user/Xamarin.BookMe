@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:ActivityIndicatorPage xmlns="http://xamarin.com/schemas/2014/forms"
+<pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
              xmlns:render="clr-namespace:BookMeMobile.Render;assembly=BookMeMobile"
@@ -17,4 +17,4 @@
       <Button x:Name="BtnSignIn" Text="Войти" Command="{Binding SignInCommand}"></Button>
     </StackLayout>
   </AbsoluteLayout>
-</pages:ActivityIndicatorPage>
+</pages:BasePage>

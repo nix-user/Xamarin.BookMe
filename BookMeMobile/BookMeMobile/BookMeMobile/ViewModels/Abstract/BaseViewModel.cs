@@ -11,7 +11,7 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels
 {
-    internal abstract class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : INotifyPropertyChanged
     {
         private readonly Dictionary<StatusCode, string> errorMessagesDictionary = new Dictionary<StatusCode, string>()
         {

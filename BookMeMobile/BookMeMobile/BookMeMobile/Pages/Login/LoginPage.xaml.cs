@@ -8,31 +8,15 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.Pages.Login
 {
-    public partial class LoginPage : ActivityIndicatorPage
+    public partial class LoginPage : BasePage
     {
         public LoginPage()
         {
             this.InitializeComponent();
             var viewModel = new LoginViewModel() { Navigation = this.Navigation };
-            viewModel.ToggleProgressIndicator = this.ToggleProgressIndicator;
-            viewModel.ShowInfoMessage = (title, content, cancelText) =>
-            {
-                this.DisplayAlert(title, content, cancelText);
-            };
+            this.SetUpViewModelSubscriptions(viewModel);
             this.BindingContext = viewModel;
             this.SetUpActivityIndicator(this.loader, this.rootLayout);
-        }
-
-        private void ToggleProgressIndicator(bool isIndicatorShown)
-        {
-            if (isIndicatorShown)
-            {
-                this.ShowActivityIndicator();
-            }
-            else
-            {
-                this.HideActivityIndicator();
-            }
         }
     }
 }
