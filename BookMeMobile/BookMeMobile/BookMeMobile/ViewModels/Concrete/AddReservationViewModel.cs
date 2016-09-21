@@ -35,6 +35,12 @@ namespace BookMeMobile.ViewModels.Concrete
             };
             this.manager = new ListRoomManager();
             this.AddReservationCommand = new Command(this.AddReservation);
+            this.GoBackCommand = new Command(this.GoBack);
+        }
+
+        private async void GoBack(object obj)
+        {
+          await this.Navigation.PopModalAsync();
         }
 
         public ICommand AddReservationCommand { get; protected set; }
@@ -62,14 +68,14 @@ namespace BookMeMobile.ViewModels.Concrete
             get { return this.parametr.To.TimeOfDay.ToString(@"hh\:mm"); }
         }
 
-        public string IsLarge
+        public bool IsLarge
         {
-            get { return string.Format("{0:Да;0;Нет}", this.parametr.IsLarge.GetHashCode()); }
+            get { return this.parametr.IsLarge; }
         }
 
-        public string HasPolycom
+        public bool HasPolycom
         {
-            get { return string.Format("{0:Да;0;Нет}", this.parametr.HasPolycom.GetHashCode()); }
+            get { return this.parametr.HasPolycom; }
         }
 
         public async void AddReservation(object someObject)

@@ -3,8 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
              xmlns:render="clr-namespace:BookMeMobile.Render;assembly=BookMeMobile"
+             xmlns:converters="clr-namespace:BookMeMobile.Converters;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.ReservationPage">
-
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:BoolToTextconverter x:Key="boolConverter"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
   <AbsoluteLayout x:Name="rootLayout" Padding="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
     <render:Loader x:Name="loader" VerticalOptions="Center" />
@@ -14,8 +19,8 @@
     <Label Text="{Binding From,StringFormat=От: '{0}'}" FontSize="Medium"/>
     <Label Text="{Binding To,StringFormat=До: '{0}'}" FontSize="Medium"/>
     <StackLayout Orientation="Horizontal">
-      <Label Text="{Binding IsLarge,StringFormat=Большая: '{0}'}" FontSize="Medium"/>
-      <Label Text="{Binding HasPolycom,StringFormat=Поликом: '{0}'}" FontSize="Medium"/>
+      <Label Text="{Binding IsLarge,StringFormat=Большая: '{0}',Converter={StaticResource boolConverter}}" FontSize="Medium"/>
+      <Label Text="{Binding HasPolycom,StringFormat=Поликом: '{0}',Converter={StaticResource boolConverter}}" FontSize="Medium"/>
     </StackLayout>
     <StackLayout Orientation="Horizontal">
       <Button Text="Нет" HorizontalOptions="FillAndExpand" Command="{Binding GoBackCommand}"/>
