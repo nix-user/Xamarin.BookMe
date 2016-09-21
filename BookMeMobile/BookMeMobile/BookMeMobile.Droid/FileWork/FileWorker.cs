@@ -15,7 +15,7 @@ namespace BookMeMobile.Droid.FileWork
     public class FileWorker : IFileWorker
     {
         private static readonly object LockThis = new object();
-        private readonly string filename = Resources.FileName;
+        private readonly string filename = Entity.Resources.FileName;
 
         public Task DeleteAsync()
         {
