@@ -7,7 +7,7 @@ using BookMeMobile.BL.Abstract;
 
 namespace BookMeMobile.BL.Concrete
 {
-    class ReservationService : BaseService, IReservationService
+    internal class ReservationService : BaseService, IReservationService
     {
     }
 }

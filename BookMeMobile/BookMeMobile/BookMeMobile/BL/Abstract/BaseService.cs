@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookMeMobile.BL.Abstract
 {
-    abstract class BaseService
+    internal abstract class BaseService
     {
     }
 }
