@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
+using BookMeMobile.Enums;
 using BookMeMobile.Interface;
 using BookMeMobile.Model;
 using Newtonsoft.Json;
@@ -35,7 +36,7 @@ namespace BookMeMobile.Data
                 {
                     var contentResponce = await response.Content.ReadAsStringAsync();
                     var token = this.ParseResponse(contentResponce);
-                    await DependencyService.Get<IFileWork>().SaveTextAsync(token);
+                    await DependencyService.Get<IFileWorker>().SaveTextAsync(token);
                     return StatusCode.Ok;
                 }
                 else

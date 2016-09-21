@@ -9,7 +9,9 @@ using BookMeMobile.Binding;
 using BookMeMobile.BL;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
+using BookMeMobile.Enums;
 using BookMeMobile.Interface;
+using BookMeMobile.Model;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Pages

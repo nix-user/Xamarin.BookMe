@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
+using BookMeMobile.Model;
 using Javax.Security.Auth;
 using Xamarin.Forms;
 

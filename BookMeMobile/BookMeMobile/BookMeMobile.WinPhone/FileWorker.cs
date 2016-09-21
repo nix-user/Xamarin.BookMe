@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.WinPhone
 {
-    public class FileWorker : IFileWork
+    public class FileWorker : IFileWorker
     {
         private readonly string filename = Resources.FileName;
 

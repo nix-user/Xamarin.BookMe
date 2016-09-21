@@ -12,7 +12,7 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.Touch.FileWork
 {
-    public class FileWorker : IFileWork
+    public class FileWorker : IFileWorker
     {
         private readonly string fileName = Resources.FileName;
 

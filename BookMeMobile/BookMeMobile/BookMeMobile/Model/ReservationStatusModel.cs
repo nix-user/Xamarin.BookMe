@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BookMeMobile.Entity;
+using BookMeMobile.Enums;
 
-namespace BookMeMobile.Entity
+namespace BookMeMobile.Model
 {
     public class ReservationStatusModel
     {
-        public ReservationModel Reservation { get; set; }
+        public Reservation Reservation { get; set; }
 
         public StatusCode StatusCode { get; set; }
     }

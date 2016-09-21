@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
+using BookMeMobile.Enums;
 using BookMeMobile.Model;
 
 namespace BookMeMobile.BL

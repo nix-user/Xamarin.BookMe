@@ -19,9 +19,9 @@ namespace BookMeMobile.BL
         private RoomRepository roomRepository;
         private ReservationRepository reservationRepository;
 
-        private ReservationModel currentReservation;
+        private Reservation currentReservation;
 
-        public ListRoomManager(ReservationModel reservation, User currentUser)
+        public ListRoomManager(Reservation reservation, User currentUser)
         {
             this.reservationRepository = new ReservationRepository();
             this.roomRepository = new RoomRepository();
@@ -34,12 +34,12 @@ namespace BookMeMobile.BL
             this.roomRepository = new RoomRepository();
         }
 
-        public async Task<OperationResult> AddReservation(RoomFilterParameters reservation, int idRoom)
+        public async Task<BaseOperationResult> AddReservation(RoomFilterParameters reservation, int idRoom)
         {
             return (await this.reservationRepository.AddReservation(reservation, idRoom));
         }
 
-        public async Task<OperationResult> DeleteReservation(int idReservation)
+        public async Task<BaseOperationResult> DeleteReservation(int idReservation)
         {
             return await this.reservationRepository.RemoveReservation(idReservation);
         }
@@ -85,17 +85,17 @@ namespace BookMeMobile.BL
             return s[0];
         }
 
-        public async Task<OperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
+        public async Task<BaseOperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
         {
             return await this.roomRepository.GetEmptyRoom(filter);
         }
 
-        public async Task<OperationResult<IEnumerable<ReservationModel>>> GetAllUserReservation()
+        public async Task<BaseOperationResult<IEnumerable<Reservation>>> GetAllUserReservation()
         {
             return await this.reservationRepository.GetUserReservations();
         }
 
-        public async Task<OperationResult<IEnumerable<ReservationModel>>> GetRoomCurrentReservations(string number)
+        public async Task<BaseOperationResult<IEnumerable<Reservation>>> GetRoomCurrentReservations(string number)
         {
             var reservationCurrent = new RoomReservationsRequestModel()
             {
@@ -106,7 +106,7 @@ namespace BookMeMobile.BL
             return await this.roomRepository.GetCurrentRoomReservation(reservationCurrent);
         }
 
-        public async Task<OperationResult> AddReservationInHour(string text)
+        public async Task<BaseOperationResult> AddReservationInHour(string text)
         {
            RoomFilterParameters parametr  = new RoomFilterParameters()
             {

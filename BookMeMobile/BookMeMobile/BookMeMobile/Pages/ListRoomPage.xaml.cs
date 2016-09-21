@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.BL;
 using BookMeMobile.Entity;
+using BookMeMobile.Enums;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 using Xamarin.Forms;
@@ -36,7 +37,7 @@ namespace BookMeMobile.Pages
 
         public List<Room> ResultRoom { get; set; }
 
-        private ReservationModel currentBooking;
+        private Reservation currentBooking;
         private ListRoomManager manager;
         private RoomFilterParameters currentReservation;
 
