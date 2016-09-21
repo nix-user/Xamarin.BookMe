@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Android.Provider;
 using Android.Widget;
-using BookMeMobile.Binding;
 using BookMeMobile.BL;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
