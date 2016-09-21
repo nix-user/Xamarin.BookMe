@@ -14,12 +14,15 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
 {
-    public partial class ReservationPage : ActivityIndicatorPage
+    public partial class ReservationPage : BasePage
     {
         public ReservationPage(RoomFilterParameters filterparametr, int idRoom)
         {
             this.InitializeComponent();
-            this.BindingContext = new AddReservationViewModel(filterparametr, idRoom);
+            var viewModel = new AddReservationViewModel(filterparametr, idRoom);
+            this.SetUpViewModelSubscriptions(viewModel);
+            this.BindingContext = viewModel;
+            this.SetUpActivityIndicator(this.loader, this.rootLayout);
         }
     }
 }

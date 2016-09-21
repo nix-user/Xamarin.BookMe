@@ -11,6 +11,7 @@ using BookMeMobile.Enums;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 using BookMeMobile.Pages;
+using BookMeMobile.Resources;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete
@@ -84,8 +85,15 @@ namespace BookMeMobile.ViewModels.Concrete
         {
             if (this.Title != null)
             {
-                StatusCode statusCodeOperation = StatusCode.Error;
-                statusCodeOperation = (await this.manager.AddReservation(this.reservation)).Status;
+                var operationResult =
+                    (await this.ExecuteOperation(async () => await this.manager.AddReservation(this.reservation))).Status;
+                if (operationResult == StatusCode.Ok)
+                {
+                    this.ShowInformationDialog(this.reservationingHeadSuccess, this.reservationingBodySucces);
+                    await this.Navigation.PopModalAsync();
+                }
+
+                this.ShowErrorMessage(operationResult);
             }
         }
     }
