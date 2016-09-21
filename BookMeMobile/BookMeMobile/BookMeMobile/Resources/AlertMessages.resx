@@ -129,6 +129,12 @@
   <data name="ServerError" xml:space="preserve">
     <value>Ошибка на стороне сервера</value>
   </data>
+  <data name="SuccessBody" xml:space="preserve">
+    <value>Действие выполнено успешно</value>
+  </data>
+  <data name="SuccessHeader" xml:space="preserve">
+    <value>Успешно</value>
+  </data>
   <data name="WrongLoginOrPassword" xml:space="preserve">
     <value>Логин или пароль введены неверно</value>
   </data>

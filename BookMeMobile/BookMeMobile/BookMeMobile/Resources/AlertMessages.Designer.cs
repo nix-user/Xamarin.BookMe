@@ -98,6 +98,24 @@ namespace BookMeMobile.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Действие выполнено успешно.
+        /// </summary>
+        internal static string SuccessBody {
+            get {
+                return ResourceManager.GetString("SuccessBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Успешно.
+        /// </summary>
+        internal static string SuccessHeader {
+            get {
+                return ResourceManager.GetString("SuccessHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Логин или пароль введены неверно.
         /// </summary>
         internal static string WrongLoginOrPassword {

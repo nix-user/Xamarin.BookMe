@@ -18,15 +18,6 @@ namespace BookMeMobile.ViewModels.Concrete
 {
     internal class AddReservationViewModel : BaseViewModel
     {
-        private readonly string reservationingHeadChecking = "Подтвердите действие";
-        private readonly string reservationingBodySucces = "Комната успешно забронирована";
-        private readonly string reservationingHeadSuccess = "Действие успешно выполнено";
-        private readonly string reservationingHeadError = "Ошибка";
-        private readonly string reservationingBodyError = "Ошибка на сервере";
-        private readonly string errorHeadEmptyTitle = "Заполните поле назначение";
-        private readonly string reservationingBodyNoInternet = "Нет доступа к интернету";
-        private readonly string reservationButonOK = "Да";
-        private readonly string reservationButonNO = "Нет";
         private ListRoomManager manager;
         private RoomFilterParameters parametr;
         private Reservation reservation;
@@ -89,7 +80,7 @@ namespace BookMeMobile.ViewModels.Concrete
                     (await this.ExecuteOperation(async () => await this.manager.AddReservation(this.reservation))).Status;
                 if (operationResult == StatusCode.Ok)
                 {
-                    this.ShowInformationDialog(this.reservationingHeadSuccess, this.reservationingBodySucces);
+                    this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
                     await this.Navigation.PopModalAsync();
                 }
 
