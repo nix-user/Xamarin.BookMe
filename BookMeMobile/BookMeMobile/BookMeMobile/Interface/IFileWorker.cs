@@ -4,12 +4,12 @@ namespace BookMeMobile.Interface
 {
     public interface IFileWorker
     {
-        Task<bool> ExistsAsync();
+        Task<bool> ExistsAsync(string fileName);
 
-        Task SaveTextAsync(string text);
+        Task SaveTextAsync(string fileName, string text);
 
-        Task<string> LoadTextAsync();
+        Task<string> LoadTextAsync(string fileName);
 
-        Task DeleteAsync();
+        Task DeleteAsync(string fileName);
     }
 }
