@@ -11,6 +11,7 @@ using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 using BookMeMobile.Pages.Login;
 using BookMeMobile.Pages.MyBookPages;
+using BookMeMobile.Pages.MyReservations;
 using BookMeMobile.Render;
 using Java.Util;
 using Xamarin.Forms;
@@ -109,34 +110,35 @@ namespace BookMeMobile.Pages
 
         public async void MyReservations_OnClicked(object sender, EventArgs e)
         {
-            var allReservatioons = await this.manager.GetAllUserReservation();
-            switch (allReservatioons.Status)
-            {
-                case StatusCode.Ok:
-                    {
-                        await this.Navigation.PushAsync(
-                            new TabPanelPage(CurrentUser, allReservatioons.Result));
-                        break;
-                    }
+            await this.Navigation.PushAsync(new MyReservationsPage());
+            //var allReservatioons = await this.manager.GetAllUserReservation();
+            //switch (allReservatioons.Status)
+            //{
+            //    case StatusCode.Ok:
+            //        {
+            //            await this.Navigation.PushAsync(
+            //                new TabPanelPage(CurrentUser, allReservatioons.Result));
+            //            break;
+            //        }
 
-                case StatusCode.ConnectionProblem:
-                    {
-                        await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
-                        break;
-                    }
+            //    case StatusCode.ConnectionProblem:
+            //        {
+            //            await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
+            //            break;
+            //        }
 
-                case StatusCode.Error:
-                    {
-                        await this.DisplayAlert(HeadError, BodyError, Ok);
-                        break;
-                    }
+            //    case StatusCode.Error:
+            //        {
+            //            await this.DisplayAlert(HeadError, BodyError, Ok);
+            //            break;
+            //        }
 
-                case StatusCode.NoAuthorize:
-                    {
-                        await this.Navigation.PushAsync(new LoginPage());
-                        break;
-                    }
-            }
+            //    case StatusCode.NoAuthorize:
+            //        {
+            //            await this.Navigation.PushAsync(new LoginPage());
+            //            break;
+            //        }
+            //}
         }
     }
 }

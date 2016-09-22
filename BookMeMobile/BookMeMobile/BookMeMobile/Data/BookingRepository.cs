@@ -35,9 +35,9 @@ namespace BookMeMobile.Data
             return await this.httpService.Post(RestURl.BookURI, reservation);
         }
 
-        public async Task<BaseOperationResult<IEnumerable<Reservation>>> GetUserReservations()
+        public async Task<BaseOperationResult<UserReservationsModel>> GetUserReservations()
         {
-            return await this.httpService.Get<IEnumerable<Reservation>>(RestURl.GetUserReservation);
+            return await this.httpService.Get<UserReservationsModel>(RestURl.GetUserReservation);
         }
     }
 }
