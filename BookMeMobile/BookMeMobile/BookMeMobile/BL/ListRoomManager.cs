@@ -23,8 +23,8 @@ namespace BookMeMobile.BL
 
         public ListRoomManager()
         {
-            this.reservationRepository = new ReservationRepository();
-            this.roomRepository = new RoomRepository();
+            this.reservationRepository = new ReservationRepository(new HttpService());
+            this.roomRepository = new RoomRepository(new HttpService());
         }
 
         /// <summary>

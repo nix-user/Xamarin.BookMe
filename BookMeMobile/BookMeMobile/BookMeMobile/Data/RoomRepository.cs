@@ -16,6 +16,10 @@ namespace BookMeMobile.Data
     {
         private readonly CultureInfo dateTimeCultureInfo = new CultureInfo("en-US");
 
+        public RoomRepository(IHttpService httpService) : base(httpService)
+        {
+        }
+
         public override async Task<BaseOperationResult<IEnumerable<Room>>> GetAll()
         {
             return await this.HttpService.Get<IEnumerable<Room>>(RestURl.RoomURl);
