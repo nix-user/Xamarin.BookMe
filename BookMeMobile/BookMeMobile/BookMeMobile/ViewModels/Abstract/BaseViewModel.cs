@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Enums;
+using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Resources;
 using Xamarin.Forms;
 
@@ -25,7 +26,12 @@ namespace BookMeMobile.ViewModels
 
         public Action<bool> ToggleProgressIndicator { get; set; }
 
-        public INavigation Navigation { get; set; }
+        protected INavigationService NavigationService { get; set; }
+
+        protected BaseViewModel(INavigationService navigationService)
+        {
+            this.NavigationService = navigationService;
+        }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

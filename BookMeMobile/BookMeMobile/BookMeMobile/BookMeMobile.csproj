@@ -40,9 +40,10 @@
     <Compile Include="Binding\ConverterBool.cs" />
     <Compile Include="Binding\ConvertFromRoomToString.cs" />
     <Compile Include="BL\Abstract\BaseService.cs" />
+    <Compile Include="BL\Abstract\IAccountService.cs" />
     <Compile Include="BL\Abstract\IReservationService.cs" />
     <Compile Include="BL\Abstract\IRoomService.cs" />
-    <Compile Include="BL\AccountService.cs" />
+    <Compile Include="BL\Concrete\AccountService.cs" />
     <Compile Include="BL\Concrete\ReservationService.cs" />
     <Compile Include="BL\Concrete\RoomService.cs" />
     <Compile Include="Data\AccountController.cs" />
@@ -53,6 +54,9 @@
     <Compile Include="Data\RestURl.cs" />
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Enums\StatusCode.cs" />
+    <Compile Include="Infrastructure\Abstract\INavigationService.cs" />
+    <Compile Include="Infrastructure\Concrete\NavigationService.cs" />
+    <Compile Include="Infrastructure\Concrete\NavigationServiceException.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\Login\LoginPage.xaml.cs">

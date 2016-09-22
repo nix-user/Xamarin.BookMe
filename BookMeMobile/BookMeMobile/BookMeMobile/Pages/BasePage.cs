@@ -14,6 +14,23 @@ namespace BookMeMobile.Pages
         private Loader loader;
         private IViewContainer<View> rootLayout;
 
+        private BaseViewModel viewModel;
+
+        public BaseViewModel ViewModel
+        {
+            get { return this.viewModel; }
+
+            set
+            {
+                this.viewModel = value;
+                this.OnViewModelSet();
+            }
+        }
+
+        protected virtual void OnViewModelSet()
+        {
+        }
+
         protected void SetUpViewModelSubscriptions(BaseViewModel baseViewModel)
         {
             baseViewModel.ToggleProgressIndicator = this.ToggleProgressIndicator;

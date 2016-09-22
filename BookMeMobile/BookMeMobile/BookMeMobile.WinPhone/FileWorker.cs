@@ -12,7 +12,7 @@ namespace BookMeMobile.WinPhone
 {
     public class FileWorker : IFileWorker
     {
-        private readonly string filename = Resources.FileName;
+        private readonly string filename = Entity.Resources.FileName;
 
         public async Task DeleteAsync()
         {
