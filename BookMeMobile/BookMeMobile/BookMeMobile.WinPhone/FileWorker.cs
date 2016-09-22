@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BookMeMobile.Interface;
-using BookMeMobile.WinPhone;
 using BookMeMobile.Resources;
-using Xamarin.Forms;
+using BookMeMobile.WinPhone;
 using Windows.Storage;
+using Xamarin.Forms;
 
 [assembly: Dependency(typeof(FileWorker))]
 
