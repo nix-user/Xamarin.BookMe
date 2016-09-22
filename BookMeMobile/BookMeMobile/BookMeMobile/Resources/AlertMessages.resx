@@ -120,6 +120,9 @@
   <data name="ErrorHeader" xml:space="preserve">
     <value>Ошибка</value>
   </data>
+  <data name="FieldIsEmpty" xml:space="preserve">
+    <value>Заполните пустое поле</value>
+  </data>
   <data name="InfoAlertCanelText" xml:space="preserve">
     <value>Ok</value>
   </data>

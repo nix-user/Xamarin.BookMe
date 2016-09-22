@@ -71,6 +71,15 @@ namespace BookMeMobile.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Заполните пустое поле.
+        /// </summary>
+        internal static string FieldIsEmpty {
+            get {
+                return ResourceManager.GetString("FieldIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         internal static string InfoAlertCanelText {

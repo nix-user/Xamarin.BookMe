@@ -19,20 +19,11 @@ namespace BookMeMobile.ViewModels.Concrete
     internal class AddReservationViewModel : BaseViewModel
     {
         private ListRoomManager manager;
-        private RoomFilterParameters parametr;
-        private Reservation reservation;
+        private ReservationModelToAdd model;
 
-        public AddReservationViewModel(RoomFilterParameters parametr, int idRoom)
+        public AddReservationViewModel(RoomFilterParameters filterParametr, int idRoom)
         {
-            this.parametr = parametr;
-            this.reservation = new Reservation()
-            {
-                From = parametr.From,
-                To = parametr.To,
-                ResourceId = idRoom,
-                Duration = parametr.To - parametr.From,
-                IsRecursive = false
-            };
+            this.model = new ReservationModelToAdd(filterParametr, idRoom);
             this.manager = new ListRoomManager();
             this.AddReservationCommand = new Command(this.AddReservation);
             this.GoBackCommand = new Command(this.GoBack);
@@ -49,33 +40,33 @@ namespace BookMeMobile.ViewModels.Concrete
 
         public string Title
         {
-            get { return this.reservation.Title; }
-            set { this.reservation.Title = value; }
+            get { return this.model.Title; }
+            set { this.model.Title = value; }
         }
 
         public string Date
         {
-            get { return this.parametr.From.Date.ToString("d"); }
+            get { return this.model.From.ToString("d"); }
         }
 
         public string From
         {
-            get { return this.parametr.From.TimeOfDay.ToString(@"hh\:mm"); }
+            get { return this.model.From.TimeOfDay.ToString(@"hh\:mm"); }
         }
 
         public string To
         {
-            get { return this.parametr.To.TimeOfDay.ToString(@"hh\:mm"); }
+            get { return this.model.To.TimeOfDay.ToString(@"hh\:mm"); }
         }
 
         public bool IsLarge
         {
-            get { return this.parametr.IsLarge; }
+            get { return this.model.IsLarge; }
         }
 
         public bool HasPolycom
         {
-            get { return this.parametr.HasPolycom; }
+            get { return this.model.HasPolycom; }
         }
 
         public async void AddReservation(object someObject)
@@ -83,7 +74,8 @@ namespace BookMeMobile.ViewModels.Concrete
             if (!string.IsNullOrEmpty(this.Title))
             {
                 var operationResult =
-                    (await this.ExecuteOperation(async () => await this.manager.AddReservation(this.reservation))).Status;
+                    (await this.ExecuteOperation(async () => await this.manager.AddReservation(this.model)))
+                        .Status;
                 if (operationResult == StatusCode.Ok)
                 {
                     this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
@@ -91,6 +83,10 @@ namespace BookMeMobile.ViewModels.Concrete
                 }
 
                 this.ShowErrorMessage(operationResult);
+            }
+            else
+            {
+                this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.FieldIsEmpty);
             }
         }
     }

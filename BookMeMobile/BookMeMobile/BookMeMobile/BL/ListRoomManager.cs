@@ -34,8 +34,17 @@ namespace BookMeMobile.BL
             this.roomRepository = new RoomRepository();
         }
 
-        public async Task<BaseOperationResult> AddReservation(Reservation reservation)
+        public async Task<BaseOperationResult> AddReservation(ReservationModelToAdd model)
         {
+            Reservation reservation = new Reservation()
+            {
+                From = model.From,
+                To = model.To,
+                Duration = model.Duration,
+                IsRecursive = model.IsRecursive,
+                Title = model.Title,
+                ResourceId = model.ResourceId
+            };
             return (await this.reservationRepository.AddReservation(reservation));
         }
 
