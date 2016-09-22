@@ -71,6 +71,15 @@ namespace BookMeMobile.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Заполните пустое поле.
+        /// </summary>
+        internal static string FieldIsEmpty {
+            get {
+                return ResourceManager.GetString("FieldIsEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         internal static string InfoAlertCanelText {
@@ -94,6 +103,24 @@ namespace BookMeMobile.Resources {
         internal static string ServerError {
             get {
                 return ResourceManager.GetString("ServerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Действие выполнено успешно.
+        /// </summary>
+        internal static string SuccessBody {
+            get {
+                return ResourceManager.GetString("SuccessBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Успешно.
+        /// </summary>
+        internal static string SuccessHeader {
+            get {
+                return ResourceManager.GetString("SuccessHeader", resourceCulture);
             }
         }
         

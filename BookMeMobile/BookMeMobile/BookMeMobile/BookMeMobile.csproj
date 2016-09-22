@@ -51,8 +51,12 @@
     <Compile Include="Data\RestURl.cs" />
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Enums\StatusCode.cs" />
+    <Compile Include="Model\AddReservationModel.cs" />
     <Compile Include="Model\Login\LoginModel.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
+    <Compile Include="Pages\AddReservationPage.xaml.cs">
+      <DependentUpon>AddReservationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\Login\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -106,6 +110,7 @@
       <DependentUpon>AlertMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Abstract\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\AddReservationViewModel.cs" />
     <Compile Include="ViewModels\Concrete\LoginViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +229,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\Login\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\AddReservationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
