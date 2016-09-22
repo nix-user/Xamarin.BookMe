@@ -8,7 +8,7 @@ namespace BookMeMobile.Converters
     {
         private readonly string trueValue = "Да";
 
-        private readonly string falseValue = "Да";
+        private readonly string falseValue = "Нет";
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
