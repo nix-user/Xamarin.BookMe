@@ -22,6 +22,6 @@ namespace BookMeMobile.Entity
 
         public string TextPeriod { get; set; }
 
-        public string TextRool { get; set; }
+        public string TextRule { get; set; }
     }
 }

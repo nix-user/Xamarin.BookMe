@@ -2,11 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:binding="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
+             xmlns:customViews="clr-namespace:BookMeMobile.CustomViews;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.MyReservations.ReservationsTab">
   <ContentPage.Resources>
     <ResourceDictionary>
-      <binding:ConverterBool x:Key="boolConvert"/>
-      <binding:ConvertFromRoomToString x:Key="FromRoomToString"/>
+      <binding:InverseBoolConverter x:Key="InverseBool"/>
       <binding:IsStringNullOrEmptyConverter x:Key="IsStringNullOrEmpty"/>
     </ResourceDictionary>
   </ContentPage.Resources>
@@ -16,28 +16,30 @@
   <ContentPage.Content>
     <StackLayout>
       <Label x:Name="messageIsEmpty" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Text="Нету резерваций" IsVisible="False"/>
-      <ListView x:Name="listRoom" ItemsSource="{Binding}" HasUnevenRows="True" SeparatorColor="Black">
+      <ListView x:Name="listRoom" ItemsSource="{Binding Reservations}" HasUnevenRows="True" SeparatorColor="Black">
         <ListView.ItemTemplate>
           <DataTemplate>
-            <ViewCell Tapped="Cell_OnTapped">
+            <customViews:ViewCellWithCommand Command="{Binding Parent.RemoveReservationCommand}" CommandParameter="{Binding}">
               <ViewCell.View>
-                  <StackLayout VerticalOptions="Center">
-                    <Grid>
-                      <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                      </Grid.RowDefinitions>
-                      <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                      </Grid.ColumnDefinitions>
-                      <Label Grid.Row="0" Grid.Column="0" Text="{Binding Room, Converter={StaticResource FromRoomToString}, StringFormat='{0}' }" FontSize="Large"/>
-                      <Image Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Source="cycle.png" IsVisible="{Binding IsRecursive}"/>
-                    </Grid>
-                    <Label Text="{Binding TextPeriod}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
-                    <Label IsVisible="{Binding TextRool, Converter={StaticResource IsStringNullOrEmpty} }" Text="{Binding TextRool}" FontSize="Small" LineBreakMode="TailTruncation"></Label>
+                <StackLayout VerticalOptions="Center">
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding RoomNumber}" FontSize="Large"/>
+                    <Image Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Source="cycle.png" IsVisible="{Binding IsRecursive}"/>
+                  </Grid>
+                  <Label Text="{Binding TextPeriod}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
+                  <StackLayout  IsVisible="{Binding Parent.IsToday, Converter={StaticResource InverseBool} }">
+                    <Label IsVisible="{Binding TextRule, Converter={StaticResource IsStringNullOrEmpty} }" Text="{Binding TextRule}" FontSize="Small" LineBreakMode="TailTruncation"></Label>
                   </StackLayout>
+                </StackLayout>
               </ViewCell.View>
-            </ViewCell>
+            </customViews:ViewCellWithCommand>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>

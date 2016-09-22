@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
+using BookMeMobile.ViewModels.Concrete;
+using BookMeMobile.ViewModels.Concrete.Reservations;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Pages.MyReservations
@@ -13,7 +15,8 @@ namespace BookMeMobile.Pages.MyReservations
         public MyReservationsPage()
         {
             this.InitializeComponent();
-            this.Children[0].BindingContext = new List<Reservation>()
+
+            var list = new List<Reservation>()
             {
                 new Reservation()
                 {
@@ -26,7 +29,7 @@ namespace BookMeMobile.Pages.MyReservations
                     IsRecursive = true,
                     ResourceId = 5,
                     TextPeriod = "Целый день.",
-                    TextRool = "Каждые 2 недели каждый ПН. ВТ. йцуйцуйцу"
+                    TextRule = "Каждые 2 недели каждый ПН. ВТ. йцуйцуйцу"
                 },
                 new Reservation()
                 {
@@ -41,6 +44,8 @@ namespace BookMeMobile.Pages.MyReservations
                     TextPeriod = "Целый день."
                 }
             };
+
+            this.Children[0].BindingContext = new ReservationsListViewModel(list);
         }
     }
 }

@@ -39,6 +39,7 @@
     <Compile Include="Binding\CheckerInColor.cs" />
     <Compile Include="Binding\ConverterBool.cs" />
     <Compile Include="Binding\ConvertFromRoomToString.cs" />
+    <Compile Include="Binding\InverseBoolConverter.cs" />
     <Compile Include="Binding\IsStringNullOrEmptyConverter.cs" />
     <Compile Include="BL\Abstract\BaseService.cs" />
     <Compile Include="BL\Abstract\IReservationService.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="BL\AccountService.cs" />
     <Compile Include="BL\Concrete\ReservationService.cs" />
     <Compile Include="BL\Concrete\RoomService.cs" />
+    <Compile Include="CustomViews\ViewCellWithCommand.cs" />
     <Compile Include="Data\AccountController.cs" />
     <Compile Include="Data\BaseRepository.cs" />
     <Compile Include="Data\BookingRepository.cs" />
@@ -117,7 +119,8 @@
     <Compile Include="Render\Loader.cs" />
     <Compile Include="ViewModels\Abstract\BaseViewModel.cs" />
     <Compile Include="ViewModels\Concrete\LoginViewModel.cs" />
-    <Compile Include="ViewModels\Concrete\ReservationListViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\Reservations\ReservationsListViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\Reservations\ReservationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">
