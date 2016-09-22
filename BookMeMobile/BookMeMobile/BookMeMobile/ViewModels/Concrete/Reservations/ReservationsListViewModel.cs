@@ -24,7 +24,7 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
             }
         }
 
-        public ReservationsListViewModel(IEnumerable<Reservation> reservations, bool isToday = true)
+        public ReservationsListViewModel(IEnumerable<Reservation> reservations, bool isToday = false)
         {
             var reservitionViewModelList = reservations.Select(reservation => new ReservationViewModel(reservation, this));
 

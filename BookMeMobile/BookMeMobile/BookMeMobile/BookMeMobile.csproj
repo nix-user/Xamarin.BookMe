@@ -92,15 +92,6 @@
     <Compile Include="Pages\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MyBookPages\AllMyBook.xaml.cs">
-      <DependentUpon>AllMyBook.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\MyBookPages\RecursiveBookPage.xaml.cs">
-      <DependentUpon>RecursiveBookPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\MyBookPages\TabbedPage.xaml.cs">
-      <DependentUpon>TabbedPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
@@ -222,24 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\MasterPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Pages\MyBookPages\RecursiveBookPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Pages\MyBookPages\TabbedPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Pages\MyBookPages\AllMyBook.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

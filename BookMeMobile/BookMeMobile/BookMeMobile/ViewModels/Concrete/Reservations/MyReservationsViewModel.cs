@@ -7,6 +7,7 @@ using BookMeMobile.BL.Abstract;
 using BookMeMobile.BL.Concrete;
 using BookMeMobile.Data;
 using BookMeMobile.Entity;
+using BookMeMobile.Enums;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 
@@ -16,13 +17,78 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
     {
         private readonly IReservationService reservationService;
 
+        private ReservationsListViewModel todayReservationsViewModel;
+        private ReservationsListViewModel recursiveReservationsViewModel;
+        private ReservationsListViewModel allReservationsViewModel;
+
         public MyReservationsViewModel()
         {
             this.reservationService = new ReservationService();
-            var a = this.reservationService.GetUserReservations().ContinueWith(x =>
+
+            this.LoadReservations();
+        }
+
+        public ReservationsListViewModel TodayReservationsViewModel
+        {
+            get
             {
-                var b = x.Result;
-            });
+                return this.todayReservationsViewModel;
+            }
+
+            protected set
+            {
+                this.todayReservationsViewModel = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public ReservationsListViewModel RecursiveReservationsViewModel
+        {
+            get
+            {
+                return this.recursiveReservationsViewModel;
+            }
+
+            protected set
+            {
+                this.recursiveReservationsViewModel = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public ReservationsListViewModel AllReservationsViewModel
+        {
+            get
+            {
+                return this.allReservationsViewModel;
+            }
+
+            protected set
+            {
+                this.allReservationsViewModel = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private async void LoadReservations()
+        {
+            var reservationsResult = await this.reservationService.GetUserReservations();
+
+            if (reservationsResult.Status == StatusCode.Ok)
+            {
+                var todayReservations = reservationsResult.Result.TodayReservations;
+                // add check if only type 1
+                var recursiveReservation = reservationsResult.Result.AllReservations.Where(x => x.IsRecursive);
+                var allReservations = reservationsResult.Result.AllReservations;
+
+                this.TodayReservationsViewModel = new ReservationsListViewModel(todayReservations, true);
+                this.RecursiveReservationsViewModel = new ReservationsListViewModel(recursiveReservation);
+                this.AllReservationsViewModel = new ReservationsListViewModel(allReservations);
+            }
+            else
+            {
+                this.ShowErrorMessage(reservationsResult.Status);
+            }
         }
     }
 }

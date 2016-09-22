@@ -15,7 +15,9 @@ namespace BookMeMobile.Pages.MyReservations
         public MyReservationsPage()
         {
             this.InitializeComponent();
-            this.BindingContext = new MyReservationsViewModel();
+            var viewModel = new MyReservationsViewModel();
+            viewModel.ShowInfoMessage += this.ShowInfoMessage;
+            this.BindingContext = viewModel;
             //var list = new List<Reservation>()
             //{
             //    new Reservation()
@@ -46,6 +48,11 @@ namespace BookMeMobile.Pages.MyReservations
             //};
 
             //this.Children[0].BindingContext = new ReservationsListViewModel(list);
+        }
+
+        private void ShowInfoMessage(string title, string content, string cancelText)
+        {
+            this.DisplayAlert(title, content, cancelText);
         }
     }
 }

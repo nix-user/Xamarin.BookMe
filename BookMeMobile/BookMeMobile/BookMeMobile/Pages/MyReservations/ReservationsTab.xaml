@@ -34,6 +34,7 @@
                     <Image Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Source="cycle.png" IsVisible="{Binding IsRecursive}"/>
                   </Grid>
                   <Label Text="{Binding TextPeriod}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
+                  <Label Text="{Binding Title}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
                   <StackLayout  IsVisible="{Binding Parent.IsToday, Converter={StaticResource InverseBool} }">
                     <Label IsVisible="{Binding TextRule, Converter={StaticResource IsStringNullOrEmpty} }" Text="{Binding TextRule}" FontSize="Small" LineBreakMode="TailTruncation"></Label>
                   </StackLayout>

@@ -10,7 +10,6 @@ using BookMeMobile.Enums;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 using BookMeMobile.Pages.Login;
-using BookMeMobile.Pages.MyBookPages;
 using BookMeMobile.Pages.MyReservations;
 using BookMeMobile.Render;
 using Java.Util;
