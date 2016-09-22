@@ -34,6 +34,20 @@ namespace BookMeMobile.UnitTests.Data.Repositories
         }
 
         [TestMethod]
+        public void Remove_DeleteMethodShouldBeCalledWithRightParameters()
+        {
+            int id = 0;
+            string expectedParam = string.Format(RestURl.Reservation + "{0}", id);
+            string realParam = string.Empty;
+            this.httpServcieMock.Setup(x => x.Delete(It.IsAny<string>())).ReturnsAsync(new BaseOperationResult()).Callback<string>(str => realParam = str);
+
+            Task<BaseOperationResult> result = this.reservationRepository.Remove(0);
+            result.Wait();
+
+            Assert.AreEqual(realParam, expectedParam);
+        }
+
+        [TestMethod]
         public void GetAll_GetMethodShouldBeCalledOnce()
         {
             Task<BaseOperationResult<IEnumerable<Reservation>>> result = this.reservationRepository.GetAll();
