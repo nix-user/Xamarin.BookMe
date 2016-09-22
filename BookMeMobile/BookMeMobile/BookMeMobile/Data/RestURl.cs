@@ -1,26 +1,21 @@
-﻿namespace BookMeMobile.Data
+﻿using BookMeMobile.Resources;
+
+namespace BookMeMobile.Data
 {
     public static class RestURl
     {
-        private const string Adress = "http://10.10.40.80:666/";
-        private const string ApiURL = Adress + "api/";
+        private static string apiURL = URIResources.IpAdress + URIResources.ApiURL;
 
-        public static string BookURl => ApiURL + "Reservation/";
+        public static string BookURI => apiURL + URIResources.ReservationDomainURL;
 
-        public static string RoomURl => ApiURL + "room/";
+        public static string RoomURl => apiURL + URIResources.RoomDomainURL;
 
-        public static string GetEmptyRoom => RoomURl + "available?From={0}&To={1}&HasPolycom={2}&IsLarge={3}";
+        public static string GetEmptyRoom => RoomURl + URIResources.EmptyRoomURL;
 
-        public static string GetCurrentRoomReservation => RoomURl + "/reservations?From={0}&To={1}&roomId={2}";
+        public static string GetCurrentRoomReservation => RoomURl + URIResources.CurrentRoomURL;
 
-        public static string GetUserReservation
-        {
-            get { return BookURl; }
-        }
+        public static string GetUserReservation => BookURI;
 
-        public static string GetToken
-        {
-            get { return Adress + "token"; }
-        }
+        public static string GetToken => URIResources.IpAdress + URIResources.Token;
     }
 }

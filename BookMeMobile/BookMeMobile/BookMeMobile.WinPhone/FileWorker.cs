@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BookMeMobile.Entity;
 using BookMeMobile.Interface;
 using BookMeMobile.WinPhone;
 using Windows.Storage;
+using BookMeMobile.Resources;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(FileWorker))]
@@ -12,7 +12,7 @@ namespace BookMeMobile.WinPhone
 {
     public class FileWorker : IFileWorker
     {
-        private readonly string filename = Resources.FileName;
+        private readonly string filename = FileResources.FileName;
 
         public async Task DeleteAsync()
         {
