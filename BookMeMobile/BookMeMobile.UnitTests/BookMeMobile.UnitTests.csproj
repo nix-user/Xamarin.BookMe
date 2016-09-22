@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="BL\AuthServiceTests.cs" />
     <Compile Include="Data\Repositories\RoomRepositoryTests.cs" />
+    <Compile Include="Data\Routes\RestURLTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Repositories\ReservationRepositoryTests.cs" />
     <Compile Include="ViewModels\LoginViewModelTests.cs" />

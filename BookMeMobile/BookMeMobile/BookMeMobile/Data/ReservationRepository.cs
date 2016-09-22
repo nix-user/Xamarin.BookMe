@@ -18,12 +18,12 @@ namespace BookMeMobile.Data
 
         public override async Task<BaseOperationResult> Remove(int id)
         {
-            return (await this.HttpService.Delete(string.Format(RestURl.BookURI + "{0}", id)));
+            return (await this.HttpService.Delete(string.Format(RestURl.Reservation + "{0}", id)));
         }
 
         public override async Task<BaseOperationResult<IEnumerable<Reservation>>> GetAll()
         {
-            return await this.HttpService.Get<IEnumerable<Reservation>>(RestURl.GetUserReservation);
+            return await this.HttpService.Get<IEnumerable<Reservation>>(RestURl.Reservation);
         }
 
         public override Task<BaseOperationResult<Reservation>> GetById(int id)
@@ -33,7 +33,7 @@ namespace BookMeMobile.Data
 
         public override async Task<BaseOperationResult> Add(Reservation reservation)
         {
-            return await this.HttpService.Post(RestURl.BookURI, reservation);
+            return await this.HttpService.Post(RestURl.Reservation, reservation);
         }
     }
 }
