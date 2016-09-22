@@ -10,6 +10,7 @@ using BookMeMobile.Entity;
 using BookMeMobile.Enums;
 using BookMeMobile.Interface;
 using BookMeMobile.Model;
+using BookMeMobile.Model.Login;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 
@@ -24,7 +25,7 @@ namespace BookMeMobile.Data
             this.client = new HttpClient();
         }
 
-        public async Task<StatusCode> GetTokenKey(User user)
+        public async Task<StatusCode> GetTokenKey(LoginModel user)
         {
             try
             {

@@ -52,6 +52,7 @@
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Enums\StatusCode.cs" />
     <Compile Include="Model\ReservationModelToAdd.cs" />
+    <Compile Include="Model\Login\LoginModel.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
     <Compile Include="Pages\ReservationPage.xaml.cs">
       <DependentUpon>ReservationPage.xaml</DependentUpon>
