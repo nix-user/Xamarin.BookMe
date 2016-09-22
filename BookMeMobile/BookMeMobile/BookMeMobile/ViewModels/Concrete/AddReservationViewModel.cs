@@ -19,11 +19,11 @@ namespace BookMeMobile.ViewModels.Concrete
     internal class AddReservationViewModel : BaseViewModel
     {
         private ListRoomManager manager;
-        private ReservationModelToAdd model;
+        private AddReservationModel model;
 
         public AddReservationViewModel(RoomFilterParameters filterParametr, int idRoom)
         {
-            this.model = new ReservationModelToAdd(filterParametr, idRoom);
+            this.model = new AddReservationModel(filterParametr, idRoom);
             this.manager = new ListRoomManager();
             this.AddReservationCommand = new Command(this.AddReservation);
             this.GoBackCommand = new Command(this.GoBack);

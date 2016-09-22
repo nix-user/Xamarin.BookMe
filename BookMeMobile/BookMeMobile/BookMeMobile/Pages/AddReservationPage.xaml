@@ -4,7 +4,7 @@
              xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
              xmlns:render="clr-namespace:BookMeMobile.Render;assembly=BookMeMobile"
              xmlns:converters="clr-namespace:BookMeMobile.Converters;assembly=BookMeMobile"
-             x:Class="BookMeMobile.Pages.ReservationPage">
+             x:Class="BookMeMobile.Pages.AddReservationPage">
   <ContentPage.Resources>
     <ResourceDictionary>
       <converters:BoolToTextconverter x:Key="boolConverter"/>

@@ -51,7 +51,7 @@ namespace BookMeMobile.Pages
         private async void BtnBooking_OnClicked(object sender, EventArgs e)
         {
             int idRoom = int.Parse(((Button)sender).ClassId);
-            await this.Navigation.PushModalAsync(new ReservationPage(this.currentReservation, idRoom));
+            await this.Navigation.PushModalAsync(new AddReservationPage(this.currentReservation, idRoom));
         }
     }
 }

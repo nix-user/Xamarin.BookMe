@@ -8,9 +8,9 @@ using Javax.Xml.Datatype;
 
 namespace BookMeMobile.Model
 {
-    public class ReservationModelToAdd
+    public class AddReservationModel
     {
-        public ReservationModelToAdd(RoomFilterParameters filterParameters, int idRoom)
+        public AddReservationModel(RoomFilterParameters filterParameters, int idRoom)
         {
             this.From = filterParameters.From;
             this.To = filterParameters.To;

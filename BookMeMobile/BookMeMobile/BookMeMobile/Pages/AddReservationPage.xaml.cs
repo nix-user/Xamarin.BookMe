@@ -14,9 +14,9 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
 {
-    public partial class ReservationPage : BasePage
+    public partial class AddReservationPage : BasePage
     {
-        public ReservationPage(RoomFilterParameters filterparametr, int idRoom)
+        public AddReservationPage(RoomFilterParameters filterparametr, int idRoom)
         {
             this.InitializeComponent();
             var viewModel = new AddReservationViewModel(filterparametr, idRoom) { Navigation = this.Navigation };
