@@ -18,13 +18,13 @@ namespace BookMeMobile.ViewModels.Concrete
 {
     internal class AddReservationViewModel : BaseViewModel
     {
-        private ListRoomManager manager;
+        private ListRoomManager service;
         private AddReservationModel model;
 
-        public AddReservationViewModel(RoomFilterParameters filterParametr, int idRoom)
+        public AddReservationViewModel(SelectModel filterParametr, int idRoom)
         {
             this.model = new AddReservationModel(filterParametr, idRoom);
-            this.manager = new ListRoomManager();
+            this.service = new ListRoomManager();
             this.AddReservationCommand = new Command(this.AddReservation);
             this.GoBackCommand = new Command(this.GoBack);
         }
@@ -74,7 +74,7 @@ namespace BookMeMobile.ViewModels.Concrete
             if (!string.IsNullOrEmpty(this.Title))
             {
                 var operationResult =
-                    (await this.ExecuteOperation(async () => await this.manager.AddReservation(this.model)))
+                    (await this.ExecuteOperation(async () => await this.service.AddReservation(this.model)))
                         .Status;
                 if (operationResult == StatusCode.Ok)
                 {

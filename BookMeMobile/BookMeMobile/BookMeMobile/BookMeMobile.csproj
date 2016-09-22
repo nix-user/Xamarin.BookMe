@@ -53,6 +53,7 @@
     <Compile Include="Enums\StatusCode.cs" />
     <Compile Include="Model\AddReservationModel.cs" />
     <Compile Include="Model\Login\LoginModel.cs" />
+    <Compile Include="Model\SelectModel.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
     <Compile Include="Pages\AddReservationPage.xaml.cs">
       <DependentUpon>AddReservationPage.xaml</DependentUpon>
@@ -121,6 +122,7 @@
     <Compile Include="ViewModels\Abstract\BaseViewModel.cs" />
     <Compile Include="ViewModels\Concrete\AddReservationViewModel.cs" />
     <Compile Include="ViewModels\Concrete\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\SelectViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">

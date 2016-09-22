@@ -25,7 +25,6 @@ namespace BookMeMobile.Droid.Render
             base.OnElementChanged(e);
             this.SetNativeControl(new EditText(Forms.Context));
             this.Control.Click += this.Control_Click;
-            this.Control.Text = e.NewElement.Time.ToString(@"hh\:mm");
             this.Control.KeyListener = null;
             this.Control.FocusChange += this.Control_FocusChange;
             this.Control.TextSize = 50;
