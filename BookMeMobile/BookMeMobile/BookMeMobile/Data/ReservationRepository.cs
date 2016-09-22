@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Android.Provider;
+using BookMeMobile.Data.Abstract;
 using BookMeMobile.Entity;
 using BookMeMobile.OperationResults;
 
@@ -10,6 +12,10 @@ namespace BookMeMobile.Data
     /// </summary>
     public class ReservationRepository : BaseRepository<Reservation>
     {
+        public ReservationRepository(IHttpService httpService) : base(httpService)
+        {
+        }
+
         public override async Task<BaseOperationResult> Remove(int id)
         {
             return (await this.HttpService.Delete(string.Format(RestURl.BookURI + "{0}", id)));

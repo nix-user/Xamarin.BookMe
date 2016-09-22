@@ -10,7 +10,12 @@ namespace BookMeMobile.Data
     /// </summary>
     public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     {
-        protected readonly HttpService HttpService = new HttpService();
+        protected readonly IHttpService HttpService;
+
+        protected BaseRepository(IHttpService httpService)
+        {
+            this.HttpService = httpService;
+        }
 
         public abstract Task<BaseOperationResult<IEnumerable<TEntity>>> GetAll();
 
