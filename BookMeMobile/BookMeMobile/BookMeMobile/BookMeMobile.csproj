@@ -117,6 +117,7 @@
     <Compile Include="Render\Loader.cs" />
     <Compile Include="ViewModels\Abstract\BaseViewModel.cs" />
     <Compile Include="ViewModels\Concrete\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\ReservationListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">
