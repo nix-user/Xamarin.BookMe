@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using BookMeMobile.BL;
-using BookMeMobile.Entity;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model;
-using BookMeMobile.OperationResults;
-using BookMeMobile.Pages;
 using BookMeMobile.Resources;
 using Xamarin.Forms;
 

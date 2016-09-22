@@ -36,7 +36,9 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="BL\Abstract\IAuthService.cs" />
+    <Compile Include="BL\Abstract\IDependencyService.cs" />
     <Compile Include="BL\Concrete\AuthService.cs" />
+    <Compile Include="BL\Concrete\CustomDependencyService.cs" />
     <Compile Include="Converters\BoolToTextconverter.cs" />
     <Compile Include="Converters\RoomToStringConverter.cs" />
     <Compile Include="BL\Abstract\BaseService.cs" />

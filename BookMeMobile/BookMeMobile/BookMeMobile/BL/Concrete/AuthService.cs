@@ -18,10 +18,12 @@ namespace BookMeMobile.BL.Concrete
     public class AuthService : IAuthService
     {
         private readonly HttpClient client;
+        private readonly IDependencyService dependencyService;
 
-        public AuthService()
+        public AuthService(IDependencyService dependencyService, HttpClient httpClient)
         {
-            this.client = new HttpClient();
+            this.dependencyService = dependencyService;
+            this.client = httpClient;
         }
 
         /// <summary>
@@ -34,6 +36,12 @@ namespace BookMeMobile.BL.Concrete
             try
             {
                 var response = await this.SendAuthRequest(loginModel);
+
+                if (response == null)
+                {
+                    return StatusCode.Error;
+                }
+
                 if (response.IsSuccessStatusCode)
                 {
                     await this.SaveToken(response);
@@ -57,7 +65,7 @@ namespace BookMeMobile.BL.Concrete
         {
             var contentResponce = await response.Content.ReadAsStringAsync();
             var token = this.ParseResponse(contentResponce);
-            await DependencyService.Get<IFileWorker>().SaveTextAsync(token);
+            await this.dependencyService.Get<IFileWorker>().SaveTextAsync(token);
         }
 
         private async Task<HttpResponseMessage> SendAuthRequest(LoginModel user)

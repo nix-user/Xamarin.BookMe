@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using BookMeMobile.BL.Concrete;
 using BookMeMobile.Data;
@@ -24,7 +25,7 @@ namespace BookMeMobile
             else
             {
                 var loginPage = new LoginPage();
-                var accountService = new AuthService();
+                var accountService = new AuthService(new CustomDependencyService(), new HttpClient());
                 var navigationService = new NavigationService(loginPage.Navigation);
                 loginPage.ViewModel = new LoginViewModel(accountService, navigationService);
                 this.MainPage = new NavigationPage(loginPage);
