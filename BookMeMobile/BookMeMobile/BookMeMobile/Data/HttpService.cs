@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using BookMeMobile.Data.Abstract;
 using BookMeMobile.Enums;
 using BookMeMobile.Interface;
 using BookMeMobile.Model;
@@ -12,7 +13,7 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.Data
 {
-    public class HttpService
+    public class HttpService : IHttpService
     {
         private readonly HttpClient httpClient = new HttpClient();
 
@@ -37,7 +38,7 @@ namespace BookMeMobile.Data
             {
                 return new BaseOperationResult<T>()
                 {
-                    Status = StatusCode.NoInternet
+                    Status = StatusCode.ConnectionProblem
                 };
             }
         }
@@ -58,7 +59,7 @@ namespace BookMeMobile.Data
             {
                 return new BaseOperationResult()
                 {
-                    Status = StatusCode.NoInternet
+                    Status = StatusCode.ConnectionProblem
                 };
             }
         }
@@ -78,7 +79,7 @@ namespace BookMeMobile.Data
             }
             catch (Exception)
             {
-                return new BaseOperationResult() { Status = StatusCode.NoInternet };
+                return new BaseOperationResult() { Status = StatusCode.ConnectionProblem };
             }
         }
 

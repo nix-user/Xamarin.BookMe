@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using BookMeMobile.BL.Concrete;
 using BookMeMobile.Data;
+using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Interface;
 using BookMeMobile.Pages;
 using BookMeMobile.Pages.Login;
+using BookMeMobile.ViewModels.Concrete;
 using Xamarin.Forms;
 
 namespace BookMeMobile
@@ -20,7 +24,11 @@ namespace BookMeMobile
             }
             else
             {
-                this.MainPage = new NavigationPage(new LoginPage());
+                var loginPage = new LoginPage();
+                var accountService = new AuthService(new CustomDependencyService(), new HttpClient());
+                var navigationService = new NavigationService(loginPage.Navigation);
+                loginPage.ViewModel = new LoginViewModel(accountService, navigationService);
+                this.MainPage = new NavigationPage(loginPage);
             }
         }
 

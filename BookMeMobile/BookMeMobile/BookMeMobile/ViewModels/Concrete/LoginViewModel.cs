@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using BookMeMobile.BL;
-using BookMeMobile.Entity;
+﻿using System.Windows.Input;
+using BookMeMobile.BL.Abstract;
 using BookMeMobile.Enums;
+using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model.Login;
-using BookMeMobile.OperationResults;
 using BookMeMobile.Pages;
 using BookMeMobile.Resources;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete
 {
-    internal class LoginViewModel : BaseViewModel
+    public class LoginViewModel : BaseViewModel
     {
+        private readonly IAuthService authService;
         private LoginModel model;
 
         public ICommand SignInCommand { get; private set; }
 
-        public LoginViewModel()
+        public LoginViewModel(IAuthService authService, INavigationService navigationService) : base(navigationService)
         {
+            this.authService = authService;
             this.SignInCommand = new Command(this.SignIn);
             this.model = new LoginModel();
         }
@@ -49,11 +45,13 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private async void SignIn()
         {
-            AccountService service = new AccountService();
-            var operationStatus = await this.ExecuteOperation(async () => await service.GetToken(this.model));
+            var operationStatus = await this.ExecuteOperation(async () => await this.authService.AuthAsync(this.model));
             if (operationStatus == StatusCode.Ok)
             {
-                await this.Navigation.PushAsync(new MainPage(new SelectPage()));
+                await this.NavigationService.XamarinNavigation.PushAsync(new MainPage(new SelectPage()));
+
+                //TODO: uncomment when SelectPage will be updated to custom mvvm navigation logic
+                //this.NavigationService.ShowViewModel(new LoginViewModel(this.authService, this.NavigationService));
                 return;
             }
 

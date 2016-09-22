@@ -8,6 +8,7 @@ using System.Windows.Input;
 using BookMeMobile.BL;
 using BookMeMobile.Entity;
 using BookMeMobile.Enums;
+using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Model;
 using BookMeMobile.ViewModels.Concrete;
 using Xamarin.Forms;
@@ -19,7 +20,7 @@ namespace BookMeMobile.Pages
         public AddReservationPage(RoomFilterParameters filterparametr, int idRoom)
         {
             this.InitializeComponent();
-            var viewModel = new AddReservationViewModel(filterparametr, idRoom) { Navigation = this.Navigation };
+            var viewModel = new AddReservationViewModel(filterparametr, idRoom, new NavigationService(this.Navigation));
             this.SetUpViewModelSubscriptions(viewModel);
             this.BindingContext = viewModel;
             this.SetUpActivityIndicator(this.loader, this.rootLayout);

@@ -35,17 +35,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="BL\Abstract\IAuthService.cs" />
+    <Compile Include="BL\Abstract\IDependencyService.cs" />
+    <Compile Include="BL\Concrete\AuthService.cs" />
+    <Compile Include="BL\Concrete\CustomDependencyService.cs" />
     <Compile Include="Converters\BoolToTextconverter.cs" />
     <Compile Include="Converters\RoomToStringConverter.cs" />
     <Compile Include="BL\Abstract\BaseService.cs" />
     <Compile Include="BL\Abstract\IReservationService.cs" />
     <Compile Include="BL\Abstract\IRoomService.cs" />
-    <Compile Include="BL\AccountService.cs" />
     <Compile Include="BL\Concrete\ReservationService.cs" />
     <Compile Include="BL\Concrete\RoomService.cs" />
-    <Compile Include="Data\AccountController.cs" />
+    <Compile Include="Data\Abstract\IHttpService.cs" />
+    <Compile Include="Data\Abstract\IRepository.cs" />
+    <Compile Include="Data\Abstract\IRoomRepository.cs" />
     <Compile Include="Data\BaseRepository.cs" />
-    <Compile Include="Data\BookingRepository.cs" />
+    <Compile Include="Data\ReservationRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\HttpService.cs" />
     <Compile Include="Data\RestURl.cs" />
@@ -53,6 +58,9 @@
     <Compile Include="Enums\StatusCode.cs" />
     <Compile Include="Model\AddReservationModel.cs" />
     <Compile Include="Model\Login\LoginModel.cs" />
+    <Compile Include="Infrastructure\Abstract\INavigationService.cs" />
+    <Compile Include="Infrastructure\Concrete\NavigationService.cs" />
+    <Compile Include="Infrastructure\Concrete\NavigationServiceException.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
     <Compile Include="Pages\AddReservationPage.xaml.cs">
       <DependentUpon>AddReservationPage.xaml</DependentUpon>
@@ -61,7 +69,6 @@
     <Compile Include="Pages\Login\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Resources.cs" />
     <Compile Include="Interface\IFileWorker.cs" />
     <Compile Include="Entity\Reservation.cs" />
     <Compile Include="Model\MenuPageItem.cs" />
@@ -108,6 +115,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AlertMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\NamingOptions.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NamingOptions.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\FileResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FileResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\URIResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>URIResources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Abstract\BaseViewModel.cs" />
     <Compile Include="ViewModels\Concrete\AddReservationViewModel.cs" />
@@ -169,6 +191,19 @@
     <EmbeddedResource Include="Resources\AlertMessages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AlertMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\NamingOptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>NamingOptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\FileResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FileResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\URIResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>URIResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
