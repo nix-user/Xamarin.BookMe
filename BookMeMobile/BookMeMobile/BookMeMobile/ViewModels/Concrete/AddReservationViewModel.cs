@@ -80,7 +80,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         public async void AddReservation(object someObject)
         {
-            if (this.Title != null)
+            if (!string.IsNullOrEmpty(this.Title))
             {
                 var operationResult =
                     (await this.ExecuteOperation(async () => await this.manager.AddReservation(this.reservation))).Status;

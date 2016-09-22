@@ -13,7 +13,8 @@
   <AbsoluteLayout x:Name="rootLayout" Padding="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
     <render:Loader x:Name="loader" VerticalOptions="Center" />
-    <Label Text="Назначение" VerticalOptions="CenterAndExpand"/>
+      <Label Text ="Бронирование комнаты" FontSize="Large" HorizontalOptions="CenterAndExpand"></Label>
+    <Label Text="Назначение" HorizontalOptions ="CenterAndExpand"/>
     <Entry Text="{Binding Title}" FontSize="Large"/>
     <Label Text="{Binding Date,StringFormat=Дата: '{0}'}" FontSize="Medium"/>
     <Label Text="{Binding From,StringFormat=От: '{0}'}" FontSize="Medium"/>
@@ -23,8 +24,8 @@
       <Label Text="{Binding HasPolycom,StringFormat=Поликом: '{0}',Converter={StaticResource boolConverter}}" FontSize="Medium"/>
     </StackLayout>
     <StackLayout Orientation="Horizontal">
-      <Button Text="Нет" HorizontalOptions="FillAndExpand" Command="{Binding GoBackCommand}"/>
-      <Button Text="Да" HorizontalOptions="FillAndExpand" Command="{Binding AddReservationCommand}"/>
+      <Button Text="Отмена" HorizontalOptions="FillAndExpand" Command="{Binding GoBackCommand}"/>
+      <Button Text="Сохранить" HorizontalOptions="FillAndExpand" Command="{Binding AddReservationCommand}"/>
     </StackLayout>
   </StackLayout>
     </AbsoluteLayout>
