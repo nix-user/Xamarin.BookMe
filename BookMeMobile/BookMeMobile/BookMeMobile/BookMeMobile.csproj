@@ -35,15 +35,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="BL\Abstract\IAuthService.cs" />
+    <Compile Include="BL\Concrete\AuthService.cs" />
     <Compile Include="Converters\BoolToTextconverter.cs" />
     <Compile Include="Converters\RoomToStringConverter.cs" />
     <Compile Include="BL\Abstract\BaseService.cs" />
     <Compile Include="BL\Abstract\IReservationService.cs" />
     <Compile Include="BL\Abstract\IRoomService.cs" />
-    <Compile Include="BL\AccountService.cs" />
     <Compile Include="BL\Concrete\ReservationService.cs" />
     <Compile Include="BL\Concrete\RoomService.cs" />
-    <Compile Include="Data\AccountController.cs" />
     <Compile Include="Data\BaseRepository.cs" />
     <Compile Include="Data\BookingRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />

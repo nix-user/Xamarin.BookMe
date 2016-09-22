@@ -86,7 +86,7 @@ namespace BookMeMobile.Pages
                         break;
                     }
 
-                case StatusCode.NoInternet:
+                case StatusCode.ConnectionProblem:
                     {
                         await this.DisplayAlert(this.reservationingHeadError, this.reservationingBodyNoInternet, this.reservationButonOK);
                         break;

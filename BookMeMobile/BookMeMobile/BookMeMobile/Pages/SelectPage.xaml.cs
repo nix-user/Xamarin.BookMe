@@ -83,7 +83,7 @@ namespace BookMeMobile.Pages
                             break;
                         }
 
-                    case StatusCode.NoInternet:
+                    case StatusCode.ConnectionProblem:
                         {
                             await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
                             break;
@@ -120,7 +120,7 @@ namespace BookMeMobile.Pages
                         break;
                     }
 
-                case StatusCode.NoInternet:
+                case StatusCode.ConnectionProblem:
                     {
                         await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
                         break;

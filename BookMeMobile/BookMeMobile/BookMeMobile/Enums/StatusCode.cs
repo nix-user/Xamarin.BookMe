@@ -4,7 +4,7 @@
     {
         Ok,
         Error,
-        NoInternet,
+        ConnectionProblem,
         NoAuthorize
     }
 }
