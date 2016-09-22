@@ -74,6 +74,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Data\Repositories\RoomRepositoryTests.cs" />
+    <Compile Include="Data\Routes\RestURLTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\LoginViewModelTests.cs" />
   </ItemGroup>
