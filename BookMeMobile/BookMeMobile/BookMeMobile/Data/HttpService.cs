@@ -37,7 +37,7 @@ namespace BookMeMobile.Data
             {
                 return new BaseOperationResult<T>()
                 {
-                    Status = StatusCode.NoInternet
+                    Status = StatusCode.ConnectionProblem
                 };
             }
         }
@@ -58,7 +58,7 @@ namespace BookMeMobile.Data
             {
                 return new BaseOperationResult()
                 {
-                    Status = StatusCode.NoInternet
+                    Status = StatusCode.ConnectionProblem
                 };
             }
         }
@@ -78,7 +78,7 @@ namespace BookMeMobile.Data
             }
             catch (Exception)
             {
-                return new BaseOperationResult() { Status = StatusCode.NoInternet };
+                return new BaseOperationResult() { Status = StatusCode.ConnectionProblem };
             }
         }
 

@@ -10,6 +10,7 @@ using BookMeMobile.BL;
 using BookMeMobile.Entity;
 using BookMeMobile.Enums;
 using BookMeMobile.Model;
+using BookMeMobile.Pages.Login;
 using Java.Lang;
 using Javax.Security.Auth;
 using Xamarin.Forms;
@@ -42,7 +43,7 @@ namespace BookMeMobile.Pages
                         break;
                     }
 
-                case StatusCode.NoInternet:
+                case StatusCode.ConnectionProblem:
                     {
                         await this.DisplayAlert(HeadError, BodyInternetIsNotExist, Ok);
                         break;

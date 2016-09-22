@@ -4,6 +4,8 @@ namespace BookMeMobile.Entity
 {
     public class Reservation
     {
+        public string Title { get; set; }
+
         public int Id { get; set; }
 
         public DateTime From { get; set; }

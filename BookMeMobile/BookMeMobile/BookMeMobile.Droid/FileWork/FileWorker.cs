@@ -4,8 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using BookMeMobile.Droid.FileWork;
-using BookMeMobile.Entity;
 using BookMeMobile.Interface;
+using BookMeMobile.Resources;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(FileWorker))]
@@ -15,7 +15,7 @@ namespace BookMeMobile.Droid.FileWork
     public class FileWorker : IFileWorker
     {
         private static readonly object LockThis = new object();
-        private readonly string filename = Resources.FileName;
+        private readonly string filename = FileResources.FileName;
 
         public Task DeleteAsync()
         {

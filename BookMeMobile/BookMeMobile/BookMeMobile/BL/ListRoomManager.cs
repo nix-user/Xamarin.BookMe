@@ -34,9 +34,18 @@ namespace BookMeMobile.BL
             this.roomRepository = new RoomRepository();
         }
 
-        public async Task<BaseOperationResult> AddReservation(RoomFilterParameters reservation, int idRoom)
+        public async Task<BaseOperationResult> AddReservation(AddReservationModel model)
         {
-            return (await this.reservationRepository.AddReservation(reservation, idRoom));
+            Reservation reservation = new Reservation()
+            {
+                From = model.From,
+                To = model.To,
+                Duration = model.Duration,
+                IsRecursive = model.IsRecursive,
+                Title = model.Title,
+                ResourceId = model.ResourceId
+            };
+            return (await this.reservationRepository.AddReservation(reservation));
         }
 
         public async Task<BaseOperationResult> DeleteReservation(int idReservation)
@@ -108,12 +117,14 @@ namespace BookMeMobile.BL
 
         public async Task<BaseOperationResult> AddReservationInHour(string text)
         {
-           RoomFilterParameters parametr  = new RoomFilterParameters()
+            Reservation reservation = new Reservation()
             {
-               From = DateTime.Now,
-               To = DateTime.Now.AddHours(1),
+                From = DateTime.Now,
+                To = DateTime.Now.AddHours(1),
+                ResourceId = int.Parse(text),
+                Duration = new TimeSpan(1, 0, 0)
             };
-            return await this.reservationRepository.AddReservation(parametr, int.Parse(text));
+            return await this.reservationRepository.AddReservation(reservation);
         }
     }
 }

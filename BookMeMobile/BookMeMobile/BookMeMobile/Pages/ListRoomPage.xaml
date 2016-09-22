@@ -1,12 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:binding1="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.ListRoomPage">
   <ContentPage.Resources>
     <ResourceDictionary>
-      <binding1:CheckerInColor x:Key="ColorConverter" />
-      <binding1:CheckerInBookRoom x:Key="boolConvert"/>
     </ResourceDictionary>
   </ContentPage.Resources>
   <StackLayout>
@@ -16,12 +13,10 @@
         <DataTemplate>
           <ViewCell>
             <ViewCell.View>
-              <StackLayout BackgroundColor="{Binding InRange,Converter={StaticResource ColorConverter}}" VerticalOptions="CenterAndExpand">
                <StackLayout Orientation="Horizontal">
                   <Label Text = "{Binding Number,StringFormat='{0}' }" FontSize="Medium"  VerticalOptions="CenterAndExpand"/>
-                  <Button HorizontalOptions="EndAndExpand" x:Name="btnBooking" ClassId="{Binding Id}" Text="Бронировать" IsVisible="{Binding IsReservation,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Large" Clicked="BtnBooking_OnClicked"/>
+                  <Button HorizontalOptions="EndAndExpand" x:Name="btnBooking" ClassId="{Binding Id}" Text="Бронировать" VerticalOptions="Fill" FontSize="Large" Clicked="BtnBooking_OnClicked"/>
                 </StackLayout>
-              </StackLayout>
             </ViewCell.View>
           </ViewCell>
         </DataTemplate>

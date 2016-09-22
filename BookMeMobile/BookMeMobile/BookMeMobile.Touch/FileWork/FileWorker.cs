@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using BookMeMobile.Entity;
 using BookMeMobile.Interface;
+using BookMeMobile.Resources;
 using BookMeMobile.Touch.FileWork;
 using Xamarin.Forms;
 
@@ -14,7 +12,7 @@ namespace BookMeMobile.Touch.FileWork
 {
     public class FileWorker : IFileWorker
     {
-        private readonly string fileName = Resources.FileName;
+        private readonly string fileName = FileResources.FileName;
 
         public Task DeleteAsync()
         {
