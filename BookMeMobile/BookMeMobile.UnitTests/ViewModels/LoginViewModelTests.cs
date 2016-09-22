@@ -39,7 +39,7 @@ namespace BookMeMobile.UnitTests.ViewModels
             loginViewModel.SignInCommand.Execute(null);
 
             //assert
-            this.navigationServiceMock.Verify(m => m.ShowViewModel(It.IsAny<LoginViewModel>()), Times.Once);
+            this.navigationServiceMock.Verify(m => m.ShowViewModel(It.IsAny<LoginViewModel>()), Times.Once); //replace with call to select page
         }
     }
 }
