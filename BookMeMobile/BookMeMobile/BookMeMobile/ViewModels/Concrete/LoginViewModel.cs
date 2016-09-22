@@ -44,7 +44,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private async void SignIn()
         {
-            var operationStatus = await this.ExecuteOperation(async () => await authService.AuthAsync(this.model));
+            var operationStatus = await this.ExecuteOperation(async () => await this.authService.AuthAsync(this.model));
             if (operationStatus == StatusCode.Ok)
             {
                 await this.Navigation.PushAsync(new MainPage(new SelectPage()));
