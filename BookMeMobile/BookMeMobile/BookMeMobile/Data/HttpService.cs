@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using BookMeMobile.BL.Abstract;
 using BookMeMobile.Data.Abstract;
 using BookMeMobile.Enums;
 using BookMeMobile.Interface;
@@ -16,10 +17,12 @@ namespace BookMeMobile.Data
     public class HttpService : IHttpService
     {
         private readonly HttpClient httpClient = new HttpClient();
+        private readonly IDependencyService dependencyService;
 
-        public HttpService()
+        public HttpService(IDependencyService dependencyService)
         {
-            string token = DependencyService.Get<IFileWorker>().LoadTextAsync().Result;
+            this.dependencyService = dependencyService;
+            string token = this.dependencyService.Get<IFileWorker>().LoadTextAsync().Result;
             if (token != null)
             {
                 this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
