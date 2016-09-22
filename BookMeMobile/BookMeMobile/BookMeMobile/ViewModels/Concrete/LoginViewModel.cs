@@ -7,6 +7,7 @@ using System.Windows.Input;
 using BookMeMobile.BL;
 using BookMeMobile.Entity;
 using BookMeMobile.Enums;
+using BookMeMobile.Model.Login;
 using BookMeMobile.OperationResults;
 using BookMeMobile.Pages;
 using BookMeMobile.Resources;
@@ -16,32 +17,32 @@ namespace BookMeMobile.ViewModels.Concrete
 {
     internal class LoginViewModel : BaseViewModel
     {
-        private string login;
-        private string password;
+        private LoginModel model;
 
         public ICommand SignInCommand { get; private set; }
 
         public LoginViewModel()
         {
             this.SignInCommand = new Command(this.SignIn);
+            this.model = new LoginModel();
         }
 
         public string Login
         {
-            get { return this.login; }
+            get { return this.model.Login; }
             set
             {
-                this.login = value;
+                this.model.Login = value;
                 this.OnPropertyChanged();
             }
         }
 
         public string Password
         {
-            get { return this.password; }
+            get { return this.model.Password; }
             set
             {
-                this.password = value;
+                this.model.Password = value;
                 this.OnPropertyChanged();
             }
         }
@@ -49,7 +50,7 @@ namespace BookMeMobile.ViewModels.Concrete
         private async void SignIn()
         {
             AccountService service = new AccountService();
-            var operationStatus = await this.ExecuteOperation(async () => await service.GetTocken(new User() { Login = this.Login, Password = this.Password }));
+            var operationStatus = await this.ExecuteOperation(async () => await service.GetToken(this.model));
             if (operationStatus == StatusCode.Ok)
             {
                 await this.Navigation.PushAsync(new MainPage(new SelectPage()));
