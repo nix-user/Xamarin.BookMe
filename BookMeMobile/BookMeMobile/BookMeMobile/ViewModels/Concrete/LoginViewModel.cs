@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using BookMeMobile.BL;
-using BookMeMobile.Entity;
+﻿using System.Windows.Input;
+using BookMeMobile.BL.Concrete;
 using BookMeMobile.Enums;
 using BookMeMobile.Model.Login;
-using BookMeMobile.OperationResults;
 using BookMeMobile.Pages;
 using BookMeMobile.Resources;
 using Xamarin.Forms;
@@ -17,6 +10,7 @@ namespace BookMeMobile.ViewModels.Concrete
 {
     internal class LoginViewModel : BaseViewModel
     {
+        private readonly AuthService authService;
         private LoginModel model;
 
         public ICommand SignInCommand { get; private set; }
@@ -25,6 +19,7 @@ namespace BookMeMobile.ViewModels.Concrete
         {
             this.SignInCommand = new Command(this.SignIn);
             this.model = new LoginModel();
+            this.authService = new AuthService();
         }
 
         public string Login
@@ -49,8 +44,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private async void SignIn()
         {
-            AccountService service = new AccountService();
-            var operationStatus = await this.ExecuteOperation(async () => await service.GetToken(this.model));
+            var operationStatus = await this.ExecuteOperation(async () => await this.authService.AuthAsync(this.model));
             if (operationStatus == StatusCode.Ok)
             {
                 await this.Navigation.PushAsync(new MainPage(new SelectPage()));
