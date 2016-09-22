@@ -17,7 +17,7 @@ namespace BookMeMobile.ViewModels
         private readonly Dictionary<StatusCode, string> errorMessagesDictionary = new Dictionary<StatusCode, string>()
         {
             { StatusCode.Error, AlertMessages.ServerError },
-            { StatusCode.NoInternet, AlertMessages.NoInternetConnection }
+            { StatusCode.ConnectionProblem, AlertMessages.NoInternetConnection }
         };
 
         public event PropertyChangedEventHandler PropertyChanged;

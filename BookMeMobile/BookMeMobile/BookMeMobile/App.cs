@@ -24,7 +24,7 @@ namespace BookMeMobile
             else
             {
                 var loginPage = new LoginPage();
-                var accountService = new AccountService();
+                var accountService = new AuthService();
                 var navigationService = new NavigationService(loginPage.Navigation);
                 loginPage.ViewModel = new LoginViewModel(accountService, navigationService);
                 this.MainPage = new NavigationPage(loginPage);

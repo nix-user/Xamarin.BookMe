@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:binding="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
+             xmlns:converters="clr-namespace:BookMeMobile.Converters;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.MyBookPages.RecursiveReservationPage"
              Title="Рекурентные">
   <ContentPage.Resources>
     <ResourceDictionary>
-      <binding:ConverterBool x:Key="boolConvert"/>
-      <binding:ConvertFromRoomToString x:Key="FromRoomToString"/>
+      <converters:BoolToTextconverter x:Key="BoolConvert"/>
+      <converters:RoomToStringConverter x:Key="FromRoomToString"/>
     </ResourceDictionary>
   </ContentPage.Resources>
   <ContentPage.Padding>
@@ -23,7 +23,7 @@
               <ViewCell.View>
                 <AbsoluteLayout>
                   <Button AbsoluteLayout.LayoutBounds="1,0.5,-1,-1"
-           AbsoluteLayout.LayoutFlags="PositionProportional" HorizontalOptions="End"   x:Name="btnBooking" ClassId="{Binding Id}" Text="Снять бронь" IsVisible="{Binding IsBook,Converter={StaticResource boolConvert}}" VerticalOptions="Fill" FontSize="Medium" Clicked="BtnBooking_OnClicked"/>
+           AbsoluteLayout.LayoutFlags="PositionProportional" HorizontalOptions="End"   x:Name="btnBooking" ClassId="{Binding Id}" Text="Снять бронь" IsVisible="{Binding IsBook,Converter={StaticResource BoolConvert}}" VerticalOptions="Fill" FontSize="Medium" Clicked="BtnBooking_OnClicked"/>
                   <StackLayout VerticalOptions="Center">
                     <Label Text = "{Binding Room, Converter={StaticResource FromRoomToString}, StringFormat='Комната: № {0}' }" FontSize="Medium"/>
                     <Label Text="{Binding From,StringFormat='{0:dd/MMMM/yyyy}'}" FontSize="Medium"></Label>

@@ -16,11 +16,11 @@ namespace BookMeMobile.Infrastructure.Concrete
 {
     public class NavigationService : INavigationService
     {
-        private INavigation xamarinNavigation;
+        public INavigation XamarinNavigation { get; set; }
 
         public NavigationService(INavigation xamarinNavigation)
         {
-            this.xamarinNavigation = xamarinNavigation;
+            this.XamarinNavigation = xamarinNavigation;
         }
 
         public void ShowViewModel(BaseViewModel viewModel)
@@ -28,7 +28,7 @@ namespace BookMeMobile.Infrastructure.Concrete
             var viewModelsViewType = this.GetPageType(viewModel);
             var view = (BasePage)Activator.CreateInstance(viewModelsViewType);
             view.ViewModel = viewModel;
-            this.xamarinNavigation.PushAsync(view);
+            this.XamarinNavigation.PushAsync(view);
         }
 
         private Type GetPageType(BaseViewModel viewModel)

@@ -35,34 +35,37 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="Binding\CheckerInBookRoom.cs" />
-    <Compile Include="Binding\CheckerInColor.cs" />
-    <Compile Include="Binding\ConverterBool.cs" />
-    <Compile Include="Binding\ConvertFromRoomToString.cs" />
+    <Compile Include="BL\Abstract\IAuthService.cs" />
+    <Compile Include="BL\Concrete\AuthService.cs" />
+    <Compile Include="Converters\BoolToTextconverter.cs" />
+    <Compile Include="Converters\RoomToStringConverter.cs" />
     <Compile Include="BL\Abstract\BaseService.cs" />
-    <Compile Include="BL\Abstract\IAccountService.cs" />
     <Compile Include="BL\Abstract\IReservationService.cs" />
     <Compile Include="BL\Abstract\IRoomService.cs" />
-    <Compile Include="BL\Concrete\AccountService.cs" />
     <Compile Include="BL\Concrete\ReservationService.cs" />
     <Compile Include="BL\Concrete\RoomService.cs" />
-    <Compile Include="Data\AccountController.cs" />
+    <Compile Include="Data\Abstract\IRepository.cs" />
+    <Compile Include="Data\Abstract\IRoomRepository.cs" />
     <Compile Include="Data\BaseRepository.cs" />
-    <Compile Include="Data\BookingRepository.cs" />
+    <Compile Include="Data\ReservationRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\HttpService.cs" />
     <Compile Include="Data\RestURl.cs" />
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Enums\StatusCode.cs" />
+    <Compile Include="Model\AddReservationModel.cs" />
+    <Compile Include="Model\Login\LoginModel.cs" />
     <Compile Include="Infrastructure\Abstract\INavigationService.cs" />
     <Compile Include="Infrastructure\Concrete\NavigationService.cs" />
     <Compile Include="Infrastructure\Concrete\NavigationServiceException.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
+    <Compile Include="Pages\AddReservationPage.xaml.cs">
+      <DependentUpon>AddReservationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\Login\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Resources.cs" />
     <Compile Include="Interface\IFileWorker.cs" />
     <Compile Include="Entity\Reservation.cs" />
     <Compile Include="Model\MenuPageItem.cs" />
@@ -115,7 +118,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NamingOptions.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\FileResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FileResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\URIResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>URIResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Abstract\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\AddReservationViewModel.cs" />
     <Compile Include="ViewModels\Concrete\LoginViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +193,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>NamingOptions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\FileResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FileResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\URIResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>URIResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\ListRoomPage.xaml">
@@ -238,6 +261,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\Login\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\AddReservationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

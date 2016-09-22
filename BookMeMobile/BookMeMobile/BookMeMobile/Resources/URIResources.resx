@@ -117,28 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ErrorHeader" xml:space="preserve">
-    <value>Ошибка</value>
+  <data name="IpAdress" xml:space="preserve">
+    <value>http://10.10.40.80:666/</value>
   </data>
-  <data name="FieldIsEmpty" xml:space="preserve">
-    <value>Заполните пустое поле</value>
+  <data name="ApiURL" xml:space="preserve">
+    <value>api/</value>
   </data>
-  <data name="InfoAlertCanelText" xml:space="preserve">
-    <value>Ok</value>
+  <data name="CurrentRoomURL" xml:space="preserve">
+    <value>reservations?From={0}&amp;To={1}&amp;roomId={2}</value>
   </data>
-  <data name="NoInternetConnection" xml:space="preserve">
-    <value>Нет подключения к интернету</value>
+  <data name="EmptyRoomURL" xml:space="preserve">
+    <value>available?From={0}&amp;To={1}&amp;HasPolycom={2}&amp;IsLarge={3}</value>
   </data>
-  <data name="ServerError" xml:space="preserve">
-    <value>Ошибка на стороне сервера</value>
+  <data name="ReservationDomainURL" xml:space="preserve">
+    <value>reservation/</value>
   </data>
-  <data name="SuccessBody" xml:space="preserve">
-    <value>Действие выполнено успешно</value>
+  <data name="RoomDomainURL" xml:space="preserve">
+    <value>room/</value>
   </data>
-  <data name="SuccessHeader" xml:space="preserve">
-    <value>Успешно</value>
-  </data>
-  <data name="WrongLoginOrPassword" xml:space="preserve">
-    <value>Логин или пароль введены неверно</value>
+  <data name="Token" xml:space="preserve">
+    <value>token</value>
   </data>
 </root>

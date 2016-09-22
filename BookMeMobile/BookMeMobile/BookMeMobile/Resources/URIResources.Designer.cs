@@ -23,14 +23,14 @@ namespace BookMeMobile.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AlertMessages {
+    internal class URIResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AlertMessages() {
+        internal URIResources() {
         }
         
         /// <summary>
@@ -40,7 +40,7 @@ namespace BookMeMobile.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BookMeMobile.Resources.AlertMessages", typeof(AlertMessages).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BookMeMobile.Resources.URIResources", typeof(URIResources).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,74 +62,65 @@ namespace BookMeMobile.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ошибка.
+        ///   Looks up a localized string similar to api/.
         /// </summary>
-        internal static string ErrorHeader {
+        internal static string ApiURL {
             get {
-                return ResourceManager.GetString("ErrorHeader", resourceCulture);
+                return ResourceManager.GetString("ApiURL", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Заполните пустое поле.
+        ///   Looks up a localized string similar to reservations?From={0}&amp;To={1}&amp;roomId={2}.
         /// </summary>
-        internal static string FieldIsEmpty {
+        internal static string CurrentRoomURL {
             get {
-                return ResourceManager.GetString("FieldIsEmpty", resourceCulture);
+                return ResourceManager.GetString("CurrentRoomURL", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ok.
+        ///   Looks up a localized string similar to available?From={0}&amp;To={1}&amp;HasPolycom={2}&amp;IsLarge={3}.
         /// </summary>
-        internal static string InfoAlertCanelText {
+        internal static string EmptyRoomURL {
             get {
-                return ResourceManager.GetString("InfoAlertCanelText", resourceCulture);
+                return ResourceManager.GetString("EmptyRoomURL", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Нет подключения к интернету.
+        ///   Looks up a localized string similar to http://10.10.40.80:666/.
         /// </summary>
-        internal static string NoInternetConnection {
+        internal static string IpAdress {
             get {
-                return ResourceManager.GetString("NoInternetConnection", resourceCulture);
+                return ResourceManager.GetString("IpAdress", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ошибка на стороне сервера.
+        ///   Looks up a localized string similar to reservation/.
         /// </summary>
-        internal static string ServerError {
+        internal static string ReservationDomainURL {
             get {
-                return ResourceManager.GetString("ServerError", resourceCulture);
+                return ResourceManager.GetString("ReservationDomainURL", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Действие выполнено успешно.
+        ///   Looks up a localized string similar to room/.
         /// </summary>
-        internal static string SuccessBody {
+        internal static string RoomDomainURL {
             get {
-                return ResourceManager.GetString("SuccessBody", resourceCulture);
+                return ResourceManager.GetString("RoomDomainURL", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Успешно.
+        ///   Looks up a localized string similar to token.
         /// </summary>
-        internal static string SuccessHeader {
+        internal static string Token {
             get {
-                return ResourceManager.GetString("SuccessHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Логин или пароль введены неверно.
-        /// </summary>
-        internal static string WrongLoginOrPassword {
-            get {
-                return ResourceManager.GetString("WrongLoginOrPassword", resourceCulture);
+                return ResourceManager.GetString("Token", resourceCulture);
             }
         }
     }

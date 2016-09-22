@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using BookMeMobile.Data;
+using BookMeMobile.Data.Abstract;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
@@ -12,21 +13,13 @@ using Org.Apache.Http.Impl.Cookie;
 
 namespace BookMeMobile.BL
 {
+    /// <summary>
+    /// Class provides ability to manage room list
+    /// </summary>
     public class ListRoomManager
     {
-        private static int counter = 0;
-
-        private RoomRepository roomRepository;
-        private ReservationRepository reservationRepository;
-
-        private Reservation currentReservation;
-
-        public ListRoomManager(Reservation reservation, User currentUser)
-        {
-            this.reservationRepository = new ReservationRepository();
-            this.roomRepository = new RoomRepository();
-            this.currentReservation = reservation;
-        }
+        private readonly IRepository<Room> roomRepository;
+        private readonly IRepository<Reservation> reservationRepository;
 
         public ListRoomManager()
         {
@@ -34,16 +27,40 @@ namespace BookMeMobile.BL
             this.roomRepository = new RoomRepository();
         }
 
-        public async Task<BaseOperationResult> AddReservation(RoomFilterParameters reservation, int idRoom)
+        /// <summary>
+        /// Add <paramref name="model"/> to reservations
+        /// </summary>
+        /// <param name="model">Reservation for adding</param>
+        /// <returns>operation result</returns>
+        public async Task<BaseOperationResult> AddReservation(AddReservationModel model)
         {
-            return (await this.reservationRepository.AddReservation(reservation, idRoom));
+            Reservation reservation = new Reservation()
+            {
+                From = model.From,
+                To = model.To,
+                Duration = model.Duration,
+                IsRecursive = model.IsRecursive,
+                Title = model.Title,
+                ResourceId = model.ResourceId
+            };
+            return (await this.reservationRepository.Add(reservation));
         }
 
+        /// <summary>
+        /// Delete reservation <paramref name="idReservation"/>
+        /// </summary>
+        /// <param name="idReservation">identifier of reservation</param>
+        /// <returns>operation result</returns>
         public async Task<BaseOperationResult> DeleteReservation(int idReservation)
         {
-            return await this.reservationRepository.RemoveReservation(idReservation);
+            return await this.reservationRepository.Remove(idReservation);
         }
 
+        /// <summary>
+        /// Sort room collection by user preference
+        /// </summary>
+        /// <param name="list">Collection to sort</param>
+        /// <returns></returns>
         public List<Room> Sort(List<Room> list)
         {
             User currentUser = new User();
@@ -80,40 +97,66 @@ namespace BookMeMobile.BL
             return list;
         }
 
-        public int GetFloorInNumber(string s)
+        /// <summary>
+        /// Method extracts floor number from room title
+        /// </summary>
+        /// <param name="roomTitle">Title of room</param>
+        /// <returns>floor number</returns>
+        public int GetFloorInNumber(string roomTitle)
         {
-            return s[0];
+            return roomTitle[0];
         }
 
+        /// <summary>
+        /// Method search empty rooms related to <paramref name="filter"/>
+        /// </summary>
+        /// <param name="filter">Search filter</param>
+        /// <returns>operation result with <see cref="Room"/> collection</returns>
         public async Task<BaseOperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
         {
-            return await this.roomRepository.GetEmptyRoom(filter);
+            return await(this.roomRepository as IRoomRepository)?.GetEmptyRoom(filter);
         }
 
+        /// <summary>
+        /// Method search all user reservation
+        /// </summary>
+        /// <returns>operation result with <see cref="Reservation"/> collection</returns>
         public async Task<BaseOperationResult<IEnumerable<Reservation>>> GetAllUserReservation()
         {
-            return await this.reservationRepository.GetUserReservations();
+            return await this.reservationRepository.GetAll();
         }
 
-        public async Task<BaseOperationResult<IEnumerable<Reservation>>> GetRoomCurrentReservations(string number)
+        /// <summary>
+        /// Method for search reservation of specified by <paramref name="number"/> room
+        /// </summary>
+        /// <param name="roomId">identifier of room</param>
+        /// <returns>operation result with <see cref="Reservation"/> collection</returns>
+        public async Task<BaseOperationResult<IEnumerable<Reservation>>> GetRoomCurrentReservations(string roomId)
         {
             var reservationCurrent = new RoomReservationsRequestModel()
             {
                 From = DateTime.Now,
                 To = DateTime.Now.AddHours(1),
-                RoomId = int.Parse(number)
+                RoomId = int.Parse(roomId)
             };
-            return await this.roomRepository.GetCurrentRoomReservation(reservationCurrent);
+            return await(this.roomRepository as IRoomRepository)?.GetCurrentRoomReservation(reservationCurrent);
         }
 
-        public async Task<BaseOperationResult> AddReservationInHour(string text)
+        /// <summary>
+        /// Method adds one-hour reservation for room specified by <paramref name="roomId"/>
+        /// </summary>
+        /// <param name="roomId">identifier of room</param>
+        /// <returns>operation result</returns>
+        public async Task<BaseOperationResult> AddReservationInHour(string roomId)
         {
-           RoomFilterParameters parametr  = new RoomFilterParameters()
+            Reservation reservation = new Reservation()
             {
-               From = DateTime.Now,
-               To = DateTime.Now.AddHours(1),
+                From = DateTime.Now,
+                To = DateTime.Now.AddHours(1),
+                ResourceId = int.Parse(roomId),
+                Duration = new TimeSpan(1, 0, 0)
             };
-            return await this.reservationRepository.AddReservation(parametr, int.Parse(text));
+            return await this.reservationRepository.Add(reservation);
         }
     }
 }
