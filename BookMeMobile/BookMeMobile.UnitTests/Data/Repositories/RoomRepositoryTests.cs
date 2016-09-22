@@ -34,5 +34,20 @@ namespace BookMeMobile.UnitTests.Data.Repositories
             //assert
             this.httpServiceMock.Verify(m => m.Get<IEnumerable<Room>>(RestURl.RoomURl), Times.Once);
         }
+
+        [TestMethod]
+        public async Task GetById_Should_Call_Http_Service_Get_With_Correct_URL()
+        {
+            //arrange
+            RoomRepository roomRepository = new RoomRepository(this.httpServiceMock.Object);
+            int roomId = 1;
+            string expectedRoute = RestURl.RoomURl + roomId;
+
+            //act
+            await roomRepository.GetById(roomId);
+
+            //assert
+            this.httpServiceMock.Verify(m => m.Get<Room>(expectedRoute), Times.Once);
+        }
     }
 }
