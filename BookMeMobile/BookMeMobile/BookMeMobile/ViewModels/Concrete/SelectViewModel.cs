@@ -75,16 +75,16 @@ namespace BookMeMobile.ViewModels.Concrete
             set { this.model.Date = value; }
         }
 
-        public TimeSpan From
+        public DateTime From
         {
-            get { return this.model.From.TimeOfDay; }
-            set { this.model.From = Convert.ToDateTime(value); }
+            get { return this.model.From; }
+            set { this.model.From = this.SetValidDate(value); }
         }
 
         public DateTime To
         {
             get { return this.model.To; }
-            set { this.model.To = Convert.ToDateTime(value); }
+            set { this.model.To = this.SetValidDate(value); }
         }
 
         public bool IsLarge
@@ -97,6 +97,11 @@ namespace BookMeMobile.ViewModels.Concrete
         {
             get { return this.model.HasPolycom; }
             set { this.model.HasPolycom = value; }
+        }
+
+        public DateTime SetValidDate(DateTime invalidDate)
+        {
+            return new DateTime(this.Date.Year, this.Date.Month, this.Date.Day, invalidDate.Hour, invalidDate.Minute, invalidDate.Second);
         }
     }
 }

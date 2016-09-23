@@ -38,6 +38,7 @@
     <Compile Include="BL\Abstract\IAuthService.cs" />
     <Compile Include="BL\Concrete\AuthService.cs" />
     <Compile Include="Converters\BoolToTextconverter.cs" />
+    <Compile Include="Converters\DateTimeToSpanConverter.cs" />
     <Compile Include="Converters\RoomToStringConverter.cs" />
     <Compile Include="BL\Abstract\BaseService.cs" />
     <Compile Include="BL\Abstract\IReservationService.cs" />

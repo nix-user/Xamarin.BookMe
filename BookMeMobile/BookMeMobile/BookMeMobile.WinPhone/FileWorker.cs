@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BookMeMobile.Interface;
+using BookMeMobile.Resources;
 using BookMeMobile.WinPhone;
 using Windows.Storage;
-using BookMeMobile.Resources;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(FileWorker))]
@@ -26,7 +26,7 @@ namespace BookMeMobile.WinPhone
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
             try
             {
-               localFolder.GetFileAsync(this.filename).GetResults();
+                localFolder.GetFileAsync(this.filename).GetResults();
             }
             catch
             {
