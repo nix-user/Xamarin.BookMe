@@ -16,25 +16,25 @@ namespace BookMeMobile.Data
 {
     public class HttpService : IHttpService
     {
-        private readonly HttpClient httpClient = new HttpClient();
         private readonly IDependencyService dependencyService;
+        private readonly IHttpHandler httpHandler;
 
-        public HttpService(IDependencyService dependencyService)
+        public HttpService(IDependencyService dependencyService, IHttpHandler httpHandler)
         {
             this.dependencyService = dependencyService;
+            this.httpHandler = httpHandler;
             string token = this.dependencyService.Get<IFileWorker>().LoadTextAsync().Result;
             if (token != null)
             {
-                this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+                this.httpHandler.RequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
             }
         }
 
         public async Task<BaseOperationResult<T>> Get<T>(string root)
         {
-            var uri = new Uri(root);
             try
             {
-                var response = await this.httpClient.GetAsync(uri);
+                var response = await this.httpHandler.GetAsync(root);
                 return await this.CreateOperationResultFromResponse<T>(response);
             }
             catch (Exception)
@@ -50,12 +50,11 @@ namespace BookMeMobile.Data
         {
             string jsonFormat = "application/json";
 
-            var uri = new Uri(root);
             var json = JsonConvert.SerializeObject(content);
             var jsonContent = new StringContent(json, Encoding.UTF8, jsonFormat);
             try
             {
-                var response = await this.httpClient.PostAsync(uri, jsonContent);
+                var response = await this.httpHandler.PostAsync(root, jsonContent);
                 return await this.CreateOperationResultFromResponse(response);
             }
             catch (Exception)
@@ -71,8 +70,7 @@ namespace BookMeMobile.Data
         {
             try
             {
-                var uri = new Uri(root);
-                var response = await this.httpClient.DeleteAsync(uri);
+                var response = await this.httpHandler.DeleteAsync(root);
                 if (response.IsSuccessStatusCode)
                 {
                     return new BaseOperationResult() { Status = StatusCode.Ok };

@@ -46,10 +46,12 @@
     <Compile Include="BL\Abstract\IRoomService.cs" />
     <Compile Include="BL\Concrete\ReservationService.cs" />
     <Compile Include="BL\Concrete\RoomService.cs" />
+    <Compile Include="Data\Abstract\IHttpHandler.cs" />
     <Compile Include="Data\Abstract\IHttpService.cs" />
     <Compile Include="Data\Abstract\IRepository.cs" />
     <Compile Include="Data\Abstract\IRoomRepository.cs" />
     <Compile Include="Data\BaseRepository.cs" />
+    <Compile Include="Data\Concrete\HttpHandler.cs" />
     <Compile Include="Data\ReservationRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\HttpService.cs" />
