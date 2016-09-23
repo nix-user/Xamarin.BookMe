@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +13,10 @@ using BookMeMobile.Data.Abstract;
 using BookMeMobile.Entity;
 using BookMeMobile.Enums;
 using BookMeMobile.Interface;
+using BookMeMobile.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Newtonsoft.Json;
 
 namespace BookMeMobile.UnitTests.Data.Services
 {
@@ -35,22 +38,48 @@ namespace BookMeMobile.UnitTests.Data.Services
 
             this.dependencyServiceMock.Setup(m => m.Get<IFileWorker>()).Returns(this.fileWorkerMock.Object);
             this.httpHandlerMock.SetupGet(m => m.RequestHeaders).Returns(this.httpRequestHeadersMock.Object);
+            this.fileWorkerMock.Setup(m => m.LoadTextAsync()).Returns(Task.FromResult(string.Empty));
         }
 
         [TestMethod]
         public async Task Get_When_Http_Handler_Get_Throws_Exception_Should_Return_Connection_Error()
         {
             //arrange
-            this.fileWorkerMock.Setup(m => m.LoadTextAsync()).Returns(Task.FromResult(string.Empty));
             this.httpHandlerMock.Setup(handler => handler.GetAsync(It.IsAny<string>())).Throws(new Exception());
             HttpService httpService = new HttpService(this.dependencyServiceMock.Object, this.httpHandlerMock.Object);
             string testRoute = "testRoute";
 
             //act
-            var result = await httpService.Get<Room>(testRoute);
+            var result = await httpService.Get<ServiceResponseTestClass>(testRoute);
 
             //assert
             Assert.AreEqual(StatusCode.ConnectionProblem, result.Status);
+        }
+
+        [TestMethod]
+        public async Task Get_When_Http_Handler_Get_Executes_Successfuly_Should_Return_Requested_Entity()
+        {
+            //arrange
+            var responseMessageContent = (new ResponseModel<ServiceResponseTestClass>()
+            {
+                IsOperationSuccessful = true,
+                Result = new ServiceResponseTestClass() { Id = 1 }
+            });
+
+            var testResponseMessage = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(responseMessageContent))
+            };
+            this.httpHandlerMock.Setup(handler => handler.GetAsync(It.IsAny<string>())).ReturnsAsync(testResponseMessage);
+            HttpService httpService = new HttpService(this.dependencyServiceMock.Object, this.httpHandlerMock.Object);
+            string testRoute = "testRoute";
+
+            //act
+            var retrieval = await httpService.Get<ServiceResponseTestClass>(testRoute);
+
+            //assert
+            Assert.AreEqual(StatusCode.Ok, retrieval.Status);
+            Assert.AreEqual(responseMessageContent.Result.Id, retrieval.Result.Id);
         }
     }
 }

@@ -46,6 +46,10 @@
       <HintPath>..\packages\Moq.4.5.3\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Net.Http" />
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -78,6 +82,7 @@
     <Compile Include="Data\Repositories\RoomRepositoryTests.cs" />
     <Compile Include="Data\Routes\RestURLTests.cs" />
     <Compile Include="Data\Services\HttpServiceTests.cs" />
+    <Compile Include="Data\Services\ServiceResponseTestClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Repositories\ReservationRepositoryTests.cs" />
     <Compile Include="ViewModels\LoginViewModelTests.cs" />
