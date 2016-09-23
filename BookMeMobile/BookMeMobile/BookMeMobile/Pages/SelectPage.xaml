@@ -12,8 +12,7 @@
     </ResourceDictionary>
   </ContentPage.Resources>
   <AbsoluteLayout x:Name="rootLayout" Padding="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-    <render:Loader x:Name="loader" VerticalOptions="Center" />
-    <StackLayout x:Name="MainLayout" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+   <StackLayout x:Name="MainLayout" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
       <StackLayout x:Name="DateSpace">
         <Label x:Name="LabelDate" FontSize="Large" Text="{Binding Date,StringFormat= Выбранная дата '{0:MM/dd/yyyy}'}"  />
         <DatePicker x:Name="Date" Format="D" Date="{Binding Date}">
@@ -23,6 +22,7 @@
             <Label Text="От" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Large"/>
             <render:TimePicker24Hour x:Name="TimeFrom" Time="{Binding From,Converter={StaticResource DateTimeToTimeSpan}}" Format="HH:mm" HorizontalOptions="FillAndExpand"/>
           </StackLayout>
+          <render:Loader x:Name="loader" VerticalOptions="Center"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
           <StackLayout >
             <Label Text="До" FontSize="Large" HorizontalTextAlignment="Center"/>
             <render:TimePicker24Hour x:Name="TimeTo"  Time="{Binding To,Converter={StaticResource DateTimeToTimeSpan}}" Format="HH:mm" HorizontalOptions="FillAndExpand"/>

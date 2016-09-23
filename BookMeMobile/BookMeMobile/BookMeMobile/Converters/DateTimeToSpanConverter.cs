@@ -8,6 +8,9 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.Converters
 {
+    /// <summary>
+    ///   This class provide logic of converting DateTime values
+    /// </summary>
     public class DateTimeToSpanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

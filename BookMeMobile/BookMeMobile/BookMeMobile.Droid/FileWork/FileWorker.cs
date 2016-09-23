@@ -15,38 +15,21 @@ namespace BookMeMobile.Droid.FileWork
     public class FileWorker : IFileWorker
     {
         private static readonly object LockThis = new object();
-        private readonly string filename = FileResources.FileName;
 
-        public Task DeleteAsync()
+        public Task DeleteAsync(string fileName)
         {
-            try
-            {
-                File.Delete(this.GetFilePath());
-                return Task.FromResult(true);
-            }
-            catch (Exception e)
-            {
-                return Task.FromResult(false);
-            }
+            return Task.Run(() => File.Delete(this.GetFilePath(fileName)));
         }
 
-        public Task<bool> ExistsAsync()
+        public Task<bool> ExistsAsync(string fileName)
         {
-            string filepath = this.GetFilePath();
-            bool exists = File.Exists(filepath);
-            return Task<bool>.FromResult(exists);
+            string filepath = this.GetFilePath(fileName);
+            return Task.Run(() => File.Exists(filepath));
         }
 
-        public Task<IEnumerable<string>> GetFilesAsync()
+        public async Task<string> LoadTextAsync(string fileName)
         {
-            IEnumerable<string> filenames = from filepath in Directory.EnumerateFiles(this.GetDocsPath())
-                                            select Path.GetFileName(filepath);
-            return Task<IEnumerable<string>>.FromResult(filenames);
-        }
-
-        public async Task<string> LoadTextAsync()
-        {
-            string filepath = this.GetFilePath();
+            string filepath = this.GetFilePath(fileName);
             lock (LockThis)
             {
                 using (StreamReader reader = File.OpenText(filepath))
@@ -56,18 +39,18 @@ namespace BookMeMobile.Droid.FileWork
             }
         }
 
-        public async Task SaveTextAsync(string text)
+        public async Task SaveTextAsync(string fileName, string text)
         {
-            string filepath = this.GetFilePath();
+            string filepath = this.GetFilePath(fileName);
             using (StreamWriter writer = File.CreateText(filepath))
             {
                 await writer.WriteAsync(text);
             }
         }
 
-        private string GetFilePath()
+        private string GetFilePath(string fileName)
         {
-            return Path.Combine(this.GetDocsPath(), this.filename);
+            return Path.Combine(this.GetDocsPath(), fileName);
         }
 
         private string GetDocsPath()
