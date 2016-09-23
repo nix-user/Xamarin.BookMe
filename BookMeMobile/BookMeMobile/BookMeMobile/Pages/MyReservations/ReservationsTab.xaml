@@ -2,7 +2,6 @@
 <pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:binding="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
-             xmlns:customViews="clr-namespace:BookMeMobile.CustomViews;assembly=BookMeMobile"
              xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.MyReservations.ReservationsTab">
   <ContentPage.Resources>
@@ -20,7 +19,11 @@
       <ListView x:Name="listRoom" ItemsSource="{Binding Reservations}" HasUnevenRows="True" SeparatorColor="Black">
         <ListView.ItemTemplate>
           <DataTemplate>
-            <customViews:ViewCellWithCommand Command="{Binding Parent.RemoveReservationCommand}" CommandParameter="{Binding}">
+            <ViewCell>
+              <ViewCell.ContextActions>
+                <MenuItem Text="Удалить"
+                      Command="{Binding Path=Parent.Parent.RemoveReservationCommand}" CommandParameter="{Binding}" />
+              </ViewCell.ContextActions>
               <ViewCell.View>
                 <StackLayout VerticalOptions="Center">
                   <Grid>
@@ -41,7 +44,7 @@
                   </StackLayout>
                 </StackLayout>
               </ViewCell.View>
-            </customViews:ViewCellWithCommand>
+            </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>

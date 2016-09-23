@@ -20,7 +20,7 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
 
         private ObservableCollection<ReservationViewModel> reservations;
 
-        public Func<ReservationViewModel, Task<bool>> ShowRemoveConfirmationDialog { get; set; }
+        public MyReservationsViewModel Parent { get; protected set; }
 
         public ObservableCollection<ReservationViewModel> Reservations
         {
@@ -32,36 +32,20 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
             }
         }
 
-        public ReservationsListViewModel(IReservationRepository reservationRepository, IEnumerable<Reservation> reservations, bool isToday = false)
+        public ReservationsListViewModel(MyReservationsViewModel parent, IEnumerable<Reservation> reservations, bool isToday = false)
         {
-            this.reservationService = new ReservationService(reservationRepository);
-
             var reservitionViewModelList = reservations.Select(reservation => new ReservationViewModel(reservation, this));
+            this.Parent = parent;
             this.Reservations = new ObservableCollection<ReservationViewModel>(reservitionViewModelList);
             this.IsToday = isToday;
-            this.RemoveReservationCommand = new Command<ReservationViewModel>(this.RemoveReservation);
+        }
+
+        public void RemoveReservationIfExist(int reservationId)
+        {
+            var reservationToRemove = this.Reservations.FirstOrDefault(x => x.Id == reservationId);
+            this.Reservations.Remove(reservationToRemove);
         }
 
         public bool IsToday { get; protected set; }
-
-        public ICommand RemoveReservationCommand { get; protected set; }
-
-        private async void RemoveReservation(ReservationViewModel reservation)
-        {
-            var isConfirmed = await this.ShowRemoveConfirmationDialog(reservation);
-            if (isConfirmed)
-            {
-                var operationResult = await this.reservationService.RemoveReservation(reservation.Id);
-                if (operationResult.Status == StatusCode.Ok)
-                {
-                    var reservationToRemove = this.Reservations.FirstOrDefault(x => x.Id == reservation.Id);
-                    this.Reservations.Remove(reservationToRemove);
-                }
-                else
-                {
-                    this.ShowErrorMessage(operationResult.Status);
-                }
-            }
-        }
     }
 }
