@@ -126,15 +126,6 @@ namespace BookMeMobile.BL
         }
 
         /// <summary>
-        /// Method search all user reservation
-        /// </summary>
-        /// <returns>operation result with <see cref="Reservation"/> collection</returns>
-        public async Task<BaseOperationResult<IEnumerable<Reservation>>> GetAllUserReservation()
-        {
-            return await this.reservationRepository.GetAll();
-        }
-
-        /// <summary>
         /// Method for search reservation of specified by <paramref name="number"/> room
         /// </summary>
         /// <param name="roomId">identifier of room</param>

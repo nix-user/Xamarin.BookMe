@@ -10,7 +10,7 @@ using BookMeMobile.Enums;
 using BookMeMobile.Model;
 using BookMeMobile.Pages;
 using BookMeMobile.Pages.Login;
-using BookMeMobile.Pages.MyBookPages;
+using BookMeMobile.Pages.MyReservations;
 using BookMeMobile.Resources;
 using Java.Sql;
 using Javax.Security.Auth;
@@ -59,15 +59,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private async void GetMyReservation()
         {
-            var operationResult = (await this.ExecuteOperation(async () => await this.service.GetAllUserReservation()));
-            if (operationResult.Status == StatusCode.Ok)
-            {
-                await this.Navigation.PushAsync(new TabPanelPage(operationResult.Result));
-            }
-            else
-            {
-                this.ShowErrorMessage(operationResult.Status);
-            }
+            await this.Navigation.PushAsync(new MyReservationsPage());
         }
 
         public DateTime Date

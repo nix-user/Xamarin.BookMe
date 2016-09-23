@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using BookMeMobile.Data.Abstract;
 using BookMeMobile.Entity;
+using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 
 namespace BookMeMobile.Data
@@ -8,7 +10,7 @@ namespace BookMeMobile.Data
     /// <summary>
     /// Class provides logic for getting <see cref="Reservation"/> from data source
     /// </summary>
-    public class ReservationRepository : BaseRepository<Reservation>
+    public class ReservationRepository : BaseRepository<Reservation>, IReservationRepository
     {
         public override async Task<BaseOperationResult> Remove(int id)
         {
@@ -28,6 +30,11 @@ namespace BookMeMobile.Data
         public override async Task<BaseOperationResult> Add(Reservation reservation)
         {
             return await this.HttpService.Post(RestURl.BookURI, reservation);
+        }
+
+        public async Task<BaseOperationResult<UserReservationsModel>> GetUserReservations()
+        {
+            return await this.HttpService.Get<UserReservationsModel>(RestURl.GetUserReservation);
         }
     }
 }

@@ -70,16 +70,14 @@ namespace BookMeMobile.Data
             {
                 var uri = new Uri(root);
                 var response = await this.httpClient.DeleteAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    return new BaseOperationResult() { Status = StatusCode.Ok };
-                }
-
-                return new BaseOperationResult() { Status = StatusCode.Error };
+                return await this.CreateOperationResultFromResponse(response);
             }
             catch (Exception)
             {
-                return new BaseOperationResult() { Status = StatusCode.ConnectionProblem };
+                return new BaseOperationResult()
+                {
+                    Status = StatusCode.ConnectionProblem
+                };
             }
         }
 

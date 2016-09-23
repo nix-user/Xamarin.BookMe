@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
-using BookMeMobile.Pages.MyBookPages;
 using Xamarin.Forms;
 using ZXing;
 using ZXing.Net.Mobile.Forms;
