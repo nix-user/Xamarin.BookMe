@@ -81,5 +81,157 @@ namespace BookMeMobile.UnitTests.Data.Services
             Assert.AreEqual(StatusCode.Ok, retrieval.Status);
             Assert.AreEqual(responseMessageContent.Result.Id, retrieval.Result.Id);
         }
+
+        [TestMethod]
+        public async Task Get_When_Http_Handler_Returns_Internal_Server_Error_Should_Return_Error_Status()
+        {
+            //arrange
+            var responseMessageContent = (new ResponseModel<ServiceResponseTestClass>()
+            {
+                IsOperationSuccessful = false,
+            });
+
+            var testResponseMessage = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(responseMessageContent))
+            };
+            this.httpHandlerMock.Setup(handler => handler.GetAsync(It.IsAny<string>())).ReturnsAsync(testResponseMessage);
+            HttpService httpService = new HttpService(this.dependencyServiceMock.Object, this.httpHandlerMock.Object);
+            string testRoute = "testRoute";
+
+            //act
+            var retrieval = await httpService.Get<ServiceResponseTestClass>(testRoute);
+
+            //assert
+            Assert.AreEqual(StatusCode.Error, retrieval.Status);
+        }
+
+        [TestMethod]
+        public async Task Post_When_Http_Handler_Post_Throws_Exception_Should_Return_Connection_Error()
+        {
+            //arrange
+            this.httpHandlerMock.Setup(handler => handler.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).Throws(new Exception());
+            HttpService httpService = new HttpService(this.dependencyServiceMock.Object, this.httpHandlerMock.Object);
+            string testRoute = "testRoute";
+            var testContent = new ServiceResponseTestClass();
+            //act
+            var result = await httpService.Post(testRoute, testContent);
+
+            //assert
+            Assert.AreEqual(StatusCode.ConnectionProblem, result.Status);
+        }
+
+        [TestMethod]
+        public async Task Post_When_Http_Handler_Post_Executes_Successfuly_Should_Return_Success_Status()
+        {
+            //arrange
+            var responseMessageContent = (new ResponseModel<ServiceResponseTestClass>()
+            {
+                IsOperationSuccessful = true
+            });
+
+            var testResponseMessage = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(responseMessageContent))
+            };
+            this.httpHandlerMock.Setup(handler => handler.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).ReturnsAsync(testResponseMessage);
+            HttpService httpService = new HttpService(this.dependencyServiceMock.Object, this.httpHandlerMock.Object);
+            string testRoute = "testRoute";
+            var testContent = new ServiceResponseTestClass();
+
+            //act
+            var retrieval = await httpService.Post(testRoute, testContent);
+
+            //assert
+            Assert.AreEqual(StatusCode.Ok, retrieval.Status);
+        }
+
+        [TestMethod]
+        public async Task Post_When_Http_Handler_Returns_Internal_Server_Error_Should_Return_Error_Status()
+        {
+            //arrange
+            var responseMessageContent = (new ResponseModel<ServiceResponseTestClass>()
+            {
+                IsOperationSuccessful = false
+            });
+
+            var testResponseMessage = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(responseMessageContent))
+            };
+            this.httpHandlerMock.Setup(handler => handler.PostAsync(It.IsAny<string>(), It.IsAny<HttpContent>())).ReturnsAsync(testResponseMessage);
+            HttpService httpService = new HttpService(this.dependencyServiceMock.Object, this.httpHandlerMock.Object);
+            string testRoute = "testRoute";
+            var testContent = new ServiceResponseTestClass();
+
+            //act
+            var retrieval = await httpService.Post(testRoute, testContent);
+
+            //assert
+            Assert.AreEqual(StatusCode.Error, retrieval.Status);
+        }
+
+        [TestMethod]
+        public async Task Delete_When_Http_Handler_Delete_Throws_Exception_Should_Return_Connection_Error()
+        {
+            //arrange
+            this.httpHandlerMock.Setup(handler => handler.DeleteAsync(It.IsAny<string>())).Throws(new Exception());
+            HttpService httpService = new HttpService(this.dependencyServiceMock.Object, this.httpHandlerMock.Object);
+            string testRoute = "testRoute";
+
+            //act
+            var result = await httpService.Delete(testRoute);
+
+            //assert
+            Assert.AreEqual(StatusCode.ConnectionProblem, result.Status);
+        }
+
+        [TestMethod]
+        public async Task Delete_When_Http_Handler_Delete_Executes_Successfuly_Should_Return_Success_Status()
+        {
+            //arrange
+            var responseMessageContent = (new ResponseModel<ServiceResponseTestClass>()
+            {
+                IsOperationSuccessful = true
+            });
+
+            var testResponseMessage = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(responseMessageContent))
+            };
+            this.httpHandlerMock.Setup(handler => handler.DeleteAsync(It.IsAny<string>())).ReturnsAsync(testResponseMessage);
+            HttpService httpService = new HttpService(this.dependencyServiceMock.Object, this.httpHandlerMock.Object);
+            string testRoute = "testRoute";
+
+            //act
+            var retrieval = await httpService.Delete(testRoute);
+
+            //assert
+            Assert.AreEqual(StatusCode.Ok, retrieval.Status);
+        }
+
+        [TestMethod]
+        public async Task Delete_When_Http_Handler_Returns_Internal_Server_Error_Should_Return_Error_Status()
+        {
+            //arrange
+            var responseMessageContent = (new ResponseModel<ServiceResponseTestClass>()
+            {
+                IsOperationSuccessful = false
+            });
+
+            var testResponseMessage = new HttpResponseMessage()
+            {
+                Content = new StringContent(JsonConvert.SerializeObject(responseMessageContent))
+            };
+            this.httpHandlerMock.Setup(handler => handler.DeleteAsync(It.IsAny<string>())).ReturnsAsync(testResponseMessage);
+            HttpService httpService = new HttpService(this.dependencyServiceMock.Object, this.httpHandlerMock.Object);
+            string testRoute = "testRoute";
+
+            //act
+            var retrieval = await httpService.Delete(testRoute);
+
+            //assert
+            Assert.AreEqual(StatusCode.Error, retrieval.Status);
+        }
     }
 }

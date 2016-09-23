@@ -74,12 +74,7 @@ namespace BookMeMobile.Data
             try
             {
                 var response = await this.httpHandler.DeleteAsync(route);
-                if (response.IsSuccessStatusCode)
-                {
-                    return new BaseOperationResult() { Status = StatusCode.Ok };
-                }
-
-                return new BaseOperationResult() { Status = StatusCode.Error };
+                return await this.CreateOperationResultFromResponse(response);
             }
             catch (Exception)
             {
