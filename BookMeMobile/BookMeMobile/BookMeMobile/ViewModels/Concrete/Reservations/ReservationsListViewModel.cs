@@ -14,6 +14,8 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
     {
         private ObservableCollection<ReservationViewModel> reservations;
 
+        public MyReservationsViewModel Parent { get; protected set; }
+
         public ObservableCollection<ReservationViewModel> Reservations
         {
             get { return this.reservations; }
@@ -24,8 +26,10 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
             }
         }
 
-        public ReservationsListViewModel(IEnumerable<Reservation> reservations, bool isToday = false)
+        public ReservationsListViewModel(IEnumerable<Reservation> reservations, MyReservationsViewModel parent, bool isToday = false)
         {
+            this.Parent = parent;
+
             var reservitionViewModelList = reservations.Select(reservation => new ReservationViewModel(reservation, this));
 
             this.Reservations = new ObservableCollection<ReservationViewModel>(reservitionViewModelList);
@@ -39,6 +43,7 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
 
         private void RemoveReservation(ReservationViewModel reservation)
         {
+            this.Parent.RemoveReservationAction?.Invoke(reservation);
         }
     }
 }

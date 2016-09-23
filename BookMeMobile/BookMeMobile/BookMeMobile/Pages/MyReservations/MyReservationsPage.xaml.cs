@@ -16,38 +16,29 @@ namespace BookMeMobile.Pages.MyReservations
         {
             this.InitializeComponent();
             var viewModel = new MyReservationsViewModel();
+            viewModel.RemoveReservationAction += this.RemoveReservationAction;
             viewModel.ShowInfoMessage += this.ShowInfoMessage;
             this.BindingContext = viewModel;
-            //var list = new List<Reservation>()
-            //{
-            //    new Reservation()
-            //    {
-            //        Room = new Room() { Number = "405a", Id = 1, IsBig = true, IsHasPolykom = true },
-            //        Id = 1,
-            //        Author = "me",
-            //        Duration = new TimeSpan(1, 1, 1),
-            //        From = new DateTime(2016, 1, 1, 1, 1, 1),
-            //        To = new DateTime(2016, 1, 1, 1, 1, 1),
-            //        IsRecursive = true,
-            //        ResourceId = 5,
-            //        TextPeriod = "Целый день.",
-            //        TextRule = "Каждые 2 недели каждый ПН. ВТ. йцуйцуйцу"
-            //    },
-            //    new Reservation()
-            //    {
-            //        Room = new Room() { Number = "405a", Id = 1, IsBig = true, IsHasPolykom = true },
-            //        Id = 1,
-            //        Author = "me",
-            //        Duration = new TimeSpan(1, 1, 1),
-            //        From = new DateTime(2016, 1, 1, 1, 1, 1),
-            //        To = new DateTime(2016, 1, 1, 1, 1, 1),
-            //        IsRecursive = false,
-            //        ResourceId = 5,
-            //        TextPeriod = "Целый день."
-            //    }
-            //};
+        }
 
-            //this.Children[0].BindingContext = new ReservationsListViewModel(list);
+        private async void RemoveReservationAction(ReservationViewModel reservationViewModel)
+        {
+            const string ConfirmationHeader = "Подтверждение";
+            const string ConfirmationMessage = "Вы действительно хотите удалить резервацию: ";
+            const string RemoveActionTitle = "Удалить";
+            const string CancelActionTitle = "Отмена";
+            const string OkActionTitle = "Да";
+
+            var actionSheetMessage = reservationViewModel.TextPeriod + " " + reservationViewModel.Title;
+
+            var action = await this.DisplayActionSheet(actionSheetMessage, CancelActionTitle, null, RemoveActionTitle);
+            if (action == RemoveActionTitle)
+            {
+                var isConfirmed = await this.DisplayAlert(ConfirmationHeader, ConfirmationMessage + actionSheetMessage, OkActionTitle, CancelActionTitle);
+                if (isConfirmed)
+                {
+                }
+            }
         }
 
         private void ShowInfoMessage(string title, string content, string cancelText)

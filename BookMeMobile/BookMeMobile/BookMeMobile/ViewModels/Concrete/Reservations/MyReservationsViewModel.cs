@@ -28,6 +28,8 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
             this.LoadReservations();
         }
 
+        public Action<ReservationViewModel> RemoveReservationAction { get; set; }
+
         public ReservationsListViewModel TodayReservationsViewModel
         {
             get
@@ -81,9 +83,9 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
                 var recursiveReservation = reservationsResult.Result.AllReservations.Where(x => x.IsRecursive);
                 var allReservations = reservationsResult.Result.AllReservations;
 
-                this.TodayReservationsViewModel = new ReservationsListViewModel(todayReservations, true);
-                this.RecursiveReservationsViewModel = new ReservationsListViewModel(recursiveReservation);
-                this.AllReservationsViewModel = new ReservationsListViewModel(allReservations);
+                this.TodayReservationsViewModel = new ReservationsListViewModel(todayReservations, this, true);
+                this.RecursiveReservationsViewModel = new ReservationsListViewModel(recursiveReservation, this);
+                this.AllReservationsViewModel = new ReservationsListViewModel(allReservations, this);
             }
             else
             {
