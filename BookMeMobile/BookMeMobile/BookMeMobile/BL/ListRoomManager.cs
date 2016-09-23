@@ -111,7 +111,7 @@ namespace BookMeMobile.BL
         /// <summary>
         /// Method search empty rooms related to <paramref name="filter"/>
         /// </summary>
-        /// <param name="filter">Search filter</param>
+        /// <param name="model">Search filter</param>
         /// <returns>operation result with <see cref="Room"/> collection</returns>
         public async Task<BaseOperationResult<IEnumerable<Room>>> GetEmptyRoom(SelectModel model)
         {
