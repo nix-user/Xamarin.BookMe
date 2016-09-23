@@ -55,7 +55,9 @@
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Enums\StatusCode.cs" />
     <Compile Include="Model\AddReservationModel.cs" />
+    <Compile Include="ViewModels\Concrete\ListRoomViewModel.cs" />
     <Compile Include="Model\Login\LoginModel.cs" />
+    <Compile Include="Model\RoomViewModel.cs" />
     <Compile Include="Model\SelectModel.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
     <Compile Include="Pages\AddReservationPage.xaml.cs">

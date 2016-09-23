@@ -21,9 +21,9 @@ namespace BookMeMobile.ViewModels.Concrete
         private ListRoomManager service;
         private AddReservationModel model;
 
-        public AddReservationViewModel(SelectModel filterParametr, int idRoom)
+        public AddReservationViewModel(SelectModel filterParametr, RoomViewModel roomModel)
         {
-            this.model = new AddReservationModel(filterParametr, idRoom);
+            this.model = new AddReservationModel(filterParametr, roomModel);
             this.service = new ListRoomManager();
             this.AddReservationCommand = new Command(this.AddReservation);
             this.GoBackCommand = new Command(this.GoBack);
@@ -31,7 +31,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private async void GoBack()
         {
-          await this.Navigation.PopModalAsync();
+            await this.Navigation.PopModalAsync();
         }
 
         public ICommand AddReservationCommand { get; protected set; }
@@ -42,6 +42,12 @@ namespace BookMeMobile.ViewModels.Concrete
         {
             get { return this.model.Title; }
             set { this.model.Title = value; }
+        }
+
+        public string NumberRoom
+        {
+            get { return this.model.NumberRoom; }
+            set { this.model.NumberRoom = value; }
         }
 
         public string Date

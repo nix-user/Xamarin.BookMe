@@ -1,26 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:render="clr-namespace:BookMeMobile.Render;assembly=BookMeMobile"
+             xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.ListRoomPage">
   <ContentPage.Resources>
     <ResourceDictionary>
     </ResourceDictionary>
   </ContentPage.Resources>
-  <StackLayout>
-    <Label x:Name="isRoom" Text="Комнат нет" FontSize="24" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="False"/>
-    <ListView x:Name="listUserRoomInRange" ItemsSource="{Binding}" RowHeight="80" VerticalOptions="Start">
-      <ListView.ItemTemplate>
-        <DataTemplate>
-          <ViewCell>
-            <ViewCell.View>
-               <StackLayout Orientation="Horizontal">
-                  <Label Text = "{Binding Number,StringFormat='{0}' }" FontSize="Medium"  VerticalOptions="CenterAndExpand"/>
-                  <Button HorizontalOptions="EndAndExpand" x:Name="btnBooking" ClassId="{Binding Id}" Text="Бронировать" VerticalOptions="Fill" FontSize="Large" Clicked="BtnBooking_OnClicked"/>
-                </StackLayout>
-            </ViewCell.View>
-          </ViewCell>
-        </DataTemplate>
-      </ListView.ItemTemplate>
-    </ListView>
-  </StackLayout>
-</ContentPage>
+  <AbsoluteLayout x:Name="rootLayout" Padding="0">
+    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+      <Label x:Name="LabelNotRooms" Text="{Binding IsNotRooms}" FontSize="24" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="False"/>
+      <ListView x:Name="listRoom" ItemsSource="{Binding ListRoom}" RowHeight="80" VerticalOptions="Start">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <ViewCell.ContextActions>
+                <MenuItem Text="Зарезервировать"
+                      Command="{Binding Path=ListViewModel.ReserveCommand}" CommandParameter="{Binding}" IsDestructive="True"/>
+              </ViewCell.ContextActions>
+              <ViewCell.View>
+                <Label  Text = "{Binding NumberRoom,StringFormat=Комната: '{0}' }" FontSize="Medium"  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+              </ViewCell.View>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+  </AbsoluteLayout>
+</pages:BasePage>
