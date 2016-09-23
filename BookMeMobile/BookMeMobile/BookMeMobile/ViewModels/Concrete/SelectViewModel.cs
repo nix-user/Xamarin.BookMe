@@ -13,6 +13,7 @@ using BookMeMobile.Pages.Login;
 using BookMeMobile.Pages.MyBookPages;
 using BookMeMobile.Resources;
 using Java.Sql;
+using Javax.Security.Auth;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete
@@ -34,7 +35,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         public ICommand GoToSearch { get; protected set; }
 
-        public async void Search(object element)
+        private async void Search(object element)
         {
             if (this.model.From < this.model.To)
             {
@@ -56,7 +57,7 @@ namespace BookMeMobile.ViewModels.Concrete
             }
         }
 
-        public async void GetMyReservation(object element)
+        private async void GetMyReservation(object element)
         {
             var operationResult = (await this.ExecuteOperation(async () => await this.service.GetAllUserReservation()));
             if (operationResult.Status == StatusCode.Ok)
@@ -99,7 +100,7 @@ namespace BookMeMobile.ViewModels.Concrete
             set { this.model.HasPolycom = value; }
         }
 
-        public DateTime SetValidDate(DateTime invalidDate)
+        private DateTime SetValidDate(DateTime invalidDate)
         {
             return new DateTime(this.Date.Year, this.Date.Month, this.Date.Day, invalidDate.Hour, invalidDate.Minute, invalidDate.Second);
         }
