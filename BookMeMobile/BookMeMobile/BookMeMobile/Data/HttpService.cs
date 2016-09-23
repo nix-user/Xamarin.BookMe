@@ -7,6 +7,7 @@ using BookMeMobile.Enums;
 using BookMeMobile.Interface;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
+using BookMeMobile.Resources;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 
@@ -18,7 +19,7 @@ namespace BookMeMobile.Data
 
         public HttpService()
         {
-            string token = DependencyService.Get<IFileWorker>().LoadTextAsync().Result;
+            string token = DependencyService.Get<IFileWorker>().LoadTextAsync(FileResources.FileName).Result;
             if (token != null)
             {
                 this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);

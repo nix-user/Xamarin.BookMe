@@ -4,8 +4,16 @@ using BookMeMobile.Model.Login;
 
 namespace BookMeMobile.BL.Abstract
 {
+    /// <summary>
+    /// Interface for authentication logic
+    /// </summary>
     public interface IAuthService
     {
-        Task<StatusCode> AuthAsync(LoginModel user);
+        /// <summary>
+        /// Authentication method
+        /// </summary>
+        /// <param name="loginModel">Model with user credentials</param>
+        /// <returns></returns>
+        Task<StatusCode> AuthAsync(LoginModel loginModel);
     }
 }

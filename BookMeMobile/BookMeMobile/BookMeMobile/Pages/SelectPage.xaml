@@ -1,45 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:ActivityIndicatorPage xmlns="http://xamarin.com/schemas/2014/forms"
+<pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:render="clr-namespace:BookMeMobile.Render;assembly=BookMeMobile"
              xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
+             xmlns:converters="clr-namespace:BookMeMobile.Converters;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.SelectPage"
              Title="Select Page">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:DateTimeToSpanConverter x:Key="DateTimeToTimeSpan"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
   <AbsoluteLayout x:Name="rootLayout" Padding="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-    <StackLayout  Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0.5, 0.42, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional">
-      <render:Loader x:Name="loader" VerticalOptions="Center" />
-    </StackLayout>
-    <StackLayout x:Name="MainLayout" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+   <StackLayout x:Name="MainLayout" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
       <StackLayout x:Name="DateSpace">
-        <Label x:Name="LabelDate" FontSize="Large" Text="Выбрана текущая дата" />
-        <DatePicker x:Name="Date" Format="D"  DateSelected="DatePickerDateSelected">
+        <Label x:Name="LabelDate" FontSize="Large" Text="{Binding Date,StringFormat= Выбранная дата '{0:MM/dd/yyyy}'}"  />
+        <DatePicker x:Name="Date" Format="D" Date="{Binding Date}">
         </DatePicker>
         <StackLayout x:Name="timeLayout" Padding="0,10,0,0" Orientation="Horizontal" HorizontalOptions="Center">
-
           <StackLayout >
             <Label Text="От" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Large"/>
-            <render:TimePicker24Hour x:Name="TimeFrom" Format="HH:mm" HorizontalOptions="FillAndExpand"></render:TimePicker24Hour>
+            <render:TimePicker24Hour x:Name="TimeFrom" Time="{Binding From,Converter={StaticResource DateTimeToTimeSpan}}" Format="HH:mm" HorizontalOptions="FillAndExpand"/>
           </StackLayout>
+          <render:Loader x:Name="loader" VerticalOptions="Center"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
           <StackLayout >
             <Label Text="До" FontSize="Large" HorizontalTextAlignment="Center"/>
-            <render:TimePicker24Hour x:Name="TimeTo" Format="HH:mm" HorizontalOptions="FillAndExpand"></render:TimePicker24Hour>
+            <render:TimePicker24Hour x:Name="TimeTo"  Time="{Binding To,Converter={StaticResource DateTimeToTimeSpan}}" Format="HH:mm" HorizontalOptions="FillAndExpand"/>
           </StackLayout>
         </StackLayout>
         <StackLayout x:Name="checkerLayout" Padding="10,20">
           <StackLayout Orientation="Horizontal">
             <Label  Text="Большая" FontSize="Large"/>
-            <Switch x:Name="IsBig" IsToggled="False" HorizontalOptions="EndAndExpand"/>
+            <Switch x:Name="IsLarge" IsToggled="{Binding IsLarge}" HorizontalOptions="EndAndExpand"/>
           </StackLayout>
           <StackLayout  Orientation="Horizontal" VerticalOptions="EndAndExpand">
             <Label Text="C Поликомом" FontSize="Large" HorizontalOptions="Start" VerticalOptions="End"/>
-            <Switch x:Name="IsPolinom" IsToggled="False" HorizontalOptions="EndAndExpand"/>
+            <Switch x:Name="HasPolycom" IsToggled="{Binding HasPolycom}" HorizontalOptions="EndAndExpand"/>
           </StackLayout>
         </StackLayout>
       </StackLayout>
       <StackLayout >
-        <Button x:Name="MyReservationsButton" HorizontalOptions="FillAndExpand" Text="Мои бронирования" Clicked="MyReservations_OnClicked"/>
-        <Button x:Name="SearchButton" HorizontalOptions="FillAndExpand" Text="Поиск" Clicked="Button_OnClicked" />
+        <Button x:Name="MyReservationsButton" HorizontalOptions="FillAndExpand" Text="Мои бронирования" Command="{Binding GoToMyReservation}"/>
+        <Button x:Name="SearchButton" HorizontalOptions="FillAndExpand" Text="Поиск" Command="{Binding GoToSearch}" />
       </StackLayout>
     </StackLayout>
   </AbsoluteLayout>
-</pages:ActivityIndicatorPage>
+</pages:BasePage>

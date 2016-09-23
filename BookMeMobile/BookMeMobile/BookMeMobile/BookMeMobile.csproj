@@ -38,6 +38,7 @@
     <Compile Include="BL\Abstract\IAuthService.cs" />
     <Compile Include="BL\Concrete\AuthService.cs" />
     <Compile Include="Converters\BoolToTextconverter.cs" />
+    <Compile Include="Converters\DateTimeToSpanConverter.cs" />
     <Compile Include="Converters\RoomToStringConverter.cs" />
     <Compile Include="Binding\InverseBoolConverter.cs" />
     <Compile Include="Binding\IsStringNullOrEmptyConverter.cs" />
@@ -47,8 +48,10 @@
     <Compile Include="BL\Concrete\ReservationService.cs" />
     <Compile Include="BL\Concrete\RoomService.cs" />
     <Compile Include="CustomViews\ViewCellWithCommand.cs" />
+    <Compile Include="Data\Abstract\IRepository.cs" />
+    <Compile Include="Data\Abstract\IRoomRepository.cs" />
     <Compile Include="Data\BaseRepository.cs" />
-    <Compile Include="Data\BookingRepository.cs" />
+    <Compile Include="Data\ReservationRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\HttpService.cs" />
     <Compile Include="Data\RestURl.cs" />
@@ -57,6 +60,7 @@
     <Compile Include="Model\AddReservationModel.cs" />
     <Compile Include="Model\Login\LoginModel.cs" />
     <Compile Include="Model\UserReservationsModel.cs" />
+    <Compile Include="Model\SelectModel.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
     <Compile Include="Pages\MyReservations\MyReservationsPage.xaml.cs">
       <DependentUpon>MyReservationsPage.xaml</DependentUpon>
@@ -123,6 +127,7 @@
     <Compile Include="ViewModels\Concrete\AddReservationViewModel.cs" />
     <Compile Include="ViewModels\Concrete\LoginViewModel.cs" />
     <Compile Include="ViewModels\Concrete\Reservations\MyReservationsViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\SelectViewModel.cs" />
     <Compile Include="ViewModels\Concrete\Reservations\ReservationsListViewModel.cs" />
     <Compile Include="ViewModels\Concrete\Reservations\ReservationViewModel.cs" />
   </ItemGroup>
