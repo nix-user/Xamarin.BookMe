@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
+using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 
 namespace BookMeMobile.Data
@@ -28,6 +29,11 @@ namespace BookMeMobile.Data
         public override async Task<BaseOperationResult> Add(Reservation reservation)
         {
             return await this.HttpService.Post(RestURl.BookURI, reservation);
+        }
+
+        public async Task<BaseOperationResult<UserReservationsModel>> GetUserReservations()
+        {
+            return await this.HttpService.Get<UserReservationsModel>(RestURl.GetUserReservation);
         }
     }
 }

@@ -124,6 +124,7 @@ namespace BookMeMobile.BL
             };
             return await(this.roomRepository as IRoomRepository)?.GetEmptyRoom(filter);
         }
+
         /// <summary>
         /// Method for search reservation of specified by <paramref name="number"/> room
         /// </summary>

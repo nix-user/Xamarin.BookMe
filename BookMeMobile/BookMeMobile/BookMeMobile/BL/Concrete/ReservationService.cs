@@ -1,4 +1,5 @@
-﻿using BookMeMobile.BL.Abstract;
+﻿using System.Threading.Tasks;
+using BookMeMobile.BL.Abstract;
 using BookMeMobile.Data;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
@@ -24,7 +25,7 @@ namespace BookMeMobile.BL.Concrete
 
         public async Task<BaseOperationResult> RemoveReservation(int id)
         {
-            return await this.reservationsRepository.RemoveReservation(id);
+            return await this.reservationsRepository.Remove(id);
         }
     }
 }
