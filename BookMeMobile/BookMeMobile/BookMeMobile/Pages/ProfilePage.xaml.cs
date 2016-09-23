@@ -18,7 +18,6 @@ namespace BookMeMobile.Pages
         public ProfilePage()
         {
             this.InitializeComponent();
-            this.BindingContext = new ProfileViewModel(SelectPage.CurrentUser);
             this.txtFavoriteRoomCell.PropertyChanged += this.FavoriteRoomCell_OnCompleted;
             this.txtMyRoomCell.PropertyChanged += this.MyRoomCell_OnCompleted;
         }
@@ -26,8 +25,6 @@ namespace BookMeMobile.Pages
         private void BtnSave_OnClicked(object sender, EventArgs e)
         {
             this.profileViewModel = (ProfileViewModel)this.BindingContext;
-            SelectPage.CurrentUser.FavoriteRoom = this.profileViewModel.FavoriteRoom;
-            SelectPage.CurrentUser.MyRoom = this.profileViewModel.MyRoom;
             btnSave.IsEnabled = false;
         }
 

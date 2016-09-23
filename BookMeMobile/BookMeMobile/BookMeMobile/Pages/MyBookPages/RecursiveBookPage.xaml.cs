@@ -22,9 +22,7 @@ namespace BookMeMobile.Pages.MyBookPages
 
         private ListRoomManager manager;
 
-        public User CurrentUser { get; set; }
-
-        public RecursiveReservationPage(User user, List<Reservation> list)
+        public RecursiveReservationPage(List<Reservation> list)
         {
             this.InitializeComponent();
             this.manager = new ListRoomManager();

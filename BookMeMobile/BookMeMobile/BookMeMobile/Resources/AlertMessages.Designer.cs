@@ -125,6 +125,15 @@ namespace BookMeMobile.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Выбран неверный интервал.
+        /// </summary>
+        internal static string WrongIntervalTime {
+            get {
+                return ResourceManager.GetString("WrongIntervalTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Логин или пароль введены неверно.
         /// </summary>
         internal static string WrongLoginOrPassword {

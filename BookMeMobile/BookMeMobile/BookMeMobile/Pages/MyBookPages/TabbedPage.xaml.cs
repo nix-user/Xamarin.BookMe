@@ -9,13 +9,13 @@ namespace BookMeMobile.Pages.MyBookPages
 {
     public partial class TabPanelPage : TabbedPage
     {
-        public TabPanelPage(User currentUser, IEnumerable<Reservation> allReservations)
+        public TabPanelPage(IEnumerable<Reservation> allReservations)
         {
             this.InitializeComponent();
             List<Reservation> recursive = allReservations.Where(x => x.IsRecursive == true).ToList();
             List<Reservation> noRecursive = allReservations.Where(x => x.IsRecursive == false).ToList();
-            Children.Add(new AllMyBook(currentUser, noRecursive, recursive));
-            Children.Add(new RecursiveReservationPage(currentUser, recursive));
+            Children.Add(new AllMyBook(noRecursive, recursive));
+            Children.Add(new RecursiveReservationPage(recursive));
         }
     }
 }

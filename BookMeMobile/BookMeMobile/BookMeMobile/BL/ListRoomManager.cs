@@ -9,6 +9,7 @@ using BookMeMobile.Entity;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 using BookMeMobile.Pages;
+using BookMeMobile.ViewModels.Concrete;
 using Org.Apache.Http.Impl.Cookie;
 
 namespace BookMeMobile.BL
@@ -110,10 +111,17 @@ namespace BookMeMobile.BL
         /// <summary>
         /// Method search empty rooms related to <paramref name="filter"/>
         /// </summary>
-        /// <param name="filter">Search filter</param>
+        /// <param name="model">Search filter</param>
         /// <returns>operation result with <see cref="Room"/> collection</returns>
-        public async Task<BaseOperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter)
+        public async Task<BaseOperationResult<IEnumerable<Room>>> GetEmptyRoom(SelectModel model)
         {
+            RoomFilterParameters filter = new RoomFilterParameters()
+            {
+                From = model.From,
+                To = model.From,
+                IsLarge = model.IsLarge,
+                HasPolycom = model.HasPolycom
+            };
             return await(this.roomRepository as IRoomRepository)?.GetEmptyRoom(filter);
         }
 
