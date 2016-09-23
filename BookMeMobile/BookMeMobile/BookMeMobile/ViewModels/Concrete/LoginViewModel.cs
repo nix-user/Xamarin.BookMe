@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using BookMeMobile.BL;
 using BookMeMobile.BL.Abstract;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
@@ -48,10 +49,7 @@ namespace BookMeMobile.ViewModels.Concrete
             var operationStatus = await this.ExecuteOperation(async () => await this.authService.AuthAsync(this.model));
             if (operationStatus == StatusCode.Ok)
             {
-                await this.NavigationService.XamarinNavigation.PushAsync(new MainPage(new SelectPage()));
-
-                //TODO: uncomment when SelectPage will be updated to custom mvvm navigation logic
-                //this.NavigationService.ShowViewModel(new LoginViewModel(this.authService, this.NavigationService));
+                this.NavigationService.ShowViewModel(new SelectViewModel(new ListRoomManager(), this.NavigationService));
                 return;
             }
 

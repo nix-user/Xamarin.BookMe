@@ -40,7 +40,10 @@
     <Compile Include="BL\Concrete\AuthService.cs" />
     <Compile Include="BL\Concrete\CustomDependencyService.cs" />
     <Compile Include="Converters\BoolToTextconverter.cs" />
+    <Compile Include="Converters\DateTimeToSpanConverter.cs" />
     <Compile Include="Converters\RoomToStringConverter.cs" />
+    <Compile Include="Binding\InverseBoolConverter.cs" />
+    <Compile Include="Binding\IsStringNullOrEmptyConverter.cs" />
     <Compile Include="BL\Abstract\BaseService.cs" />
     <Compile Include="BL\Abstract\IReservationService.cs" />
     <Compile Include="BL\Abstract\IRoomService.cs" />
@@ -49,6 +52,7 @@
     <Compile Include="Data\Abstract\IHttpHandler.cs" />
     <Compile Include="Data\Abstract\IHttpService.cs" />
     <Compile Include="Data\Abstract\IRepository.cs" />
+    <Compile Include="Data\Abstract\IReservationRepository.cs" />
     <Compile Include="Data\Abstract\IRoomRepository.cs" />
     <Compile Include="Data\BaseRepository.cs" />
     <Compile Include="Data\Concrete\HttpHandler.cs" />
@@ -63,9 +67,17 @@
     <Compile Include="Infrastructure\Abstract\INavigationService.cs" />
     <Compile Include="Infrastructure\Concrete\NavigationService.cs" />
     <Compile Include="Infrastructure\Concrete\NavigationServiceException.cs" />
+    <Compile Include="Model\UserReservationsModel.cs" />
+    <Compile Include="Model\SelectModel.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
+    <Compile Include="Pages\MyReservations\MyReservationsPage.xaml.cs">
+      <DependentUpon>MyReservationsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AddReservationPage.xaml.cs">
       <DependentUpon>AddReservationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MyReservations\ReservationsTab.xaml.cs">
+      <DependentUpon>ReservationsTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\Login\LoginPage.xaml.cs">
@@ -91,15 +103,6 @@
     </Compile>
     <Compile Include="Pages\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\MyBookPages\AllMyBook.xaml.cs">
-      <DependentUpon>AllMyBook.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\MyBookPages\RecursiveBookPage.xaml.cs">
-      <DependentUpon>RecursiveBookPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\MyBookPages\TabbedPage.xaml.cs">
-      <DependentUpon>TabbedPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
@@ -136,6 +139,10 @@
     <Compile Include="ViewModels\Abstract\BaseViewModel.cs" />
     <Compile Include="ViewModels\Concrete\AddReservationViewModel.cs" />
     <Compile Include="ViewModels\Concrete\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\Reservations\MyReservationsViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\SelectViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\Reservations\ReservationsListViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\Reservations\ReservationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">
@@ -233,30 +240,21 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\MyBookPages\RecursiveBookPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Pages\MyBookPages\TabbedPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Pages\MyBookPages\AllMyBook.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config">
     </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\QrBook.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\MyReservations\MyReservationsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -268,6 +266,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\AddReservationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\MyReservations\ReservationsTab.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

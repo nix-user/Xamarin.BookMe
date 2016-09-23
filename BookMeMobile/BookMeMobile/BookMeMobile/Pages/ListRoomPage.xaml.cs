@@ -30,9 +30,9 @@ namespace BookMeMobile.Pages
 
         private Reservation currentBooking;
         private ListRoomManager manager;
-        private RoomFilterParameters currentReservation;
+        private SelectModel currentReservation;
 
-        public ListRoomPage(IEnumerable<Room> search, RoomFilterParameters reservation)
+        public ListRoomPage(IEnumerable<Room> search, SelectModel reservation)
         {
             this.InitializeComponent();
             this.manager = new ListRoomManager();

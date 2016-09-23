@@ -21,5 +21,9 @@ namespace BookMeMobile.Entity
         public int? ResourceId { get; set; }
 
         public TimeSpan Duration { get; set; }
+
+        public string TextPeriod { get; set; }
+
+        public string TextRule { get; set; }
     }
 }

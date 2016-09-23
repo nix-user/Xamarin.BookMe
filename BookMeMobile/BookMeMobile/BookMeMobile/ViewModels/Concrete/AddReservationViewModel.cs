@@ -10,18 +10,18 @@ namespace BookMeMobile.ViewModels.Concrete
 {
     internal class AddReservationViewModel : BaseViewModel
     {
-        private ListRoomManager manager;
+        private ListRoomManager service;
         private AddReservationModel model;
 
-        public AddReservationViewModel(RoomFilterParameters filterParametr, int idRoom, INavigationService navigationService) : base(navigationService)
+        public AddReservationViewModel(SelectModel filterParametr, int idRoom, INavigationService navigationService) : base(navigationService)
         {
             this.model = new AddReservationModel(filterParametr, idRoom);
-            this.manager = new ListRoomManager();
+            this.service = new ListRoomManager();
             this.AddReservationCommand = new Command(this.AddReservation);
             this.GoBackCommand = new Command(this.GoBack);
         }
 
-        private async void GoBack(object obj)
+        private async void GoBack()
         {
             await this.NavigationService.XamarinNavigation.PopModalAsync();
         }
@@ -61,12 +61,12 @@ namespace BookMeMobile.ViewModels.Concrete
             get { return this.model.HasPolycom; }
         }
 
-        public async void AddReservation(object someObject)
+        public async void AddReservation()
         {
             if (!string.IsNullOrEmpty(this.Title))
             {
                 var operationResult =
-                    (await this.ExecuteOperation(async () => await this.manager.AddReservation(this.model)))
+                    (await this.ExecuteOperation(async () => await this.service.AddReservation(this.model)))
                         .Status;
                 if (operationResult == StatusCode.Ok)
                 {

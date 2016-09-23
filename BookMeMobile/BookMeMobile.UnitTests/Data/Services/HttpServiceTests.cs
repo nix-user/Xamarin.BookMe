@@ -38,7 +38,7 @@ namespace BookMeMobile.UnitTests.Data.Services
 
             this.dependencyServiceMock.Setup(m => m.Get<IFileWorker>()).Returns(this.fileWorkerMock.Object);
             this.httpHandlerMock.SetupGet(m => m.RequestHeaders).Returns(this.httpRequestHeadersMock.Object);
-            this.fileWorkerMock.Setup(m => m.LoadTextAsync()).Returns(Task.FromResult(string.Empty));
+            this.fileWorkerMock.Setup(m => m.LoadTextAsync(It.IsAny<string>())).Returns(Task.FromResult(string.Empty));
         }
 
         [TestMethod]

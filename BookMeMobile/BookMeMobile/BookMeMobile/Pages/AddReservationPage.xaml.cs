@@ -17,10 +17,10 @@ namespace BookMeMobile.Pages
 {
     public partial class AddReservationPage : BasePage
     {
-        public AddReservationPage(RoomFilterParameters filterparametr, int idRoom)
+        public AddReservationPage(SelectModel filterParametr, int idRoom)
         {
             this.InitializeComponent();
-            var viewModel = new AddReservationViewModel(filterparametr, idRoom, new NavigationService(this.Navigation));
+            var viewModel = new AddReservationViewModel(filterParametr, idRoom, new NavigationService(this.Navigation));
             this.SetUpViewModelSubscriptions(viewModel);
             this.BindingContext = viewModel;
             this.SetUpActivityIndicator(this.loader, this.rootLayout);

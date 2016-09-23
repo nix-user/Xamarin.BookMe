@@ -10,6 +10,7 @@ using BookMeMobile.Enums;
 using BookMeMobile.Interface;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
+using BookMeMobile.Resources;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 
@@ -26,7 +27,7 @@ namespace BookMeMobile.Data
         {
             this.dependencyService = dependencyService;
             this.httpHandler = httpHandler;
-            string token = this.dependencyService.Get<IFileWorker>().LoadTextAsync().Result;
+            string token = this.dependencyService.Get<IFileWorker>().LoadTextAsync(FileResources.FileName).Result;
             if (token != null)
             {
                 this.httpHandler.RequestHeaders.Add(AuthorizationHeaderName, new AuthenticationHeaderValue("bearer", token).ToString());
@@ -73,12 +74,16 @@ namespace BookMeMobile.Data
         {
             try
             {
-                var response = await this.httpHandler.DeleteAsync(route);
-                return await this.CreateOperationResultFromResponse(response);
+                var uri = new Uri(route);
+				var response = await this.httpHandler.DeleteAsync(route);
+				return await this.CreateOperationResultFromResponse(response);
             }
             catch (Exception)
             {
-                return new BaseOperationResult() { Status = StatusCode.ConnectionProblem };
+                return new BaseOperationResult()
+                {
+                    Status = StatusCode.ConnectionProblem
+                };
             }
         }
 

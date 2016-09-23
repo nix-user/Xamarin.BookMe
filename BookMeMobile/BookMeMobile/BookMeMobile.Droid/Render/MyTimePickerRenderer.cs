@@ -9,6 +9,7 @@ using Java.Lang;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using AndroidTimePicker = Android.Widget.TimePicker;
+using String = System.String;
 using TextAlignment = Android.Views.TextAlignment;
 using TimePicker = Xamarin.Forms.TimePicker;
 
@@ -25,10 +26,11 @@ namespace BookMeMobile.Droid.Render
             base.OnElementChanged(e);
             this.SetNativeControl(new EditText(Forms.Context));
             this.Control.Click += this.Control_Click;
-            this.Control.Text = e.NewElement.Time.ToString(@"hh\:mm");
+            TimeSpan currentTime = e.NewElement.Time;
+            this.Control.Text = $"{currentTime.Hours}:{currentTime.Minutes}";
             this.Control.KeyListener = null;
             this.Control.FocusChange += this.Control_FocusChange;
-            this.Control.TextSize = 50;
+            this.Control.TextSize = 45;
         }
 
         private void Control_FocusChange(object sender, FocusChangeEventArgs e)
