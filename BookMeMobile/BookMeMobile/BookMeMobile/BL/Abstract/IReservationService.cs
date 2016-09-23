@@ -11,7 +11,7 @@ namespace BookMeMobile.BL.Abstract
     internal interface IReservationService
     {
         /// <summary>
-        /// A method to recieve all the grouped reservations of the current user 
+        /// A method to receive all the grouped reservations of the current user
         /// </summary>
         /// <returns>An operation result with grouped reservations</returns>
         Task<BaseOperationResult<UserReservationsModel>> GetUserReservations();

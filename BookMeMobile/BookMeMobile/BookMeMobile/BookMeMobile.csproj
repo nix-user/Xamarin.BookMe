@@ -49,6 +49,7 @@
     <Compile Include="BL\Concrete\RoomService.cs" />
     <Compile Include="CustomViews\ViewCellWithCommand.cs" />
     <Compile Include="Data\Abstract\IRepository.cs" />
+    <Compile Include="Data\Abstract\IReservationRepository.cs" />
     <Compile Include="Data\Abstract\IRoomRepository.cs" />
     <Compile Include="Data\BaseRepository.cs" />
     <Compile Include="Data\ReservationRepository.cs" />

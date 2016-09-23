@@ -10,14 +10,14 @@ using Xamarin.Forms;
 namespace BookMeMobile.Binding
 {
     /// <summary>
-    /// A converter to inverse a bool value from XAML code 
+    /// A converter to inverse a boolean value from XAML code
     /// </summary>
     public class InverseBoolConverter : IValueConverter
     {
         /// <summary>
         /// Convert method
         /// </summary>
-        /// <param name="value">A bool value</param>
+        /// <param name="value">A boolean value</param>
         /// <returns>Inverted value</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -27,7 +27,7 @@ namespace BookMeMobile.Binding
         /// <summary>
         /// Convert back method
         /// </summary>
-        /// <param name="value">A bool value</param>
+        /// <param name="value">A boolean value</param>
         /// <returns>Inverted value</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using BookMeMobile.BL.Abstract;
 using BookMeMobile.Data;
+using BookMeMobile.Data.Abstract;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 
@@ -11,11 +12,11 @@ namespace BookMeMobile.BL.Concrete
     /// </summary>
     internal class ReservationService : BaseService, IReservationService
     {
-        private readonly ReservationRepository reservationsRepository = new ReservationRepository();
+        private readonly IReservationRepository reservationsRepository;
 
-        public ReservationService()
+        public ReservationService(IReservationRepository reservationsRepository)
         {
-            this.reservationsRepository = new ReservationRepository();
+            this.reservationsRepository = reservationsRepository;
         }
 
         public async Task<BaseOperationResult<UserReservationsModel>> GetUserReservations()

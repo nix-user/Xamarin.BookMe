@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using BookMeMobile.BL.Abstract;
 using BookMeMobile.BL.Concrete;
+using BookMeMobile.Data.Abstract;
 using BookMeMobile.Entity;
 using BookMeMobile.Enums;
 using Xamarin.Forms;
@@ -31,9 +32,9 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
             }
         }
 
-        public ReservationsListViewModel(IEnumerable<Reservation> reservations, bool isToday = false)
+        public ReservationsListViewModel(IReservationRepository reservationRepository, IEnumerable<Reservation> reservations, bool isToday = false)
         {
-            this.reservationService = new ReservationService();
+            this.reservationService = new ReservationService(reservationRepository);
 
             var reservitionViewModelList = reservations.Select(reservation => new ReservationViewModel(reservation, this));
             this.Reservations = new ObservableCollection<ReservationViewModel>(reservitionViewModelList);
