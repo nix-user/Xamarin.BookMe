@@ -29,7 +29,7 @@ namespace BookMeMobile.ViewModels.Concrete
             this.GoBackCommand = new Command(this.GoBack);
         }
 
-        private async void GoBack(object obj)
+        private async void GoBack()
         {
           await this.Navigation.PopModalAsync();
         }
@@ -69,7 +69,7 @@ namespace BookMeMobile.ViewModels.Concrete
             get { return this.model.HasPolycom; }
         }
 
-        public async void AddReservation(object someObject)
+        public async void AddReservation()
         {
             if (!string.IsNullOrEmpty(this.Title))
             {

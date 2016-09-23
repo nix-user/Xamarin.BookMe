@@ -35,7 +35,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         public ICommand GoToSearch { get; protected set; }
 
-        private async void Search(object element)
+        private async void Search()
         {
             if (this.model.From < this.model.To)
             {
@@ -57,7 +57,7 @@ namespace BookMeMobile.ViewModels.Concrete
             }
         }
 
-        private async void GetMyReservation(object element)
+        private async void GetMyReservation()
         {
             var operationResult = (await this.ExecuteOperation(async () => await this.service.GetAllUserReservation()));
             if (operationResult.Status == StatusCode.Ok)
