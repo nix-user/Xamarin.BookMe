@@ -11,5 +11,7 @@ namespace BookMeMobile.BL.Abstract
     internal interface IReservationService
     {
         Task<BaseOperationResult<UserReservationsModel>> GetUserReservations();
+
+        Task<BaseOperationResult> RemoveReservation(int id);
     }
 }

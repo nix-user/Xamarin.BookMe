@@ -23,5 +23,10 @@ namespace BookMeMobile.BL.Concrete
         {
             return await this.reservationsRepository.GetUserReservations();
         }
+
+        public async Task<BaseOperationResult> RemoveReservation(int id)
+        {
+            return await this.reservationsRepository.RemoveReservation(id);
+        }
     }
 }

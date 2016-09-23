@@ -99,11 +99,6 @@ namespace BookMeMobile.BL
             return await this.roomRepository.GetEmptyRoom(filter);
         }
 
-        public async Task<BaseOperationResult<IEnumerable<Reservation>>> GetAllUserReservation()
-        {
-            return await this.reservationRepository.GetUserReservations();
-        }
-
         public async Task<BaseOperationResult<IEnumerable<Reservation>>> GetRoomCurrentReservations(string number)
         {
             var reservationCurrent = new RoomReservationsRequestModel()

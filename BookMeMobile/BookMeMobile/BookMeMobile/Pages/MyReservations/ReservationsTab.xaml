@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:binding="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
              xmlns:customViews="clr-namespace:BookMeMobile.CustomViews;assembly=BookMeMobile"
+             xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.MyReservations.ReservationsTab">
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -33,8 +34,8 @@
                     <Label Grid.Row="0" Grid.Column="0" Text="{Binding RoomNumber}" FontSize="Large"/>
                     <Image Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Source="cycle.png" IsVisible="{Binding IsRecursive}"/>
                   </Grid>
-                  <Label Text="{Binding TextPeriod}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
                   <Label Text="{Binding Title}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
+                  <Label Text="{Binding TextPeriod}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
                   <StackLayout  IsVisible="{Binding Parent.IsToday, Converter={StaticResource InverseBool} }">
                     <Label IsVisible="{Binding TextRule, Converter={StaticResource IsStringNullOrEmpty} }" Text="{Binding TextRule}" FontSize="Small" LineBreakMode="TailTruncation"></Label>
                   </StackLayout>
@@ -46,4 +47,4 @@
       </ListView>
     </StackLayout>
   </ContentPage.Content>
-</ContentPage>
+</pages:BasePage>

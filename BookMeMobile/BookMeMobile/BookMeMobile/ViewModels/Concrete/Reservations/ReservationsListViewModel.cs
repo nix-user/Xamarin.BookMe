@@ -5,16 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using BookMeMobile.BL.Abstract;
+using BookMeMobile.BL.Concrete;
 using BookMeMobile.Entity;
+using BookMeMobile.Enums;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete.Reservations
 {
     public class ReservationsListViewModel : BaseViewModel
     {
+        private readonly IReservationService reservationService;
+
         private ObservableCollection<ReservationViewModel> reservations;
 
-        public MyReservationsViewModel Parent { get; protected set; }
+        public Func<ReservationViewModel, Task<bool>> ShowRemoveConfirmationDialog { get; set; }
 
         public ObservableCollection<ReservationViewModel> Reservations
         {
@@ -26,12 +31,11 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
             }
         }
 
-        public ReservationsListViewModel(IEnumerable<Reservation> reservations, MyReservationsViewModel parent, bool isToday = false)
+        public ReservationsListViewModel(IEnumerable<Reservation> reservations, bool isToday = false)
         {
-            this.Parent = parent;
+            this.reservationService = new ReservationService();
 
             var reservitionViewModelList = reservations.Select(reservation => new ReservationViewModel(reservation, this));
-
             this.Reservations = new ObservableCollection<ReservationViewModel>(reservitionViewModelList);
             this.IsToday = isToday;
             this.RemoveReservationCommand = new Command<ReservationViewModel>(this.RemoveReservation);
@@ -41,9 +45,22 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
 
         public ICommand RemoveReservationCommand { get; protected set; }
 
-        private void RemoveReservation(ReservationViewModel reservation)
+        private async void RemoveReservation(ReservationViewModel reservation)
         {
-            this.Parent.RemoveReservationAction?.Invoke(reservation);
+            var isConfirmed = await this.ShowRemoveConfirmationDialog(reservation);
+            if (isConfirmed)
+            {
+                var operationResult = await this.reservationService.RemoveReservation(reservation.Id);
+                if (operationResult.Status == StatusCode.Ok)
+                {
+                    var reservationToRemove = this.Reservations.FirstOrDefault(x => x.Id == reservation.Id);
+                    this.Reservations.Remove(reservationToRemove);
+                }
+                else
+                {
+                    this.ShowErrorMessage(operationResult.Status);
+                }
+            }
         }
     }
 }

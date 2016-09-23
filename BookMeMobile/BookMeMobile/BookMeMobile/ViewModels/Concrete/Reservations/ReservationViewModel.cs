@@ -19,6 +19,8 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
 
         public ReservationsListViewModel Parent { get; protected set; }
 
+        public int Id => this.reservation.Id;
+
         public string Title => this.reservation.Title;
 
         public string TextPeriod => this.reservation.TextPeriod;
