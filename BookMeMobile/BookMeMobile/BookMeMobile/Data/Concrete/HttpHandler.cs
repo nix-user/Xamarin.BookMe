@@ -13,7 +13,7 @@ namespace BookMeMobile.Data.Concrete
     {
         private HttpClient httpClient = new HttpClient();
 
-        public HttpRequestHeaders RequestHeaders
+        public HttpHeaders RequestHeaders
         {
             get { return this.httpClient.DefaultRequestHeaders; }
         }

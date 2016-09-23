@@ -10,7 +10,7 @@ namespace BookMeMobile.Data.Abstract
 {
     public interface IHttpHandler
     {
-        HttpRequestHeaders RequestHeaders { get; }
+        HttpHeaders RequestHeaders { get; }
 
         Task<HttpResponseMessage> GetAsync(string url);
 

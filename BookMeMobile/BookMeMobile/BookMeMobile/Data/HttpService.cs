@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -16,6 +17,8 @@ namespace BookMeMobile.Data
 {
     public class HttpService : IHttpService
     {
+        private const string AuthorizationHeaderName = "Authorize";
+
         private readonly IDependencyService dependencyService;
         private readonly IHttpHandler httpHandler;
 
@@ -26,15 +29,15 @@ namespace BookMeMobile.Data
             string token = this.dependencyService.Get<IFileWorker>().LoadTextAsync().Result;
             if (token != null)
             {
-                this.httpHandler.RequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+                this.httpHandler.RequestHeaders.Add(AuthorizationHeaderName, new AuthenticationHeaderValue("bearer", token).ToString());
             }
         }
 
-        public async Task<BaseOperationResult<T>> Get<T>(string root)
+        public async Task<BaseOperationResult<T>> Get<T>(string route)
         {
             try
             {
-                var response = await this.httpHandler.GetAsync(root);
+                var response = await this.httpHandler.GetAsync(route);
                 return await this.CreateOperationResultFromResponse<T>(response);
             }
             catch (Exception)
@@ -46,7 +49,7 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<BaseOperationResult> Post<TContent>(string root, TContent content)
+        public async Task<BaseOperationResult> Post<TContent>(string route, TContent content)
         {
             string jsonFormat = "application/json";
 
@@ -54,7 +57,7 @@ namespace BookMeMobile.Data
             var jsonContent = new StringContent(json, Encoding.UTF8, jsonFormat);
             try
             {
-                var response = await this.httpHandler.PostAsync(root, jsonContent);
+                var response = await this.httpHandler.PostAsync(route, jsonContent);
                 return await this.CreateOperationResultFromResponse(response);
             }
             catch (Exception)
@@ -66,11 +69,11 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<BaseOperationResult> Delete(string root)
+        public async Task<BaseOperationResult> Delete(string route)
         {
             try
             {
-                var response = await this.httpHandler.DeleteAsync(root);
+                var response = await this.httpHandler.DeleteAsync(route);
                 if (response.IsSuccessStatusCode)
                 {
                     return new BaseOperationResult() { Status = StatusCode.Ok };

@@ -9,10 +9,10 @@ namespace BookMeMobile.Data.Abstract
 {
     public interface IHttpService
     {
-        Task<BaseOperationResult<T>> Get<T>(string root);
+        Task<BaseOperationResult<T>> Get<T>(string route);
 
-        Task<BaseOperationResult> Post<TContent>(string root, TContent content);
+        Task<BaseOperationResult> Post<TContent>(string route, TContent content);
 
-        Task<BaseOperationResult> Delete(string root);
+        Task<BaseOperationResult> Delete(string route);
     }
 }
