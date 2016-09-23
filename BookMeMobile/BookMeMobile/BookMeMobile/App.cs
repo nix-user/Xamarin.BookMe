@@ -6,6 +6,7 @@ using BookMeMobile.Data;
 using BookMeMobile.Interface;
 using BookMeMobile.Pages;
 using BookMeMobile.Pages.Login;
+using BookMeMobile.Resources;
 using Xamarin.Forms;
 
 namespace BookMeMobile
@@ -14,7 +15,7 @@ namespace BookMeMobile
     {
         public App()
         {
-            if (DependencyService.Get<IFileWorker>().ExistsAsync().Result)
+            if (DependencyService.Get<IFileWorker>().ExistsAsync(FileResources.FileName).Result)
             {
                 this.MainPage = new NavigationPage(new MainPage());
             }

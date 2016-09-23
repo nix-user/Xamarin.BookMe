@@ -12,42 +12,38 @@ namespace BookMeMobile.Touch.FileWork
 {
     public class FileWorker : IFileWorker
     {
-        private readonly string fileName = FileResources.FileName;
-
-        public Task DeleteAsync()
+        public Task DeleteAsync(string fileName)
         {
-            File.Delete(this.GetFilePath());
-            return Task.FromResult(true);
+            return Task.Run(() => File.Delete(this.GetFilePath(fileName)));
         }
 
-        public Task<bool> ExistsAsync()
+        public Task<bool> ExistsAsync(string fileName)
         {
-            string filepath = this.GetFilePath();
-            bool exists = File.Exists(filepath);
-            return Task<bool>.FromResult(exists);
+            string filepath = this.GetFilePath(fileName);
+            return Task.Run(() => File.Exists(filepath));
         }
 
-        public async Task<string> LoadTextAsync()
+        public async Task<string> LoadTextAsync(string fileName)
         {
-            string filepath = this.GetFilePath();
+            string filepath = this.GetFilePath(fileName);
             using (StreamReader reader = File.OpenText(filepath))
             {
-                return reader.ReadToEndAsync().Result;
+                return await reader.ReadToEndAsync();
             }
         }
 
-        public async Task SaveTextAsync(string text)
+        public async Task SaveTextAsync(string fileName, string text)
         {
-            string filepath = this.GetFilePath();
+            string filepath = this.GetFilePath(fileName);
             using (StreamWriter writer = File.CreateText(filepath))
             {
                 await writer.WriteAsync(text);
             }
         }
 
-        private string GetFilePath()
+        private string GetFilePath(string fileName)
         {
-            return Path.Combine(this.GetDocsPath(), this.fileName);
+            return Path.Combine(this.GetDocsPath(), fileName);
         }
 
         private string GetDocsPath()

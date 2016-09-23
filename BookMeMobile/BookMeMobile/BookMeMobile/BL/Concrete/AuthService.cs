@@ -8,6 +8,7 @@ using BookMeMobile.Data;
 using BookMeMobile.Enums;
 using BookMeMobile.Interface;
 using BookMeMobile.Model.Login;
+using BookMeMobile.Resources;
 using Xamarin.Forms;
 
 namespace BookMeMobile.BL.Concrete
@@ -57,7 +58,7 @@ namespace BookMeMobile.BL.Concrete
         {
             var contentResponce = await response.Content.ReadAsStringAsync();
             var token = this.ParseResponse(contentResponce);
-            await DependencyService.Get<IFileWorker>().SaveTextAsync(token);
+            await DependencyService.Get<IFileWorker>().SaveTextAsync(FileResources.FileName, token);
         }
 
         private async Task<HttpResponseMessage> SendAuthRequest(LoginModel user)
