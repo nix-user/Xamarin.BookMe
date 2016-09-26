@@ -27,7 +27,7 @@ namespace BookMeMobile.Droid.Render
             this.SetNativeControl(new EditText(Forms.Context));
             this.Control.Click += this.Control_Click;
             TimeSpan currentTime = e.NewElement.Time;
-            this.Control.Text = $"{currentTime.Hours}:{currentTime.Minutes}";
+            this.Control.Text = currentTime.ToString(@"hh\:mm");
             this.Control.KeyListener = null;
             this.Control.FocusChange += this.Control_FocusChange;
             this.Control.TextSize = 45;
@@ -50,7 +50,10 @@ namespace BookMeMobile.Droid.Render
         {
             if (this.dialog == null)
             {
-                this.dialog = new TimePickerDialog(Forms.Context, this, DateTime.Now.Hour, DateTime.Now.Minute, true);
+                string[] controlTime = this.Control.Text.Split(':');
+                int hours = int.Parse(controlTime[0]);
+                int minutes = int.Parse(controlTime[1]);
+                this.dialog = new TimePickerDialog(Forms.Context, this, hours, minutes, true);
             }
 
             this.dialog.Show();
