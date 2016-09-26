@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using BookMeMobile.Entity;
+using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Pages;
 using BookMeMobile.ViewModels;
 using Xamarin.Forms;
@@ -36,7 +37,7 @@ namespace BookMeMobile.Model
             get { return this.ListRoom.Any() ? null : "Комнат нет"; }
         }
 
-        public ListRoomViewModel(IEnumerable<Room> rooms, SelectModel selectModel)
+        public ListRoomViewModel(IEnumerable<Room> rooms, INavigationService navigationService, SelectModel selectModel) : base(navigationService)
         {
             this.ListRoom = rooms.Where(x => !UnallowedResources.Contains(x.Number)).Select(x => new RoomViewModel()
             {
@@ -52,7 +53,7 @@ namespace BookMeMobile.Model
         public async void Reserve(object selectElement)
         {
             RoomViewModel selectedRoom = selectElement as RoomViewModel;
-            await this.Navigation.PushModalAsync(new AddReservationPage(this.selectModel, selectedRoom));
+            await this.NavigationService.XamarinNavigation.PushModalAsync(new AddReservationPage(this.selectModel, selectedRoom));
         }
     }
 }

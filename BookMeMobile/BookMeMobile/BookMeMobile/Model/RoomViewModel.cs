@@ -8,7 +8,7 @@ using BookMeMobile.ViewModels;
 
 namespace BookMeMobile.Model
 {
-    public class RoomViewModel : BaseViewModel
+    public class RoomViewModel
     {
         public Room Room { get; set; }
 

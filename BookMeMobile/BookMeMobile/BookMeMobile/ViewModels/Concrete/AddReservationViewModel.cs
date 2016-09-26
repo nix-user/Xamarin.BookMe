@@ -13,7 +13,7 @@ namespace BookMeMobile.ViewModels.Concrete
         private ListRoomManager service;
         private AddReservationModel model;
 
-        public AddReservationViewModel(SelectModel filterParametr, INavigationService navigationService, RoomViewModel roomModel):base(navigationService)
+        public AddReservationViewModel(SelectModel filterParametr, INavigationService navigationService, RoomViewModel roomModel) : base(navigationService)
         {
             this.model = new AddReservationModel(filterParametr, roomModel);
             this.service = new ListRoomManager();
