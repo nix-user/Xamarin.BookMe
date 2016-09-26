@@ -18,7 +18,7 @@ namespace BookMeMobile.Data
 {
     public class HttpService : IHttpService
     {
-        private const string AuthorizationHeaderName = "Authorize";
+        private const string AuthorizationHeaderName = "Authorization";
 
         private readonly IDependencyService dependencyService;
         private readonly IHttpHandler httpHandler;

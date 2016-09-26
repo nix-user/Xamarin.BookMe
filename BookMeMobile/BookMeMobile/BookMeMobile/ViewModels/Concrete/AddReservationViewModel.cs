@@ -78,6 +78,7 @@ namespace BookMeMobile.ViewModels.Concrete
                 {
                     this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
                     await this.NavigationService.XamarinNavigation.PopModalAsync();
+                    return;
                 }
 
                 this.ShowErrorMessage(operationResult);

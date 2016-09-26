@@ -20,18 +20,19 @@ namespace BookMeMobile.Pages
         {
             this.InitializeComponent();
             var masterPageItems = new List<MenuPageItem>();
-            masterPageItems.Add(new MenuPageItem
-            {
-                Title = "Профиль",
-                IconSource = "profileMenu.png",
-                TargetType = typeof(ProfilePage)
-            });
-            masterPageItems.Add(new MenuPageItem
-            {
-                Title = "QR Бронирование",
-                IconSource = "profileMenu.png",
-                TargetType = typeof(QrReservation)
-            });
+            //TODO: uncomment after fix
+            //masterPageItems.Add(new MenuPageItem
+            //{
+            //    Title = "Профиль",
+            //    IconSource = "profileMenu.png",
+            //    TargetType = typeof(ProfilePage)
+            //});
+            //masterPageItems.Add(new MenuPageItem
+            //{
+            //    Title = "QR Бронирование",
+            //    IconSource = "profileMenu.png",
+            //    TargetType = typeof(QrReservation)
+            //});
             listView.ItemsSource = masterPageItems;
         }
     }
