@@ -20,7 +20,7 @@ namespace BookMeMobile
                 var selectPage = new SelectPage();
                 var navigationService = new NavigationService(selectPage.Navigation);
                 selectPage.ViewModel = new SelectViewModel(new ListRoomManager(), navigationService);
-                this.MainPage = new NavigationPage(selectPage);
+                this.MainPage = new NavigationPage(new MasterPage(selectPage));
             }
             else
             {

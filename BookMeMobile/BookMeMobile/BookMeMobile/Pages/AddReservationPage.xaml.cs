@@ -17,13 +17,17 @@ namespace BookMeMobile.Pages
 {
     public partial class AddReservationPage : BasePage
     {
-        public AddReservationPage(SelectModel filterParametr, RoomViewModel roomModel)
+        public AddReservationPage()
         {
             this.InitializeComponent();
-            var viewModel = new AddReservationViewModel(filterParametr, new NavigationService(this.Navigation), roomModel);
-            this.SetUpViewModelSubscriptions(viewModel);
-            this.BindingContext = viewModel;
             this.SetUpActivityIndicator(this.loader, this.rootLayout);
+        }
+
+        protected override void OnViewModelSet()
+        {
+            base.OnViewModelSet();
+            this.SetUpViewModelSubscriptions(this.ViewModel);
+            this.BindingContext = this.ViewModel;
         }
     }
 }

@@ -109,8 +109,8 @@
     <Compile Include="Pages\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\QrBook.xaml.cs">
-      <DependentUpon>QrBook.xaml</DependentUpon>
+    <Compile Include="Pages\QrReservation.xaml.cs">
+      <DependentUpon>QrReservation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SelectPage.xaml.cs">
       <DependentUpon>SelectPage.xaml</DependentUpon>
@@ -141,6 +141,7 @@
     <Compile Include="ViewModels\Abstract\BaseViewModel.cs" />
     <Compile Include="ViewModels\Concrete\AddReservationViewModel.cs" />
     <Compile Include="ViewModels\Concrete\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\MasterViewModel.cs" />
     <Compile Include="ViewModels\Concrete\Reservations\MyReservationsViewModel.cs" />
     <Compile Include="ViewModels\Concrete\SelectViewModel.cs" />
     <Compile Include="ViewModels\Concrete\Reservations\ReservationsListViewModel.cs" />
@@ -247,7 +248,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\QrBook.xaml">
+    <EmbeddedResource Include="Pages\QrReservation.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
