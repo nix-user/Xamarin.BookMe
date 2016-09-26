@@ -63,7 +63,9 @@
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Enums\StatusCode.cs" />
     <Compile Include="Model\AddReservationModel.cs" />
+    <Compile Include="ViewModels\Concrete\ListRoomViewModel.cs" />
     <Compile Include="Model\Login\LoginModel.cs" />
+    <Compile Include="Model\RoomViewModel.cs" />
     <Compile Include="Infrastructure\Abstract\INavigationService.cs" />
     <Compile Include="Infrastructure\Concrete\NavigationService.cs" />
     <Compile Include="Infrastructure\Concrete\NavigationServiceException.cs" />
