@@ -20,14 +20,15 @@ namespace BookMeMobile.Droid.Render
     public class MyTimePickerRenderer : ViewRenderer<TimePicker, EditText>, TimePickerDialog.IOnTimeSetListener, IJavaObject, IDisposable
     {
         private TimePickerDialog dialog = null;
+        private TimeSpan currentTime;
 
         protected override void OnElementChanged(ElementChangedEventArgs<TimePicker> e)
         {
             base.OnElementChanged(e);
             this.SetNativeControl(new EditText(Forms.Context));
             this.Control.Click += this.Control_Click;
-            TimeSpan currentTime = e.NewElement.Time;
-            this.Control.Text = currentTime.ToString(@"hh\:mm");
+            this.currentTime = e.NewElement.Time;
+            this.Control.Text = this.currentTime.ToString(@"hh\:mm");
             this.Control.KeyListener = null;
             this.Control.FocusChange += this.Control_FocusChange;
             this.Control.TextSize = 45;
@@ -50,10 +51,7 @@ namespace BookMeMobile.Droid.Render
         {
             if (this.dialog == null)
             {
-                string[] controlTime = this.Control.Text.Split(':');
-                int hours = int.Parse(controlTime[0]);
-                int minutes = int.Parse(controlTime[1]);
-                this.dialog = new TimePickerDialog(Forms.Context, this, hours, minutes, true);
+                this.dialog = new TimePickerDialog(Forms.Context, this, this.currentTime.Hours, this.currentTime.Minutes, true);
             }
 
             this.dialog.Show();
