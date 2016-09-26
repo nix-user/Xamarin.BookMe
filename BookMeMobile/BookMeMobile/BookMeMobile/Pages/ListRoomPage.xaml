@@ -15,12 +15,11 @@
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell>
-              <ViewCell.ContextActions>
-                <MenuItem Text="Зарезервировать"
-                      Command="{Binding Path=ListViewModel.ReserveCommand}" CommandParameter="{Binding}" IsDestructive="True"/>
-              </ViewCell.ContextActions>
               <ViewCell.View>
+                <StackLayout Orientation="Horizontal">
                 <Label  Text = "{Binding NumberRoom,StringFormat=Комната: '{0}' }" FontSize="Medium"  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                <Button HorizontalOptions="EndAndExpand" x:Name="btnBooking" Text="Бронировать" VerticalOptions="Fill" FontSize="Large" Command="{Binding Path=ListViewModel.ReserveCommand}" CommandParameter="{Binding}"/>
+                  </StackLayout>
               </ViewCell.View>
             </ViewCell>
           </DataTemplate>
