@@ -1,6 +1,8 @@
 ﻿using System.Windows.Input;
-using BookMeMobile.BL.Concrete;
+using BookMeMobile.BL;
+using BookMeMobile.BL.Abstract;
 using BookMeMobile.Enums;
+using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model.Login;
 using BookMeMobile.Pages;
 using BookMeMobile.Resources;
@@ -8,18 +10,18 @@ using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete
 {
-    internal class LoginViewModel : BaseViewModel
+    public class LoginViewModel : BaseViewModel
     {
-        private readonly AuthService authService;
+        private readonly IAuthService authService;
         private LoginModel model;
 
         public ICommand SignInCommand { get; private set; }
 
-        public LoginViewModel()
+        public LoginViewModel(IAuthService authService, INavigationService navigationService) : base(navigationService)
         {
+            this.authService = authService;
             this.SignInCommand = new Command(this.SignIn);
             this.model = new LoginModel();
-            this.authService = new AuthService();
         }
 
         public string Login
@@ -47,7 +49,7 @@ namespace BookMeMobile.ViewModels.Concrete
             var operationStatus = await this.ExecuteOperation(async () => await this.authService.AuthAsync(this.model));
             if (operationStatus == StatusCode.Ok)
             {
-                await this.Navigation.PushAsync(new MainPage(new SelectPage()));
+                this.NavigationService.ShowViewModel(new SelectViewModel(new ListRoomManager(), this.NavigationService));
                 return;
             }
 

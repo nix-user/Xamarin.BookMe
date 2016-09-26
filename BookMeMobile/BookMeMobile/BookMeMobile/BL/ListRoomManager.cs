@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using BookMeMobile.BL.Concrete;
 using BookMeMobile.Data;
 using BookMeMobile.Data.Abstract;
+using BookMeMobile.Data.Concrete;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
@@ -24,8 +26,8 @@ namespace BookMeMobile.BL
 
         public ListRoomManager()
         {
-            this.reservationRepository = new ReservationRepository();
-            this.roomRepository = new RoomRepository();
+            this.reservationRepository = new ReservationRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler()));
+            this.roomRepository = new RoomRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler()));
         }
 
         /// <summary>

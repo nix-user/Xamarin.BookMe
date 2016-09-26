@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using BookMeMobile.BL;
-using BookMeMobile.Entity;
 using BookMeMobile.Enums;
+using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model;
-using BookMeMobile.OperationResults;
-using BookMeMobile.Pages;
 using BookMeMobile.Resources;
 using Xamarin.Forms;
 
@@ -21,7 +13,7 @@ namespace BookMeMobile.ViewModels.Concrete
         private ListRoomManager service;
         private AddReservationModel model;
 
-        public AddReservationViewModel(SelectModel filterParametr, int idRoom)
+        public AddReservationViewModel(SelectModel filterParametr, int idRoom, INavigationService navigationService) : base(navigationService)
         {
             this.model = new AddReservationModel(filterParametr, idRoom);
             this.service = new ListRoomManager();
@@ -31,7 +23,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private async void GoBack()
         {
-          await this.Navigation.PopModalAsync();
+            await this.NavigationService.XamarinNavigation.PopModalAsync();
         }
 
         public ICommand AddReservationCommand { get; protected set; }
@@ -79,7 +71,7 @@ namespace BookMeMobile.ViewModels.Concrete
                 if (operationResult == StatusCode.Ok)
                 {
                     this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
-                    await this.Navigation.PopModalAsync();
+                    await this.NavigationService.XamarinNavigation.PopModalAsync();
                 }
 
                 this.ShowErrorMessage(operationResult);
