@@ -7,10 +7,11 @@ using System.Windows.Input;
 using BookMeMobile.BL;
 using BookMeMobile.BL.Concrete;
 using BookMeMobile.Enums;
+using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model;
 using BookMeMobile.Pages;
 using BookMeMobile.Pages.Login;
-using BookMeMobile.Pages.MyBookPages;
+using BookMeMobile.Pages.MyReservations;
 using BookMeMobile.Resources;
 using Java.Sql;
 using Javax.Security.Auth;
@@ -23,10 +24,11 @@ namespace BookMeMobile.ViewModels.Concrete
         private SelectModel model;
         private ListRoomManager service;
 
-        public SelectViewModel()
+        public SelectViewModel(ListRoomManager listRoomManager, INavigationService navigationService) : base(navigationService)
         {
             this.model = new SelectModel();
-            this.service = new ListRoomManager();
+            this.service = listRoomManager;
+
             this.GoToMyReservation = new Command(this.GetMyReservation);
             this.GoToSearch = new Command(this.Search);
         }
@@ -44,7 +46,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
                 if (operationResult.Status == StatusCode.Ok)
                 {
-                    await this.Navigation.PushAsync(new MainPage(new ListRoomPage(operationResult.Result, this.model)));
+                    await this.NavigationService.XamarinNavigation.PushAsync(new MainPage(new ListRoomPage(operationResult.Result, this.model)));
                 }
                 else
                 {
@@ -59,15 +61,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private async void GetMyReservation()
         {
-            var operationResult = (await this.ExecuteOperation(async () => await this.service.GetAllUserReservation()));
-            if (operationResult.Status == StatusCode.Ok)
-            {
-                await this.Navigation.PushAsync(new TabPanelPage(operationResult.Result));
-            }
-            else
-            {
-                this.ShowErrorMessage(operationResult.Status);
-            }
+            await this.NavigationService.XamarinNavigation.PushAsync(new MyReservationsPage());
         }
 
         public DateTime Date

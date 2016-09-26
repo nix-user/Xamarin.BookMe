@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BookMeMobile.Data;
+﻿using BookMeMobile.BL;
+using BookMeMobile.BL.Concrete;
+using BookMeMobile.Data.Concrete;
+using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Interface;
 using BookMeMobile.Pages;
 using BookMeMobile.Pages.Login;
 using BookMeMobile.Resources;
+using BookMeMobile.ViewModels.Concrete;
 using Xamarin.Forms;
 
 namespace BookMeMobile
@@ -17,11 +17,18 @@ namespace BookMeMobile
         {
             if (DependencyService.Get<IFileWorker>().ExistsAsync(FileResources.FileName).Result)
             {
-                this.MainPage = new NavigationPage(new MainPage());
+                var selectPage = new SelectPage();
+                var navigationService = new NavigationService(selectPage.Navigation);
+                selectPage.ViewModel = new SelectViewModel(new ListRoomManager(), navigationService);
+                this.MainPage = new NavigationPage(selectPage);
             }
             else
             {
-                this.MainPage = new NavigationPage(new LoginPage());
+                var loginPage = new LoginPage();
+                var accountService = new AuthService(new CustomDependencyService(), new HttpClientHandler());
+                var navigationService = new NavigationService(loginPage.Navigation);
+                loginPage.ViewModel = new LoginViewModel(accountService, navigationService);
+                this.MainPage = new NavigationPage(loginPage);
             }
         }
 

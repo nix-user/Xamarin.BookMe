@@ -1,5 +1,4 @@
-﻿using BookMeMobile.ViewModels.Concrete;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
 {
@@ -8,9 +7,6 @@ namespace BookMeMobile.Pages
         public SelectPage()
         {
             this.InitializeComponent();
-            var viewModel = new SelectViewModel() { Navigation = this.Navigation };
-            this.SetUpViewModelSubscriptions(viewModel);
-            this.BindingContext = viewModel;
             this.SetUpActivityIndicator(this.loader, this.rootLayout);
             this.SetUpToPlatform();
         }
@@ -21,6 +17,13 @@ namespace BookMeMobile.Pages
             {
                 MainLayout.Padding = new Thickness(0, -40, 0, 0);
             }
+        }
+
+        protected override void OnViewModelSet()
+        {
+            base.OnViewModelSet();
+            this.SetUpViewModelSubscriptions(this.ViewModel);
+            this.BindingContext = this.ViewModel;
         }
     }
 }

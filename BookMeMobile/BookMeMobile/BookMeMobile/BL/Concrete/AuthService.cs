@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.BL.Abstract;
 using BookMeMobile.Data;
+using BookMeMobile.Data.Abstract;
 using BookMeMobile.Enums;
 using BookMeMobile.Interface;
 using BookMeMobile.Model.Login;
@@ -18,11 +19,13 @@ namespace BookMeMobile.BL.Concrete
     /// </summary>
     public class AuthService : IAuthService
     {
-        private readonly HttpClient client;
+        private readonly IDependencyService dependencyService;
+        private readonly IHttpHandler httpHandler;
 
-        public AuthService()
+        public AuthService(IDependencyService dependencyService, IHttpHandler httpHandler)
         {
-            this.client = new HttpClient();
+            this.dependencyService = dependencyService;
+            this.httpHandler = httpHandler;
         }
 
         /// <summary>
@@ -35,6 +38,12 @@ namespace BookMeMobile.BL.Concrete
             try
             {
                 var response = await this.SendAuthRequest(loginModel);
+
+                if (response == null)
+                {
+                    return StatusCode.Error;
+                }
+
                 if (response.IsSuccessStatusCode)
                 {
                     await this.SaveToken(response);
@@ -58,15 +67,14 @@ namespace BookMeMobile.BL.Concrete
         {
             var contentResponce = await response.Content.ReadAsStringAsync();
             var token = this.ParseResponse(contentResponce);
-            await DependencyService.Get<IFileWorker>().SaveTextAsync(FileResources.FileName, token);
+            await this.dependencyService.Get<IFileWorker>().SaveTextAsync(FileResources.FileName, token);
         }
 
         private async Task<HttpResponseMessage> SendAuthRequest(LoginModel user)
         {
-            var uri = new Uri(RestURl.GetToken);
             var requestСontent = this.GetLineRequest(user.Login, user.Password);
             var content = new StringContent(requestСontent, Encoding.UTF8, "application/x-www-form-urlencoded");
-            var response = await this.client.PostAsync(uri, content);
+            var response = await this.httpHandler.PostAsync(RestURl.GetToken, content);
             return response;
         }
 

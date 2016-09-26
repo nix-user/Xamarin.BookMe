@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:binding="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
+             xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
+             x:Class="BookMeMobile.Pages.MyReservations.ReservationsTab">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <binding:InverseBoolConverter x:Key="InverseBool"/>
+      <binding:IsStringNullOrEmptyConverter x:Key="IsStringNullOrEmpty"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Padding>
+    10, 10, 10, 10
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <StackLayout>
+      <Label x:Name="messageIsEmpty" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Text="Нету резерваций" IsVisible="False"/>
+      <ListView x:Name="listRoom" ItemsSource="{Binding Reservations}" HasUnevenRows="True" SeparatorColor="Black">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <ViewCell.ContextActions>
+                <MenuItem Text="Удалить"
+                      Command="{Binding Path=Parent.Parent.RemoveReservationCommand}" CommandParameter="{Binding}" />
+              </ViewCell.ContextActions>
+              <ViewCell.View>
+                <StackLayout VerticalOptions="Center">
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding RoomNumber}" FontSize="Large"/>
+                    <Image Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Source="cycle.png" IsVisible="{Binding IsRecursive}"/>
+                  </Grid>
+                  <Label Text="{Binding Title}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
+                  <Label Text="{Binding TextPeriod}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
+                  <StackLayout  IsVisible="{Binding Parent.IsToday, Converter={StaticResource InverseBool} }">
+                    <Label IsVisible="{Binding TextRule, Converter={StaticResource IsStringNullOrEmpty} }" Text="{Binding TextRule}" FontSize="Small" LineBreakMode="TailTruncation"></Label>
+                  </StackLayout>
+                </StackLayout>
+              </ViewCell.View>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+  </ContentPage.Content>
+</pages:BasePage>
