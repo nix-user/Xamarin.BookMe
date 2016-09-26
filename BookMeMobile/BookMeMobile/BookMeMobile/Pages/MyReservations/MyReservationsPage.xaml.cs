@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookMeMobile.BL.Abstract;
-using BookMeMobile.BL.Concrete;
-using BookMeMobile.Entity;
-using BookMeMobile.ViewModels.Concrete;
+﻿using System.Threading.Tasks;
+using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.ViewModels.Concrete.Reservations;
 using Xamarin.Forms;
 
@@ -17,7 +10,7 @@ namespace BookMeMobile.Pages.MyReservations
         public MyReservationsPage()
         {
             this.InitializeComponent();
-            var viewModel = new MyReservationsViewModel();
+            var viewModel = new MyReservationsViewModel(new NavigationService(this.Navigation));
             viewModel.ShowInfoMessage += this.ShowInfoMessage;
             viewModel.ShowRemoveConfirmationDialog += this.ShowRemoveConfirmationDialog;
             this.BindingContext = viewModel;

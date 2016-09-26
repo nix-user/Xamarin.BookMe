@@ -36,7 +36,9 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="BL\Abstract\IAuthService.cs" />
+    <Compile Include="BL\Abstract\IDependencyService.cs" />
     <Compile Include="BL\Concrete\AuthService.cs" />
+    <Compile Include="BL\Concrete\CustomDependencyService.cs" />
     <Compile Include="Converters\BoolToTextconverter.cs" />
     <Compile Include="Converters\DateTimeToSpanConverter.cs" />
     <Compile Include="Converters\RoomToStringConverter.cs" />
@@ -48,10 +50,13 @@
     <Compile Include="BL\Concrete\ReservationService.cs" />
     <Compile Include="BL\Concrete\RoomService.cs" />
     <Compile Include="CustomViews\ViewCellWithCommand.cs" />
+    <Compile Include="Data\Abstract\IHttpHandler.cs" />
+    <Compile Include="Data\Abstract\IHttpService.cs" />
     <Compile Include="Data\Abstract\IRepository.cs" />
     <Compile Include="Data\Abstract\IReservationRepository.cs" />
     <Compile Include="Data\Abstract\IRoomRepository.cs" />
     <Compile Include="Data\BaseRepository.cs" />
+    <Compile Include="Data\Concrete\HttpHandler.cs" />
     <Compile Include="Data\ReservationRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\HttpService.cs" />
@@ -59,7 +64,12 @@
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Enums\StatusCode.cs" />
     <Compile Include="Model\AddReservationModel.cs" />
+    <Compile Include="ViewModels\Concrete\ListRoomViewModel.cs" />
     <Compile Include="Model\Login\LoginModel.cs" />
+    <Compile Include="Model\RoomViewModel.cs" />
+    <Compile Include="Infrastructure\Abstract\INavigationService.cs" />
+    <Compile Include="Infrastructure\Concrete\NavigationService.cs" />
+    <Compile Include="Infrastructure\Concrete\NavigationServiceException.cs" />
     <Compile Include="Model\UserReservationsModel.cs" />
     <Compile Include="Model\SelectModel.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
@@ -113,6 +123,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AlertMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\NamingOptions.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NamingOptions.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\FileResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -189,6 +204,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>AlertMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\NamingOptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>NamingOptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\FileResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>FileResources.Designer.cs</LastGenOutput>
@@ -243,6 +262,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Pages\Login\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

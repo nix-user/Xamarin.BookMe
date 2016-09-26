@@ -8,8 +8,10 @@ using BookMeMobile.BL.Abstract;
 using BookMeMobile.BL.Concrete;
 using BookMeMobile.Data;
 using BookMeMobile.Data.Abstract;
+using BookMeMobile.Data.Concrete;
 using BookMeMobile.Entity;
 using BookMeMobile.Enums;
+using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
 using Xamarin.Forms;
@@ -27,9 +29,9 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
 
         public ICommand RemoveReservationCommand { get; set; }
 
-        public MyReservationsViewModel()
+        public MyReservationsViewModel(INavigationService navigationService) : base(navigationService)
         {
-            this.reservationRepository = new ReservationRepository();
+            this.reservationRepository = new ReservationRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler()));
             this.reservationService = new ReservationService(this.reservationRepository);
             this.RemoveReservationCommand = new Command<ReservationViewModel>(this.RemoveReservation);
 
@@ -88,9 +90,9 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
                 var recursiveReservation = reservationsResult.Result.AllReservations.Where(x => x.IsRecursive);
                 var allReservations = reservationsResult.Result.AllReservations;
 
-                this.TodayReservationsViewModel = new ReservationsListViewModel(this, todayReservations, true);
-                this.RecursiveReservationsViewModel = new ReservationsListViewModel(this, recursiveReservation);
-                this.AllReservationsViewModel = new ReservationsListViewModel(this, allReservations);
+                this.TodayReservationsViewModel = new ReservationsListViewModel(this.NavigationService, this, todayReservations, true);
+                this.RecursiveReservationsViewModel = new ReservationsListViewModel(this.NavigationService, this, recursiveReservation);
+                this.AllReservationsViewModel = new ReservationsListViewModel(this.NavigationService, this, allReservations);
             }
             else
             {

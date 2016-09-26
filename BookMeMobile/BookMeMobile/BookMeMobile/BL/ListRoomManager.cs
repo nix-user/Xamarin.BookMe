@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using BookMeMobile.BL.Concrete;
 using BookMeMobile.Data;
 using BookMeMobile.Data.Abstract;
+using BookMeMobile.Data.Concrete;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
@@ -24,8 +26,8 @@ namespace BookMeMobile.BL
 
         public ListRoomManager()
         {
-            this.reservationRepository = new ReservationRepository();
-            this.roomRepository = new RoomRepository();
+            this.reservationRepository = new ReservationRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler()));
+            this.roomRepository = new RoomRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler()));
         }
 
         /// <summary>
@@ -62,7 +64,7 @@ namespace BookMeMobile.BL
         /// </summary>
         /// <param name="list">Collection to sort</param>
         /// <returns></returns>
-        public List<Room> Sort(List<Room> list)
+        public List<RoomViewModel> Sort(List<RoomViewModel> list)
         {
             User currentUser = new User();
             currentUser.MyRoom = "410";
@@ -70,15 +72,15 @@ namespace BookMeMobile.BL
             int userFloor = this.GetFloorInNumber(currentUser.MyRoom);
             list.Sort((view1, view2) =>
             {
-                if (Math.Abs(GetFloorInNumber(view1.Number.ToString()) - userFloor) >
-                    Math.Abs(GetFloorInNumber(view2.Number.ToString()) - userFloor))
+                if (Math.Abs(GetFloorInNumber(view1.NumberRoom.ToString()) - userFloor) >
+                    Math.Abs(GetFloorInNumber(view2.NumberRoom.ToString()) - userFloor))
                 {
                     return 1;
                 }
                 else
                 {
-                    if (Math.Abs(GetFloorInNumber(view1.Number.ToString()) - userFloor) <
-                        Math.Abs(GetFloorInNumber(view2.Number.ToString()) - userFloor))
+                    if (Math.Abs(GetFloorInNumber(view1.NumberRoom.ToString()) - userFloor) <
+                        Math.Abs(GetFloorInNumber(view2.NumberRoom.ToString()) - userFloor))
                     {
                         return -1;
                     }
@@ -88,9 +90,9 @@ namespace BookMeMobile.BL
                     }
                 }
             });
-            if (list.FindIndex(x => x.Number == currentUser.FavoriteRoom) > 0)
+            if (list.FindIndex(x => x.NumberRoom == currentUser.FavoriteRoom) > 0)
             {
-                Room first = list[list.FindIndex(x => x.Number == currentUser.FavoriteRoom)];
+                RoomViewModel first = list[list.FindIndex(x => x.NumberRoom == currentUser.FavoriteRoom)];
                 list.Remove(first);
                 list.Insert(0, first);
             }

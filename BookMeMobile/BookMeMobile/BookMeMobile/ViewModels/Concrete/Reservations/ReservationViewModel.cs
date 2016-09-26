@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
+using BookMeMobile.Infrastructure.Abstract;
 
 namespace BookMeMobile.ViewModels.Concrete.Reservations
 {
@@ -11,7 +12,7 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
     {
         private readonly Reservation reservation;
 
-        public ReservationViewModel(Reservation reservation, ReservationsListViewModel parent)
+        public ReservationViewModel(INavigationService navigationService, Reservation reservation, ReservationsListViewModel parent) : base(navigationService)
         {
             this.reservation = reservation;
             this.Parent = parent;
