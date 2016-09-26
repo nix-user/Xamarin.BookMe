@@ -14,18 +14,6 @@ namespace BookMeMobile.Model
 {
     public class ListRoomViewModel : BaseViewModel
     {
-        private static readonly IEnumerable<string> UnallowedResources = new List<string>()
-        {
-            "709",
-            "710",
-            "712a",
-            "713",
-            "Netatmo",
-            "NetatmoCityHall",
-            "Projector 1",
-            "Projector 2"
-        };
-
         private SelectModel selectModel;
 
         public List<RoomViewModel> ListRoom { get; }
@@ -39,12 +27,12 @@ namespace BookMeMobile.Model
 
         public ListRoomViewModel(IEnumerable<Room> rooms, INavigationService navigationService, SelectModel selectModel) : base(navigationService)
         {
-            this.ListRoom = rooms.Where(x => !UnallowedResources.Contains(x.Number)).Select(x => new RoomViewModel()
+            this.ListRoom = rooms.Select(x => new RoomViewModel()
             {
                 Id = x.Id,
                 NumberRoom = x.Number,
                 ListViewModel = this
-            }).ToList();
+            }).OrderBy(r => r.NumberRoom).ToList();
 
             this.ReserveCommand = new Command(this.Reserve);
             this.selectModel = selectModel;
