@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:binding="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
              xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
+             xmlns:customViews="clr-namespace:BookMeMobile.CustomViews;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.MyReservations.ReservationsTab">
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -19,11 +20,7 @@
       <ListView x:Name="listRoom" ItemsSource="{Binding Reservations}" HasUnevenRows="True" SeparatorColor="Black">
         <ListView.ItemTemplate>
           <DataTemplate>
-            <ViewCell>
-              <ViewCell.ContextActions>
-                <MenuItem Text="Удалить"
-                      Command="{Binding Path=Parent.Parent.RemoveReservationCommand}" CommandParameter="{Binding}" />
-              </ViewCell.ContextActions>
+            <customViews:ViewCellWithCommand Command="{Binding Parent.Parent.RemoveReservationCommand}" CommandParameter="{Binding}">
               <ViewCell.View>
                 <StackLayout VerticalOptions="Center">
                   <Grid>
@@ -44,7 +41,7 @@
                   </StackLayout>
                 </StackLayout>
               </ViewCell.View>
-            </ViewCell>
+            </customViews:ViewCellWithCommand>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
