@@ -1,4 +1,5 @@
-﻿using BookMeMobile.BL.Concrete;
+﻿using BookMeMobile.BL;
+using BookMeMobile.BL.Concrete;
 using BookMeMobile.Data.Concrete;
 using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Interface;
@@ -16,7 +17,10 @@ namespace BookMeMobile
         {
             if (DependencyService.Get<IFileWorker>().ExistsAsync(FileResources.FileName).Result)
             {
-                this.MainPage = new NavigationPage(new MainPage());
+                var selectPage = new SelectPage();
+                var navigationService = new NavigationService(selectPage.Navigation);
+                selectPage.ViewModel = new SelectViewModel(new ListRoomManager(), navigationService);
+                this.MainPage = new NavigationPage();
             }
             else
             {
