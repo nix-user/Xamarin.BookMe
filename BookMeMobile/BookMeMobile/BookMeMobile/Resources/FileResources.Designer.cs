@@ -23,7 +23,7 @@ namespace BookMeMobile.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class FileResources {
+    internal class FileResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -64,9 +64,18 @@ namespace BookMeMobile.Resources {
         /// <summary>
         ///   Looks up a localized string similar to TempToken.
         /// </summary>
-        public static string FileName {
+        internal static string FileName {
             get {
                 return ResourceManager.GetString("FileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        internal static string ProfileData {
+            get {
+                return ResourceManager.GetString("ProfileData", resourceCulture);
             }
         }
     }

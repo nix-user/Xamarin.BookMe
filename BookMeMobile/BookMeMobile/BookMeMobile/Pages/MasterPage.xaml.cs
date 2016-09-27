@@ -44,7 +44,7 @@ namespace BookMeMobile.Pages
             {
                 if (item.TargetType == typeof(ProfilePage))
                 {
-                    this.Detail = (Page)Activator.CreateInstance(item.TargetType);
+                    this.Detail = new ProfilePage();
                 }
 
                 if (item.TargetType == typeof(QrReservation))

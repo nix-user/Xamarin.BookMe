@@ -18,7 +18,7 @@ namespace BookMeMobile.Data
 {
     public class HttpService : IHttpService
     {
-        private const string AuthorizationHeaderName = "Authorize";
+        private const string AuthorizationHeaderName = "Authorization";
 
         private readonly IDependencyService dependencyService;
         private readonly IHttpHandler httpHandler;
@@ -77,6 +77,26 @@ namespace BookMeMobile.Data
                 var uri = new Uri(route);
 				var response = await this.httpHandler.DeleteAsync(route);
 				return await this.CreateOperationResultFromResponse(response);
+            }
+            catch (Exception)
+            {
+                return new BaseOperationResult()
+                {
+                    Status = StatusCode.ConnectionProblem
+                };
+            }
+        }
+
+        public async Task<BaseOperationResult> Put<TContent>(string route, TContent content)
+        {
+            string jsonFormat = "application/json";
+
+            var json = JsonConvert.SerializeObject(content);
+            var jsonContent = new StringContent(json, Encoding.UTF8, jsonFormat);
+            try
+            {
+                var response = await this.httpHandler.PutAsync(route, jsonContent);
+                return await this.CreateOperationResultFromResponse(response);
             }
             catch (Exception)
             {

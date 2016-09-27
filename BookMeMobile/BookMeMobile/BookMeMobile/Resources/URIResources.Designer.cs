@@ -89,11 +89,20 @@ namespace BookMeMobile.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://10.10.40.80:666/.
+        ///   Looks up a localized string similar to http://10.10.41.172/.
         /// </summary>
         internal static string IpAdress {
             get {
                 return ResourceManager.GetString("IpAdress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        internal static string ProfileDomainURL {
+            get {
+                return ResourceManager.GetString("ProfileDomainURL", resourceCulture);
             }
         }
         

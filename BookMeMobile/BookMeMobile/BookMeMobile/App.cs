@@ -1,6 +1,10 @@
-﻿using BookMeMobile.BL;
+﻿using System.Threading.Tasks;
+using BookMeMobile.BL;
+using BookMeMobile.BL.Abstract;
 using BookMeMobile.BL.Concrete;
+using BookMeMobile.Data;
 using BookMeMobile.Data.Concrete;
+using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Interface;
 using BookMeMobile.Pages;
@@ -20,7 +24,7 @@ namespace BookMeMobile
                 var selectPage = new SelectPage();
                 var navigationService = new NavigationService(selectPage.Navigation);
                 selectPage.ViewModel = new SelectViewModel(new ListRoomManager(), navigationService);
-                this.MainPage = new NavigationPage(selectPage);
+                this.MainPage = new NavigationPage(new MainPage(selectPage));
             }
             else
             {
@@ -28,13 +32,16 @@ namespace BookMeMobile
                 var accountService = new AuthService(new CustomDependencyService(), new HttpClientHandler());
                 var navigationService = new NavigationService(loginPage.Navigation);
                 loginPage.ViewModel = new LoginViewModel(accountService, navigationService);
-                this.MainPage = new NavigationPage(loginPage);
+                this.MainPage = new NavigationPage(new MainPage(loginPage));
             }
         }
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+            ProfileService profileService =
+                    new ProfileService(
+                        new ProfileRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler())));
+            var getUserDataOperationResult = Task.Run(async () => await profileService.GetUserData());
         }
 
         protected override void OnSleep()

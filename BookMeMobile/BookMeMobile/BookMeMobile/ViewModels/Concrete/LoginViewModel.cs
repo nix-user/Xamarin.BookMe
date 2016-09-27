@@ -1,6 +1,10 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using BookMeMobile.BL;
 using BookMeMobile.BL.Abstract;
+using BookMeMobile.BL.Concrete;
+using BookMeMobile.Data;
+using BookMeMobile.Data.Concrete;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model.Login;
@@ -49,6 +53,7 @@ namespace BookMeMobile.ViewModels.Concrete
             var operationStatus = await this.ExecuteOperation(async () => await this.authService.AuthAsync(this.model));
             if (operationStatus == StatusCode.Ok)
             {
+                this.GetProfileModel();
                 this.NavigationService.ShowViewModel(new SelectViewModel(new ListRoomManager(), this.NavigationService));
                 return;
             }
@@ -60,6 +65,14 @@ namespace BookMeMobile.ViewModels.Concrete
             }
 
             this.ShowErrorMessage(operationStatus);
+        }
+
+        private void GetProfileModel()
+        {
+            ProfileService profileService =
+                   new ProfileService(
+                       new ProfileRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler())));
+            var getUserDataOperationResult = Task.Run(async () => await profileService.GetUserData());
         }
     }
 }

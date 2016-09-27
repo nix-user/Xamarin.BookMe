@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using BookMeMobile.Droid.FileWork;
 using BookMeMobile.Interface;
 using BookMeMobile.Resources;
-using Xamarin.Forms;
 
-[assembly: Dependency(typeof(FileWorker))]
+[assembly: Xamarin.Forms.Dependency(typeof(FileWorker))]
 
 namespace BookMeMobile.Droid.FileWork
 {
@@ -29,13 +29,20 @@ namespace BookMeMobile.Droid.FileWork
 
         public async Task<string> LoadTextAsync(string fileName)
         {
-            string filepath = this.GetFilePath(fileName);
-            lock (LockThis)
+            try
             {
-                using (StreamReader reader = File.OpenText(filepath))
+                string filepath = this.GetFilePath(fileName);
+                lock (LockThis)
                 {
-                    return reader.ReadToEndAsync().Result;
+                    using (StreamReader reader = File.OpenText(filepath))
+                    {
+                        return reader.ReadToEndAsync().Result;
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 

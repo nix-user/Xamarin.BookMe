@@ -120,4 +120,7 @@
   <data name="FileName" xml:space="preserve">
     <value>TempToken</value>
   </data>
+  <data name="ProfileData" xml:space="preserve">
+    <value>Profile</value>
+  </data>
 </root>
