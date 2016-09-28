@@ -89,7 +89,7 @@ namespace BookMeMobile.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://10.10.41.172/.
+        ///   Looks up a localized string similar to http://bookme.net.nixsolutions.com/.
         /// </summary>
         internal static string IpAdress {
             get {

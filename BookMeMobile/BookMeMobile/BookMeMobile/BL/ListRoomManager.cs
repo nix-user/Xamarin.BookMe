@@ -39,8 +39,8 @@ namespace BookMeMobile.BL
         {
             Reservation reservation = new Reservation()
             {
-                From = model.From,
-                To = model.To,
+                From = model.Date.Date.Add(model.From.TimeOfDay),
+                To = model.Date.Date.Add(model.To.TimeOfDay),
                 Duration = model.Duration,
                 IsRecursive = model.IsRecursive,
                 Title = model.Title,
@@ -68,8 +68,8 @@ namespace BookMeMobile.BL
         {
             RoomFilterParameters filter = new RoomFilterParameters()
             {
-                From = model.From,
-                To = model.To,
+                From = model.Date.Date.Add(model.From.TimeOfDay),
+                To = model.Date.Date.Add(model.To.TimeOfDay),
                 IsLarge = model.IsLarge,
                 HasPolycom = model.HasPolycom
             };

@@ -25,12 +25,20 @@ namespace BookMeMobile.Pages.MyReservations
         {
             const string ConfirmationHeader = "Подтверждение";
             const string ConfirmationMessage = "Вы действительно хотите удалить резервацию: ";
+            const string RemoveActionTitle = "Удалить";
             const string CancelActionTitle = "Отмена";
             const string OkActionTitle = "Да";
 
             var actionSheetMessage = reservationViewModel.TextPeriod + " " + reservationViewModel.Title;
 
-            return await this.DisplayAlert(ConfirmationHeader, ConfirmationMessage + actionSheetMessage, OkActionTitle, CancelActionTitle);
+            var action = await this.DisplayActionSheet(actionSheetMessage, CancelActionTitle, null, RemoveActionTitle);
+            if (action == RemoveActionTitle)
+            {
+                var isConfirmed = await this.DisplayAlert(ConfirmationHeader, ConfirmationMessage + actionSheetMessage, OkActionTitle, CancelActionTitle);
+                return isConfirmed;
+            }
+
+            return false;
         }
     }
 }

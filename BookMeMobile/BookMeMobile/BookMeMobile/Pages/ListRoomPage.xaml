@@ -8,17 +8,24 @@
     <ResourceDictionary>
     </ResourceDictionary>
   </ContentPage.Resources>
-  <StackLayout x:Name="rootLayout" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+  <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
     <Label x:Name="LabelNotRooms" Text="{Binding IsNotRooms}" FontSize="24" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="False"/>
-    <ListView x:Name="listRoom" ItemsSource="{Binding ListRoom}" RowHeight="80" VerticalOptions="Start">
+    <ListView x:Name="listRoom" ItemsSource="{Binding ListRoom}" RowHeight="80" VerticalOptions="FillAndExpand">
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
             <ViewCell.View>
-              <StackLayout Orientation="Horizontal">
-                <Label  Text = "{Binding NumberRoom,StringFormat=Комната: '{0}' }" FontSize="Medium"  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                <Button HorizontalOptions="EndAndExpand" x:Name="btnBooking" Text="Бронировать" VerticalOptions="Fill" FontSize="Large" Command="{Binding Path=ListViewModel.ReserveCommand}" CommandParameter="{Binding}"/>
-              </StackLayout>
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="4*" />
+                  <ColumnDefinition Width="6*" />
+                </Grid.ColumnDefinitions>
+                <Label HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="0"  LineBreakMode="WordWrap" Text = "{Binding NumberRoom,StringFormat='{0}' }" FontSize="Medium"  VerticalOptions="CenterAndExpand"/>
+                <Button Grid.Row="0" Grid.Column="1"  x:Name="btnBooking" Text="Бронировать" VerticalOptions="FillAndExpand" FontSize="Large" Command="{Binding Path=ListViewModel.ReserveCommand}" CommandParameter="{Binding}"/>
+              </Grid>
             </ViewCell.View>
           </ViewCell>
         </DataTemplate>

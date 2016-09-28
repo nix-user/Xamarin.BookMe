@@ -19,7 +19,7 @@ namespace BookMeMobile
     {
         public App()
         {
-            if (DependencyService.Get<IFileWorker>().ExistsAsync(FileResources.FileName).Result)
+            if (Task.Run(async () => await DependencyService.Get<IFileWorker>().ExistsAsync(FileResources.FileName)).Result)
             {
                 var selectPage = new SelectPage();
                 var navigationService = new NavigationService(selectPage.Navigation);

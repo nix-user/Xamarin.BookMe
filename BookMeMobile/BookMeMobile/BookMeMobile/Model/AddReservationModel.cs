@@ -19,13 +19,14 @@ namespace BookMeMobile.Model
             this.IsLarge = filterParameters.IsLarge;
             this.HasPolycom = filterParameters.HasPolycom;
             this.NumberRoom = roomModel.NumberRoom;
+            this.Date = filterParameters.Date;
         }
 
         public string NumberRoom { get; set; }
 
         public string Title { get; set; }
 
-        public DateTime Date => this.Date.Date;
+        public DateTime Date { get; set; }
 
         public DateTime From { get; set; }
 
