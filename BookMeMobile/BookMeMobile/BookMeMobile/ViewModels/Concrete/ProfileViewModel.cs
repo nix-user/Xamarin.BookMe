@@ -67,8 +67,8 @@ namespace BookMeMobile.ViewModels.Concrete
                    (await this.ExecuteOperation(async () => await this.profileService.SaveProfileModel(this.ProfileModel)));
             if (operationResult.Status == StatusCode.Ok)
             {
-                this.OnPropertyChanged("IsEnableButtonSave");
                 this.oldModel = new ProfileModel(ProfileModel);
+                this.MyFloor = this.oldModel.Floor;
                 this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
             }
             else
