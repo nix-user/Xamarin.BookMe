@@ -20,8 +20,8 @@
                   <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="*" />
-                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="4*" />
+                  <ColumnDefinition Width="6*" />
                 </Grid.ColumnDefinitions>
                 <Label HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.Column="0"  LineBreakMode="WordWrap" Text = "{Binding NumberRoom,StringFormat='{0}' }" FontSize="Medium"  VerticalOptions="CenterAndExpand"/>
                 <Button Grid.Row="0" Grid.Column="1"  x:Name="btnBooking" Text="Бронировать" VerticalOptions="FillAndExpand" FontSize="Large" Command="{Binding Path=ListViewModel.ReserveCommand}" CommandParameter="{Binding}"/>
