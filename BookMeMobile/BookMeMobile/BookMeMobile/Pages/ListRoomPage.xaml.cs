@@ -10,12 +10,16 @@ namespace BookMeMobile.Pages
 {
     public partial class ListRoomPage : BasePage
     {
-        public ListRoomPage(IEnumerable<Room> search, SelectModel reservation)
+        public ListRoomPage()
         {
             this.InitializeComponent();
-            var viewModel = new ListRoomViewModel(search, new NavigationService(this.Navigation), reservation);
-            this.SetUpViewModelSubscriptions(viewModel);
-            this.BindingContext = viewModel;
+        }
+
+        protected override void OnViewModelSet()
+        {
+            base.OnViewModelSet();
+            this.SetUpViewModelSubscriptions(this.ViewModel);
+            this.BindingContext = this.ViewModel;
         }
     }
 }

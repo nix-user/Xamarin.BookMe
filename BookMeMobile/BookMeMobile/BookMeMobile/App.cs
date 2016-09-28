@@ -24,7 +24,7 @@ namespace BookMeMobile
                 var selectPage = new SelectPage();
                 var navigationService = new NavigationService(selectPage.Navigation);
                 selectPage.ViewModel = new SelectViewModel(new ListRoomManager(), navigationService);
-                this.MainPage = new NavigationPage(new MainPage(selectPage));
+                this.MainPage = new NavigationPage(new MasterPage(selectPage));
             }
             else
             {
@@ -32,7 +32,7 @@ namespace BookMeMobile
                 var accountService = new AuthService(new CustomDependencyService(), new HttpClientHandler());
                 var navigationService = new NavigationService(loginPage.Navigation);
                 loginPage.ViewModel = new LoginViewModel(accountService, navigationService);
-                this.MainPage = new NavigationPage(new MainPage(loginPage));
+                this.MainPage = new NavigationPage(loginPage);
             }
         }
 
@@ -41,7 +41,7 @@ namespace BookMeMobile
             ProfileService profileService =
                     new ProfileService(
                         new ProfileRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler())));
-            var getUserDataOperationResult = Task.Run(async () => await profileService.GetUserData());
+            Task.Run(async () => await profileService.GetUserData());
         }
 
         protected override void OnSleep()

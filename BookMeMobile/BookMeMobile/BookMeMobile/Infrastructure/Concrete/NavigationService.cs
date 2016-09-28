@@ -28,7 +28,7 @@ namespace BookMeMobile.Infrastructure.Concrete
             var viewModelsViewType = this.GetPageType(viewModel);
             var view = (BasePage)Activator.CreateInstance(viewModelsViewType);
             view.ViewModel = viewModel;
-            this.XamarinNavigation.PushAsync(new MainPage(view));
+            this.XamarinNavigation.PushAsync(new MasterPage(view));
         }
 
         private Type GetPageType(BaseViewModel viewModel)

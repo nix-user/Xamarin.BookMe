@@ -17,6 +17,11 @@ namespace BookMeMobile.Model
             this.Room = new Room();
         }
 
+        public RoomViewModel(Room room)
+        {
+            this.Room = room;
+        }
+
         public int Id
         {
             get { return this.Room.Id; }

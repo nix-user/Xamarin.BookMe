@@ -8,23 +8,21 @@
     <ResourceDictionary>
     </ResourceDictionary>
   </ContentPage.Resources>
-  <AbsoluteLayout x:Name="rootLayout" Padding="0">
-    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
-      <Label x:Name="LabelNotRooms" Text="{Binding IsNotRooms}" FontSize="24" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="False"/>
-      <ListView x:Name="listRoom" ItemsSource="{Binding ListRoom}" RowHeight="80" VerticalOptions="Start">
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell>
-              <ViewCell.View>
-                <StackLayout Orientation="Horizontal">
+  <StackLayout x:Name="rootLayout" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+    <Label x:Name="LabelNotRooms" Text="{Binding IsNotRooms}" FontSize="24" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="False"/>
+    <ListView x:Name="listRoom" ItemsSource="{Binding ListRoom}" RowHeight="80" VerticalOptions="Start">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+            <ViewCell.View>
+              <StackLayout Orientation="Horizontal">
                 <Label  Text = "{Binding NumberRoom,StringFormat=Комната: '{0}' }" FontSize="Medium"  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                 <Button HorizontalOptions="EndAndExpand" x:Name="btnBooking" Text="Бронировать" VerticalOptions="Fill" FontSize="Large" Command="{Binding Path=ListViewModel.ReserveCommand}" CommandParameter="{Binding}"/>
-                  </StackLayout>
-              </ViewCell.View>
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>
-    </StackLayout>
-  </AbsoluteLayout>
+              </StackLayout>
+            </ViewCell.View>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </StackLayout>
 </pages:BasePage>

@@ -11,14 +11,6 @@ namespace BookMeMobile.Pages
         public ProfilePage()
         {
             this.InitializeComponent();
-            this.ViewModel =
-                new ProfileViewModel(
-                    new ProfileService(
-                        new ProfileRepository(
-                            new HttpService(
-                                new CustomDependencyService(),
-                                new HttpClientHandler()))),
-                    new NavigationService(this.Navigation));
             this.SetUpActivityIndicator(this.loader, this.rootLayout);
         }
 
