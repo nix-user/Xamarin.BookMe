@@ -24,7 +24,7 @@ namespace BookMeMobile.WinPhone
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
             try
             {
-                localFolder.GetFileAsync(fileName).GetResults();
+                await localFolder.GetFileAsync(fileName);
                 return true;
             }
             catch
@@ -38,8 +38,8 @@ namespace BookMeMobile.WinPhone
             try
             {
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                StorageFile tokenFile = localFolder.GetFileAsync(fileName).GetResults();
-                return FileIO.ReadTextAsync(tokenFile).GetResults();
+                StorageFile tokenFile = await localFolder.GetFileAsync(fileName);
+                return await FileIO.ReadTextAsync(tokenFile);
             }
             catch (Exception e)
             {
