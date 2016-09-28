@@ -60,9 +60,9 @@ namespace BookMeMobile.ViewModels.Concrete
             }
         }
 
-        private void GetMyReservation()
+        private async void GetMyReservation()
         {
-            this.NavigationService.ShowViewModel(new MyReservationsViewModel(this.NavigationService));
+            await this.NavigationService.XamarinNavigation.PushAsync(new MyReservationsPage());
         }
 
         public DateTime Date
