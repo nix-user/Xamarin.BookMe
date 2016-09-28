@@ -32,6 +32,12 @@ namespace BookMeMobile.Pages
                 IconSource = "profileMenu.png",
                 TargetType = typeof(QrReservation)
             });
+            masterPageItems.Add(new MenuPageItem
+            {
+                Title = "Поиск комнат",
+                IconSource = "profileMenu.png",
+                TargetType = typeof(SelectPage)
+            });
             listView.ItemsSource = masterPageItems;
         }
     }

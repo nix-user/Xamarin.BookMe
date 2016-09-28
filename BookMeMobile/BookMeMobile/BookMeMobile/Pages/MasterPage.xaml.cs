@@ -47,6 +47,11 @@ namespace BookMeMobile.Pages
                     this.Detail = new ProfilePage();
                 }
 
+                if (item.TargetType == typeof(SelectPage))
+                {
+                    this.Detail = new SelectPage();
+                }
+
                 if (item.TargetType == typeof(QrReservation))
                 {
                     this.scanPage = new ZXingScannerPage();

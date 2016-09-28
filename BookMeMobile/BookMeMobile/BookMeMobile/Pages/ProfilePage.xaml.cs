@@ -10,6 +10,7 @@ namespace BookMeMobile.Pages
     {
         public ProfilePage()
         {
+            this.InitializeComponent();
             this.ViewModel =
                 new ProfileViewModel(
                     new ProfileService(
@@ -18,9 +19,14 @@ namespace BookMeMobile.Pages
                                 new CustomDependencyService(),
                                 new HttpClientHandler()))),
                     new NavigationService(this.Navigation));
-            this.BindingContext = this.ViewModel;
-            this.InitializeComponent();
             this.SetUpActivityIndicator(this.loader, this.rootLayout);
+        }
+
+        protected override void OnViewModelSet()
+        {
+            base.OnViewModelSet();
+            this.SetUpViewModelSubscriptions(this.ViewModel);
+            this.BindingContext = this.ViewModel;
         }
     }
 }

@@ -39,6 +39,7 @@ namespace BookMeMobile.ViewModels.Concrete
             set
             {
                 this.ProfileModel.FavouriteRoom = value;
+                this.OnPropertyChanged("IsEnableButtonSave");
             }
         }
 
@@ -52,6 +53,7 @@ namespace BookMeMobile.ViewModels.Concrete
             set
             {
                 this.ProfileModel.Floor = value;
+                this.OnPropertyChanged("IsEnableButtonSave");
             }
         }
 
@@ -65,8 +67,8 @@ namespace BookMeMobile.ViewModels.Concrete
                    (await this.ExecuteOperation(async () => await this.profileService.SaveProfileModel(this.ProfileModel)));
             if (operationResult.Status == StatusCode.Ok)
             {
+                this.oldModel = new ProfileModel(ProfileModel);
                 this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
-                this.NavigationService.ShowViewModel(new SelectViewModel(new ListRoomManager(), this.NavigationService));
             }
             else
             {
