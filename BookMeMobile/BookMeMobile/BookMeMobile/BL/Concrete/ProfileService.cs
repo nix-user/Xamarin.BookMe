@@ -23,7 +23,7 @@ namespace BookMeMobile.BL.Concrete
 
         public ProfileService(IProfileRepository repository)
         {
-            this.profileRepository = new ProfileRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler()));
+            this.profileRepository = repository;
         }
 
         public async Task<BaseOperationResult<ProfileModel>> GetUserData()

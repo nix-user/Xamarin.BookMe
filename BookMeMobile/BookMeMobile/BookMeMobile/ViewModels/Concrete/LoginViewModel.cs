@@ -53,8 +53,7 @@ namespace BookMeMobile.ViewModels.Concrete
             var operationStatus = await this.ExecuteOperation(async () => await this.authService.AuthAsync(this.model));
             if (operationStatus == StatusCode.Ok)
             {
-                this.GetProfileModel();
-                this.NavigationService.ShowViewModel(new SelectViewModel(new ListRoomManager(), this.NavigationService));
+               this.NavigationService.ShowViewModel(new SelectViewModel(new ListRoomManager(), this.NavigationService));
                 return;
             }
 
@@ -65,14 +64,6 @@ namespace BookMeMobile.ViewModels.Concrete
             }
 
             this.ShowErrorMessage(operationStatus);
-        }
-
-        private void GetProfileModel()
-        {
-            ProfileService profileService =
-                   new ProfileService(
-                       new ProfileRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler())));
-            var getUserDataOperationResult = Task.Run(async () => await profileService.GetUserData());
         }
     }
 }
