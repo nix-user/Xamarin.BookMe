@@ -21,10 +21,10 @@ namespace BookMeMobile.ViewModels.Concrete
         private IProfileService profileService;
         private ProfileModel oldModel;
 
-        public ProfileViewModel(IProfileService profileService, INavigationService navigationService) : base(navigationService)
+        public ProfileViewModel(IProfileService profileService, INavigationService navigationService, ProfileModel model) : base(navigationService)
         {
             this.profileService = new ProfileService(new ProfileRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler())));
-            ProfileModel = this.profileService.GetProfileFromFile().Result ?? new ProfileModel();
+            this.ProfileModel = model;
             this.oldModel = new ProfileModel(ProfileModel);
             this.ChangeSaveCommand = new Command(this.SaveChanges);
         }

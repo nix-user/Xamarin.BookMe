@@ -13,7 +13,5 @@ namespace BookMeMobile.BL.Abstract
         Task<BaseOperationResult<ProfileModel>> GetUserData();
 
         Task<BaseOperationResult> SaveProfileModel(ProfileModel model);
-
-        Task<ProfileModel> GetProfileFromFile();
     }
 }

@@ -147,6 +147,7 @@
     <Compile Include="ViewModels\Abstract\BaseViewModel.cs" />
     <Compile Include="ViewModels\Concrete\AddReservationViewModel.cs" />
     <Compile Include="ViewModels\Concrete\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\MenuPageViewModel.cs" />
     <Compile Include="ViewModels\Concrete\ProfileViewModel.cs" />
     <Compile Include="ViewModels\Concrete\MasterViewModel.cs" />
     <Compile Include="ViewModels\Concrete\Reservations\MyReservationsViewModel.cs" />

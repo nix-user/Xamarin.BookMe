@@ -24,7 +24,7 @@ namespace BookMeMobile
                 var selectPage = new SelectPage();
                 var navigationService = new NavigationService(selectPage.Navigation);
                 selectPage.ViewModel = new SelectViewModel(new ListRoomManager(), navigationService);
-                this.MainPage = new NavigationPage(new MasterPage(selectPage));
+                this.MainPage = new NavigationPage(new MasterPage(selectPage, navigationService));
             }
             else
             {
@@ -38,10 +38,6 @@ namespace BookMeMobile
 
         protected override void OnStart()
         {
-            ProfileService profileService =
-                    new ProfileService(
-                        new ProfileRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler())));
-            Task.Run(async () => await profileService.GetUserData());
         }
 
         protected override void OnSleep()

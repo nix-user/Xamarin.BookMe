@@ -9,7 +9,7 @@
     <StackLayout  Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0.5, 0.42, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional">
       <render:Loader x:Name="loader" VerticalOptions="Center" />
     </StackLayout>
-    <StackLayout BindingContext="{Binding}" VerticalOptions="Start" Padding="10,0,10,0">
+    <StackLayout BindingContext="{Binding}" VerticalOptions="CenterAndExpand" Padding="10,0,40,0">
       <TableView>
         <TableRoot>
           <TableSection>

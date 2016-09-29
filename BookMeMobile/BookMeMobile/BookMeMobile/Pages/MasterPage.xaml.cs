@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
+using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Model;
 using BookMeMobile.ViewModels.Concrete;
@@ -15,14 +16,12 @@ namespace BookMeMobile.Pages
 {
     public partial class MasterPage : MasterDetailPage
     {
-        private ZXingScannerPage scanPage;
-
-        public MasterPage(Page page)
+        public MasterPage(Page page, NavigationService navigationService)
         {
-            var viewModel = new MasterViewModel(new NavigationService(this.Navigation), page);
-            this.Master = viewModel.MasterPage;
-            this.Detail = viewModel.DetailPage;
-            this.IsPresented = viewModel.IsPresented;
+            this.Detail = page;
+            var menu = new MenuPage(navigationService);
+            menu.ViewModel = new MenuPageViewModel(navigationService);
+            this.Master = menu;
         }
     }
 }
