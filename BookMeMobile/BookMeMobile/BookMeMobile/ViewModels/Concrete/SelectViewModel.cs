@@ -13,6 +13,7 @@ using BookMeMobile.Pages;
 using BookMeMobile.Pages.Login;
 using BookMeMobile.Pages.MyReservations;
 using BookMeMobile.Resources;
+using BookMeMobile.ViewModels.Abstract;
 using Java.Sql;
 using Javax.Security.Auth;
 using Xamarin.Forms;

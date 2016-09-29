@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
 using BookMeMobile.Infrastructure.Abstract;
+using BookMeMobile.ViewModels.Abstract;
 
 namespace BookMeMobile.ViewModels.Concrete.Reservations
 {

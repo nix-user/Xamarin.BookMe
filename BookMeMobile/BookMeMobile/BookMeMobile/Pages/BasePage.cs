@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Render;
 using BookMeMobile.ViewModels;
+using BookMeMobile.ViewModels.Abstract;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Pages

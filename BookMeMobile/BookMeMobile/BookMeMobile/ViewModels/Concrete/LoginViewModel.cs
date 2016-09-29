@@ -6,6 +6,7 @@ using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model.Login;
 using BookMeMobile.Pages;
 using BookMeMobile.Resources;
+using BookMeMobile.ViewModels.Abstract;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete

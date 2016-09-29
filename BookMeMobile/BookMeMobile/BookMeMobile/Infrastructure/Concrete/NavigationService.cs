@@ -5,6 +5,7 @@ using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Pages;
 using BookMeMobile.Resources;
 using BookMeMobile.ViewModels;
+using BookMeMobile.ViewModels.Abstract;
 using BookMeMobile.ViewModels.Concrete;
 using Microsoft.Practices.Unity;
 using Xamarin.Forms;

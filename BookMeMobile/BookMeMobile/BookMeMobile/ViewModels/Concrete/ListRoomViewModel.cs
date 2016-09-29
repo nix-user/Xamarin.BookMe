@@ -8,6 +8,7 @@ using BookMeMobile.Entity;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Pages;
 using BookMeMobile.ViewModels;
+using BookMeMobile.ViewModels.Abstract;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Model
