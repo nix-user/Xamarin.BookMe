@@ -9,6 +9,7 @@ using BookMeMobile.Data.Concrete;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model;
+using BookMeMobile.Pages;
 using BookMeMobile.Resources;
 using Xamarin.Forms;
 
@@ -21,12 +22,28 @@ namespace BookMeMobile.ViewModels.Concrete
         private IProfileService profileService;
         private ProfileModel oldModel;
 
-        public ProfileViewModel(IProfileService profileService, INavigationService navigationService, ProfileModel model) : base(navigationService)
+        public ProfileViewModel(IProfileService profileService, INavigationService navigationService) : base(navigationService)
         {
-            this.profileService = new ProfileService(new ProfileRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler())));
-            this.ProfileModel = model;
-            this.oldModel = new ProfileModel(ProfileModel);
+            this.ProfileModel = new ProfileModel();
+            this.profileService = profileService;
             this.ChangeSaveCommand = new Command(this.SaveChanges);
+        }
+
+        public async Task GetDataProfile()
+        {
+            await Task.Delay(1000);
+            var operationResult = await ExecuteOperation(async () => await this.profileService.GetUserData());
+            if (operationResult.Status == StatusCode.Ok)
+            {
+                this.oldModel = new ProfileModel(operationResult.Result);
+                this.FavoriteRoom = operationResult.Result.FavouriteRoom;
+                this.MyFloor = operationResult.Result.Floor;
+                this.oldModel = new ProfileModel(ProfileModel);
+            }
+            else
+            {
+                this.ShowErrorMessage(operationResult.Status);
+            }
         }
 
         public string FavoriteRoom
@@ -39,6 +56,7 @@ namespace BookMeMobile.ViewModels.Concrete
             set
             {
                 this.ProfileModel.FavouriteRoom = value;
+                this.OnPropertyChanged();
                 this.OnPropertyChanged("IsEnableButtonSave");
             }
         }
@@ -53,6 +71,7 @@ namespace BookMeMobile.ViewModels.Concrete
             set
             {
                 this.ProfileModel.Floor = value;
+                this.OnPropertyChanged();
                 this.OnPropertyChanged("IsEnableButtonSave");
             }
         }

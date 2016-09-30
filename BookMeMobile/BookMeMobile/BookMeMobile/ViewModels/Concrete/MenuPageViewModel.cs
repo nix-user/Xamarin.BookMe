@@ -67,7 +67,7 @@ namespace BookMeMobile.ViewModels.Concrete
             {
                 if (item.TargetType == typeof(ProfilePage))
                 {
-                    await this.GoToProfilePage();
+                    this.GoToProfilePage();
                 }
 
                 if (item.TargetType == typeof(SelectPage))
@@ -86,17 +86,15 @@ namespace BookMeMobile.ViewModels.Concrete
             }
         }
 
-        private async Task GoToProfilePage()
+        private void GoToProfilePage()
         {
-            var profile = (await this.ExecuteOperation(async () => await this.GetProfileData()));
             var viewModel = new ProfileViewModel(
                 new ProfileService(
                     new ProfileRepository(
                         new HttpService(
                             new CustomDependencyService(),
                             new HttpClientHandler()))),
-                this.navigationService,
-                profile);
+                this.navigationService);
             this.navigationService.ShowViewModel(viewModel);
         }
 

@@ -1,4 +1,5 @@
-﻿using BookMeMobile.BL.Concrete;
+﻿using System.Threading.Tasks;
+using BookMeMobile.BL.Concrete;
 using BookMeMobile.Data;
 using BookMeMobile.Data.Concrete;
 using BookMeMobile.Infrastructure.Concrete;
@@ -14,10 +15,18 @@ namespace BookMeMobile.Pages
             this.SetUpActivityIndicator(this.loader, this.rootLayout);
         }
 
-        protected override void OnViewModelSet()
+        protected override async void OnAppearing()
         {
-            base.OnViewModelSet();
-            this.SetUpViewModelSubscriptions(this.ViewModel);
+            base.OnAppearing();
+
+            this.ViewModel = new ProfileViewModel(
+                new ProfileService(
+                new ProfileRepository(
+                    new HttpService(
+                        new CustomDependencyService(),
+                        new HttpClientHandler()))),
+                new NavigationService(this.Navigation));
+            await ((ProfileViewModel)this.ViewModel).GetDataProfile();
             this.BindingContext = this.ViewModel;
         }
     }

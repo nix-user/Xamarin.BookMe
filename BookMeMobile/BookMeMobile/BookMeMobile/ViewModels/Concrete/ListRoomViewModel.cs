@@ -32,7 +32,7 @@ namespace BookMeMobile.Model
 
         public ListRoomViewModel(IEnumerable<Room> rooms, INavigationService navigationService, SelectModel selectModel) : base(navigationService)
         {
-            this.ListRoom = rooms.Select(x => new RoomViewModel(x)).ToList();
+            this.ListRoom = rooms.Select(x => new RoomViewModel(x, this)).ToList();
             this.ReserveCommand = new Command(this.Reserve);
             this.selectModel = selectModel;
         }

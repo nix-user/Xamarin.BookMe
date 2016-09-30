@@ -20,7 +20,7 @@
           </TableSection>
         </TableRoot>
       </TableView>
-      <Button x:Name="btnSave" Text="Сохранить" Command="{Binding ChangeSaveCommand}" IsEnabled="{Binding IsEnableButtonSave,Mode=TwoWay}"/>
+        <Button x:Name="btnSave" Text="Сохранить" Command="{Binding ChangeSaveCommand}" IsEnabled="{Binding IsEnableButtonSave}"/>
     </StackLayout>
   </AbsoluteLayout>
 </pages:BasePage>

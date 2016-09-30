@@ -55,6 +55,22 @@ namespace BookMeMobile.Pages
             this.loader.Hide();
         }
 
+        private void SetIsEnabledToTableViewChildren(View child, bool value)
+        {
+            var tableView = child as TableView;
+            if (tableView != null)
+            {
+                for (int i = 0; i < tableView.Root.Count; i++)
+                {
+                    for (int j = 0; j < tableView.Root[i].Count; j++)
+                    {
+                        var cell = tableView.Root[i][j];
+                        cell.IsEnabled = value;
+                    }
+                }
+            }
+        }
+
         private void SetIsEnabledToChildren(IViewContainer<View> rootLayout, bool value)
         {
             foreach (var child in rootLayout.Children)
@@ -66,6 +82,7 @@ namespace BookMeMobile.Pages
                 }
                 else
                 {
+                    this.SetIsEnabledToTableViewChildren(child, value);
                     child.IsEnabled = value;
                 }
             }
