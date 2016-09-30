@@ -18,7 +18,6 @@ namespace BookMeMobile.Pages
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-
             this.ViewModel = new ProfileViewModel(
                 new ProfileService(
                 new ProfileRepository(
