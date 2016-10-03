@@ -68,7 +68,6 @@ namespace BookMeMobile.ViewModels.Concrete
                 if (item.TargetType == typeof(SelectPage))
                 {
                     this.navigationService.ShowViewModel<SelectViewModel>();
-                    //this.navigationService.ShowViewModel(new SelectViewModel(new ListRoomManager(), this.navigationService));
                 }
 
                 if (item.TargetType == typeof(QrReservation))
@@ -83,14 +82,6 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private void GoToProfilePage()
         {
-            //var viewModel = new ProfileViewModel(
-            //    new ProfileService(
-            //        new ProfileRepository(
-            //            new HttpService(
-            //                new CustomDependencyService(),
-            //                new HttpClientHandler()))),
-            //    this.navigationService);
-            //this.navigationService.ShowViewModel(viewModel);
             this.navigationService.ShowViewModel<ProfileViewModel>();
         }
 

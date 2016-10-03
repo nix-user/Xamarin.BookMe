@@ -18,13 +18,6 @@ namespace BookMeMobile.Pages
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            //this.ViewModel = new ProfileViewModel(
-            //    new ProfileService(
-            //    new ProfileRepository(
-            //        new HttpService(
-            //            new CustomDependencyService(),
-            //            new HttpClientHandler()))),
-            //    new NavigationService(this.Navigation));
             await((ProfileViewModel)this.ViewModel).GetDataProfile();
             this.BindingContext = this.ViewModel;
         }

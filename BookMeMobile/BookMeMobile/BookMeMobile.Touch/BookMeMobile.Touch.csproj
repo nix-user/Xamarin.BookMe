@@ -74,9 +74,9 @@
     <ConsolePause>False</ConsolePause>
     <MtouchArch>ARMv7, ARM64</MtouchArch>
     <BuildIpa>True</BuildIpa>
-    <CodesignKey>iPhone Developer: Viktor Kudria (3R3H95DNT9)</CodesignKey>
+    <CodesignProvision>Automatic:AdHoc</CodesignProvision>
+    <CodesignKey>iPhone Distribution</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>ea101ce9-6828-4f2e-80a7-b916508bc28b</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>none</DebugType>
@@ -89,10 +89,6 @@
     <CodesignProvision>Automatic:AppStore</CodesignProvision>
     <CodesignKey>iPhone Distribution</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhoneSimulator'">
-    <CodesignKey>iPhone Developer: Viktor Kudria (3R3H95DNT9)</CodesignKey>
-    <CodesignProvision>ea101ce9-6828-4f2e-80a7-b916508bc28b</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="FileWork\FileWorker.cs" />
