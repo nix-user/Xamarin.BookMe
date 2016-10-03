@@ -32,5 +32,10 @@ namespace BookMeMobile.Data.Concrete
         {
             return await this.httpClient.DeleteAsync(url);
         }
+
+        public async Task<HttpResponseMessage> PutAsync(string url, HttpContent content)
+        {
+            return await this.httpClient.PutAsync(url, content);
+        }
     }
 }

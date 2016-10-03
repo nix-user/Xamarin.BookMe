@@ -1,7 +1,10 @@
 ﻿using System.Threading.Tasks;
 using BookMeMobile.BL;
+using BookMeMobile.BL.Abstract;
 using BookMeMobile.BL.Concrete;
+using BookMeMobile.Data;
 using BookMeMobile.Data.Concrete;
+using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Interface;
 using BookMeMobile.Pages;
@@ -21,7 +24,7 @@ namespace BookMeMobile
                 var selectPage = new SelectPage();
                 var navigationService = new NavigationService(selectPage.Navigation);
                 selectPage.ViewModel = new SelectViewModel(new ListRoomManager(), navigationService);
-                this.MainPage = new NavigationPage(selectPage);
+                this.MainPage = new NavigationPage(new MasterPage(selectPage, navigationService));
             }
             else
             {
@@ -35,7 +38,6 @@ namespace BookMeMobile
 
         protected override void OnStart()
         {
-            // Handle when your app starts
         }
 
         protected override void OnSleep()

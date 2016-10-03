@@ -14,5 +14,7 @@ namespace BookMeMobile.Data.Abstract
         Task<BaseOperationResult> Post<TContent>(string route, TContent content);
 
         Task<BaseOperationResult> Delete(string route);
+
+        Task<BaseOperationResult> Put<TContent>(string route, TContent content);
     }
 }

@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using BookMeMobile.BL.Concrete;
+using BookMeMobile.Data;
+using BookMeMobile.Data.Concrete;
 using BookMeMobile.Entity;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Pages;
 using BookMeMobile.ViewModels;
+using BookMeMobile.ViewModels.Concrete;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Model
@@ -27,21 +32,15 @@ namespace BookMeMobile.Model
 
         public ListRoomViewModel(IEnumerable<Room> rooms, INavigationService navigationService, SelectModel selectModel) : base(navigationService)
         {
-            this.ListRoom = rooms.Select(x => new RoomViewModel()
-            {
-                Id = x.Id,
-                NumberRoom = x.Number,
-                ListViewModel = this
-            }).OrderBy(r => r.NumberRoom).ToList();
-
+            this.ListRoom = rooms.Select(x => new RoomViewModel(x, this)).ToList();
             this.ReserveCommand = new Command(this.Reserve);
             this.selectModel = selectModel;
         }
 
-        public async void Reserve(object selectElement)
+        public void Reserve(object selectElement)
         {
             RoomViewModel selectedRoom = selectElement as RoomViewModel;
-            await this.NavigationService.XamarinNavigation.PushModalAsync(new AddReservationPage(this.selectModel, selectedRoom));
+            this.NavigationService.ShowViewModel(new AddReservationViewModel(this.selectModel, this.NavigationService, selectedRoom));
         }
     }
 }

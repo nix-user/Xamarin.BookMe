@@ -13,6 +13,7 @@ using BookMeMobile.Pages;
 using BookMeMobile.Pages.Login;
 using BookMeMobile.Pages.MyReservations;
 using BookMeMobile.Resources;
+using BookMeMobile.ViewModels.Concrete.Reservations;
 using Java.Sql;
 using Javax.Security.Auth;
 using Xamarin.Forms;
@@ -46,7 +47,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
                 if (operationResult.Status == StatusCode.Ok)
                 {
-                    await this.NavigationService.XamarinNavigation.PushAsync(new MainPage(new ListRoomPage(operationResult.Result, this.model)));
+                    this.NavigationService.ShowViewModel(new ListRoomViewModel(operationResult.Result, this.NavigationService, this.model));
                 }
                 else
                 {

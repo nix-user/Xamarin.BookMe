@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BookMeMobile.Interface;
-using BookMeMobile.Resources;
 using BookMeMobile.WinPhone;
 using Windows.Storage;
 using Xamarin.Forms;
