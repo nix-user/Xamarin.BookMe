@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Pages;
 using BookMeMobile.Resources;
-using BookMeMobile.ViewModels;
 using BookMeMobile.ViewModels.Abstract;
-using BookMeMobile.ViewModels.Concrete;
 using Microsoft.Practices.Unity;
 using Xamarin.Forms;
 
@@ -25,18 +24,27 @@ namespace BookMeMobile.Infrastructure.Concrete
             this.XamarinNavigation = xamarinNavigation;
         }
 
-        public void ShowViewModel(BaseViewModel viewModel)
-        {
-            var view = this.GetPage(viewModel);
-            this.XamarinNavigation.PushAsync(view);
-        }
-
         public void ShowViewModel<TViewModel>()
             where TViewModel : BaseViewModel
         {
-            var viewModel = (BaseViewModel)App.Container.Resolve(typeof(TViewModel), new ParameterOverride("navigationService", this));
+            this.ShowViewModel<TViewModel>(new Dictionary<string, object>());
+        }
+
+        public void ShowViewModel<TViewModel>(object parameterValuesObject)
+            where TViewModel : BaseViewModel
+        {
+            this.ShowViewModel<TViewModel>(this.ObjectToDictionary(parameterValuesObject));
+        }
+
+        public void ShowViewModel<TViewModel>(IDictionary<string, object> parameterValues)
+            where TViewModel : BaseViewModel
+        {
+            parameterValues.Add("navigationService", this);
+
+            ParameterOverride[] parameters = parameterValues.Select(p => new ParameterOverride(p.Key, p.Value)).ToArray();
+
+            var viewModel = (BaseViewModel)App.Container.Resolve(typeof(TViewModel), parameters);
             var view = this.GetPage(viewModel);
-            this.XamarinNavigation = view.Navigation;
             this.XamarinNavigation.PushAsync(view);
         }
 
@@ -45,7 +53,7 @@ namespace BookMeMobile.Infrastructure.Concrete
         {
             var viewModel = (BaseViewModel)App.Container.Resolve(typeof(TViewModel), new ParameterOverride("navigationService", this));
             var view = this.GetPage(viewModel);
-
+            this.XamarinNavigation = view.Navigation;
             mainPage = new NavigationPage(view);
         }
 
@@ -76,6 +84,20 @@ namespace BookMeMobile.Infrastructure.Concrete
         {
             int endingStringIndex = viewModelName.IndexOf(NamingOptions.ViewModelEnding);
             return viewModelName.Substring(0, endingStringIndex) + NamingOptions.PageEnding;
+        }
+
+        private Dictionary<string, object> ObjectToDictionary(object source)
+        {
+            var dictionary = new Dictionary<string, object>();
+            IEnumerable<PropertyInfo> properties = source.GetType().GetRuntimeProperties();
+
+            foreach (var property in properties)
+            {
+                var val = property.GetValue(source);
+                dictionary.Add(property.Name, val);
+            }
+
+            return dictionary;
         }
     }
 }

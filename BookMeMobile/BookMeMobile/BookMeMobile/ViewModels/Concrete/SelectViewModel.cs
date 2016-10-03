@@ -47,7 +47,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
                 if (operationResult.Status == StatusCode.Ok)
                 {
-                    await this.NavigationService.XamarinNavigation.PushAsync(new MainPage(new ListRoomPage(operationResult.Result, this.model)));
+                    this.NavigationService.ShowViewModel<ListRoomViewModel>(new { rooms = operationResult.Result, selectModel = this.model });
                 }
                 else
                 {

@@ -50,7 +50,7 @@ namespace BookMeMobile.ViewModels.Concrete
             var operationStatus = await this.ExecuteOperation(async () => await this.authService.AuthAsync(this.model));
             if (operationStatus == StatusCode.Ok)
             {
-                this.NavigationService.ShowViewModel(new SelectViewModel(new ListRoomManager(), this.NavigationService));
+                this.NavigationService.ShowViewModel<SelectViewModel>();
                 return;
             }
 

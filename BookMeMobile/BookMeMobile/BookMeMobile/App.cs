@@ -18,34 +18,26 @@ namespace BookMeMobile
 {
     public class App : Application
     {
+        private INavigationService navigationService;
+
         public static UnityContainer Container { get; set; }
 
         public App()
         {
-            INavigation navigation;
+            this.navigationService = new NavigationService();
             this.SetupDependencies();
+            Page mainPage;
 
             if (Task.Run(async () => await DependencyService.Get<IFileWorker>().ExistsAsync(FileResources.FileName)).Result)
             {
-                var selectPage = new SelectPage();
-                navigation = selectPage.Navigation;
-                var navigationService = new NavigationService(navigation);
-                selectPage.ViewModel = new SelectViewModel(new ListRoomManager(), navigationService);
-                this.MainPage = new NavigationPage(selectPage);
+                this.navigationService.ShowViewModelAsMainPage<SelectViewModel>(out mainPage);
             }
             else
             {
-                var navigationService = new NavigationService();
-                Page mainPage;
-                navigationService.ShowViewModelAsMainPage<LoginViewModel>(out mainPage);
-                this.MainPage = mainPage;
-                /*var loginPage = new LoginPage();
-                var accountService = new AuthService(new CustomDependencyService(), new HttpClientHandler());
-                navigation = loginPage.Navigation;
-                var navigationService = new NavigationService(navigation);
-                loginPage.ViewModel = new LoginViewModel(accountService, navigationService);
-                this.MainPage = new NavigationPage(loginPage);*/
+                this.navigationService.ShowViewModelAsMainPage<LoginViewModel>(out mainPage);
             }
+
+            this.MainPage = mainPage;
         }
 
         protected override void OnStart()
@@ -69,8 +61,9 @@ namespace BookMeMobile
             App.Container.RegisterType<IAuthService, AuthService>();
             App.Container.RegisterType<IDependencyService, CustomDependencyService>();
             App.Container.RegisterType<IHttpHandler, HttpClientHandler>();
-            //App.Container.RegisterType<INavigationService, NavigationService>(new InjectionConstructor(navigation));
             App.Container.RegisterType<LoginViewModel>();
+            App.Container.RegisterType<ListRoomManager>();
+            App.Container.RegisterType<SelectViewModel>();
         }
     }
 }

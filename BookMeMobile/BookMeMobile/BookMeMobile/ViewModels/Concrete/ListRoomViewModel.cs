@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using BookMeMobile.Entity;
 using BookMeMobile.Infrastructure.Abstract;
+using BookMeMobile.Model;
 using BookMeMobile.Pages;
-using BookMeMobile.ViewModels;
 using BookMeMobile.ViewModels.Abstract;
 using Xamarin.Forms;
 
-namespace BookMeMobile.Model
+namespace BookMeMobile.ViewModels.Concrete
 {
     public class ListRoomViewModel : BaseViewModel
     {
@@ -26,7 +23,7 @@ namespace BookMeMobile.Model
             get { return this.ListRoom.Any() ? null : "Комнат нет"; }
         }
 
-        public ListRoomViewModel(IEnumerable<Room> rooms, INavigationService navigationService, SelectModel selectModel) : base(navigationService)
+        public ListRoomViewModel(IEnumerable<Room> rooms, SelectModel selectModel, INavigationService navigationService) : base(navigationService)
         {
             this.ListRoom = rooms.Select(x => new RoomViewModel()
             {
