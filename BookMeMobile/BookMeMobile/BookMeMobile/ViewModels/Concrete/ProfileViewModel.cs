@@ -24,23 +24,6 @@ namespace BookMeMobile.ViewModels.Concrete
             this.ChangeSaveCommand = new Command(this.SaveChanges);
         }
 
-        public async Task GetDataProfile()
-        {
-            await Task.Delay(1000);
-            var operationResult = await ExecuteOperation(async () => await this.profileService.GetUserData());
-            if (operationResult.Status == StatusCode.Ok)
-            {
-                this.oldModel = new ProfileModel(operationResult.Result);
-                this.FavoriteRoom = operationResult.Result.FavouriteRoom;
-                this.MyFloor = operationResult.Result.Floor;
-                this.oldModel = new ProfileModel(ProfileModel);
-            }
-            else
-            {
-                this.ShowErrorMessage(operationResult.Status);
-            }
-        }
-
         public string FavoriteRoom
         {
             get
@@ -71,9 +54,32 @@ namespace BookMeMobile.ViewModels.Concrete
             }
         }
 
-        public bool IsEnableButtonSave => !this.oldModel.Equals(ProfileModel);
+        public bool IsEnableButtonSave => !this.oldModel.Equals(this.ProfileModel);
 
         public ICommand ChangeSaveCommand { get; set; }
+
+        public async Task GetDataProfile()
+        {
+            await Task.Delay(1000);
+            var operationResult = await ExecuteOperation(async () => await this.profileService.GetUserData());
+            if (operationResult.Status == StatusCode.Ok)
+            {
+                if (operationResult.Result != null)
+                {
+                    this.oldModel = new ProfileModel(operationResult.Result);
+                    this.FavoriteRoom = operationResult.Result.FavouriteRoom;
+                    this.MyFloor = operationResult.Result.Floor;
+                    this.oldModel = new ProfileModel(this.ProfileModel);
+                }else
+                {
+                    this.oldModel = new ProfileModel();
+                }
+            }
+            else
+            {
+                this.ShowErrorMessage(operationResult.Status);
+            }
+        }
 
         private async void SaveChanges(object binding)
         {
