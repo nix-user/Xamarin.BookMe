@@ -62,9 +62,9 @@ namespace BookMeMobile.Infrastructure.Concrete
 
             ParameterOverride[] parameters = parameterValues.Select(p => new ParameterOverride(p.Key, p.Value)).ToArray();
 
+            var view = this.ResolvePage(typeof(TViewModel));
             var viewModel = (BaseViewModel)App.Container.Resolve(typeof(TViewModel), parameters);
-            var view = this.GetPage(viewModel);
-
+            view.ViewModel = viewModel;
             if (modal)
             {
                 this.XamarinNavigation.PushModalAsync(view);
@@ -77,23 +77,22 @@ namespace BookMeMobile.Infrastructure.Concrete
 
         private BasePage SetupPage<TViewModel>()
         {
+            var view = this.ResolvePage(typeof(TViewModel));
             var viewModel = (BaseViewModel)App.Container.Resolve(typeof(TViewModel), new ParameterOverride("navigationService", this));
-            var view = this.GetPage(viewModel);
+            view.ViewModel = viewModel;
             this.XamarinNavigation = view.Navigation;
             return view;
         }
 
-        private BasePage GetPage(BaseViewModel viewModel)
+        private BasePage ResolvePage(Type viewModelType)
         {
-            var viewModelsViewType = this.GetPageType(viewModel);
-            var view = (BasePage)Activator.CreateInstance(viewModelsViewType);
-            view.ViewModel = viewModel;
-            return view;
+            var viewModelsPageType = this.GetPageType(viewModelType);
+            var page = (BasePage)Activator.CreateInstance(viewModelsPageType);
+            return page;
         }
 
-        private Type GetPageType(BaseViewModel viewModel)
+        private Type GetPageType(Type viewModelType)
         {
-            var viewModelType = viewModel.GetType();
             var currentAssembly = viewModelType.GetTypeInfo().Assembly;
             var pageTypeName = this.GetPageName(viewModelType.Name);
             var pageType = currentAssembly.ExportedTypes.FirstOrDefault(type => type.FullName.Contains(pageTypeName));
