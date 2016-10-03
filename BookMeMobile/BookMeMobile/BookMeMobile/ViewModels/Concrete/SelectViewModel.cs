@@ -65,13 +65,26 @@ namespace BookMeMobile.ViewModels.Concrete
         public DateTime From
         {
             get { return this.model.From; }
-            set { this.model.From = this.SetValidDate(value); }
+            set
+            {
+                var currentTime = this.SetValidDate(value);
+                if (currentTime >= this.To)
+                {
+                    this.To = currentTime.AddMinutes(30);
+                }
+
+                this.model.From = currentTime;
+            }
         }
 
         public DateTime To
         {
             get { return this.model.To; }
-            set { this.model.To = this.SetValidDate(value); }
+            set
+            {
+                this.model.To = this.SetValidDate(value);
+                this.OnPropertyChanged();
+            }
         }
 
         public bool IsLarge

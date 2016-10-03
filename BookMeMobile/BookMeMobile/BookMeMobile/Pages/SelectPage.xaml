@@ -12,19 +12,19 @@
     </ResourceDictionary>
   </ContentPage.Resources>
   <AbsoluteLayout x:Name="rootLayout" Padding="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-   <StackLayout x:Name="MainLayout" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+    <StackLayout x:Name="MainLayout" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
       <StackLayout x:Name="DateSpace">
         <DatePicker x:Name="Date" Format="D" Date="{Binding Date}">
         </DatePicker>
         <StackLayout x:Name="timeLayout" Padding="0,10,0,0" Orientation="Horizontal" HorizontalOptions="Center">
           <StackLayout >
             <Label Text="От" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Large"/>
-            <render:TimePicker24Hour x:Name="TimeFrom" Time="{Binding From,Converter={StaticResource DateTimeToTimeSpan}}" Format="HH:mm" HorizontalOptions="FillAndExpand"/>
+            <render:TimePicker24Hour x:Name="TimeFrom" Time="{Binding From,Mode=TwoWay,Converter={StaticResource DateTimeToTimeSpan}}" Format="HH:mm" HorizontalOptions="FillAndExpand"/>
           </StackLayout>
           <render:Loader x:Name="loader" VerticalOptions="Center"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
           <StackLayout >
             <Label Text="До" FontSize="Large" HorizontalTextAlignment="Center"/>
-            <render:TimePicker24Hour x:Name="TimeTo"  Time="{Binding To,Converter={StaticResource DateTimeToTimeSpan}}" Format="HH:mm" HorizontalOptions="FillAndExpand"/>
+            <render:TimePicker24Hour x:Name="TimeTo"  Time="{Binding To,Mode=TwoWay, Converter={StaticResource DateTimeToTimeSpan}}" Format="HH:mm"  HorizontalOptions="FillAndExpand"/>
           </StackLayout>
         </StackLayout>
         <StackLayout x:Name="checkerLayout" Padding="10,20">
