@@ -7,12 +7,10 @@ using BookMeMobile.BL.Concrete;
 using BookMeMobile.Data;
 using BookMeMobile.Data.Abstract;
 using BookMeMobile.Data.Concrete;
+using BookMeMobile.Data.FakeRepository;
 using BookMeMobile.Entity;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
-using BookMeMobile.Pages;
-using BookMeMobile.ViewModels.Concrete;
-using Org.Apache.Http.Impl.Cookie;
 
 namespace BookMeMobile.BL
 {
@@ -26,8 +24,8 @@ namespace BookMeMobile.BL
 
         public ListRoomManager()
         {
-            this.reservationRepository = new ReservationRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler()));
-            this.roomRepository = new RoomRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler()));
+            this.reservationRepository = new FakeReservationRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler()));
+            this.roomRepository = new FakeRoomRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler()));
         }
 
         /// <summary>

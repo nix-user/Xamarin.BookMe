@@ -40,6 +40,7 @@
     <Compile Include="BL\Abstract\IProfileServices.cs" />
     <Compile Include="BL\Concrete\AuthService.cs" />
     <Compile Include="BL\Concrete\CustomDependencyService.cs" />
+    <Compile Include="BL\Concrete\Fake\FakeAuthService.cs" />
     <Compile Include="BL\Concrete\ProfileService.cs" />
     <Compile Include="Converters\BoolToTextconverter.cs" />
     <Compile Include="Converters\DateTimeToSpanConverter.cs" />
@@ -60,6 +61,10 @@
     <Compile Include="Data\Abstract\IRoomRepository.cs" />
     <Compile Include="Data\BaseRepository.cs" />
     <Compile Include="Data\Concrete\HttpHandler.cs" />
+    <Compile Include="Data\FakeRepositoryes\FakeData.cs" />
+    <Compile Include="Data\FakeRepositoryes\FakeProfileRepository.cs" />
+    <Compile Include="Data\FakeRepositoryes\FakeReservationRepository.cs" />
+    <Compile Include="Data\FakeRepositoryes\FakeRoomRepository.cs" />
     <Compile Include="Data\ProfileRepository.cs" />
     <Compile Include="Data\ReservationRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />

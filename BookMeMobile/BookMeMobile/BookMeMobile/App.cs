@@ -2,9 +2,11 @@
 using BookMeMobile.BL;
 using BookMeMobile.BL.Abstract;
 using BookMeMobile.BL.Concrete;
+using BookMeMobile.BL.Concrete.Fake;
 using BookMeMobile.Data;
 using BookMeMobile.Data.Abstract;
 using BookMeMobile.Data.Concrete;
+using BookMeMobile.Data.FakeRepository;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Interface;
@@ -56,14 +58,14 @@ namespace BookMeMobile
         private void SetupDependencies()
         {
             App.Container = new UnityContainer();
-            App.Container.RegisterType<IAuthService, AuthService>();
+            App.Container.RegisterType<IAuthService, FakeAuthService>();
             App.Container.RegisterType<IDependencyService, CustomDependencyService>();
             App.Container.RegisterType<IHttpHandler, HttpClientHandler>();
             App.Container.RegisterType<LoginViewModel>();
             App.Container.RegisterType<ListRoomManager>();
             App.Container.RegisterType<SelectViewModel>();
             App.Container.RegisterType<IProfileService, ProfileService>();
-            App.Container.RegisterType<IProfileRepository, ProfileRepository>();
+            App.Container.RegisterType<IProfileRepository, FakeProfileRepository>();
             App.Container.RegisterType<IHttpService, HttpService>();
             App.Container.RegisterType<IDependencyService, CustomDependencyService>();
             App.Container.RegisterType<IHttpHandler, HttpClientHandler>();

@@ -9,6 +9,7 @@ using BookMeMobile.BL.Concrete;
 using BookMeMobile.Data;
 using BookMeMobile.Data.Abstract;
 using BookMeMobile.Data.Concrete;
+using BookMeMobile.Data.FakeRepository;
 using BookMeMobile.Entity;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
@@ -32,7 +33,7 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
 
         public MyReservationsViewModel(INavigationService navigationService) : base(navigationService)
         {
-            this.reservationRepository = new ReservationRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler()));
+            this.reservationRepository = new FakeReservationRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler()));
             this.reservationService = new ReservationService(this.reservationRepository);
             this.RemoveReservationCommand = new Command<ReservationViewModel>(this.RemoveReservation);
 
