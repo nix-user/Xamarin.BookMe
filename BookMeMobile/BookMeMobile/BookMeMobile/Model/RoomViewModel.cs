@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Entity;
 using BookMeMobile.ViewModels;
+using BookMeMobile.ViewModels.Concrete;
 
 namespace BookMeMobile.Model
 {

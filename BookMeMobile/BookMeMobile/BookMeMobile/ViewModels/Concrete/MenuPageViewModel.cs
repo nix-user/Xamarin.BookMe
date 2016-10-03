@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using BookMeMobile.BL;
@@ -11,10 +7,9 @@ using BookMeMobile.Data;
 using BookMeMobile.Data.Concrete;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
-using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Model;
 using BookMeMobile.Pages;
-using Java.Security.Interfaces;
+using BookMeMobile.ViewModels.Abstract;
 using Xamarin.Forms;
 using ZXing;
 using ZXing.Net.Mobile.Forms;
@@ -72,8 +67,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
                 if (item.TargetType == typeof(SelectPage))
                 {
-                    this.navigationService.ShowViewModel(new SelectViewModel(new ListRoomManager(),
-                        this.navigationService));
+                    this.navigationService.ShowViewModel<SelectViewModel>();
                 }
 
                 if (item.TargetType == typeof(QrReservation))
@@ -88,14 +82,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private void GoToProfilePage()
         {
-            var viewModel = new ProfileViewModel(
-                new ProfileService(
-                    new ProfileRepository(
-                        new HttpService(
-                            new CustomDependencyService(),
-                            new HttpClientHandler()))),
-                this.navigationService);
-            this.navigationService.ShowViewModel(viewModel);
+            this.navigationService.ShowViewModel<ProfileViewModel>();
         }
 
         private async Task<ProfileModel> GetProfileData()

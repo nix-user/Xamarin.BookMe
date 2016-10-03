@@ -14,6 +14,7 @@ using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
+using BookMeMobile.ViewModels.Abstract;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete.Reservations

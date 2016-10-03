@@ -10,6 +10,7 @@ using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model.Login;
 using BookMeMobile.Pages;
 using BookMeMobile.Resources;
+using BookMeMobile.ViewModels.Abstract;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete
@@ -53,7 +54,7 @@ namespace BookMeMobile.ViewModels.Concrete
             var operationStatus = await this.ExecuteOperation(async () => await this.authService.AuthAsync(this.model));
             if (operationStatus == StatusCode.Ok)
             {
-               this.NavigationService.ShowViewModel(new SelectViewModel(new ListRoomManager(), this.NavigationService));
+                this.NavigationService.ShowViewModel<SelectViewModel>();
                 return;
             }
 

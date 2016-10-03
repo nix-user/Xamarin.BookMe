@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,12 +9,13 @@ using BookMeMobile.Data;
 using BookMeMobile.Data.Concrete;
 using BookMeMobile.Entity;
 using BookMeMobile.Infrastructure.Abstract;
+using BookMeMobile.Model;
 using BookMeMobile.Pages;
-using BookMeMobile.ViewModels;
+using BookMeMobile.ViewModels.Abstract;
 using BookMeMobile.ViewModels.Concrete;
 using Xamarin.Forms;
 
-namespace BookMeMobile.Model
+namespace BookMeMobile.ViewModels.Concrete
 {
     public class ListRoomViewModel : BaseViewModel
     {
@@ -30,9 +30,9 @@ namespace BookMeMobile.Model
             get { return this.ListRoom.Any() ? null : "Комнат нет"; }
         }
 
-        public ListRoomViewModel(IEnumerable<Room> rooms, INavigationService navigationService, SelectModel selectModel) : base(navigationService)
+        public ListRoomViewModel(IEnumerable<Room> rooms, SelectModel selectModel, INavigationService navigationService) : base(navigationService)
         {
-            this.ListRoom = rooms.Select(x => new RoomViewModel(x, this)).ToList();
+            this.ListRoom = rooms.OrderBy(x => x.Number).Select(x => new RoomViewModel(x, this)).ToList();
             this.ReserveCommand = new Command(this.Reserve);
             this.selectModel = selectModel;
         }
@@ -40,7 +40,7 @@ namespace BookMeMobile.Model
         public void Reserve(object selectElement)
         {
             RoomViewModel selectedRoom = selectElement as RoomViewModel;
-            this.NavigationService.ShowViewModel(new AddReservationViewModel(this.selectModel, this.NavigationService, selectedRoom));
+            this.NavigationService.ShowViewModel<AddReservationViewModel>(new { filterParameter = this.selectModel, roomModel = selectedRoom }, true);
         }
     }
 }

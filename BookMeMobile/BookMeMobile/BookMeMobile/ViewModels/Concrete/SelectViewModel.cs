@@ -1,21 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using BookMeMobile.BL;
-using BookMeMobile.BL.Concrete;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model;
-using BookMeMobile.Pages;
-using BookMeMobile.Pages.Login;
 using BookMeMobile.Pages.MyReservations;
 using BookMeMobile.Resources;
-using BookMeMobile.ViewModels.Concrete.Reservations;
-using Java.Sql;
-using Javax.Security.Auth;
+using BookMeMobile.ViewModels.Abstract;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete
@@ -47,7 +38,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
                 if (operationResult.Status == StatusCode.Ok)
                 {
-                    this.NavigationService.ShowViewModel(new ListRoomViewModel(operationResult.Result, this.NavigationService, this.model));
+                    this.NavigationService.ShowViewModel<ListRoomViewModel>(new { rooms = operationResult.Result, selectModel = this.model });
                 }
                 else
                 {

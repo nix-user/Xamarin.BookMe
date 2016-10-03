@@ -4,6 +4,7 @@ using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model;
 using BookMeMobile.Resources;
+using BookMeMobile.ViewModels.Abstract;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete
@@ -13,10 +14,14 @@ namespace BookMeMobile.ViewModels.Concrete
         private ListRoomManager service;
         private AddReservationModel model;
 
-        public AddReservationViewModel(SelectModel filterParametr, INavigationService navigationService, RoomViewModel roomModel) : base(navigationService)
+        public AddReservationViewModel(
+            SelectModel filterParameter,
+            RoomViewModel roomModel,
+            ListRoomManager roomManager,
+            INavigationService navigationService) : base(navigationService)
         {
-            this.model = new AddReservationModel(filterParametr, roomModel);
-            this.service = new ListRoomManager();
+            this.model = new AddReservationModel(filterParameter, roomModel);
+            this.service = roomManager;
             this.AddReservationCommand = new Command(this.AddReservation);
             this.GoBackCommand = new Command(this.GoBack);
         }

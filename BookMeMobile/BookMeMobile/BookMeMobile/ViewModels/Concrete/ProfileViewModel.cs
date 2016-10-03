@@ -1,16 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
-using BookMeMobile.BL;
 using BookMeMobile.BL.Abstract;
-using BookMeMobile.BL.Concrete;
-using BookMeMobile.Data;
-using BookMeMobile.Data.Concrete;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model;
-using BookMeMobile.Pages;
 using BookMeMobile.Resources;
+using BookMeMobile.ViewModels.Abstract;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete
@@ -27,23 +22,6 @@ namespace BookMeMobile.ViewModels.Concrete
             this.ProfileModel = new ProfileModel();
             this.profileService = profileService;
             this.ChangeSaveCommand = new Command(this.SaveChanges);
-        }
-
-        public async Task GetDataProfile()
-        {
-            await Task.Delay(1000);
-            var operationResult = await ExecuteOperation(async () => await this.profileService.GetUserData());
-            if (operationResult.Status == StatusCode.Ok)
-            {
-                this.oldModel = new ProfileModel(operationResult.Result);
-                this.FavoriteRoom = operationResult.Result.FavouriteRoom;
-                this.MyFloor = operationResult.Result.Floor;
-                this.oldModel = new ProfileModel(ProfileModel);
-            }
-            else
-            {
-                this.ShowErrorMessage(operationResult.Status);
-            }
         }
 
         public string FavoriteRoom
@@ -76,9 +54,32 @@ namespace BookMeMobile.ViewModels.Concrete
             }
         }
 
-        public bool IsEnableButtonSave => !this.oldModel.Equals(ProfileModel);
+        public bool IsEnableButtonSave => !this.oldModel.Equals(this.ProfileModel);
 
         public ICommand ChangeSaveCommand { get; set; }
+
+        public async Task GetDataProfile()
+        {
+            await Task.Delay(1000);
+            var operationResult = await ExecuteOperation(async () => await this.profileService.GetUserData());
+            if (operationResult.Status == StatusCode.Ok)
+            {
+                if (operationResult.Result != null)
+                {
+                    this.oldModel = new ProfileModel(operationResult.Result);
+                    this.FavoriteRoom = operationResult.Result.FavouriteRoom;
+                    this.MyFloor = operationResult.Result.Floor;
+                    this.oldModel = new ProfileModel(this.ProfileModel);
+                }else
+                {
+                    this.oldModel = new ProfileModel();
+                }
+            }
+            else
+            {
+                this.ShowErrorMessage(operationResult.Status);
+            }
+        }
 
         private async void SaveChanges(object binding)
         {

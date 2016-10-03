@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Resources;
-using Xamarin.Forms;
 
-namespace BookMeMobile.ViewModels
+namespace BookMeMobile.ViewModels.Abstract
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
