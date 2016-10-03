@@ -1,16 +1,13 @@
 using System;
+using System.ComponentModel;
 using Android.App;
 using Android.Runtime;
-using Android.Util;
 using Android.Widget;
 using BookMeMobile.Droid.Render;
 using BookMeMobile.Render;
-using Java.Lang;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using AndroidTimePicker = Android.Widget.TimePicker;
-using String = System.String;
-using TextAlignment = Android.Views.TextAlignment;
 using TimePicker = Xamarin.Forms.TimePicker;
 
 [assembly: ExportRenderer(typeof(TimePicker24Hour), typeof(MyTimePickerRenderer))]
@@ -32,6 +29,12 @@ namespace BookMeMobile.Droid.Render
             this.Control.KeyListener = null;
             this.Control.FocusChange += this.Control_FocusChange;
             this.Control.TextSize = 45;
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+            this.Control.Text = ((TimePicker)sender).Time.ToString(@"hh\:mm");
         }
 
         private void Control_FocusChange(object sender, FocusChangeEventArgs e)
