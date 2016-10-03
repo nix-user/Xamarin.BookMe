@@ -1,4 +1,5 @@
 ﻿using System;
+using BookMeMobile.ViewModels.Concrete;
 
 namespace BookMeMobile.Model
 {
@@ -9,5 +10,7 @@ namespace BookMeMobile.Model
         public string IconSource { get; set; }
 
         public Type TargetType { get; set; }
+
+        public MenuPageViewModel ViewModel { get; set; }
     }
 }

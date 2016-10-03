@@ -37,8 +37,10 @@
     <Compile Include="App.cs" />
     <Compile Include="BL\Abstract\IAuthService.cs" />
     <Compile Include="BL\Abstract\IDependencyService.cs" />
+    <Compile Include="BL\Abstract\IProfileServices.cs" />
     <Compile Include="BL\Concrete\AuthService.cs" />
     <Compile Include="BL\Concrete\CustomDependencyService.cs" />
+    <Compile Include="BL\Concrete\ProfileService.cs" />
     <Compile Include="Converters\BoolToTextconverter.cs" />
     <Compile Include="Converters\DateTimeToSpanConverter.cs" />
     <Compile Include="Converters\RoomToStringConverter.cs" />
@@ -52,11 +54,13 @@
     <Compile Include="CustomViews\ViewCellWithCommand.cs" />
     <Compile Include="Data\Abstract\IHttpHandler.cs" />
     <Compile Include="Data\Abstract\IHttpService.cs" />
+    <Compile Include="Data\Abstract\IProfileRepository.cs" />
     <Compile Include="Data\Abstract\IRepository.cs" />
     <Compile Include="Data\Abstract\IReservationRepository.cs" />
     <Compile Include="Data\Abstract\IRoomRepository.cs" />
     <Compile Include="Data\BaseRepository.cs" />
     <Compile Include="Data\Concrete\HttpHandler.cs" />
+    <Compile Include="Data\ProfileRepository.cs" />
     <Compile Include="Data\ReservationRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\HttpService.cs" />
@@ -64,6 +68,7 @@
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Enums\StatusCode.cs" />
     <Compile Include="Model\AddReservationModel.cs" />
+    <Compile Include="Model\ProfileModel.cs" />
     <Compile Include="ViewModels\Concrete\ListRoomViewModel.cs" />
     <Compile Include="Model\Login\LoginModel.cs" />
     <Compile Include="Model\RoomViewModel.cs" />
@@ -110,8 +115,8 @@
     <Compile Include="Pages\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\QrBook.xaml.cs">
-      <DependentUpon>QrBook.xaml</DependentUpon>
+    <Compile Include="Pages\QrReservation.xaml.cs">
+      <DependentUpon>QrReservation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SelectPage.xaml.cs">
       <DependentUpon>SelectPage.xaml</DependentUpon>
@@ -142,6 +147,9 @@
     <Compile Include="ViewModels\Abstract\BaseViewModel.cs" />
     <Compile Include="ViewModels\Concrete\AddReservationViewModel.cs" />
     <Compile Include="ViewModels\Concrete\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\MenuPageViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\ProfileViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\MasterViewModel.cs" />
     <Compile Include="ViewModels\Concrete\Reservations\MyReservationsViewModel.cs" />
     <Compile Include="ViewModels\Concrete\SelectViewModel.cs" />
     <Compile Include="ViewModels\Concrete\Reservations\ReservationsListViewModel.cs" />
@@ -256,7 +264,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\QrBook.xaml">
+    <EmbeddedResource Include="Pages\QrReservation.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

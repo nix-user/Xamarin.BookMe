@@ -1,24 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
+             xmlns:render="clr-namespace:BookMeMobile.Render;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.ProfilePage"
              Title="Profile">
-  <StackLayout BindingContext="{Binding}" VerticalOptions="Start" Padding="10,0,10,0">
-   
-    <StackLayout Orientation="Horizontal" VerticalOptions="Start">
-      <Image Source="profileMenu.png" />
-      <Label  Text="{Binding UserName}" FontSize="Medium" VerticalOptions="Center"></Label>
+  <AbsoluteLayout x:Name="rootLayout" Padding="0" VerticalOptions="CenterAndExpand">
+    <StackLayout  Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0.5, 0.42, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional">
+      <render:Loader x:Name="loader" VerticalOptions="Center" />
     </StackLayout>
-    <TableView>
-      <TableRoot>
-        <TableSection>
-          <EntryCell x:Name="txtFavoriteRoomCell" Keyboard="Default" Label="Любимая комната:" Text="{Binding FavoriteRoom}"/>
-        </TableSection>
-        <TableSection>
-          <EntryCell x:Name="txtMyRoomCell" Keyboard="Default" Label="Моя комната:" Text="{Binding MyRoom}"/>
-        </TableSection>
-      </TableRoot>
-    </TableView>
-    <Button x:Name="btnSave" IsEnabled="False" Text="Сохранить" Clicked="BtnSave_OnClicked"/>
-  </StackLayout>
-</ContentPage>
+    <StackLayout BindingContext="{Binding}" VerticalOptions="CenterAndExpand" Padding="10,0,40,0">
+      <TableView>
+        <TableRoot>
+          <TableSection>
+            <EntryCell x:Name="txtFavoriteRoomCell" Keyboard="Default" Label="Любимая комната:" Text="{Binding FavoriteRoom}"/>
+          </TableSection>
+          <TableSection>
+            <EntryCell x:Name="txtMyRoomCell" Keyboard="Numeric" Label="Мой этаж:" Text="{Binding MyFloor}"/>
+          </TableSection>
+        </TableRoot>
+      </TableView>
+        <Button x:Name="btnSave" Text="Сохранить" Command="{Binding ChangeSaveCommand}" IsEnabled="{Binding IsEnableButtonSave}"/>
+    </StackLayout>
+  </AbsoluteLayout>
+</pages:BasePage>

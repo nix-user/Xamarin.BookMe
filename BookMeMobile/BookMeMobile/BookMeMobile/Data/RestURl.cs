@@ -15,5 +15,7 @@ namespace BookMeMobile.Data
         public static string Reservation => apiURL + URIResources.ReservationDomainURL;
 
         public static string GetToken => URIResources.IpAdress + URIResources.Token;
+
+        public static string ProfileUrl => apiURL + URIResources.ProfileDomainURL;
     }
 }

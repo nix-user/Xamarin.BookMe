@@ -1,6 +1,10 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using BookMeMobile.BL;
 using BookMeMobile.BL.Abstract;
+using BookMeMobile.BL.Concrete;
+using BookMeMobile.Data;
+using BookMeMobile.Data.Concrete;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model.Login;

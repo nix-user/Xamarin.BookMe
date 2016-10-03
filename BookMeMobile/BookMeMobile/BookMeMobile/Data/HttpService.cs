@@ -87,6 +87,26 @@ namespace BookMeMobile.Data
             }
         }
 
+        public async Task<BaseOperationResult> Put<TContent>(string route, TContent content)
+        {
+            string jsonFormat = "application/json";
+
+            var json = JsonConvert.SerializeObject(content);
+            var jsonContent = new StringContent(json, Encoding.UTF8, jsonFormat);
+            try
+            {
+                var response = await this.httpHandler.PutAsync(route, jsonContent);
+                return await this.CreateOperationResultFromResponse(response);
+            }
+            catch (Exception)
+            {
+                return new BaseOperationResult()
+                {
+                    Status = StatusCode.ConnectionProblem
+                };
+            }
+        }
+
         private async Task<BaseOperationResult> CreateOperationResultFromResponse(HttpResponseMessage response)
         {
             var contentResponse = await response.Content.ReadAsStringAsync();

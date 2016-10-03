@@ -24,20 +24,39 @@ namespace BookMeMobile.Infrastructure.Concrete
             this.XamarinNavigation = xamarinNavigation;
         }
 
-        public void ShowViewModel<TViewModel>()
+        public void ShowViewModel<TViewModel>(bool modal = false)
             where TViewModel : BaseViewModel
         {
-            this.ShowViewModel<TViewModel>(new Dictionary<string, object>());
+            this.PushViewModel<TViewModel>(new Dictionary<string, object>(), modal);
         }
 
-        public void ShowViewModel<TViewModel>(object parameterValuesObject)
+        public void ShowViewModel<TViewModel>(object parameterValuesObject, bool modal = false)
             where TViewModel : BaseViewModel
         {
-            this.ShowViewModel<TViewModel>(this.ObjectToDictionary(parameterValuesObject));
+            this.PushViewModel<TViewModel>(this.ObjectToDictionary(parameterValuesObject), modal);
         }
 
-        public void ShowViewModel<TViewModel>(IDictionary<string, object> parameterValues)
+        public void ShowViewModel<TViewModel>(IDictionary<string, object> parameterValues, bool modal = false)
             where TViewModel : BaseViewModel
+        {
+            this.PushViewModel<TViewModel>(parameterValues, modal);
+        }
+
+        public Page ShowViewModelAsMainPage<TViewModel>()
+            where TViewModel : BaseViewModel
+        {
+            var view = this.SetupPage<TViewModel>();
+            return new NavigationPage(view);
+        }
+
+        public Page ShowViewModelAsMainPageWithMenu<TViewModel>()
+            where TViewModel : BaseViewModel
+        {
+            var view = this.SetupPage<TViewModel>();
+            return new NavigationPage(new MasterPage(view, this));
+        }
+
+        private void PushViewModel<TViewModel>(IDictionary<string, object> parameterValues, bool modal)
         {
             parameterValues.Add("navigationService", this);
 
@@ -45,16 +64,23 @@ namespace BookMeMobile.Infrastructure.Concrete
 
             var viewModel = (BaseViewModel)App.Container.Resolve(typeof(TViewModel), parameters);
             var view = this.GetPage(viewModel);
-            this.XamarinNavigation.PushAsync(view);
+
+            if (modal)
+            {
+                this.XamarinNavigation.PushModalAsync(view);
+            }
+            else
+            {
+                this.XamarinNavigation.PushAsync(new MasterPage(view, this));
+            }
         }
 
-        public void ShowViewModelAsMainPage<TViewModel>(out Page mainPage)
-            where TViewModel : BaseViewModel
+        private BasePage SetupPage<TViewModel>()
         {
             var viewModel = (BaseViewModel)App.Container.Resolve(typeof(TViewModel), new ParameterOverride("navigationService", this));
             var view = this.GetPage(viewModel);
             this.XamarinNavigation = view.Navigation;
-            mainPage = new NavigationPage(view);
+            return view;
         }
 
         private BasePage GetPage(BaseViewModel viewModel)

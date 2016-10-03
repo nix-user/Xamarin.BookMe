@@ -1,21 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using BookMeMobile.BL;
-using BookMeMobile.BL.Concrete;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model;
-using BookMeMobile.Pages;
-using BookMeMobile.Pages.Login;
 using BookMeMobile.Pages.MyReservations;
 using BookMeMobile.Resources;
 using BookMeMobile.ViewModels.Abstract;
-using Java.Sql;
-using Javax.Security.Auth;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete

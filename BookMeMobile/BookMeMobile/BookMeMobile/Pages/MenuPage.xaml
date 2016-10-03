@@ -1,28 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
+             xmlns:render="clr-namespace:BookMeMobile.Render;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.MenuPage"
              Padding="0,40,0,0"
              Icon="hamburger.png"
              Title="Menu"
              >
-  <ContentPage.Content>
-    <StackLayout>
-    <Label FontSize="Large" HorizontalOptions="Center"/>
-    <ListView x:Name="listView" VerticalOptions="FillAndExpand" SeparatorVisibility="Default">
-      <ListView.ItemTemplate>
-        <DataTemplate>
-          <ViewCell>
-            <ViewCell.View>
-              <StackLayout Orientation="Horizontal">
-                <Image Source="{Binding Source}"/> 
-                <Label Text="{Binding Title}" VerticalOptions="CenterAndExpand"/>
-              </StackLayout>
-            </ViewCell.View>
-          </ViewCell>
-        </DataTemplate>
-      </ListView.ItemTemplate>
-    </ListView>
+  <AbsoluteLayout x:Name="rootLayout" Padding="0" VerticalOptions="CenterAndExpand">
+    <StackLayout  Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0.5, 0.42, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional">
+      <render:Loader x:Name="loader" VerticalOptions="Center" />
     </StackLayout>
-  </ContentPage.Content>
-</ContentPage>
+    <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+      <ListView x:Name="listView" ItemsSource="{Binding MasterPageItems}" VerticalOptions="FillAndExpand" SeparatorVisibility="Default">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <ViewCell.View>
+                <StackLayout>
+                  <Button VerticalOptions="FillAndExpand" FontSize="Medium" HorizontalOptions="FillAndExpand" Text ="{Binding Title}" Command="{Binding Path= ViewModel.SelectItemCommand}" CommandParameter="{Binding}"/>
+                </StackLayout>
+              </ViewCell.View>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+  </AbsoluteLayout>
+</pages:BasePage>

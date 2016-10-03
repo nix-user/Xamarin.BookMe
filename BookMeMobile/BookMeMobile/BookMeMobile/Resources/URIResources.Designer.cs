@@ -98,6 +98,15 @@ namespace BookMeMobile.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        internal static string ProfileDomainURL {
+            get {
+                return ResourceManager.GetString("ProfileDomainURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to reservation/.
         /// </summary>
         internal static string ReservationDomainURL {

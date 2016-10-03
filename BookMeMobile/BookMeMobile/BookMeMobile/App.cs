@@ -2,13 +2,12 @@
 using BookMeMobile.BL;
 using BookMeMobile.BL.Abstract;
 using BookMeMobile.BL.Concrete;
+using BookMeMobile.Data;
 using BookMeMobile.Data.Abstract;
 using BookMeMobile.Data.Concrete;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Interface;
-using BookMeMobile.Pages;
-using BookMeMobile.Pages.Login;
 using BookMeMobile.Resources;
 using BookMeMobile.ViewModels.Concrete;
 using Microsoft.Practices.Unity;
@@ -30,11 +29,11 @@ namespace BookMeMobile
 
             if (Task.Run(async () => await DependencyService.Get<IFileWorker>().ExistsAsync(FileResources.FileName)).Result)
             {
-                this.navigationService.ShowViewModelAsMainPage<SelectViewModel>(out mainPage);
+                mainPage = this.navigationService.ShowViewModelAsMainPageWithMenu<SelectViewModel>();
             }
             else
             {
-                this.navigationService.ShowViewModelAsMainPage<LoginViewModel>(out mainPage);
+                mainPage = this.navigationService.ShowViewModelAsMainPage<LoginViewModel>();
             }
 
             this.MainPage = mainPage;
@@ -42,7 +41,6 @@ namespace BookMeMobile
 
         protected override void OnStart()
         {
-            // Handle when your app starts
         }
 
         protected override void OnSleep()
@@ -64,6 +62,11 @@ namespace BookMeMobile
             App.Container.RegisterType<LoginViewModel>();
             App.Container.RegisterType<ListRoomManager>();
             App.Container.RegisterType<SelectViewModel>();
+            App.Container.RegisterType<IProfileService, ProfileService>();
+            App.Container.RegisterType<IProfileRepository, ProfileRepository>();
+            App.Container.RegisterType<IHttpService, HttpService>();
+            App.Container.RegisterType<IDependencyService, CustomDependencyService>();
+            App.Container.RegisterType<IHttpHandler, HttpClientHandler>();
         }
     }
 }

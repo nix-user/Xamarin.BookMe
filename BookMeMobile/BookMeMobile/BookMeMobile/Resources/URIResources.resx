@@ -138,4 +138,7 @@
   <data name="Token" xml:space="preserve">
     <value>token</value>
   </data>
+  <data name="ProfileDomainURL" xml:space="preserve">
+    <value>Profile</value>
+  </data>
 </root>
