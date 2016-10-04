@@ -18,29 +18,29 @@
         </DatePicker>
         <StackLayout x:Name="timeLayout" Padding="0,10,0,0" Orientation="Horizontal" HorizontalOptions="Center">
           <StackLayout >
-            <Label Text="От" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Large"/>
+            <Label Text="From" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Large"/>
             <render:TimePicker24Hour x:Name="TimeFrom" Time="{Binding From,Mode=TwoWay,Converter={StaticResource DateTimeToTimeSpan}}" Format="HH:mm" HorizontalOptions="FillAndExpand"/>
           </StackLayout>
           <render:Loader x:Name="loader" VerticalOptions="Center"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
           <StackLayout >
-            <Label Text="До" FontSize="Large" HorizontalTextAlignment="Center"/>
+            <Label Text="To" FontSize="Large" HorizontalTextAlignment="Center"/>
             <render:TimePicker24Hour x:Name="TimeTo"  Time="{Binding To,Mode=TwoWay, Converter={StaticResource DateTimeToTimeSpan}}" Format="HH:mm"  HorizontalOptions="FillAndExpand"/>
           </StackLayout>
         </StackLayout>
         <StackLayout x:Name="checkerLayout" Padding="10,20">
           <StackLayout Orientation="Horizontal">
-            <Label  Text="Большая" FontSize="Large"/>
+            <Label  Text="Large" FontSize="Large"/>
             <Switch x:Name="IsLarge" IsToggled="{Binding IsLarge}" HorizontalOptions="EndAndExpand"/>
           </StackLayout>
           <StackLayout  Orientation="Horizontal" VerticalOptions="EndAndExpand">
-            <Label Text="C Поликомом" FontSize="Large" HorizontalOptions="Start" VerticalOptions="End"/>
+            <Label Text="Polycom" FontSize="Large" HorizontalOptions="Start" VerticalOptions="End"/>
             <Switch x:Name="HasPolycom" IsToggled="{Binding HasPolycom}" HorizontalOptions="EndAndExpand"/>
           </StackLayout>
         </StackLayout>
       </StackLayout>
       <StackLayout >
-        <Button x:Name="MyReservationsButton" HorizontalOptions="FillAndExpand" Text="Мои бронирования" Command="{Binding GoToMyReservation}"/>
-        <Button x:Name="SearchButton" HorizontalOptions="FillAndExpand" Text="Поиск" Command="{Binding GoToSearch}" />
+        <Button x:Name="MyReservationsButton" HorizontalOptions="FillAndExpand" Text="My Reservations" Command="{Binding GoToMyReservation}"/>
+        <Button x:Name="SearchButton" HorizontalOptions="FillAndExpand" Text="Search" Command="{Binding GoToSearch}" />
       </StackLayout>
     </StackLayout>
   </AbsoluteLayout>

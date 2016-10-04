@@ -32,23 +32,23 @@ namespace BookMeMobile.ViewModels.Concrete
             this.SelectItemCommand = new Command(this.SelectItem);
             this.MasterPageItems = new ObservableCollection<MenuPageItem>();
             this.navigationService = navigationService;
+            //this.MasterPageItems.Add(new MenuPageItem
+            //{
+            //    Title = "Профиль",
+            //    IconSource = "profileMenu.png",
+            //    TargetType = typeof(ProfilePage),
+            //    ViewModel = this
+            //});
+            //this.MasterPageItems.Add(new MenuPageItem
+            //{
+            //    Title = "QR Бронирование",
+            //    IconSource = "profileMenu.png",
+            //    TargetType = typeof(QrReservation),
+            //    ViewModel = this
+            //});
             this.MasterPageItems.Add(new MenuPageItem
             {
-                Title = "Профиль",
-                IconSource = "profileMenu.png",
-                TargetType = typeof(ProfilePage),
-                ViewModel = this
-            });
-            this.MasterPageItems.Add(new MenuPageItem
-            {
-                Title = "QR Бронирование",
-                IconSource = "profileMenu.png",
-                TargetType = typeof(QrReservation),
-                ViewModel = this
-            });
-            this.MasterPageItems.Add(new MenuPageItem
-            {
-                Title = "Поиск комнат",
+                Title = "Search",
                 IconSource = "profileMenu.png",
                 TargetType = typeof(SelectPage),
                 ViewModel = this
