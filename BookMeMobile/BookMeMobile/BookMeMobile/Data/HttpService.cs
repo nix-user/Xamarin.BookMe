@@ -19,6 +19,8 @@ namespace BookMeMobile.Data
     public class HttpService : IHttpService
     {
         private const string AuthorizationHeaderName = "Authorization";
+        private const string CacheHeaderName = "Cache-Control";
+        private const string CacheHeaderValue = "no-cache";
 
         private readonly IDependencyService dependencyService;
         private readonly IHttpHandler httpHandler;
@@ -31,6 +33,7 @@ namespace BookMeMobile.Data
             if (token != null)
             {
                 this.httpHandler.RequestHeaders.Add(AuthorizationHeaderName, new AuthenticationHeaderValue("bearer", token).ToString());
+                this.httpHandler.RequestHeaders.Add(CacheHeaderName, CacheHeaderValue);
             }
         }
 
