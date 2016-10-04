@@ -54,13 +54,19 @@ namespace BookMeMobile.ViewModels.Concrete
             }
         }
 
-        public bool IsEnableButtonSave => !this.oldModel.Equals(this.ProfileModel);
+        public bool IsEnableButtonSave => this.oldModel != null && !this.oldModel.Equals(this.ProfileModel);
 
         public ICommand ChangeSaveCommand { get; set; }
 
-        public async Task GetDataProfile()
+        public override void OnAttachedToView()
         {
-            await Task.Delay(1000);
+            base.OnAttachedToView();
+
+            this.GetDataProfile();
+        }
+
+        private async Task GetDataProfile()
+        {
             var operationResult = await ExecuteOperation(async () => await this.profileService.GetUserData());
             if (operationResult.Status == StatusCode.Ok)
             {
@@ -69,7 +75,6 @@ namespace BookMeMobile.ViewModels.Concrete
                     this.oldModel = new ProfileModel(operationResult.Result);
                     this.FavoriteRoom = operationResult.Result.FavouriteRoom;
                     this.MyFloor = operationResult.Result.Floor;
-                    this.oldModel = new ProfileModel(this.ProfileModel);
                 }
                 else
                 {
