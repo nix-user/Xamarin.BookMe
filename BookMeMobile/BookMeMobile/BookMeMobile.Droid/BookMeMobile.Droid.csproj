@@ -141,6 +141,7 @@
     <Compile Include="FileWork\FileWorker.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Render\MyTimePickerRenderer.cs" />
+    <Compile Include="Render\TimePIckerDialog.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
