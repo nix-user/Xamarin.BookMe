@@ -29,7 +29,7 @@ namespace BookMeMobile.Model
 
         public bool HasPolycom { get; set; }
 
-        private DateTime RoundTime(DateTime dt)
+        public DateTime RoundTime(DateTime dt)
         {
             var delta = dt.Ticks % this.timeStep.Ticks;
             bool roundUp = delta > this.timeStep.Ticks / 2;

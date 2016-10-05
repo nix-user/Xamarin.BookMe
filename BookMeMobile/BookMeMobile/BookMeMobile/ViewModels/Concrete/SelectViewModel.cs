@@ -67,10 +67,10 @@ namespace BookMeMobile.ViewModels.Concrete
             get { return this.model.From; }
             set
             {
-                var currentTime = this.SetValidDate(value);
+                var currentTime = this.model.RoundTime(this.SetValidDate(value));
                 if (currentTime >= this.To)
                 {
-                    this.To = currentTime.AddMinutes(30);
+                    this.To = this.model.RoundTime(currentTime.AddMinutes(30));
                 }
 
                 this.model.From = currentTime;
@@ -82,7 +82,7 @@ namespace BookMeMobile.ViewModels.Concrete
             get { return this.model.To; }
             set
             {
-                this.model.To = this.SetValidDate(value);
+                this.model.To = this.model.RoundTime(this.SetValidDate(value));
                 this.OnPropertyChanged();
             }
         }
