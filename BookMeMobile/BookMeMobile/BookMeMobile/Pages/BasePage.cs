@@ -25,6 +25,7 @@ namespace BookMeMobile.Pages
             {
                 this.viewModel = value;
                 this.OnViewModelSet();
+                this.viewModel.OnAttachedToView();
             }
         }
 

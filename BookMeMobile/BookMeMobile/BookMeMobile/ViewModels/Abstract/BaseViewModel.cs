@@ -30,6 +30,10 @@ namespace BookMeMobile.ViewModels.Abstract
             this.NavigationService = navigationService;
         }
 
+        public virtual void OnAttachedToView()
+        {
+        }
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
