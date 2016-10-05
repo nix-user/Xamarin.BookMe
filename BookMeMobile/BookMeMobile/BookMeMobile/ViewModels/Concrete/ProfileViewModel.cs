@@ -75,7 +75,6 @@ namespace BookMeMobile.ViewModels.Concrete
                     this.oldModel = new ProfileModel(operationResult.Result);
                     this.FavoriteRoom = operationResult.Result.FavouriteRoom;
                     this.MyFloor = operationResult.Result.Floor;
-                    this.oldModel = new ProfileModel(this.ProfileModel);
                 }
                 else
                 {
