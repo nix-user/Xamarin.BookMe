@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using BookMeMobile.Render;
 using BookMeMobile.Touch.Render;
 using Foundation;
@@ -21,11 +21,12 @@ namespace BookMeMobile.Touch.Render
             timePicker.Locale = new NSLocale("no_nb");
             this.timePickerSize = (TimePicker24Hour)Element;
             this.SetFontSize(this.timePickerSize);
+            timePicker.MinuteInterval = 15;
         }
 
         private void SetFontSize(TimePicker24Hour timePicker)
         {
-           this.Control.Font = UIFont.FromName("BrandonGrotesque-Light", 40);
+            this.Control.Font = UIFont.FromName("BrandonGrotesque-Light", 40);
         }
     }
 }
