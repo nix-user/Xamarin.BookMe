@@ -69,6 +69,11 @@
     <Compile Include="Enums\StatusCode.cs" />
     <Compile Include="Model\AddReservationModel.cs" />
     <Compile Include="Model\ProfileModel.cs" />
+    <Compile Include="Resources\IconResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IconResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Concrete\ListRoomViewModel.cs" />
     <Compile Include="Model\Login\LoginModel.cs" />
     <Compile Include="Model\RoomViewModel.cs" />
@@ -278,7 +283,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Pages\Login\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

@@ -4,8 +4,8 @@
              xmlns:local="clr-namespace:BookMeMobile.Pages.MyReservations;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.MyReservations.MyReservationsPage">
   <TabbedPage.Children>
-    <local:ReservationsTab BindingContext="{Binding TodayReservationsViewModel}" Title="Сегодня"></local:ReservationsTab>
-    <local:ReservationsTab BindingContext="{Binding RecursiveReservationsViewModel}" Title="Рекуррентные"></local:ReservationsTab>
-    <local:ReservationsTab BindingContext="{Binding AllReservationsViewModel}" Title="Все"></local:ReservationsTab>
+    <local:ReservationsTab BindingContext="{Binding TodayReservationsViewModel}" Title="Сегодня" Icon ="Today.png"></local:ReservationsTab>
+    <local:ReservationsTab BindingContext="{Binding RecursiveReservationsViewModel}" Title="Рекуррентные" Icon="cycle.png"></local:ReservationsTab>
+    <local:ReservationsTab BindingContext="{Binding AllReservationsViewModel}" Title="Все" Icon="All.png"></local:ReservationsTab>
   </TabbedPage.Children>
 </TabbedPage>
