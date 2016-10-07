@@ -16,8 +16,8 @@ namespace BookMeMobile.Model
             this.To = filterParameters.To;
             this.ResourceId = roomModel.Id;
             this.IsRecursive = false;
-            this.IsLarge = filterParameters.IsLarge;
-            this.HasPolycom = filterParameters.HasPolycom;
+            this.IsLarge = roomModel.Room.IsBig;
+            this.HasPolycom = roomModel.Room.IsHasPolykom;
             this.NumberRoom = roomModel.NumberRoom;
             this.Date = filterParameters.Date;
         }
