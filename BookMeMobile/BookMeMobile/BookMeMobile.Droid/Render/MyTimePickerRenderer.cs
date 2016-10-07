@@ -29,6 +29,7 @@ namespace BookMeMobile.Droid.Render
             control.Click += (sender, ea) => timePickerDlg.Show();
             control.Text = Element.Time.Hours.ToString("00") + ":" + Element.Time.Minutes.ToString("00");
             this.SetNativeControl(control);
+            this.Control.TextSize = 45;
         }
 
         public void UpdateDuration(object sender, TimeSetEventArgs e)
