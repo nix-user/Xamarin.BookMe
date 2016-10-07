@@ -34,7 +34,7 @@ namespace BookMeMobile.ViewModels.Concrete
             this.navigationService = navigationService;
             this.MasterPageItems.Add(new MenuPageItem
             {
-                Title = "Профиль",
+                Title = "Мой профиль",
                 IconSource = "profileMenu.png",
                 TargetType = typeof(ProfilePage),
                 ViewModel = this
