@@ -95,11 +95,11 @@ namespace BookMeMobile.ViewModels.Concrete
             {
                 this.oldModel = new ProfileModel(ProfileModel);
                 this.MyFloor = this.oldModel.Floor;
-                this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
+                await this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
             }
             else
             {
-                this.ShowErrorMessage(operationResult.Status);
+                await this.ShowErrorMessage(operationResult.Status);
             }
         }
     }

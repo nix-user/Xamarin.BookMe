@@ -38,16 +38,16 @@ namespace BookMeMobile.ViewModels.Concrete
 
                 if (operationResult.Status == StatusCode.Ok)
                 {
-                    this.NavigationService.ShowViewModel<ListRoomViewModel>(new { rooms = operationResult.Result, selectModel = this.model });
+                    this.NavigationService.ShowViewModel<ListRoomViewModel>(new { rooms = operationResult.Result, selectModel = this.model }, true);
                 }
                 else
                 {
-                    this.ShowErrorMessage(operationResult.Status);
+                   await this.ShowErrorMessage(operationResult.Status);
                 }
             }
             else
             {
-                this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongIntervalTime);
+               await this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongIntervalTime);
             }
         }
 

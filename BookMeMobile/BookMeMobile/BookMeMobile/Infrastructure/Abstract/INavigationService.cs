@@ -6,6 +6,8 @@ namespace BookMeMobile.Infrastructure.Abstract
 {
     public interface INavigationService
     {
+        void RemoveFromNavigationStakcToIndexFromTheEnd(int index = 1);
+
         void ShowViewModel<TViewModel>(bool modal = false) where TViewModel : BaseViewModel;
 
         void ShowViewModel<TViewModel>(object parameterValuesObject, bool modal = false) where TViewModel : BaseViewModel;

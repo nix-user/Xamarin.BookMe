@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using BookMeMobile.BL;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
@@ -81,16 +82,18 @@ namespace BookMeMobile.ViewModels.Concrete
                         .Status;
                 if (operationResult == StatusCode.Ok)
                 {
-                    this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
-                    await this.NavigationService.XamarinNavigation.PopModalAsync();
-                    return;
+                    await this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
+                    this.NavigationService.ShowViewModel<SelectViewModel>();
+                    await this.NavigationService.XamarinNavigation.PopAsync();
                 }
-
-                this.ShowErrorMessage(operationResult);
+                else
+                {
+                    await this.ShowErrorMessage(operationResult);
+                }
             }
             else
             {
-                this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.FieldIsEmpty);
+                await this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.FieldIsEmpty);
             }
         }
     }

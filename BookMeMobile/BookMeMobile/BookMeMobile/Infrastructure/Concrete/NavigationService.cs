@@ -24,6 +24,12 @@ namespace BookMeMobile.Infrastructure.Concrete
             this.XamarinNavigation = xamarinNavigation;
         }
 
+        public void RemoveFromNavigationStakcToIndexFromTheEnd(int index = 1)
+        {
+            var navigationStack = this.XamarinNavigation.NavigationStack;
+            this.XamarinNavigation.RemovePage(navigationStack[navigationStack.Count - index]);
+        }
+
         public void ShowViewModel<TViewModel>(bool modal = false)
             where TViewModel : BaseViewModel
         {
