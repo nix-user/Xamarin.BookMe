@@ -31,11 +31,7 @@ namespace BookMeMobile.Model
 
         public DateTime RoundTime(DateTime dt)
         {
-            var delta = dt.Ticks % this.timeStep.Ticks;
-            bool roundUp = delta > this.timeStep.Ticks / 2;
-            var offset = roundUp ? this.timeStep.Ticks : 0;
-
-            return new DateTime(dt.Ticks + offset - delta, dt.Kind);
+            return new DateTime(((dt.Ticks + this.timeStep.Ticks - 1) / this.timeStep.Ticks) * this.timeStep.Ticks);
         }
     }
 }

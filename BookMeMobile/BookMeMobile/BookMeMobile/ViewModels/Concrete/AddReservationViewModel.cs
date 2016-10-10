@@ -29,7 +29,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private async void GoBack()
         {
-            await this.NavigationService.XamarinNavigation.PopModalAsync();
+            await this.NavigationService.XamarinNavigation.PopAsync();
         }
 
         public ICommand AddReservationCommand { get; protected set; }
@@ -50,7 +50,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         public string Date
         {
-            get { return this.model.From.ToString("d"); }
+            get { return this.model.Date.ToString("d"); }
         }
 
         public string From

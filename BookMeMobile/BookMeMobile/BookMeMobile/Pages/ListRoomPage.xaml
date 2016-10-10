@@ -9,7 +9,7 @@
     </ResourceDictionary>
   </ContentPage.Resources>
   <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
-    <Label x:Name="LabelNotRooms" Text="{Binding IsNotRooms}" FontSize="24" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="False"/>
+    <Label x:Name="LabelNotRooms" Text="{Binding IsNotRooms}" FontSize="24" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
     <ListView x:Name="listRoom" ItemsSource="{Binding ListRoom}" RowHeight="80" VerticalOptions="FillAndExpand">
       <ListView.ItemTemplate>
         <DataTemplate>

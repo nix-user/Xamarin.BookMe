@@ -125,6 +125,15 @@ namespace BookMeMobile.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Нельзя забронировать комнату на прошлое время..
+        /// </summary>
+        internal static string WrongIntervalInThePast {
+            get {
+                return ResourceManager.GetString("WrongIntervalInThePast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Выбран неверный интервал.
         /// </summary>
         internal static string WrongIntervalTime {
