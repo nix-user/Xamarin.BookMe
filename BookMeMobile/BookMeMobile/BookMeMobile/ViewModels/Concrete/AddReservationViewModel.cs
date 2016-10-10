@@ -50,7 +50,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         public string Date
         {
-            get { return this.model.Date.ToString("d"); }
+            get { return this.model.Date.ToString("dd.MM.yy"); }
         }
 
         public string From
