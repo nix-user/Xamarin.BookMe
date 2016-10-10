@@ -39,16 +39,25 @@ namespace BookMeMobile.ViewModels.Concrete
             }
         }
 
-        public int MyFloor
+        public string MyFloor
         {
             get
             {
-                return this.ProfileModel.Floor;
+                return this.ProfileModel.Floor == 0 ? string.Empty : this.ProfileModel.Floor.ToString();
             }
 
             set
             {
-                this.ProfileModel.Floor = value;
+                int result;
+                if (int.TryParse(value, out result))
+                {
+                    this.ProfileModel.Floor = result;
+                }
+                else
+                {
+                    this.ProfileModel.Floor = 0;
+                }
+
                 this.OnPropertyChanged();
                 this.OnPropertyChanged("IsEnableButtonSave");
             }
@@ -74,7 +83,7 @@ namespace BookMeMobile.ViewModels.Concrete
                 {
                     this.oldModel = new ProfileModel(operationResult.Result);
                     this.FavoriteRoom = operationResult.Result.FavouriteRoom;
-                    this.MyFloor = operationResult.Result.Floor;
+                    this.MyFloor = operationResult.Result.Floor.ToString();
                 }
                 else
                 {
@@ -83,7 +92,7 @@ namespace BookMeMobile.ViewModels.Concrete
             }
             else
             {
-                this.ShowErrorMessage(operationResult.Status);
+                await this.ShowErrorMessage(operationResult.Status);
             }
         }
 
@@ -94,7 +103,7 @@ namespace BookMeMobile.ViewModels.Concrete
             if (operationResult.Status == StatusCode.Ok)
             {
                 this.oldModel = new ProfileModel(ProfileModel);
-                this.MyFloor = this.oldModel.Floor;
+                this.MyFloor = this.oldModel.Floor.ToString();
                 await this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
             }
             else
