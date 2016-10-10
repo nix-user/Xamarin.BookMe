@@ -55,16 +55,17 @@ namespace BookMeMobile.ViewModels.Concrete
             if (operationStatus == StatusCode.Ok)
             {
                 this.NavigationService.ShowViewModel<SelectViewModel>();
+                this.NavigationService.RemoveFromNavigationStakcToIndexFromTheEnd(2);
                 return;
             }
 
             if (operationStatus == StatusCode.NoAuthorize)
             {
-                this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongLoginOrPassword);
+               await this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongLoginOrPassword);
                 return;
             }
 
-            this.ShowErrorMessage(operationStatus);
+           await this.ShowErrorMessage(operationStatus);
         }
     }
 }
