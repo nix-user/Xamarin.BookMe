@@ -24,7 +24,9 @@
         <Label Grid.Row="1"  Grid.Column="0" VerticalTextAlignment="Center" FontSize="Medium" Text="Мой этаж:" />
         <Entry Grid.Row="1" Grid.Column="1"  VerticalOptions="CenterAndExpand" Keyboard="Numeric" Text="{Binding MyFloor}"/>
       </Grid>
-      <Button x:Name="btnSave" Text="Сохранить" Command="{Binding ChangeSaveCommand}" IsEnabled="{Binding IsEnableButtonSave,Mode='TwoWay'}"/>
+      <StackLayout Padding="20">
+        <Button x:Name="btnSave" Text="Сохранить" Command="{Binding ChangeSaveCommand}" IsEnabled="{Binding IsEnableButtonSave,Mode='TwoWay'}"/>
+      </StackLayout>
     </StackLayout>
   </AbsoluteLayout>
 </pages:BasePage>
