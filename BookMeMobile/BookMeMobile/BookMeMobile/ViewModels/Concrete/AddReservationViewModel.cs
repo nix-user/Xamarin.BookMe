@@ -83,8 +83,8 @@ namespace BookMeMobile.ViewModels.Concrete
                 if (operationResult == StatusCode.Ok)
                 {
                     await this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
-                    this.NavigationService.ShowViewModel<SelectViewModel>();
-                    await this.NavigationService.XamarinNavigation.PopAsync();
+                    this.NavigationService.RemoveFromNavigationStakcToIndexFromTheEnd();
+                    this.NavigationService.RemoveFromNavigationStakcToIndexFromTheEnd();
                 }
                 else
                 {

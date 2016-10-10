@@ -38,7 +38,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
                 if (operationResult.Status == StatusCode.Ok)
                 {
-                    this.NavigationService.ShowViewModel<ListRoomViewModel>(new { rooms = operationResult.Result, selectModel = this.model }, true);
+                    this.NavigationService.ShowViewModel<ListRoomViewModel>(new { rooms = operationResult.Result, selectModel = this.model });
                 }
                 else
                 {

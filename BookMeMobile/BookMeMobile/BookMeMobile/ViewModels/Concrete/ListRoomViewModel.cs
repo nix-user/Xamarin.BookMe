@@ -40,7 +40,7 @@ namespace BookMeMobile.ViewModels.Concrete
         public void Reserve(object selectElement)
         {
             RoomViewModel selectedRoom = selectElement as RoomViewModel;
-            this.NavigationService.ShowViewModel<AddReservationViewModel>(new { filterParameter = this.selectModel, roomModel = selectedRoom }, true);
+            this.NavigationService.ShowViewModel<AddReservationViewModel>(new { filterParameter = this.selectModel, roomModel = selectedRoom });
         }
     }
 }
