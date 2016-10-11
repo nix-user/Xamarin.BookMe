@@ -54,18 +54,17 @@ namespace BookMeMobile.ViewModels.Concrete
             var operationStatus = await this.ExecuteOperation(async () => await this.authService.AuthAsync(this.model));
             if (operationStatus == StatusCode.Ok)
             {
-                this.NavigationService.ShowViewModel<SelectViewModel>();
-                this.NavigationService.RemoveFromNavigationStakcToIndexFromTheEnd(2);
+                App.Current.MainPage = this.NavigationService.ShowViewModelAsMainPageWithMenu<SelectViewModel>();
                 return;
             }
 
             if (operationStatus == StatusCode.NoAuthorize)
             {
-               await this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongLoginOrPassword);
+                await this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongLoginOrPassword);
                 return;
             }
 
-           await this.ShowErrorMessage(operationStatus);
+            await this.ShowErrorMessage(operationStatus);
         }
     }
 }
