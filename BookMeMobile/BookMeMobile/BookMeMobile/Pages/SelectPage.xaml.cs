@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
 {
@@ -9,6 +10,7 @@ namespace BookMeMobile.Pages
             this.InitializeComponent();
             this.SetUpActivityIndicator(this.loader, this.rootLayout);
             this.SetUpToPlatform();
+            this.Date.MinimumDate = DateTime.Now;
         }
 
         public void SetUpToPlatform()

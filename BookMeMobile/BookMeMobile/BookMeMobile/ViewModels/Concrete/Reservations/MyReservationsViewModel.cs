@@ -97,7 +97,7 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
             }
             else
             {
-                this.ShowErrorMessage(reservationsResult.Status);
+                await this.ShowErrorMessage(reservationsResult.Status);
             }
         }
 

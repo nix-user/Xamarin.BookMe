@@ -16,9 +16,9 @@ namespace BookMeMobile.Pages.MyReservations
             this.BindingContext = viewModel;
         }
 
-        private void ShowInfoMessage(string title, string content, string cancelText)
+        private async Task ShowInfoMessage(string title, string content, string cancelText)
         {
-            this.DisplayAlert(title, content, cancelText);
+            await this.DisplayAlert(title, content, cancelText);
         }
 
         private async Task<bool> ShowRemoveConfirmationDialog(ReservationViewModel reservationViewModel)

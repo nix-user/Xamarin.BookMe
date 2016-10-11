@@ -5,7 +5,7 @@
              xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
              xmlns:converters="clr-namespace:BookMeMobile.Converters;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.SelectPage"
-             Title="Поиск комнат">
+             Title="BookMe">
   <ContentPage.Resources>
     <ResourceDictionary>
       <converters:DateTimeToSpanConverter x:Key="DateTimeToTimeSpan"/>
@@ -14,7 +14,7 @@
   <AbsoluteLayout x:Name="rootLayout" Padding="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
     <StackLayout x:Name="MainLayout" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
       <StackLayout x:Name="DateSpace">
-        <DatePicker x:Name="Date" Format="D" Date="{Binding Date}">
+        <DatePicker x:Name="Date" Format="dddd dd MMMM  yyyy" Date="{Binding Date, Mode=TwoWay}">
         </DatePicker>
         <StackLayout x:Name="timeLayout" Padding="0,10,0,0" Orientation="Horizontal" HorizontalOptions="Center">
           <StackLayout >
@@ -39,8 +39,8 @@
         </StackLayout>
       </StackLayout>
       <StackLayout >
-        <Button x:Name="MyReservationsButton" HorizontalOptions="FillAndExpand" Text="Мои бронирования" Command="{Binding GoToMyReservation}"/>
-        <Button x:Name="SearchButton" HorizontalOptions="FillAndExpand" Text="Поиск" Command="{Binding GoToSearch}" />
+        <Button x:Name="MyReservationsButton" HorizontalOptions="FillAndExpand" Text="Моя бронь" Command="{Binding GoToMyReservation}"/>
+        <Button x:Name="SearchButton" HorizontalOptions="FillAndExpand" Text="Поиск комнат" Command="{Binding GoToSearch}" />
       </StackLayout>
     </StackLayout>
   </AbsoluteLayout>

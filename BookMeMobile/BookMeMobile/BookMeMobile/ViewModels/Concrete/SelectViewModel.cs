@@ -33,8 +33,20 @@ namespace BookMeMobile.ViewModels.Concrete
         {
             if (this.model.From < this.model.To)
             {
+                this.ValidInterval();
+            }
+            else
+            {
+                await this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongIntervalTime);
+            }
+        }
+
+        private async void ValidInterval()
+        {
+            if (this.Date.Date != DateTime.Now.Date || this.model.From.TimeOfDay >= DateTime.Now.TimeOfDay)
+            {
                 var operationResult =
-                   (await this.ExecuteOperation(async () => await this.service.GetEmptyRoom(this.model)));
+                                  (await this.ExecuteOperation(async () => await this.service.GetEmptyRoom(this.model)));
 
                 if (operationResult.Status == StatusCode.Ok)
                 {
@@ -42,12 +54,12 @@ namespace BookMeMobile.ViewModels.Concrete
                 }
                 else
                 {
-                    this.ShowErrorMessage(operationResult.Status);
+                    await this.ShowErrorMessage(operationResult.Status);
                 }
             }
             else
             {
-                this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongIntervalTime);
+                await this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongIntervalInThePast);
             }
         }
 
