@@ -39,8 +39,8 @@
         </StackLayout>
       </StackLayout>
       <StackLayout >
-        <Button x:Name="MyReservationsButton" HorizontalOptions="FillAndExpand" Text="Моя бронь" Command="{Binding GoToMyReservation}"/>
-        <Button x:Name="SearchButton" HorizontalOptions="FillAndExpand" Text="Поиск комнат" Command="{Binding GoToSearch}" />
+        <Button x:Name="MyReservationsButton" FontSize="Large" HorizontalOptions="FillAndExpand" Text="Моя бронь" Command="{Binding GoToMyReservation}"/>
+        <Button x:Name="SearchButton" FontSize="Large" HorizontalOptions="FillAndExpand" Text="Поиск комнат" Command="{Binding GoToSearch}" />
       </StackLayout>
     </StackLayout>
   </AbsoluteLayout>
