@@ -31,7 +31,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private async void Search()
         {
-            if (this.model.From < this.model.To)
+            if (this.model.From.TimeOfDay < this.model.To.TimeOfDay)
             {
                 this.ValidInterval();
             }

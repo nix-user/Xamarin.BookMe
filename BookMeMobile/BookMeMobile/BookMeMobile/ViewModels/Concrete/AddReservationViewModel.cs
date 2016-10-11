@@ -83,8 +83,7 @@ namespace BookMeMobile.ViewModels.Concrete
                 if (operationResult == StatusCode.Ok)
                 {
                     await this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
-                    this.NavigationService.RemoveFromNavigationStakcToIndexFromTheEnd();
-                    this.NavigationService.RemoveFromNavigationStakcToIndexFromTheEnd();
+                    App.Current.MainPage = this.NavigationService.ShowViewModelAsMainPageWithMenu<SelectViewModel>();
                 }
                 else
                 {
