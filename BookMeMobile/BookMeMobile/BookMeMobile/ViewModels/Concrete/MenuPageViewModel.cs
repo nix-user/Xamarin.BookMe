@@ -39,13 +39,13 @@ namespace BookMeMobile.ViewModels.Concrete
                 TargetType = typeof(ProfilePage),
                 ViewModel = this
             });
-            this.MasterPageItems.Add(new MenuPageItem
-            {
-                Title = "QR Бронирование",
-                IconSource = "profileMenu.png",
-                TargetType = typeof(QrReservation),
-                ViewModel = this
-            });
+            //this.MasterPageItems.Add(new MenuPageItem
+            //{
+            //    Title = "QR Бронирование",
+            //    IconSource = "profileMenu.png",
+            //    TargetType = typeof(QrReservation),
+            //    ViewModel = this
+            //});
             this.MasterPageItems.Add(new MenuPageItem
             {
                 Title = "Поиск комнат",
