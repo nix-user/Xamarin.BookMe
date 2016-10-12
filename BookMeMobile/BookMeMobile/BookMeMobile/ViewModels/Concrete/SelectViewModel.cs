@@ -7,6 +7,7 @@ using BookMeMobile.Model;
 using BookMeMobile.Pages.MyReservations;
 using BookMeMobile.Resources;
 using BookMeMobile.ViewModels.Abstract;
+using Microsoft.Practices.Unity;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete
@@ -16,18 +17,26 @@ namespace BookMeMobile.ViewModels.Concrete
         private SelectModel model;
         private ListRoomManager service;
 
-        public SelectViewModel(ListRoomManager listRoomManager, INavigationService navigationService) : base(navigationService)
+        public SelectViewModel(ListRoomManager listRoomManager, INavigationService navigationService, DateTime? date = null) : base(navigationService)
         {
             this.model = new SelectModel();
             this.service = listRoomManager;
-
             this.GoToMyReservation = new Command(this.GetMyReservation);
             this.GoToSearch = new Command(this.Search);
+            this.GoToCalendarCommand = new Command(this.GoToCalendar);
+            this.Date = date.Value;
         }
 
         public ICommand GoToMyReservation { get; protected set; }
 
         public ICommand GoToSearch { get; protected set; }
+
+        public ICommand GoToCalendarCommand { get; set; }
+
+        public void GoToCalendar()
+        {
+            this.NavigationService.ShowViewModel<CalendarViewModel>();
+        }
 
         private async void Search()
         {
@@ -43,7 +52,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private async void ValidInterval()
         {
-            if (this.Date.Date != DateTime.Now.Date || this.model.From.TimeOfDay >= DateTime.Now.TimeOfDay)
+            if (this.model.Date.Date != DateTime.Now.Date || this.model.From.TimeOfDay >= DateTime.Now.TimeOfDay)
             {
                 var operationResult =
                                   (await this.ExecuteOperation(async () => await this.service.GetEmptyRoom(this.model)));
@@ -113,7 +122,8 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private DateTime SetValidDate(DateTime invalidDate)
         {
-            return new DateTime(this.Date.Year, this.Date.Month, this.Date.Day, invalidDate.Hour, invalidDate.Minute, invalidDate.Second);
+            DateTime curretTime = this.model.Date;
+            return new DateTime(curretTime.Year, curretTime.Month, curretTime.Day, invalidDate.Hour, invalidDate.Minute, invalidDate.Second);
         }
     }
 }

@@ -106,6 +106,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="ExifLib, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ExifLib.PCL.1.0.1\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -126,6 +130,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="XamForms.Controls.Calendar, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\XamForms.Controls.Calendar.1.0.5\lib\Xamarin.iOS10\XamForms.Controls.Calendar.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="XamForms.Controls.Calendar.iOS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\XamForms.Controls.Calendar.1.0.5\lib\Xamarin.iOS10\XamForms.Controls.Calendar.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ZXing.Net.Mobile.Core, Version=2.1.47.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ZXing.Net.Mobile.2.1.47\lib\Xamarin.iOS10\ZXing.Net.Mobile.Core.dll</HintPath>
       <Private>True</Private>

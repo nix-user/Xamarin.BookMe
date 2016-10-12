@@ -10,7 +10,6 @@ namespace BookMeMobile.Pages
             this.InitializeComponent();
             this.SetUpActivityIndicator(this.loader, this.rootLayout);
             this.SetUpToPlatform();
-            this.Date.MinimumDate = DateTime.Now;
         }
 
         public void SetUpToPlatform()
