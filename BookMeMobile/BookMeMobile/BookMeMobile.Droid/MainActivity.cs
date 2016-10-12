@@ -16,7 +16,7 @@ namespace BookMeMobile.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-
+            XamForms.Controls.Droid.Calendar.Init();
             global::ZXing.Net.Mobile.Forms.Android.Platform.Init();
             this.LoadApplication(new App());
         }
