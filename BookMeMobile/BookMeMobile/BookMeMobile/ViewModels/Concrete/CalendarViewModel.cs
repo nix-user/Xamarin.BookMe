@@ -17,7 +17,7 @@ namespace BookMeMobile.ViewModels
             this.SelectDateCommand = new Command(this.SelectDate);
             this.ButtonOkCommand = new Command(this.ButtonOk);
             this.GoBackCommand = new Command(this.GoBack);
-            this.SelectedDate = selectDate.Value.AddDays(1);
+            this.SelectedDate = selectDate.Value;
         }
 
         public DateTime MinDate => DateTime.Now.AddDays(-1);
