@@ -15,7 +15,7 @@
   <AbsoluteLayout x:Name="rootLayout" Padding="0" HorizontalOptions="CenterAndExpand"  VerticalOptions="CenterAndExpand">
     <StackLayout x:Name="MainLayout" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
       <StackLayout x:Name="DateSpace">
-        <Button Text="{Binding Date,Converter={StaticResource DateTimeToString}}" FontSize="Large" HorizontalOptions="FillAndExpand" Command="{Binding GoToCalendarCommand}"/>
+        <Button Text="{Binding Date,Converter={StaticResource DateTimeToString},Mode=TwoWay}" FontSize="Large" HorizontalOptions="FillAndExpand" Command="{Binding GoToCalendarCommand}"/>
         <StackLayout x:Name="timeLayout" Padding="0,10,0,0" Orientation="Horizontal" HorizontalOptions="Center">
           <StackLayout >
             <Label Text="От" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Large"/>
@@ -30,11 +30,11 @@
         <StackLayout x:Name="checkerLayout" Padding="10,20">
           <StackLayout Orientation="Horizontal">
             <Label  Text="Большая" FontSize="Large"/>
-            <Switch x:Name="IsLarge" IsToggled="{Binding IsLarge}" HorizontalOptions="EndAndExpand"/>
+            <Switch x:Name="IsLarge" IsToggled="{Binding IsLarge,Mode=TwoWay}" HorizontalOptions="EndAndExpand"/>
           </StackLayout>
           <StackLayout  Orientation="Horizontal" VerticalOptions="EndAndExpand">
             <Label Text="C Поликомом" FontSize="Large" HorizontalOptions="Start" VerticalOptions="End"/>
-            <Switch x:Name="HasPolycom" IsToggled="{Binding HasPolycom}" HorizontalOptions="EndAndExpand"/>
+            <Switch x:Name="HasPolycom" IsToggled="{Binding HasPolycom,Mode=TwoWay}" HorizontalOptions="EndAndExpand"/>
           </StackLayout>
         </StackLayout>
       </StackLayout>

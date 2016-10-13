@@ -17,14 +17,13 @@ namespace BookMeMobile.ViewModels.Concrete
         private SelectModel model;
         private ListRoomManager service;
 
-        public SelectViewModel(ListRoomManager listRoomManager, INavigationService navigationService, DateTime? date = null) : base(navigationService)
+        public SelectViewModel(ListRoomManager listRoomManager, INavigationService navigationService, SelectModel model) : base(navigationService)
         {
-            this.model = new SelectModel();
+            this.model = model;
             this.service = listRoomManager;
             this.GoToMyReservation = new Command(this.GetMyReservation);
             this.GoToSearch = new Command(this.Search);
             this.GoToCalendarCommand = new Command(this.GoToCalendar);
-            this.Date = date.Value;
         }
 
         public ICommand GoToMyReservation { get; protected set; }

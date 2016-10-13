@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BookMeMobile.ViewModels;
 using Xamarin.Forms;
+using XamForms.Controls;
 
 namespace BookMeMobile.Pages
 {
@@ -19,6 +21,7 @@ namespace BookMeMobile.Pages
             base.OnViewModelSet();
             this.SetUpViewModelSubscriptions(this.ViewModel);
             this.BindingContext = this.ViewModel;
+            this.calendar.MinDate = DateTime.Now.AddDays(-1);
         }
     }
 }
