@@ -2,6 +2,7 @@
 using BookMeMobile.Render;
 using BookMeMobile.Touch.Render;
 using Foundation;
+using ObjCRuntime;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -27,6 +28,16 @@ namespace BookMeMobile.Touch.Render
         private void SetFontSize(TimePicker24Hour timePicker)
         {
             this.Control.Font = UIFont.FromName("BrandonGrotesque-Light", 40);
+        }
+
+        public override bool CanPerform(Selector action, NSObject withSender)
+        {
+            if (action.Name == "paste:" || action.Name == "copy:" || action.Name == "cut:")
+            {
+                return false;
+            }
+
+            return base.CanPerform(action, withSender);
         }
     }
 }
