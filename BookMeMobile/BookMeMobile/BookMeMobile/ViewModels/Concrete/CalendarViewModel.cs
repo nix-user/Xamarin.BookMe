@@ -10,25 +10,23 @@ namespace BookMeMobile.ViewModels
 {
     public class CalendarViewModel : BaseViewModel
     {
-        private CalendarModel model = new CalendarModel();
+        private SelectModel model;
 
-        public CalendarViewModel(DateTime? selectDate, INavigationService navigationService) : base(navigationService)
+        public CalendarViewModel(SelectModel selectModel, INavigationService navigationService) : base(navigationService)
         {
             this.SelectDateCommand = new Command(this.SelectDate);
             this.ButtonOkCommand = new Command(this.ButtonOk);
             this.GoBackCommand = new Command(this.GoBack);
-            this.SelectedDate = selectDate.Value;
+            this.model = selectModel;
         }
 
-        public DateTime MinDate => DateTime.Now.AddDays(-1);
+        public DateTime MinDate => DateTime.Now.Date;
 
-        public DateTime StartDate => DateTime.Now;
-
-        public DateTime? SelectedDate
+        public DateTime SelectedDate
         {
-            get { return this.model.SelectedDate; }
+            get { return this.model.Date; }
 
-            set { this.model.SelectedDate = value; }
+            set { this.model.Date = value; }
         }
 
         public ICommand SelectDateCommand { get; set; }
@@ -45,12 +43,12 @@ namespace BookMeMobile.ViewModels
 
         private void ButtonOk()
         {
-            this.NavigationService.ShowViewModel<SelectViewModel>(new { date = this.SelectedDate });
+            this.NavigationService.ShowViewModel<SelectViewModel>(new { model = this.model });
         }
 
         private void GoBack()
         {
-            this.NavigationService.ShowViewModel<SelectViewModel>();
+            this.NavigationService.XamarinNavigation.PopAsync();
         }
     }
 }

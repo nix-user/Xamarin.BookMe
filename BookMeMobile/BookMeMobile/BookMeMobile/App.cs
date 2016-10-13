@@ -9,7 +9,7 @@ using BookMeMobile.Data.Concrete;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Interface;
-using BookMeMobile.Pages;
+using BookMeMobile.Model;
 using BookMeMobile.Resources;
 using BookMeMobile.ViewModels.Concrete;
 using Microsoft.Practices.Unity;
@@ -69,7 +69,7 @@ namespace BookMeMobile
             App.Container.RegisterType<IHttpService, HttpService>();
             App.Container.RegisterType<IDependencyService, CustomDependencyService>();
             App.Container.RegisterType<IHttpHandler, HttpClientHandler>();
-            App.Container.RegisterInstance<DateTime?>(new DateTime?(DateTime.Now));
+            App.Container.RegisterInstance<SelectModel>(new SelectModel());
         }
     }
 }

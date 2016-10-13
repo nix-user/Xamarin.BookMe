@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
              xmlns:controls="clr-namespace:XamForms.Controls;assembly=XamForms.Controls.Calendar"
+             xmlns:converters="clr-namespace:BookMeMobile.Converters;assembly=BookMeMobile"
+                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
              x:Class="BookMeMobile.Pages.CalendarPage">
   <StackLayout BackgroundColor="Gray" Padding="10,0,10,0">
-    <controls:Calendar x:Name="calendar" SelectedDate="{Binding SelectedDate}"  StartDay="Monday" SelectedBorderWidth="4" MinDate="{Binding MinDate}" StartDate="{Binding StartDate}" DateCommand = "{Binding SelectDateCommand}"/>
+    <controls:Calendar x:Name="calendar" MinDate="{x:Static sys:DateTime.Now}" StartDay="Monday" SelectedBorderWidth="4"  MultiSelectDates="False" DateCommand="{Binding SelectDateCommand}"/>
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="auto" />
@@ -14,8 +16,8 @@
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
-    <Button Grid.Row="0" Grid.Column="0" Text="Назад" FontSize="Large" VerticalOptions="FillAndExpand" Command="{Binding GoBackCommand}"/>
-    <Button Grid.Row="0" Grid.Column="1" Text="Выбрать" FontSize="Large" VerticalOptions="FillAndExpand" Command="{Binding ButtonOkCommand}"/>
+      <Button Grid.Row="0" Grid.Column="0" Text="Назад" FontSize="Large" VerticalOptions="FillAndExpand" Command="{Binding GoBackCommand}"/>
+      <Button Grid.Row="0" Grid.Column="1" Text="Выбрать" FontSize="Large" VerticalOptions="FillAndExpand" Command="{Binding ButtonOkCommand}"/>
     </Grid>
   </StackLayout>
 </pages:BasePage>
