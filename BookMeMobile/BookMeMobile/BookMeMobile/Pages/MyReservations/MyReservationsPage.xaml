@@ -5,7 +5,7 @@
              x:Class="BookMeMobile.Pages.MyReservations.MyReservationsPage">
   <TabbedPage.Children>
     <local:ReservationsTab BindingContext="{Binding TodayReservationsViewModel}" Title="Сегодня" Icon ="Today.png"></local:ReservationsTab>
-    <local:ReservationsTab BindingContext="{Binding RecursiveReservationsViewModel}" Title="Рекуррентные" Icon="cycle.png"></local:ReservationsTab>
+    <local:ReservationsTab BindingContext="{Binding RecursiveReservationsViewModel}" Title="Рекуррентные" Icon="recurrently.png"></local:ReservationsTab>
     <local:ReservationsTab BindingContext="{Binding AllReservationsViewModel}" Title="Все" Icon="All.png"></local:ReservationsTab>
   </TabbedPage.Children>
 </TabbedPage>
