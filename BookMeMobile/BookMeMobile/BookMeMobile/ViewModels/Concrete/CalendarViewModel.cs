@@ -20,8 +20,6 @@ namespace BookMeMobile.ViewModels
             this.model = selectModel;
         }
 
-        public DateTime MinDate => DateTime.Now.Date;
-
         public DateTime SelectedDate
         {
             get { return this.model.Date; }

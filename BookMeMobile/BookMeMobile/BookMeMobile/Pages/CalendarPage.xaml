@@ -7,7 +7,7 @@
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
              x:Class="BookMeMobile.Pages.CalendarPage">
   <StackLayout BackgroundColor="Gray" Padding="10,0,10,0">
-    <controls:Calendar x:Name="calendar" MinDate="{x:Static sys:DateTime.Now}" StartDay="Monday" SelectedBorderWidth="4"  MultiSelectDates="False" DateCommand="{Binding SelectDateCommand}"/>
+    <controls:Calendar x:Name="calendar" MinDate="{x:Static sys:DateTime.Today}" StartDay="Monday" SelectedBorderWidth="4"  MultiSelectDates="False" DateCommand="{Binding SelectDateCommand}"/>
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="auto" />
