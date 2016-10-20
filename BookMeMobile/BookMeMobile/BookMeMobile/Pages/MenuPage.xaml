@@ -18,7 +18,7 @@
             <ViewCell>
               <ViewCell.View>
                 <StackLayout>
-                  <Button VerticalOptions="FillAndExpand" FontSize="Medium" HorizontalOptions="FillAndExpand" Text ="{Binding Title}" Command="{Binding Path= ViewModel.SelectItemCommand}" CommandParameter="{Binding}"/>
+                  <Button VerticalOptions="Fill" FontSize="Medium" HorizontalOptions="Fill" Text ="{Binding Title}" Command="{Binding Path= ViewModel.SelectItemCommand}" CommandParameter="{Binding}"/>
                 </StackLayout>
               </ViewCell.View>
             </ViewCell>
