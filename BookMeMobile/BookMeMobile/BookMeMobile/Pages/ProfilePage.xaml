@@ -9,7 +9,7 @@
     <StackLayout  Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0.5, 0.42, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional">
       <render:Loader x:Name="loader" VerticalOptions="Center" />
     </StackLayout>
-    <StackLayout BindingContext="{Binding}" VerticalOptions="CenterAndExpand">
+    <StackLayout BindingContext="{Binding}" VerticalOptions="CenterAndExpand" Padding="10,0,10,0">
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="*" />
@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*" />
-          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="150" />
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0"  Grid.Column="0" VerticalTextAlignment="Center" FontSize="Medium" Text="Любимая комната:" />
         <Entry Grid.Row="0" Grid.Column="1"  VerticalOptions="CenterAndExpand" Keyboard="Default" Text="{Binding FavoriteRoom}"/>

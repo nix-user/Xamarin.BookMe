@@ -21,7 +21,6 @@ namespace BookMeMobile.Pages
             base.OnViewModelSet();
             this.SetUpViewModelSubscriptions(this.ViewModel);
             this.BindingContext = this.ViewModel;
-            this.calendar.MinDate = DateTime.Now.AddDays(-1);
         }
     }
 }
