@@ -18,6 +18,8 @@ namespace BookMeMobile.Infrastructure.Abstract
 
         Page ShowViewModelAsMainPageWithMenu<TViewModel>() where TViewModel : BaseViewModel;
 
+        Page ShowViewModelAsMainPageWithMenu<TViewModel>(object parameterValuesObject) where TViewModel : BaseViewModel;
+
         INavigation XamarinNavigation { get; set; }
     }
 }

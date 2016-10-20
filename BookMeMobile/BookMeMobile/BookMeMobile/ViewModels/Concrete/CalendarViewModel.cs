@@ -41,7 +41,7 @@ namespace BookMeMobile.ViewModels
 
         private void ButtonOk()
         {
-            this.NavigationService.ShowViewModel<SelectViewModel>(new { model = this.model });
+            App.Current.MainPage = this.NavigationService.ShowViewModelAsMainPageWithMenu<SelectViewModel>(new { model = this.model });
         }
 
         private void GoBack()

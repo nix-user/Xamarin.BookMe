@@ -62,6 +62,13 @@ namespace BookMeMobile.Infrastructure.Concrete
             return new NavigationPage(new MasterPage(view, this));
         }
 
+        public Page ShowViewModelAsMainPageWithMenu<TViewModel>(object parameterValuesObject)
+            where TViewModel : BaseViewModel
+        {
+            var view = this.SetupPage<TViewModel>(this.ObjectToDictionary(parameterValuesObject));
+            return new NavigationPage(new MasterPage(view, this));
+        }
+
         private void PushViewModel<TViewModel>(IDictionary<string, object> parameterValues, bool modal)
         {
             parameterValues.Add("navigationService", this);
@@ -81,10 +88,14 @@ namespace BookMeMobile.Infrastructure.Concrete
             }
         }
 
-        private BasePage SetupPage<TViewModel>()
+        private BasePage SetupPage<TViewModel>(IDictionary<string, object> parameterValues = null)
         {
+            parameterValues = parameterValues ?? new Dictionary<string, object>();
+            parameterValues.Add("navigationService", this);
+            ParameterOverride[] parameters = parameterValues.Select(p => new ParameterOverride(p.Key, p.Value)).ToArray();
+
             var view = this.ResolvePage(typeof(TViewModel));
-            var viewModel = (BaseViewModel)App.Container.Resolve(typeof(TViewModel), new ParameterOverride("navigationService", this));
+            var viewModel = (BaseViewModel)App.Container.Resolve(typeof(TViewModel), parameters);
             view.ViewModel = viewModel;
             this.XamarinNavigation = view.Navigation;
             return view;
