@@ -22,20 +22,13 @@
           <DataTemplate>
             <customViews:ViewCellWithCommand Command="{Binding Parent.Parent.RemoveReservationCommand}" CommandParameter="{Binding}">
               <ViewCell.View>
-                <StackLayout VerticalOptions="Center">
-                  <Grid>
-                    <Grid.RowDefinitions>
-                      <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="*" />
-                      <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Text="{Binding RoomNumber}" FontSize="Large"/>
-                    <Image Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Source="cycle.png" IsVisible="{Binding IsRecursive}"/>
-                  </Grid>
-                  <Label Text="{Binding Title}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
+                <StackLayout VerticalOptions="CenterAndExpand" Padding="0,20,0,20">
                   <Label Text="{Binding TextPeriod}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
+                  <StackLayout Orientation="Horizontal">
+                    <Label  Text="{Binding RoomNumber}" FontSize="Medium"/>
+                    <Image HorizontalOptions="EndAndExpand" Source="cycle.png"  IsVisible="{Binding Parent.IsToday, Converter={StaticResource InverseBool} }"/>
+                  </StackLayout>
+                  <Label Text="{Binding Title}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
                   <StackLayout  IsVisible="{Binding Parent.IsToday, Converter={StaticResource InverseBool} }">
                     <Label IsVisible="{Binding TextRule, Converter={StaticResource IsStringNullOrEmpty} }" Text="{Binding TextRule}" FontSize="Small" LineBreakMode="TailTruncation"></Label>
                   </StackLayout>

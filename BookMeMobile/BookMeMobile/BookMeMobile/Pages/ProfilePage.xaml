@@ -20,7 +20,9 @@
           <ColumnDefinition Width="150" />
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0"  Grid.Column="0" VerticalTextAlignment="Center" FontSize="Medium" Text="Любимая комната:" />
-        <Entry Grid.Row="0" Grid.Column="1"  VerticalOptions="CenterAndExpand" Keyboard="Default" Text="{Binding FavoriteRoom}"/>
+        <StackLayout Grid.Row="0" Grid.Column="1">
+          <render:BindablePicker x:Name="Picker" SelectedIndex="0" ItemsSource="{Binding AllRoom}" SelectedItem="{Binding SelectedRoom}" />
+        </StackLayout>
         <Label Grid.Row="1"  Grid.Column="0" VerticalTextAlignment="Center" FontSize="Medium" Text="Мой этаж:" />
         <Entry Grid.Row="1" Grid.Column="1"  VerticalOptions="CenterAndExpand" Keyboard="Numeric" Text="{Binding MyFloor}"/>
       </Grid>

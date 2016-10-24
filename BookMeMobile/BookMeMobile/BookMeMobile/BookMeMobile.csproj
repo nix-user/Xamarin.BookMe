@@ -68,12 +68,14 @@
     <Compile Include="Data\RestURl.cs" />
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Enums\StatusCode.cs" />
+    <Compile Include="Infrastructure\EnumerableExtensions.cs" />
     <Compile Include="Model\AddReservationModel.cs" />
     <Compile Include="Model\CalendarModel.cs" />
     <Compile Include="Model\ProfileModel.cs" />
     <Compile Include="Pages\CalendarPage.xaml.cs">
       <DependentUpon>CalendarPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Render\BindablePicker.cs" />
     <Compile Include="ViewModels\Concrete\CalendarViewModel.cs" />
     <Compile Include="ViewModels\Concrete\ListRoomViewModel.cs" />
     <Compile Include="Model\Login\LoginModel.cs" />
