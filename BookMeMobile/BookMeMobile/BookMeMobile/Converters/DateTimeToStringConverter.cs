@@ -8,7 +8,7 @@ namespace BookMeMobile.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((DateTime)value).ToString("dddd dd MMMM  yyyy");
+            return ((DateTime)value).ToString("ddd dd MMMM  yyyy");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
