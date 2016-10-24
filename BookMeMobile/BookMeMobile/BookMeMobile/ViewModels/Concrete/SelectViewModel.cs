@@ -18,12 +18,19 @@ namespace BookMeMobile.ViewModels.Concrete
         private SelectModel model;
         private ListRoomManager service;
         private IReservationService reservationServise;
+        private IProfileService profileService;
 
-        public SelectViewModel(ListRoomManager listRoomManager, IReservationService reservationServise, INavigationService navigationService, SelectModel model) : base(navigationService)
+        public SelectViewModel(ListRoomManager listRoomManager,
+            IProfileService profileService,
+            IReservationService reservationServise,
+            INavigationService navigationService,
+            SelectModel model) : base(navigationService)
         {
             this.model = model;
             this.service = listRoomManager;
             this.reservationServise = reservationServise;
+            this.profileService = profileService;
+
             this.GoToMyReservation = new Command(this.GetMyReservation);
             this.GoToSearch = new Command(this.Search);
             this.GoToCalendarCommand = new Command(this.GoToCalendar);
@@ -58,10 +65,11 @@ namespace BookMeMobile.ViewModels.Concrete
             {
                 var operationResult =
                                   (await this.ExecuteOperation(async () => await this.service.GetEmptyRoom(this.model)));
+                var operationResultProfile = await ExecuteOperation(async () => await this.profileService.GetUserData());
 
                 if (operationResult.Status == StatusCode.Ok)
                 {
-                    this.NavigationService.ShowViewModel<ListRoomViewModel>(new { rooms = operationResult.Result, selectModel = this.model });
+                    this.NavigationService.ShowViewModel<ListRoomViewModel>(new { rooms = operationResult.Result, selectModel = this.model, profileModel = operationResultProfile.Result });
                 }
                 else
                 {

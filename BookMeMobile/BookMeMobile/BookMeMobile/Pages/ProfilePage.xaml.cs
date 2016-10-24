@@ -18,7 +18,8 @@ namespace BookMeMobile.Pages
         {
             if (sender != null)
             {
-                ((ProfileViewModel)this.ViewModel).FavoriteRoom = ((BindablePicker)sender).ItemsSource[7].ToString();
+                var picker = (BindablePicker)sender;
+                ((ProfileViewModel)this.ViewModel).FavoriteRoom = picker.ItemsSource[picker.SelectedIndex].ToString();
             }
         }
 

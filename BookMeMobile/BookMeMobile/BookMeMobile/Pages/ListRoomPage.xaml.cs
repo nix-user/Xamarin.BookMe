@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BookMeMobile.Entity;
 using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Model;
@@ -20,6 +21,8 @@ namespace BookMeMobile.Pages
             base.OnViewModelSet();
             this.SetUpViewModelSubscriptions(this.ViewModel);
             this.BindingContext = this.ViewModel;
+            var viewModel = (ListRoomViewModel)this.ViewModel;
+            this.listRoom.ScrollTo(viewModel.FavoriteOrFloorRoom, ScrollToPosition.Center, true);
         }
     }
 }
