@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using BookMeMobile.Infrastructure.Concrete;
+using BookMeMobile.Model;
 using BookMeMobile.ViewModels.Concrete.Reservations;
 using Xamarin.Forms;
 
@@ -7,10 +8,10 @@ namespace BookMeMobile.Pages.MyReservations
 {
     public partial class MyReservationsPage : TabbedPage
     {
-        public MyReservationsPage()
+        public MyReservationsPage(UserReservationsModel reservationsModel)
         {
             this.InitializeComponent();
-            var viewModel = new MyReservationsViewModel(new NavigationService(this.Navigation));
+            var viewModel = new MyReservationsViewModel(reservationsModel, new NavigationService(this.Navigation));
             viewModel.ShowInfoMessage += this.ShowInfoMessage;
             viewModel.ShowRemoveConfirmationDialog += this.ShowRemoveConfirmationDialog;
             this.BindingContext = viewModel;

@@ -10,7 +10,7 @@ namespace BookMeMobile.BL.Concrete
     /// <summary>
     /// This class performs a logic for managing reservations
     /// </summary>
-    internal class ReservationService : BaseService, IReservationService
+    public class ReservationService : BaseService, IReservationService
     {
         private readonly IReservationRepository reservationsRepository;
 

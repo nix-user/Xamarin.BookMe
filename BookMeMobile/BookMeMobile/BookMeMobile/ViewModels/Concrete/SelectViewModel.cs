@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using BookMeMobile.BL;
+using BookMeMobile.BL.Abstract;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model;
@@ -16,11 +17,13 @@ namespace BookMeMobile.ViewModels.Concrete
     {
         private SelectModel model;
         private ListRoomManager service;
+        private IReservationService reservationServise;
 
-        public SelectViewModel(ListRoomManager listRoomManager, INavigationService navigationService, SelectModel model) : base(navigationService)
+        public SelectViewModel(ListRoomManager listRoomManager, IReservationService reservationServise, INavigationService navigationService, SelectModel model) : base(navigationService)
         {
             this.model = model;
             this.service = listRoomManager;
+            this.reservationServise = reservationServise;
             this.GoToMyReservation = new Command(this.GetMyReservation);
             this.GoToSearch = new Command(this.Search);
             this.GoToCalendarCommand = new Command(this.GoToCalendar);
@@ -73,7 +76,17 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private async void GetMyReservation()
         {
-            await this.NavigationService.XamarinNavigation.PushAsync(new MyReservationsPage());
+            var operationResult =
+                                  (await this.ExecuteOperation(async () => await this.reservationServise.GetUserReservations()));
+
+            if (operationResult.Status == StatusCode.Ok)
+            {
+                await this.NavigationService.XamarinNavigation.PushAsync(new MyReservationsPage(operationResult.Result));
+            }
+            else
+            {
+                await this.ShowErrorMessage(operationResult.Status);
+            }
         }
 
         public DateTime Date
