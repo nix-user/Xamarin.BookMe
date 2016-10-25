@@ -16,13 +16,18 @@ namespace BookMeMobile.Pages
             this.InitializeComponent();
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            var viewModel = (ListRoomViewModel)this.ViewModel;
+            this.listRoom.ScrollTo(viewModel.FavoriteOrFloorRoom, ScrollToPosition.Center, true);
+        }
+
         protected override void OnViewModelSet()
         {
             base.OnViewModelSet();
             this.SetUpViewModelSubscriptions(this.ViewModel);
             this.BindingContext = this.ViewModel;
-            var viewModel = (ListRoomViewModel)this.ViewModel;
-            this.listRoom.ScrollTo(viewModel.FavoriteOrFloorRoom, ScrollToPosition.Center, true);
         }
     }
 }
