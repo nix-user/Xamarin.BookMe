@@ -64,6 +64,8 @@ namespace BookMeMobile
             App.Container.RegisterType<LoginViewModel>();
             App.Container.RegisterType<ListRoomManager>();
             App.Container.RegisterType<SelectViewModel>();
+            App.Container.RegisterType<IReservationRepository, ReservationRepository>();
+            App.Container.RegisterType<IReservationService, ReservationService>();
             App.Container.RegisterType<IProfileService, ProfileService>();
             App.Container.RegisterType<IRoomRepository, RoomRepository>();
             App.Container.RegisterType<IRoomService, RoomService>();
