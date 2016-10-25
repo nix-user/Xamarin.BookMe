@@ -20,7 +20,10 @@ namespace BookMeMobile.Pages
         {
             base.OnAppearing();
             var viewModel = (ListRoomViewModel)this.ViewModel;
-            this.listRoom.ScrollTo(viewModel.FavoriteOrFloorRoom, ScrollToPosition.Center, true);
+            if (viewModel.FavoriteOrFloorRoom != null)
+            {
+                this.listRoom.ScrollTo(viewModel.FavoriteOrFloorRoom, ScrollToPosition.Center, true);
+            }
         }
 
         protected override void OnViewModelSet()
