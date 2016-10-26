@@ -188,9 +188,6 @@
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\profileMenu.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\Today.png" />
   </ItemGroup>
   <ItemGroup>
