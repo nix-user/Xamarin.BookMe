@@ -15,12 +15,12 @@
       <render:Loader x:Name="loader" VerticalOptions="Center" />
       <Label Text ="Бронирование комнаты" FontSize="Large" HorizontalOptions="CenterAndExpand"></Label>
       <Label Text="Назначение" HorizontalOptions ="CenterAndExpand"/>
-      <Entry Text="{Binding Title}" FontSize="Large"/>
-      <Label Text="{Binding NumberRoom,StringFormat=Комната: '{0}'}" FontSize="Medium"/>
-      <Label Text="{Binding Date,StringFormat=Дата: '{0}'}" FontSize="Medium"/>
-      <Label Text="{Binding From,StringFormat=От: '{0}'}" FontSize="Medium"/>
-      <Label Text="{Binding To,StringFormat=До: '{0}'}" FontSize="Medium"/>
-      <StackLayout Orientation="Horizontal">
+      <Entry Text="{Binding Title}" FontSize="Large" />
+      <Label Text="{Binding NumberRoom,StringFormat=Комната: '{0}'}" FontSize="Medium" HorizontalOptions="CenterAndExpand"/>
+      <Label Text="{Binding Date,StringFormat=Дата: '{0}'}" FontSize="Medium" HorizontalOptions="CenterAndExpand"/>
+      <Label Text="{Binding From,StringFormat=От: '{0}'}" FontSize="Medium" HorizontalOptions="CenterAndExpand"/>
+      <Label Text="{Binding To,StringFormat=До: '{0}'}" FontSize="Medium" HorizontalOptions="CenterAndExpand"/>
+      <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
         <Label Text="{Binding IsLarge,StringFormat=Большая: '{0}',Converter={StaticResource boolConverter}}" FontSize="Medium"/>
         <Label Text="{Binding HasPolycom,StringFormat=Поликом: '{0}',Converter={StaticResource boolConverter}}" FontSize="Medium"/>
       </StackLayout>

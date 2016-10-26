@@ -18,6 +18,16 @@ namespace BookMeMobile.Pages
             {
                 MainLayout.Padding = new Thickness(0, -40, 0, 0);
             }
+
+            if (Device.OS == TargetPlatform.iOS)
+            {
+                this.rootLayout.Padding = new Thickness(0, 50);
+                var distanceBetweenBlocks = new Thickness(0, 25);
+                this.DateSpace.Padding = distanceBetweenBlocks;
+                this.timeLayout.Padding = distanceBetweenBlocks;
+                this.checkerLayout.Padding = distanceBetweenBlocks;
+                this.ButtonSpace.Padding = distanceBetweenBlocks;
+            }
         }
 
         protected override void OnViewModelSet()
