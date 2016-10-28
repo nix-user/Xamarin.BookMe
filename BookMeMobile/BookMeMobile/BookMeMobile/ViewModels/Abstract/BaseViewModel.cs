@@ -19,7 +19,7 @@ namespace BookMeMobile.ViewModels.Abstract
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Action<string, string, string> ShowInfoMessage { get; set; }
+        public Func<string, string, string, Task> ShowInfoMessage { get; set; }
 
         public Action<bool> ToggleProgressIndicator { get; set; }
 
@@ -30,19 +30,23 @@ namespace BookMeMobile.ViewModels.Abstract
             this.NavigationService = navigationService;
         }
 
+        public virtual void OnAttachedToView()
+        {
+        }
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected void ShowInformationDialog(string header, string content)
+        protected async Task ShowInformationDialog(string header, string content)
         {
-            this.ShowInfoMessage?.Invoke(header, content, AlertMessages.InfoAlertCanelText);
+            await this.ShowInfoMessage?.Invoke(header, content, AlertMessages.InfoAlertCanelText);
         }
 
-        protected void ShowErrorMessage(StatusCode statusCode)
+        protected async Task ShowErrorMessage(StatusCode statusCode)
         {
-            this.ShowInformationDialog(AlertMessages.ErrorHeader, this.errorMessagesDictionary[statusCode]);
+            await this.ShowInformationDialog(AlertMessages.ErrorHeader, this.errorMessagesDictionary[statusCode]);
         }
 
         protected async Task<TReturn> ExecuteOperation<TReturn>(Func<Task<TReturn>> operation)

@@ -4,18 +4,16 @@
              xmlns:render="clr-namespace:BookMeMobile.Render;assembly=BookMeMobile"
              xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
              x:Class="BookMeMobile.Pages.ListRoomPage">
-  <ContentPage.Resources>
-    <ResourceDictionary>
-    </ResourceDictionary>
-  </ContentPage.Resources>
-  <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
-    <Label x:Name="LabelNotRooms" Text="{Binding IsNotRooms}" FontSize="24" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" IsVisible="False"/>
-    <ListView x:Name="listRoom" ItemsSource="{Binding ListRoom}" RowHeight="80" VerticalOptions="FillAndExpand">
+
+  <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+    <Label  x:Name="LabelNotRooms" IsVisible ="{Binding IsNotRooms}" FontSize="24" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Text="Комнат нет"/>
+    <Button Grid.Row="0" Grid.Column="0"   x:Name="FavoriteRoom"  HorizontalOptions="FillAndExpand" FontSize="Large" VerticalOptions="FillAndExpand" Text="{Binding FavoriteRoom}" IsVisible="{Binding HasFavoriteRoom}" Command="{Binding ReserveFavoriteRoomCommand}"/>
+    <ListView x:Name="listRoom" ItemsSource="{Binding ListRoom}" RowHeight="80" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
       <ListView.ItemTemplate>
         <DataTemplate>
           <ViewCell>
-            <ViewCell.View>              
-                <Button x:Name="btnBooking" Text = "{Binding NumberRoom,StringFormat='{0}' }" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Large" Command="{Binding Path=ListViewModel.ReserveCommand}" CommandParameter="{Binding}"/>
+            <ViewCell.View>
+              <Button x:Name="btnBooking" Text = "{Binding NumberRoom,StringFormat='{0}' }" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Large" Command="{Binding Path=ListViewModel.ReserveCommand}" CommandParameter="{Binding}"/>
             </ViewCell.View>
           </ViewCell>
         </DataTemplate>

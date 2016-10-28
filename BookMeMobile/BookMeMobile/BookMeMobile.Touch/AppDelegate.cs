@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
 using UIKit;
 
 namespace BookMeMobile.Touch
@@ -21,6 +17,7 @@ namespace BookMeMobile.Touch
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            XamForms.Controls.iOS.Calendar.Init();
             this.LoadApplication(new App());
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             return base.FinishedLaunching(app, options);

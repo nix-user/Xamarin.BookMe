@@ -1,4 +1,7 @@
-﻿using BookMeMobile.ViewModels.Concrete;
+﻿using System;
+using System.Linq;
+using BookMeMobile.Render;
+using BookMeMobile.ViewModels.Concrete;
 
 namespace BookMeMobile.Pages
 {
@@ -8,6 +11,16 @@ namespace BookMeMobile.Pages
         {
             this.InitializeComponent();
             this.SetUpActivityIndicator(this.loader, this.rootLayout);
+            this.Picker.SelectedIndexChanged += this.Picker_SelectedIndexChanged;
+        }
+
+        private void Picker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (sender != null)
+            {
+                var picker = (BindablePicker)sender;
+                ((ProfileViewModel)this.ViewModel).FavoriteRoom = picker.ItemsSource[picker.SelectedIndex].ToString();
+            }
         }
 
         protected override void OnViewModelSet()

@@ -6,6 +6,8 @@ namespace BookMeMobile.Infrastructure.Abstract
 {
     public interface INavigationService
     {
+        void RemoveFromNavigationStakcToIndexFromTheEnd(int index = 1);
+
         void ShowViewModel<TViewModel>(bool modal = false) where TViewModel : BaseViewModel;
 
         void ShowViewModel<TViewModel>(object parameterValuesObject, bool modal = false) where TViewModel : BaseViewModel;
@@ -15,6 +17,8 @@ namespace BookMeMobile.Infrastructure.Abstract
         Page ShowViewModelAsMainPage<TViewModel>() where TViewModel : BaseViewModel;
 
         Page ShowViewModelAsMainPageWithMenu<TViewModel>() where TViewModel : BaseViewModel;
+
+        Page ShowViewModelAsMainPageWithMenu<TViewModel>(object parameterValuesObject) where TViewModel : BaseViewModel;
 
         INavigation XamarinNavigation { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
 {
@@ -16,6 +17,16 @@ namespace BookMeMobile.Pages
             if (Device.OS == TargetPlatform.Windows || Device.OS == TargetPlatform.WinPhone)
             {
                 MainLayout.Padding = new Thickness(0, -40, 0, 0);
+            }
+
+            if (Device.OS == TargetPlatform.iOS)
+            {
+                this.rootLayout.Padding = new Thickness(0, 50);
+                var distanceBetweenBlocks = new Thickness(0, 25);
+                this.DateSpace.Padding = distanceBetweenBlocks;
+                this.timeLayout.Padding = distanceBetweenBlocks;
+                this.checkerLayout.Padding = distanceBetweenBlocks;
+                this.ButtonSpace.Padding = distanceBetweenBlocks;
             }
         }
 

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Windows.Input;
 using BookMeMobile.BL;
+using BookMeMobile.BL.Abstract;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model;
 using BookMeMobile.Pages.MyReservations;
 using BookMeMobile.Resources;
 using BookMeMobile.ViewModels.Abstract;
+using Microsoft.Practices.Unity;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete
@@ -15,45 +17,84 @@ namespace BookMeMobile.ViewModels.Concrete
     {
         private SelectModel model;
         private ListRoomManager service;
+        private IReservationService reservationServise;
+        private IProfileService profileService;
 
-        public SelectViewModel(ListRoomManager listRoomManager, INavigationService navigationService) : base(navigationService)
+        public SelectViewModel(ListRoomManager listRoomManager,
+            IProfileService profileService,
+            IReservationService reservationServise,
+            INavigationService navigationService,
+            SelectModel model) : base(navigationService)
         {
-            this.model = new SelectModel();
+            this.model = model;
             this.service = listRoomManager;
+            this.reservationServise = reservationServise;
+            this.profileService = profileService;
 
             this.GoToMyReservation = new Command(this.GetMyReservation);
             this.GoToSearch = new Command(this.Search);
+            this.GoToCalendarCommand = new Command(this.GoToCalendar);
         }
 
         public ICommand GoToMyReservation { get; protected set; }
 
         public ICommand GoToSearch { get; protected set; }
 
+        public ICommand GoToCalendarCommand { get; set; }
+
+        public void GoToCalendar()
+        {
+            this.NavigationService.ShowViewModel<CalendarViewModel>();
+        }
+
         private async void Search()
         {
-            if (this.model.From < this.model.To)
+            if (this.model.From.TimeOfDay < this.model.To.TimeOfDay)
+            {
+                this.ValidInterval();
+            }
+            else
+            {
+                await this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongIntervalTime);
+            }
+        }
+
+        private async void ValidInterval()
+        {
+            if (this.model.Date.Date != DateTime.Now.Date || this.model.From.TimeOfDay >= DateTime.Now.TimeOfDay)
             {
                 var operationResult =
-                   (await this.ExecuteOperation(async () => await this.service.GetEmptyRoom(this.model)));
+                                  (await this.ExecuteOperation(async () => await this.service.GetEmptyRoom(this.model)));
+                var operationResultProfile = await ExecuteOperation(async () => await this.profileService.GetUserData());
 
                 if (operationResult.Status == StatusCode.Ok)
                 {
-                    this.NavigationService.ShowViewModel<ListRoomViewModel>(new { rooms = operationResult.Result, selectModel = this.model });
+                    this.NavigationService.ShowViewModel<ListRoomViewModel>(new { rooms = operationResult.Result, selectModel = this.model, profileModel = operationResultProfile.Result });
                 }
                 else
                 {
-                    this.ShowErrorMessage(operationResult.Status);
+                    await this.ShowErrorMessage(operationResult.Status);
                 }
             }
             else
             {
-                this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongIntervalTime);
+                await this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongIntervalInThePast);
             }
         }
 
         private async void GetMyReservation()
         {
-            await this.NavigationService.XamarinNavigation.PushAsync(new MyReservationsPage());
+            var operationResult =
+                                  (await this.ExecuteOperation(async () => await this.reservationServise.GetUserReservations()));
+
+            if (operationResult.Status == StatusCode.Ok)
+            {
+                await this.NavigationService.XamarinNavigation.PushAsync(new MyReservationsPage(operationResult.Result));
+            }
+            else
+            {
+                await this.ShowErrorMessage(operationResult.Status);
+            }
         }
 
         public DateTime Date
@@ -67,10 +108,10 @@ namespace BookMeMobile.ViewModels.Concrete
             get { return this.model.From; }
             set
             {
-                var currentTime = this.SetValidDate(value);
+                var currentTime = this.model.RoundTime(this.SetValidDate(value));
                 if (currentTime >= this.To)
                 {
-                    this.To = currentTime.AddMinutes(30);
+                    this.To = this.model.RoundTime(currentTime.AddMinutes(30));
                 }
 
                 this.model.From = currentTime;
@@ -82,7 +123,7 @@ namespace BookMeMobile.ViewModels.Concrete
             get { return this.model.To; }
             set
             {
-                this.model.To = this.SetValidDate(value);
+                this.model.To = this.model.RoundTime(this.SetValidDate(value));
                 this.OnPropertyChanged();
             }
         }
@@ -101,7 +142,8 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private DateTime SetValidDate(DateTime invalidDate)
         {
-            return new DateTime(this.Date.Year, this.Date.Month, this.Date.Day, invalidDate.Hour, invalidDate.Minute, invalidDate.Second);
+            DateTime curretTime = this.model.Date;
+            return new DateTime(curretTime.Year, curretTime.Month, curretTime.Day, invalidDate.Hour, invalidDate.Minute, invalidDate.Second);
         }
     }
 }

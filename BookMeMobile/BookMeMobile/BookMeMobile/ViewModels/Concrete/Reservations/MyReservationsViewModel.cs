@@ -31,13 +31,13 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
 
         public ICommand RemoveReservationCommand { get; set; }
 
-        public MyReservationsViewModel(INavigationService navigationService) : base(navigationService)
+        public MyReservationsViewModel(UserReservationsModel reservationsModel, INavigationService navigationService) : base(navigationService)
         {
             this.reservationRepository = new FakeReservationRepository(new HttpService(new CustomDependencyService(), new HttpClientHandler()));
             this.reservationService = new ReservationService(this.reservationRepository);
             this.RemoveReservationCommand = new Command<ReservationViewModel>(this.RemoveReservation);
 
-            this.LoadReservations();
+            this.LoadReservations(reservationsModel);
         }
 
         public ReservationsListViewModel TodayReservationsViewModel
@@ -82,24 +82,15 @@ namespace BookMeMobile.ViewModels.Concrete.Reservations
             }
         }
 
-        private async void LoadReservations()
+        private async void LoadReservations(UserReservationsModel reservationsResult)
         {
-            var reservationsResult = await this.reservationService.GetUserReservations();
+            var todayReservations = reservationsResult.TodayReservations;
+            var recursiveReservation = reservationsResult.AllReservations.Where(x => x.IsRecursive);
+            var allReservations = reservationsResult.AllReservations;
 
-            if (reservationsResult.Status == StatusCode.Ok)
-            {
-                var todayReservations = reservationsResult.Result.TodayReservations;
-                var recursiveReservation = reservationsResult.Result.AllReservations.Where(x => x.IsRecursive);
-                var allReservations = reservationsResult.Result.AllReservations;
-
-                this.TodayReservationsViewModel = new ReservationsListViewModel(this.NavigationService, this, todayReservations, true);
-                this.RecursiveReservationsViewModel = new ReservationsListViewModel(this.NavigationService, this, recursiveReservation);
-                this.AllReservationsViewModel = new ReservationsListViewModel(this.NavigationService, this, allReservations);
-            }
-            else
-            {
-                this.ShowErrorMessage(reservationsResult.Status);
-            }
+            this.TodayReservationsViewModel = new ReservationsListViewModel(this.NavigationService, this, todayReservations, true);
+            this.RecursiveReservationsViewModel = new ReservationsListViewModel(this.NavigationService, this, recursiveReservation);
+            this.AllReservationsViewModel = new ReservationsListViewModel(this.NavigationService, this, allReservations);
         }
 
         private async void RemoveReservation(ReservationViewModel reservation)

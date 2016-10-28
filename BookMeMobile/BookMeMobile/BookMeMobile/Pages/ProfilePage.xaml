@@ -9,18 +9,26 @@
     <StackLayout  Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0.5, 0.42, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional">
       <render:Loader x:Name="loader" VerticalOptions="Center" />
     </StackLayout>
-    <StackLayout BindingContext="{Binding}" VerticalOptions="CenterAndExpand" Padding="10,0,40,0">
-      <TableView>
-        <TableRoot>
-          <TableSection>
-            <EntryCell x:Name="txtFavoriteRoomCell" Keyboard="Default" Label="Любимая комната:" Text="{Binding FavoriteRoom}"/>
-          </TableSection>
-          <TableSection>
-            <EntryCell x:Name="txtMyRoomCell" Keyboard="Numeric" Label="Мой этаж:" Text="{Binding MyFloor}"/>
-          </TableSection>
-        </TableRoot>
-      </TableView>
-        <Button x:Name="btnSave" Text="Сохранить" Command="{Binding ChangeSaveCommand}" IsEnabled="{Binding IsEnableButtonSave}"/>
+    <StackLayout BindingContext="{Binding}" VerticalOptions="CenterAndExpand" Padding="10,0,10,0">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="150" />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0"  Grid.Column="0" VerticalTextAlignment="Center" FontSize="Medium" Text="Любимая комната:" />
+        <StackLayout Grid.Row="0" Grid.Column="1">
+          <render:BindablePicker x:Name="Picker" SelectedIndex="0" ItemsSource="{Binding AllRoom}" SelectedItem="{Binding SelectedRoom}" />
+        </StackLayout>
+        <Label Grid.Row="1"  Grid.Column="0" VerticalTextAlignment="Center" FontSize="Medium" Text="Мой этаж:" />
+        <Entry Grid.Row="1" Grid.Column="1"  VerticalOptions="CenterAndExpand" Keyboard="Numeric" Text="{Binding MyFloor}"/>
+      </Grid>
+      <StackLayout Padding="20">
+        <Button x:Name="btnSave" Text="Сохранить" Command="{Binding ChangeSaveCommand}" IsEnabled="{Binding IsEnableButtonSave,Mode='TwoWay'}"/>
+      </StackLayout>
     </StackLayout>
   </AbsoluteLayout>
 </pages:BasePage>

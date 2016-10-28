@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using BookMeMobile.BL;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
@@ -28,7 +29,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         private async void GoBack()
         {
-            await this.NavigationService.XamarinNavigation.PopModalAsync();
+            await this.NavigationService.XamarinNavigation.PopAsync();
         }
 
         public ICommand AddReservationCommand { get; protected set; }
@@ -49,7 +50,7 @@ namespace BookMeMobile.ViewModels.Concrete
 
         public string Date
         {
-            get { return this.model.From.ToString("d"); }
+            get { return this.model.Date.ToString("dd.MM.yy"); }
         }
 
         public string From
@@ -81,16 +82,17 @@ namespace BookMeMobile.ViewModels.Concrete
                         .Status;
                 if (operationResult == StatusCode.Ok)
                 {
-                    this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
-                    await this.NavigationService.XamarinNavigation.PopModalAsync();
-                    return;
+                    await this.ShowInformationDialog(AlertMessages.SuccessHeader, AlertMessages.SuccessBody);
+                    App.Current.MainPage = this.NavigationService.ShowViewModelAsMainPageWithMenu<SelectViewModel>();
                 }
-
-                this.ShowErrorMessage(operationResult);
+                else
+                {
+                    await this.ShowErrorMessage(operationResult);
+                }
             }
             else
             {
-                this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.FieldIsEmpty);
+                await this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.FieldIsEmpty);
             }
         }
     }

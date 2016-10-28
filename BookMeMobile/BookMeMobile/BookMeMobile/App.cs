@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using BookMeMobile.BL;
 using BookMeMobile.BL.Abstract;
 using BookMeMobile.BL.Concrete;
@@ -10,6 +11,7 @@ using BookMeMobile.Data.FakeRepository;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Interface;
+using BookMeMobile.Model;
 using BookMeMobile.Resources;
 using BookMeMobile.ViewModels.Concrete;
 using Microsoft.Practices.Unity;
@@ -64,11 +66,16 @@ namespace BookMeMobile
             App.Container.RegisterType<LoginViewModel>();
             App.Container.RegisterType<ListRoomManager>();
             App.Container.RegisterType<SelectViewModel>();
+            App.Container.RegisterType<IReservationRepository, ReservationRepository>();
+            App.Container.RegisterType<IReservationService, ReservationService>();
             App.Container.RegisterType<IProfileService, ProfileService>();
+            App.Container.RegisterType<IRoomRepository, RoomRepository>();
+            App.Container.RegisterType<IRoomService, RoomService>();
             App.Container.RegisterType<IProfileRepository, FakeProfileRepository>();
             App.Container.RegisterType<IHttpService, HttpService>();
             App.Container.RegisterType<IDependencyService, CustomDependencyService>();
             App.Container.RegisterType<IHttpHandler, HttpClientHandler>();
+            App.Container.RegisterInstance<SelectModel>(new SelectModel());
         }
     }
 }

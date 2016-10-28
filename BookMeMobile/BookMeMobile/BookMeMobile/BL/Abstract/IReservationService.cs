@@ -8,7 +8,7 @@ namespace BookMeMobile.BL.Abstract
     /// <summary>
     /// This interface which performs contract for managing reservations
     /// </summary>
-    internal interface IReservationService
+    public interface IReservationService
     {
         /// <summary>
         /// A method to receive all the grouped reservations of the current user
