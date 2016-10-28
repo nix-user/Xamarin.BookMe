@@ -22,6 +22,7 @@ namespace BookMeMobile.WinPhone.Render
             if (this.Control != null)
             {
                Control.ClockIdentifier = "24HourClock";
+                Control.MinuteIncrement = 15;
             }
         }
     }

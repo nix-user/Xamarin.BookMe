@@ -1,10 +1,16 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
+using BookMeMobile.BL;
 using BookMeMobile.BL.Abstract;
+using BookMeMobile.BL.Concrete;
+using BookMeMobile.Data;
+using BookMeMobile.Data.Concrete;
 using BookMeMobile.Enums;
 using BookMeMobile.Infrastructure.Abstract;
 using BookMeMobile.Model.Login;
 using BookMeMobile.Pages;
 using BookMeMobile.Resources;
+using BookMeMobile.ViewModels.Abstract;
 using Xamarin.Forms;
 
 namespace BookMeMobile.ViewModels.Concrete
@@ -48,20 +54,17 @@ namespace BookMeMobile.ViewModels.Concrete
             var operationStatus = await this.ExecuteOperation(async () => await this.authService.AuthAsync(this.model));
             if (operationStatus == StatusCode.Ok)
             {
-                await this.NavigationService.XamarinNavigation.PushAsync(new MainPage(new SelectPage()));
-
-                //TODO: uncomment when SelectPage will be updated to custom mvvm navigation logic
-                //this.NavigationService.ShowViewModel(new LoginViewModel(this.authService, this.NavigationService));
+                App.Current.MainPage = this.NavigationService.ShowViewModelAsMainPageWithMenu<SelectViewModel>();
                 return;
             }
 
             if (operationStatus == StatusCode.NoAuthorize)
             {
-                this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongLoginOrPassword);
+                await this.ShowInformationDialog(AlertMessages.ErrorHeader, AlertMessages.WrongLoginOrPassword);
                 return;
             }
 
-            this.ShowErrorMessage(operationStatus);
+            await this.ShowErrorMessage(operationStatus);
         }
     }
 }

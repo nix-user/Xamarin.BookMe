@@ -1,57 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookMeMobile.BL;
 using BookMeMobile.Entity;
-using BookMeMobile.Enums;
+using BookMeMobile.Infrastructure.Concrete;
 using BookMeMobile.Model;
-using BookMeMobile.OperationResults;
+using BookMeMobile.ViewModels.Concrete;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
 {
-    public partial class ListRoomPage : ContentPage
+    public partial class ListRoomPage : BasePage
     {
-        private static readonly IEnumerable<string> UnallowedResources = new List<string>()
-        {
-            "709",
-            "710",
-            "712a",
-            "713",
-            "Netatmo",
-            "NetatmoCityHall",
-            "Projector 1",
-            "Projector 2"
-        };
-
-        public List<Room> ResultRoom { get; set; }
-
-        private Reservation currentBooking;
-        private ListRoomManager manager;
-        private RoomFilterParameters currentReservation;
-
-        public ListRoomPage(IEnumerable<Room> search, RoomFilterParameters reservation)
+        public ListRoomPage()
         {
             this.InitializeComponent();
-            this.manager = new ListRoomManager();
-            this.ResultRoom = search.Where(x => !UnallowedResources.Contains(x.Number)).ToList();
-            this.manager.Sort(this.ResultRoom);
-            if (!this.ResultRoom.Any())
-            {
-                isRoom.IsVisible = true;
-            }
-
-            this.currentReservation = reservation;
-
-            listUserRoomInRange.BindingContext = this.ResultRoom;
         }
 
-        private async void BtnBooking_OnClicked(object sender, EventArgs e)
+        protected override void OnAppearing()
         {
-            int idRoom = int.Parse(((Button)sender).ClassId);
-            await this.Navigation.PushModalAsync(new AddReservationPage(this.currentReservation, idRoom));
+            base.OnAppearing();
+            var viewModel = (ListRoomViewModel)this.ViewModel;
+            if (viewModel.FavoriteOrFloorRoom != null)
+            {
+                this.listRoom.ScrollTo(viewModel.FavoriteOrFloorRoom, ScrollToPosition.Center, true);
+            }
+        }
+
+        protected override void OnViewModelSet()
+        {
+            base.OnViewModelSet();
+            this.SetUpViewModelSubscriptions(this.ViewModel);
+            this.BindingContext = this.ViewModel;
         }
     }
 }

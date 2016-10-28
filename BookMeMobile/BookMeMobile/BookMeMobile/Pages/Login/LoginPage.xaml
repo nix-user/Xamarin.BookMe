@@ -9,12 +9,12 @@
     <StackLayout  Orientation="Horizontal" AbsoluteLayout.LayoutBounds="0.5, 0.42, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional">
       <render:Loader x:Name="loader" VerticalOptions="Center" />
     </StackLayout>
-    <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-      <Label HorizontalOptions="Center" Text="Логин" FontSize="Large"/>
-      <Entry Text="{Binding Login}" HorizontalTextAlignment="Center"/>
-      <Label HorizontalOptions="Center" Text="Пароль" FontSize="Large"/>
-      <Entry Text="{Binding Password}" IsPassword="True" HorizontalTextAlignment="Center"/>
-      <Button x:Name="BtnSignIn" Text="Войти" Command="{Binding SignInCommand}"></Button>
+    <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" >
+      <Entry Text="{Binding Login}"  HorizontalTextAlignment="Center" Placeholder="Логин"/>
+      <Entry Text="{Binding Password}" HorizontalTextAlignment="Center" Placeholder="Пароль" IsPassword="True"/>
+      <StackLayout Padding="20">
+        <Button HorizontalOptions="FillAndExpand" x:Name="BtnSignIn" Text="Войти" Command="{Binding SignInCommand}"></Button>
+      </StackLayout>
     </StackLayout>
   </AbsoluteLayout>
 </pages:BasePage>

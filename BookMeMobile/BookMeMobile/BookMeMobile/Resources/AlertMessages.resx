@@ -138,6 +138,12 @@
   <data name="SuccessHeader" xml:space="preserve">
     <value>Успешно</value>
   </data>
+  <data name="WrongIntervalInThePast" xml:space="preserve">
+    <value>Нельзя забронировать комнату на прошлое время.</value>
+  </data>
+  <data name="WrongIntervalTime" xml:space="preserve">
+    <value>Выбран неверный интервал</value>
+  </data>
   <data name="WrongLoginOrPassword" xml:space="preserve">
     <value>Логин или пароль введены неверно</value>
   </data>

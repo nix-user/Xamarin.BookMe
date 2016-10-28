@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.Render;
 using BookMeMobile.ViewModels;
+using BookMeMobile.ViewModels.Abstract;
 using Xamarin.Forms;
 
 namespace BookMeMobile.Pages
@@ -24,6 +25,7 @@ namespace BookMeMobile.Pages
             {
                 this.viewModel = value;
                 this.OnViewModelSet();
+                this.viewModel.OnAttachedToView();
             }
         }
 
@@ -55,6 +57,22 @@ namespace BookMeMobile.Pages
             this.loader.Hide();
         }
 
+        private void SetIsEnabledToTableViewChildren(View child, bool value)
+        {
+            var tableView = child as TableView;
+            if (tableView != null)
+            {
+                for (int i = 0; i < tableView.Root.Count; i++)
+                {
+                    for (int j = 0; j < tableView.Root[i].Count; j++)
+                    {
+                        var cell = tableView.Root[i][j];
+                        cell.IsEnabled = value;
+                    }
+                }
+            }
+        }
+
         private void SetIsEnabledToChildren(IViewContainer<View> rootLayout, bool value)
         {
             foreach (var child in rootLayout.Children)
@@ -66,6 +84,7 @@ namespace BookMeMobile.Pages
                 }
                 else
                 {
+                    this.SetIsEnabledToTableViewChildren(child, value);
                     child.IsEnabled = value;
                 }
             }
@@ -83,9 +102,9 @@ namespace BookMeMobile.Pages
             }
         }
 
-        private void ShowInfoMessage(string title, string content, string cancelText)
+        private async Task ShowInfoMessage(string title, string content, string cancelText)
         {
-            this.DisplayAlert(title, content, cancelText);
+            await this.DisplayAlert(title, content, cancelText);
         }
     }
 }

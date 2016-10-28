@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -9,6 +10,7 @@ using BookMeMobile.Enums;
 using BookMeMobile.Interface;
 using BookMeMobile.Model;
 using BookMeMobile.OperationResults;
+using BookMeMobile.Resources;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 
@@ -16,25 +18,30 @@ namespace BookMeMobile.Data
 {
     public class HttpService : IHttpService
     {
-        private readonly HttpClient httpClient = new HttpClient();
-        private readonly IDependencyService dependencyService;
+        private const string AuthorizationHeaderName = "Authorization";
+        private const string CacheHeaderName = "Cache-Control";
+        private const string CacheHeaderValue = "no-cache";
 
-        public HttpService(IDependencyService dependencyService)
+        private readonly IDependencyService dependencyService;
+        private readonly IHttpHandler httpHandler;
+
+        public HttpService(IDependencyService dependencyService, IHttpHandler httpHandler)
         {
             this.dependencyService = dependencyService;
-            string token = this.dependencyService.Get<IFileWorker>().LoadTextAsync().Result;
+            this.httpHandler = httpHandler;
+            string token = Task.Run(async () => await this.dependencyService.Get<IFileWorker>().LoadTextAsync(FileResources.FileName)).Result;
             if (token != null)
             {
-                this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+                this.httpHandler.RequestHeaders.Add(AuthorizationHeaderName, new AuthenticationHeaderValue("bearer", token).ToString());
+                this.httpHandler.RequestHeaders.Add(CacheHeaderName, CacheHeaderValue);
             }
         }
 
-        public async Task<BaseOperationResult<T>> Get<T>(string root)
+        public async Task<BaseOperationResult<T>> Get<T>(string route)
         {
-            var uri = new Uri(root);
             try
             {
-                var response = await this.httpClient.GetAsync(uri);
+                var response = await this.httpHandler.GetAsync(route);
                 return await this.CreateOperationResultFromResponse<T>(response);
             }
             catch (Exception)
@@ -46,16 +53,15 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<BaseOperationResult> Post<TContent>(string root, TContent content)
+        public async Task<BaseOperationResult> Post<TContent>(string route, TContent content)
         {
             string jsonFormat = "application/json";
 
-            var uri = new Uri(root);
             var json = JsonConvert.SerializeObject(content);
             var jsonContent = new StringContent(json, Encoding.UTF8, jsonFormat);
             try
             {
-                var response = await this.httpClient.PostAsync(uri, jsonContent);
+                var response = await this.httpHandler.PostAsync(route, jsonContent);
                 return await this.CreateOperationResultFromResponse(response);
             }
             catch (Exception)
@@ -67,22 +73,40 @@ namespace BookMeMobile.Data
             }
         }
 
-        public async Task<BaseOperationResult> Delete(string root)
+        public async Task<BaseOperationResult> Delete(string route)
         {
             try
             {
-                var uri = new Uri(root);
-                var response = await this.httpClient.DeleteAsync(uri);
-                if (response.IsSuccessStatusCode)
-                {
-                    return new BaseOperationResult() { Status = StatusCode.Ok };
-                }
-
-                return new BaseOperationResult() { Status = StatusCode.Error };
+                var uri = new Uri(route);
+                var response = await this.httpHandler.DeleteAsync(route);
+                return await this.CreateOperationResultFromResponse(response);
             }
             catch (Exception)
             {
-                return new BaseOperationResult() { Status = StatusCode.ConnectionProblem };
+                return new BaseOperationResult()
+                {
+                    Status = StatusCode.ConnectionProblem
+                };
+            }
+        }
+
+        public async Task<BaseOperationResult> Put<TContent>(string route, TContent content)
+        {
+            string jsonFormat = "application/json";
+
+            var json = JsonConvert.SerializeObject(content);
+            var jsonContent = new StringContent(json, Encoding.UTF8, jsonFormat);
+            try
+            {
+                var response = await this.httpHandler.PutAsync(route, jsonContent);
+                return await this.CreateOperationResultFromResponse(response);
+            }
+            catch (Exception)
+            {
+                return new BaseOperationResult()
+                {
+                    Status = StatusCode.ConnectionProblem
+                };
             }
         }
 

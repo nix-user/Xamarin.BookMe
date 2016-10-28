@@ -10,17 +10,23 @@ namespace BookMeMobile.Model
 {
     public class AddReservationModel
     {
-        public AddReservationModel(RoomFilterParameters filterParameters, int idRoom)
+        public AddReservationModel(SelectModel filterParameters, RoomViewModel roomModel)
         {
             this.From = filterParameters.From;
             this.To = filterParameters.To;
-            this.ResourceId = idRoom;
+            this.ResourceId = roomModel.Id;
             this.IsRecursive = false;
+            this.IsLarge = roomModel.Room.IsBig;
+            this.HasPolycom = roomModel.Room.IsHasPolykom;
+            this.NumberRoom = roomModel.NumberRoom;
+            this.Date = filterParameters.Date;
         }
+
+        public string NumberRoom { get; set; }
 
         public string Title { get; set; }
 
-        public DateTime Date => this.Date.Date;
+        public DateTime Date { get; set; }
 
         public DateTime From { get; set; }
 

@@ -3,7 +3,7 @@
     /// <summary>
     /// Service with shared logic
     /// </summary>
-    internal abstract class BaseService
+    public abstract class BaseService
     {
     }
 }

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IpAdress" xml:space="preserve">
-    <value>http://10.10.40.80:666/</value>
+    <value>http://bookme.net.nixsolutions.com/</value>
   </data>
   <data name="ApiURL" xml:space="preserve">
     <value>api/</value>
@@ -137,5 +137,8 @@
   </data>
   <data name="Token" xml:space="preserve">
     <value>token</value>
+  </data>
+  <data name="ProfileDomainURL" xml:space="preserve">
+    <value>Profile</value>
   </data>
 </root>

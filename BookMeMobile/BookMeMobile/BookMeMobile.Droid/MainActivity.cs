@@ -4,7 +4,11 @@ using Android.OS;
 
 namespace BookMeMobile.Droid
 {
-    [Activity(Label = "BookMeMobile", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "BookMe",
+        Icon = "@drawable/icon",
+        MainLauncher = true,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+        ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -12,7 +16,7 @@ namespace BookMeMobile.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-
+            XamForms.Controls.Droid.Calendar.Init();
             global::ZXing.Net.Mobile.Forms.Android.Platform.Init();
             this.LoadApplication(new App());
         }

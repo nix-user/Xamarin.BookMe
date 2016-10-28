@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using BookMeMobile.BL.Abstract;
 using BookMeMobile.Data;
+using BookMeMobile.Data.Abstract;
 using BookMeMobile.Enums;
 using BookMeMobile.Interface;
 using BookMeMobile.Model.Login;
+using BookMeMobile.Resources;
 using Xamarin.Forms;
 
 namespace BookMeMobile.BL.Concrete
@@ -17,13 +19,13 @@ namespace BookMeMobile.BL.Concrete
     /// </summary>
     public class AuthService : IAuthService
     {
-        private readonly HttpClient client;
         private readonly IDependencyService dependencyService;
+        private readonly IHttpHandler httpHandler;
 
-        public AuthService(IDependencyService dependencyService, HttpClient httpClient)
+        public AuthService(IDependencyService dependencyService, IHttpHandler httpHandler)
         {
             this.dependencyService = dependencyService;
-            this.client = httpClient;
+            this.httpHandler = httpHandler;
         }
 
         /// <summary>
@@ -65,15 +67,14 @@ namespace BookMeMobile.BL.Concrete
         {
             var contentResponce = await response.Content.ReadAsStringAsync();
             var token = this.ParseResponse(contentResponce);
-            await this.dependencyService.Get<IFileWorker>().SaveTextAsync(token);
+            await this.dependencyService.Get<IFileWorker>().SaveTextAsync(FileResources.FileName, token);
         }
 
         private async Task<HttpResponseMessage> SendAuthRequest(LoginModel user)
         {
-            var uri = new Uri(RestURl.GetToken);
             var requestСontent = this.GetLineRequest(user.Login, user.Password);
             var content = new StringContent(requestСontent, Encoding.UTF8, "application/x-www-form-urlencoded");
-            var response = await this.client.PostAsync(uri, content);
+            var response = await this.httpHandler.PostAsync(RestURl.GetToken, content);
             return response;
         }
 

@@ -18,6 +18,8 @@ namespace BookMeMobile.Data.Abstract
         /// <returns>operation result with status code and room collection</returns>
         Task<BaseOperationResult<IEnumerable<Room>>> GetEmptyRoom(RoomFilterParameters filter);
 
+        Task<BaseOperationResult<IEnumerable<Room>>> GetAll();
+
         /// <summary>
         /// Method for getting active reservation which satisfied <paramref name="reservationsModel"/>
         /// </summary>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BookMeMobile.Interface;
-using BookMeMobile.Resources;
 using BookMeMobile.WinPhone;
 using Windows.Storage;
 using Xamarin.Forms;
@@ -12,38 +11,34 @@ namespace BookMeMobile.WinPhone
 {
     public class FileWorker : IFileWorker
     {
-        private readonly string filename = FileResources.FileName;
-
-        public async Task DeleteAsync()
+        public async Task DeleteAsync(string fileName)
         {
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile storageFile = await localFolder.GetFileAsync(this.filename);
+            StorageFile storageFile = await localFolder.GetFileAsync(fileName);
             await storageFile.DeleteAsync();
         }
 
-        public async Task<bool> ExistsAsync()
+        public async Task<bool> ExistsAsync(string fileName)
         {
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
             try
             {
-               localFolder.GetFileAsync(this.filename).GetResults();
+                await localFolder.GetFileAsync(fileName);
+                return true;
             }
             catch
             {
                 return false;
             }
-
-            return true;
         }
 
-        public async Task<string> LoadTextAsync()
+        public async Task<string> LoadTextAsync(string fileName)
         {
             try
             {
                 StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-                StorageFile tokenFile = localFolder.GetFileAsync(this.filename).GetResults();
-                string text = FileIO.ReadTextAsync(tokenFile).GetResults();
-                return text;
+                StorageFile tokenFile = await localFolder.GetFileAsync(fileName);
+                return await FileIO.ReadTextAsync(tokenFile);
             }
             catch (Exception e)
             {
@@ -51,11 +46,10 @@ namespace BookMeMobile.WinPhone
             }
         }
 
-        public async Task SaveTextAsync(string text)
+        public async Task SaveTextAsync(string fileName, string text)
         {
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFile tokenFile = await localFolder.CreateFileAsync(this.filename,
-                                                 CreationCollisionOption.ReplaceExisting);
+            StorageFile tokenFile = await localFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
             await FileIO.WriteTextAsync(tokenFile, text);
         }
     }

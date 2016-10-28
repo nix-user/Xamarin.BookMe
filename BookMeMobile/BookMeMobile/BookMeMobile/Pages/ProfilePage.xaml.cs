@@ -1,58 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookMeMobile.Entity;
-using BookMeMobile.Model;
-using Javax.Security.Auth;
-using Xamarin.Forms;
+using BookMeMobile.Render;
+using BookMeMobile.ViewModels.Concrete;
 
 namespace BookMeMobile.Pages
 {
-    public partial class ProfilePage : ContentPage
+    public partial class ProfilePage : BasePage
     {
-        private ProfileViewModel profileViewModel;
-        private User currentUser;
-
         public ProfilePage()
         {
             this.InitializeComponent();
-            this.BindingContext = new ProfileViewModel(SelectPage.CurrentUser);
-            this.txtFavoriteRoomCell.PropertyChanged += this.FavoriteRoomCell_OnCompleted;
-            this.txtMyRoomCell.PropertyChanged += this.MyRoomCell_OnCompleted;
+            this.SetUpActivityIndicator(this.loader, this.rootLayout);
+            this.Picker.SelectedIndexChanged += this.Picker_SelectedIndexChanged;
         }
 
-        private void BtnSave_OnClicked(object sender, EventArgs e)
+        private void Picker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.profileViewModel = (ProfileViewModel)this.BindingContext;
-            SelectPage.CurrentUser.FavoriteRoom = this.profileViewModel.FavoriteRoom;
-            SelectPage.CurrentUser.MyRoom = this.profileViewModel.MyRoom;
-            btnSave.IsEnabled = false;
-        }
-
-        private void FavoriteRoomCell_OnCompleted(object sender, EventArgs e)
-        {
-            if (this.txtFavoriteRoomCell.Text != this.currentUser.FavoriteRoom)
+            if (sender != null)
             {
-                this.VisibleButon();
+                var picker = (BindablePicker)sender;
+                ((ProfileViewModel)this.ViewModel).FavoriteRoom = picker.ItemsSource[picker.SelectedIndex].ToString();
             }
         }
 
-        private void MyRoomCell_OnCompleted(object sender, EventArgs e)
+        protected override void OnViewModelSet()
         {
-            if (this.txtMyRoomCell.Text != this.currentUser.MyRoom.ToString())
-            {
-                this.VisibleButon();
-            }
-        }
-
-        private void VisibleButon()
-        {
-            if (this.btnSave != null)
-            {
-                this.btnSave.IsEnabled = true;
-            }
+            base.OnViewModelSet();
+            this.SetUpViewModelSubscriptions(this.ViewModel);
+            this.BindingContext = this.ViewModel;
         }
     }
 }

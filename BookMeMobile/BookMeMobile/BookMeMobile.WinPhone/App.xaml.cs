@@ -1,13 +1,10 @@
 ﻿using System;
-using BookMeMobile.WinPhone.Render;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-using Xamarin.Forms.Platform.WinRT;
-using TimePicker = Xamarin.Forms.TimePicker;
 
 namespace BookMeMobile.WinPhone
 {
@@ -48,6 +45,7 @@ namespace BookMeMobile.WinPhone
                 rootFrame = new Frame();
                 rootFrame.CacheSize = 1;
                 Xamarin.Forms.Forms.Init(e);
+                XamForms.Controls.Windows.Calendar.Init();
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                 }

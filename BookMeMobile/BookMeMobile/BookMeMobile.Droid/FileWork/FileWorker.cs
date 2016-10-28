@@ -2,72 +2,62 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using BookMeMobile.Droid.FileWork;
 using BookMeMobile.Interface;
 using BookMeMobile.Resources;
-using Xamarin.Forms;
 
-[assembly: Dependency(typeof(FileWorker))]
+[assembly: Xamarin.Forms.Dependency(typeof(FileWorker))]
 
 namespace BookMeMobile.Droid.FileWork
 {
     public class FileWorker : IFileWorker
     {
         private static readonly object LockThis = new object();
-        private readonly string filename = FileResources.FileName;
 
-        public Task DeleteAsync()
+        public Task DeleteAsync(string fileName)
+        {
+            return Task.Run(() => File.Delete(this.GetFilePath(fileName)));
+        }
+
+        public Task<bool> ExistsAsync(string fileName)
+        {
+            string filepath = this.GetFilePath(fileName);
+            return Task.Run(() => File.Exists(filepath));
+        }
+
+        public async Task<string> LoadTextAsync(string fileName)
         {
             try
             {
-                File.Delete(this.GetFilePath());
-                return Task.FromResult(true);
-            }
-            catch (Exception e)
-            {
-                return Task.FromResult(false);
-            }
-        }
-
-        public Task<bool> ExistsAsync()
-        {
-            string filepath = this.GetFilePath();
-            bool exists = File.Exists(filepath);
-            return Task<bool>.FromResult(exists);
-        }
-
-        public Task<IEnumerable<string>> GetFilesAsync()
-        {
-            IEnumerable<string> filenames = from filepath in Directory.EnumerateFiles(this.GetDocsPath())
-                                            select Path.GetFileName(filepath);
-            return Task<IEnumerable<string>>.FromResult(filenames);
-        }
-
-        public async Task<string> LoadTextAsync()
-        {
-            string filepath = this.GetFilePath();
-            lock (LockThis)
-            {
-                using (StreamReader reader = File.OpenText(filepath))
+                string filepath = this.GetFilePath(fileName);
+                lock (LockThis)
                 {
-                    return reader.ReadToEndAsync().Result;
+                    using (StreamReader reader = File.OpenText(filepath))
+                    {
+                        return reader.ReadToEndAsync().Result;
+                    }
                 }
             }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
-        public async Task SaveTextAsync(string text)
+        public async Task SaveTextAsync(string fileName, string text)
         {
-            string filepath = this.GetFilePath();
+            string filepath = this.GetFilePath(fileName);
             using (StreamWriter writer = File.CreateText(filepath))
             {
                 await writer.WriteAsync(text);
             }
         }
 
-        private string GetFilePath()
+        private string GetFilePath(string fileName)
         {
-            return Path.Combine(this.GetDocsPath(), this.filename);
+            return Path.Combine(this.GetDocsPath(), fileName);
         }
 
         private string GetDocsPath()

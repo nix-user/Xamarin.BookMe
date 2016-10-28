@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using BookMeMobile.Render;
 using BookMeMobile.Touch.Render;
 using Foundation;
+using ObjCRuntime;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -21,11 +22,22 @@ namespace BookMeMobile.Touch.Render
             timePicker.Locale = new NSLocale("no_nb");
             this.timePickerSize = (TimePicker24Hour)Element;
             this.SetFontSize(this.timePickerSize);
+            timePicker.MinuteInterval = 15;
         }
 
         private void SetFontSize(TimePicker24Hour timePicker)
         {
-           this.Control.Font = UIFont.FromName("BrandonGrotesque-Light", 40);
+            this.Control.Font = UIFont.FromName("BrandonGrotesque-Light", 40);
+        }
+
+        public override bool CanPerform(Selector action, NSObject withSender)
+        {
+            if (action.Name == "paste:" || action.Name == "copy:" || action.Name == "cut:")
+            {
+                return false;
+            }
+
+            return base.CanPerform(action, withSender);
         }
     }
 }

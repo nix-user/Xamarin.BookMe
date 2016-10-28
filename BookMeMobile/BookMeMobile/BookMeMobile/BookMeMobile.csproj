@@ -37,33 +37,68 @@
     <Compile Include="App.cs" />
     <Compile Include="BL\Abstract\IAuthService.cs" />
     <Compile Include="BL\Abstract\IDependencyService.cs" />
+    <Compile Include="BL\Abstract\IProfileServices.cs" />
     <Compile Include="BL\Concrete\AuthService.cs" />
     <Compile Include="BL\Concrete\CustomDependencyService.cs" />
+    <Compile Include="BL\Concrete\Fake\FakeAuthService.cs" />
+    <Compile Include="BL\Concrete\ProfileService.cs" />
     <Compile Include="Converters\BoolToTextconverter.cs" />
+    <Compile Include="Converters\DateTimeToSpanConverter.cs" />
+    <Compile Include="Converters\DateTimeToStringConverter.cs" />
     <Compile Include="Converters\RoomToStringConverter.cs" />
+    <Compile Include="Binding\InverseBoolConverter.cs" />
+    <Compile Include="Binding\IsStringNullOrEmptyConverter.cs" />
     <Compile Include="BL\Abstract\BaseService.cs" />
     <Compile Include="BL\Abstract\IReservationService.cs" />
     <Compile Include="BL\Abstract\IRoomService.cs" />
     <Compile Include="BL\Concrete\ReservationService.cs" />
     <Compile Include="BL\Concrete\RoomService.cs" />
+    <Compile Include="CustomViews\ViewCellWithCommand.cs" />
+    <Compile Include="Data\Abstract\IHttpHandler.cs" />
     <Compile Include="Data\Abstract\IHttpService.cs" />
+    <Compile Include="Data\Abstract\IProfileRepository.cs" />
     <Compile Include="Data\Abstract\IRepository.cs" />
+    <Compile Include="Data\Abstract\IReservationRepository.cs" />
     <Compile Include="Data\Abstract\IRoomRepository.cs" />
     <Compile Include="Data\BaseRepository.cs" />
+    <Compile Include="Data\Concrete\HttpHandler.cs" />
+    <Compile Include="Data\FakeRepositoryes\FakeData.cs" />
+    <Compile Include="Data\FakeRepositoryes\FakeProfileRepository.cs" />
+    <Compile Include="Data\FakeRepositoryes\FakeReservationRepository.cs" />
+    <Compile Include="Data\FakeRepositoryes\FakeRoomRepository.cs" />
+    <Compile Include="Data\ProfileRepository.cs" />
     <Compile Include="Data\ReservationRepository.cs" />
     <Compile Include="BL\ListRoomManager.cs" />
     <Compile Include="Data\HttpService.cs" />
     <Compile Include="Data\RestURl.cs" />
     <Compile Include="Data\RoomRepository.cs" />
     <Compile Include="Enums\StatusCode.cs" />
+    <Compile Include="Infrastructure\EnumerableExtensions.cs" />
     <Compile Include="Model\AddReservationModel.cs" />
+    <Compile Include="Model\CalendarModel.cs" />
+    <Compile Include="Model\ProfileModel.cs" />
+    <Compile Include="Pages\CalendarPage.xaml.cs">
+      <DependentUpon>CalendarPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Render\BindablePicker.cs" />
+    <Compile Include="ViewModels\Concrete\CalendarViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\ListRoomViewModel.cs" />
     <Compile Include="Model\Login\LoginModel.cs" />
+    <Compile Include="Model\RoomViewModel.cs" />
     <Compile Include="Infrastructure\Abstract\INavigationService.cs" />
     <Compile Include="Infrastructure\Concrete\NavigationService.cs" />
     <Compile Include="Infrastructure\Concrete\NavigationServiceException.cs" />
+    <Compile Include="Model\UserReservationsModel.cs" />
+    <Compile Include="Model\SelectModel.cs" />
     <Compile Include="Pages\ActivityIndicatorPage.cs" />
+    <Compile Include="Pages\MyReservations\MyReservationsPage.xaml.cs">
+      <DependentUpon>MyReservationsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AddReservationPage.xaml.cs">
       <DependentUpon>AddReservationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MyReservations\ReservationsTab.xaml.cs">
+      <DependentUpon>ReservationsTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Pages\Login\LoginPage.xaml.cs">
@@ -90,20 +125,11 @@
     <Compile Include="Pages\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MyBookPages\AllMyBook.xaml.cs">
-      <DependentUpon>AllMyBook.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\MyBookPages\RecursiveBookPage.xaml.cs">
-      <DependentUpon>RecursiveBookPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\MyBookPages\TabbedPage.xaml.cs">
-      <DependentUpon>TabbedPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\QrBook.xaml.cs">
-      <DependentUpon>QrBook.xaml</DependentUpon>
+    <Compile Include="Pages\QrReservation.xaml.cs">
+      <DependentUpon>QrReservation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SelectPage.xaml.cs">
       <DependentUpon>SelectPage.xaml</DependentUpon>
@@ -134,8 +160,27 @@
     <Compile Include="ViewModels\Abstract\BaseViewModel.cs" />
     <Compile Include="ViewModels\Concrete\AddReservationViewModel.cs" />
     <Compile Include="ViewModels\Concrete\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\MenuPageViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\ProfileViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\MasterViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\Reservations\MyReservationsViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\SelectViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\Reservations\ReservationsListViewModel.cs" />
+    <Compile Include="ViewModels\Concrete\Reservations\ReservationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="ExifLib, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ExifLib.PCL.1.0.1\lib\portable-net45+sl50+win+WindowsPhoneApp81+wp80+Xamarin.iOS10+MonoAndroid10+MonoTouch10\ExifLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.4.0.1\lib\portable-net45+wp80+win8+wpa81+MonoAndroid10+MonoTouch10\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Mono.Android">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v6.0\Mono.Android.dll</HintPath>
     </Reference>
@@ -159,11 +204,12 @@
       <HintPath>..\..\packages\Xamarin.Forms.2.3.1.114\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xamarin.Forms.Platform.Android">
-      <HintPath>..\..\packages\Xamarin.Forms.2.0.0.6482\lib\MonoAndroid10\Xamarin.Forms.Platform.Android.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.2.3.1.114\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="XamForms.Controls.Calendar, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\XamForms.Controls.Calendar.1.0.5\lib\portable-net45+wp8+win8+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10+UAP10\XamForms.Controls.Calendar.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ZXing.Net.Mobile.Core, Version=2.1.47.0, Culture=neutral, processorArchitecture=MSIL">
@@ -231,35 +277,25 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\MyBookPages\RecursiveBookPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Pages\MyBookPages\TabbedPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Pages\MyBookPages\AllMyBook.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config">
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pages\QrBook.xaml">
+    <EmbeddedResource Include="Pages\QrReservation.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\MyReservations\MyReservationsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\Login\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -270,8 +306,19 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\MyReservations\ReservationsTab.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\CalendarPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <Import Project="$(SolutionDir)\Build\StyleCop\StyleCop.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <Error Condition="!Exists('..\..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Xamarin.Forms.2.3.1.114\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets'))" />

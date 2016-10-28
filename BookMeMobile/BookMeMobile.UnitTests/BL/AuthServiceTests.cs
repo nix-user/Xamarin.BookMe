@@ -2,6 +2,7 @@
 using System.Net.Http;
 using BookMeMobile.BL.Abstract;
 using BookMeMobile.BL.Concrete;
+using BookMeMobile.Data.Abstract;
 using BookMeMobile.Enums;
 using BookMeMobile.Model.Login;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,14 +15,14 @@ namespace BookMeMobile.UnitTests.BL
     {
         private AuthService authService;
         private Mock<IDependencyService> dependencyServiceMoq;
-        private Mock<HttpClient> httpClientMoq;
+        private Mock<IHttpHandler> httpHandlertMoq;
 
         [TestInitialize]
         public void Init()
         {
             this.dependencyServiceMoq = new Mock<IDependencyService>();
-            this.httpClientMoq = new Mock<HttpClient>();
-            this.authService = new AuthService(this.dependencyServiceMoq.Object, this.httpClientMoq.Object);
+            this.httpHandlertMoq = new Mock<IHttpHandler>();
+            this.authService = new AuthService(this.dependencyServiceMoq.Object, this.httpHandlertMoq.Object);
         }
 
         [TestMethod]

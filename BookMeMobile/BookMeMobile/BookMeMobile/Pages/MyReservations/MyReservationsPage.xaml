@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BookMeMobile.Pages.MyReservations;assembly=BookMeMobile"
+             x:Class="BookMeMobile.Pages.MyReservations.MyReservationsPage">
+  <TabbedPage.Children>
+    <local:ReservationsTab BindingContext="{Binding TodayReservationsViewModel}" Title="Today" Icon ="Today.png"></local:ReservationsTab>
+    <local:ReservationsTab BindingContext="{Binding RecursiveReservationsViewModel}" Title="Reccurence" Icon="recurrently.png"></local:ReservationsTab>
+    <local:ReservationsTab BindingContext="{Binding AllReservationsViewModel}" Title="All" Icon="All.png"></local:ReservationsTab>
+  </TabbedPage.Children>
+</TabbedPage>

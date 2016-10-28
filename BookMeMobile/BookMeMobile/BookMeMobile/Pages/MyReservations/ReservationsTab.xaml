@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:binding="clr-namespace:BookMeMobile.Binding;assembly=BookMeMobile"
+             xmlns:pages="clr-namespace:BookMeMobile.Pages;assembly=BookMeMobile"
+             xmlns:customViews="clr-namespace:BookMeMobile.CustomViews;assembly=BookMeMobile"
+             x:Class="BookMeMobile.Pages.MyReservations.ReservationsTab">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <binding:InverseBoolConverter x:Key="InverseBool"/>
+      <binding:IsStringNullOrEmptyConverter x:Key="IsStringNullOrEmpty"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Padding>
+    10, 10, 10, 10
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <StackLayout>
+      <Label x:Name="messageIsEmpty" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="Large" Text="Нету резерваций" IsVisible="False"/>
+      <ListView x:Name="listRoom" ItemsSource="{Binding Reservations}" HasUnevenRows="True" SeparatorColor="Black">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <customViews:ViewCellWithCommand Command="{Binding Parent.Parent.RemoveReservationCommand}" CommandParameter="{Binding}">
+              <ViewCell.View>
+                <StackLayout VerticalOptions="CenterAndExpand" Padding="0,20,0,20">
+                  <Label Text="{Binding TextPeriod}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
+                  <StackLayout Orientation="Horizontal">
+                    <Label  Text="{Binding RoomNumber}" FontSize="Medium"/>
+                    <Image HorizontalOptions="EndAndExpand" Source="cycle.png"  IsVisible="{Binding Parent.IsToday, Converter={StaticResource InverseBool} }"/>
+                  </StackLayout>
+                  <Label Text="{Binding Title}" FontSize="Medium" LineBreakMode="TailTruncation"></Label>
+                  <StackLayout  IsVisible="{Binding Parent.IsToday, Converter={StaticResource InverseBool} }">
+                    <Label IsVisible="{Binding TextRule, Converter={StaticResource IsStringNullOrEmpty} }" Text="{Binding TextRule}" FontSize="Small" LineBreakMode="TailTruncation"></Label>
+                  </StackLayout>
+                </StackLayout>
+              </ViewCell.View>
+            </customViews:ViewCellWithCommand>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+  </ContentPage.Content>
+</pages:BasePage>
